@@ -1,0 +1,33 @@
+name: Build development zip file
+on: push
+jobs:
+    build:
+        name: Build zip file
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v2
+            - name: npm install and build
+              run: |
+                  npm ci
+                  npm run build
+              env:
+                  CI: true
+
+            - name: Package
+              uses: actions/upload-artifact@v2
+              with:
+                  name: rust-starter
+                  retention-days: 5
+                  path: |
+                      ${{ github.workspace }}/
+                      !${{ github.workspace }}/node_modules/
+                      !${{ github.workspace }}/cypress/
+                      !${{ github.workspace }}/target/
+                      !${{ github.workspace }}/scripts/
+                      !${{ github.workspace }}/.git/
+                      !${{ github.workspace }}/.github/
+                      !${{ github.workspace }}/.wordpress-org/
+                      !${{ github.workspace }}/assets/
+                      !${{ github.workspace }}/scripts/
+                      !${{ github.workspace }}/package-lock.json

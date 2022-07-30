@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "kevinbatdorf/rust-starter",
+    "version": "0.1.0",
+    "title": "Rust Starter",
+    "category": "common",
+    "description": "My amazing block",
+    "attributes": {
+        "text": {
+            "type": "string",
+            "source": "text"
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "textdomain": "rust-starter",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css"
+}

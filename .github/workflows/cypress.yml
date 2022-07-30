@@ -1,0 +1,44 @@
+name: Run Cypress test suite
+on:
+    push:
+    workflow_dispatch:
+    # schedule:
+    # At 08:00 on Thursday.
+    # - cron: "0 8 * * 4"
+jobs:
+    test:
+        name: Cypress
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                wp-version: [null, '"WordPress/WordPress#master"']
+        steps:
+            - name: Clone repo
+              uses: actions/checkout@v2
+            - name: Install server
+              run: |
+                  npm ci
+                  npm install -g @wordpress/env
+                  npm run build
+                  rm .wp-env.json
+            - name: Change WP version
+              uses: jsdaniell/create-json@1.1.2
+              with:
+                  name: 'wp-env.json'
+                  json: '{"core": ${{ matrix.wp-version }},"plugins":["."]}'
+            - name: Start server
+              run: wp-env start
+            - name: Cypress run
+              uses: cypress-io/github-action@v2
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - uses: actions/upload-artifact@v2
+              if: always()
+              with:
+                  name: cypress-screenshots
+                  path: cypress/screenshots
+            - uses: actions/upload-artifact@v2
+              if: failure()
+              with:
+                  name: cypress-videos
+                  path: cypress/videos

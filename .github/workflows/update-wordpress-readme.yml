@@ -1,0 +1,24 @@
+name: Plugin asset/readme update
+on:
+    push:
+        branches:
+            - main
+jobs:
+    trunk:
+        name: Push to WordPress.org
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: npm install and build
+              run: |
+                  npm ci
+                  npm run build
+              env:
+                  CI: true
+            - name: WordPress.org plugin asset/readme update
+              uses: 10up/action-wordpress-plugin-asset-update@stable
+              continue-on-error: true
+              env:
+                  SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+                  SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+                  SLUG: animate-in-view
