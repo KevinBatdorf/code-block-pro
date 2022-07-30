@@ -23,7 +23,7 @@
         "@typescript-eslint/parser": "^5.19.0",
         "@wasm-tool/wasm-pack-plugin": "^1.6.0",
         "@wordpress/block-editor": "^8.5.1",
-        "@wordpress/env": "^4.5.0",
+        "@wordpress/env": "^5.0.0",
         "@wordpress/scripts": "^22.4.0",
         "@wordpress/url": "^3.7.0",
         "autoprefixer": "^10.4.4",
