@@ -1,21 +1,21 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 2,
-    "name": "kevinbatdorf/rust-starter",
+    "name": "kevinbatdorf/code-block-pro",
     "version": "0.1.0",
-    "title": "Rust Starter",
+    "title": "Code Block Pro",
     "category": "common",
-    "description": "My amazing block",
+    "description": "Code highlighting powered by the VS Code engine",
     "attributes": {
-        "text": {
-            "type": "string",
-            "source": "text"
-        }
+        "code": { "type": "string" },
+        "codeHTML": { "type": "string" },
+        "language": { "type": "string" },
+        "theme": { "type": "string" }
     },
     "supports": {
         "html": false
     },
-    "textdomain": "rust-starter",
+    "textdomain": "code-block-pro",
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",
     "style": "file:./style-index.css"

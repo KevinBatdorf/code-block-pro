@@ -1,38 +1,42 @@
+import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor'
 import { registerBlockType } from '@wordpress/blocks'
-import { useBlockProps as blockProps } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { TheBlock } from './front/TheBlock'
-import { Controls } from './editor/Controls'
 import blockConfig from './block.json'
+import { Controls } from './editor/Controls'
+import { Edit } from './editor/Edit'
+import './front/style.css'
 
 export type Attributes = {
-    text: string
+    code: string
+    codeHTML: string
+    language: string
+    theme: string
 }
 
-registerBlockType<Attributes>('kevinbatdorf/rust-starter', {
+registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     ...blockConfig,
     icon: undefined,
     // Types seem to be mismatched if importing these from block.json
     attributes: {
-        text: {
-            type: 'string',
-            default: 'Loading...',
-        },
+        code: { type: 'string' },
+        codeHTML: { type: 'string' },
+        language: { type: 'string' },
+        theme: { type: 'string', default: 'nord' },
     },
 
-    title: __('Rust Starter', 'rust-starter'),
+    title: __('Code Block Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => (
         <>
             <Controls attributes={attributes} setAttributes={setAttributes} />
-            <div {...blockProps()}>
-                <TheBlock {...attributes} />
-            </div>
+            <pre {...blockProps()}>
+                <Edit attributes={attributes} setAttributes={setAttributes} />
+            </pre>
         </>
     ),
     save: ({ attributes }) => {
         return (
             <div {...blockProps.save()}>
-                <TheBlock {...attributes} />
+                <RichText.Content value={attributes.codeHTML} />
             </div>
         )
     },

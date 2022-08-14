@@ -17,7 +17,7 @@ jobs:
             - name: Package
               uses: actions/upload-artifact@v2
               with:
-                  name: rust-starter
+                  name: code-block-pro
                   retention-days: 5
                   path: |
                       ${{ github.workspace }}/

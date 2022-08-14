@@ -1,4 +1,4 @@
-.rust-starter-editor {
+.code-block-pro-editor {
     --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
     --tw-ring-offset-width: 0px;
     --tw-ring-offset-color: transparent;
@@ -11,9 +11,9 @@
     --tw-scale-x: 1;
     --tw-scale-y: 1;
 }
-.rust-starter-editor *,
-.rust-starter-editor *:after,
-.rust-starter-editor *:before {
+.code-block-pro-editor *,
+.code-block-pro-editor *:after,
+.code-block-pro-editor *:before {
     box-sizing: border-box;
     border: 0 solid #e5e7eb;
 }

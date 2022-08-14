@@ -25,7 +25,7 @@ jobs:
               env:
                   SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
                   SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-                  SLUG: rust-starter
+                  SLUG: code-block-pro
 
             - name: Upload release asset
               uses: actions/upload-release-asset@v1

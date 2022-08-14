@@ -1,16 +1,7 @@
-.rust-starter {
-    --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
-    --tw-ring-offset-width: 0px;
-    --tw-ring-offset-color: transparent;
-    /* --tw-ring-color: you-may-want-to-update-this; */
+.wp-block-kevinbatdorf-code-block-pro pre {
+    overflow-wrap: break-word;
+    @apply overflow-auto p-4 px-6 whitespace-pre-wrap;
 }
-.rust-starter *,
-.rust-starter *:after,
-.rust-starter *:before {
-    box-sizing: border-box;
-    border: 0 solid #e5e7eb;
+.wp-block-kevinbatdorf-code-block-pro pre code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-/* Add more styles here specific to the block/frontend */

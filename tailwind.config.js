@@ -1,8 +1,14 @@
 const colors = require('tailwindcss/colors')
+delete colors['lightBlue']
+delete colors['warmGray']
+delete colors['trueGray']
+delete colors['coolGray']
+delete colors['blueGray']
+
 // See postcss.config.js for more parsing options.
 module.exports = {
     // Tnis should match the namespace you use in your css styles.
-    important: '.rust-starter',
+    important: '.code-block-pro',
     theme: {
         screens: {
             xxs: '280px',

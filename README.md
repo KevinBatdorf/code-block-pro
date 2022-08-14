@@ -8,7 +8,7 @@ This is a minimum block plugin template to rapidly get started building WP block
 ### Getting Started
 
 -   Run `npm install` to install necessary packages
--   Run `npm run rename <text-domain> <label>` to rename from rust-starter.
+-   Run `npm run rename <text-domain> <label>` to rename from code-block-pro.
 -   Run `npm run start` to start the dev server
 -   Run `cypress open` to run interactive tests
 
