@@ -27,7 +27,7 @@
         "@wordpress/url": "^3.16.0",
         "autoprefixer": "^10.4.8",
         "cypress": "^10.4.0",
-        "eslint": "^8.21.0",
+        "eslint": "^8.22.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-prettier": "^4.2.1",
