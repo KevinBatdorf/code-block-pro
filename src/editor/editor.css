@@ -21,3 +21,11 @@
 @tailwind components;
 @tailwind utilities;
 /* Add more styles here specific to the editor only */
+.code-block-pro-editor .npm__react-simple-code-editor__textarea {
+    @apply shadow-none;
+}
+.code-block-pro-editor textarea,
+.code-block-pro-editor pre {
+    @apply m-0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}

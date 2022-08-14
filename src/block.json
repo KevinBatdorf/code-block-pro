@@ -13,7 +13,8 @@
         "theme": { "type": "string" }
     },
     "supports": {
-        "html": false
+        "html": false,
+        "align": true
     },
     "textdomain": "code-block-pro",
     "editorScript": "file:./index.js",

@@ -1,6 +1,11 @@
-import { RichText } from '@wordpress/block-editor'
-import { useEffect, useRef, useState } from '@wordpress/element'
+import {
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import Editor from 'react-simple-code-editor'
 import { getHighlighter, Highlighter, setCDN } from 'shiki'
 import type { Attributes } from '..'
 
@@ -10,44 +15,59 @@ interface EditProps {
 }
 export const Edit = ({ attributes, setAttributes }: EditProps) => {
     const [highlighter, setHighlighter] = useState<Highlighter>()
-    const decoderDiv = useRef<HTMLDivElement>(document.createElement('div'))
-    const { theme, language, code } = attributes
+    const [editorBg, setEditorBg] = useState<string>()
+    const [cursorColor, setCursorColor] = useState<string>()
+    const { theme, language, code = '' } = attributes
+    const textAreaRef = useRef<HTMLDivElement>(null)
     const handleChange = (code: string) => {
         setAttributes({ ...attributes, code })
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setCDN('https://unpkg.com/shiki/')
-        getHighlighter({ theme }).then(setHighlighter)
+        getHighlighter({ theme: 'vitesse-light' }).then(setHighlighter)
     }, [theme])
 
     useEffect(() => {
         if (!highlighter) return
-        if (!code) return
-        decoderDiv.current.innerHTML = code
-        const decoded =
-            decoderDiv.current.childNodes?.[0]?.nodeValue?.toString()
-        if (!decoded) return
-        const html = highlighter.codeToHtml(decoded, {
+        setEditorBg(highlighter.getBackgroundColor())
+        setCursorColor(highlighter.getForegroundColor())
+    }, [theme, highlighter, attributes.codeHTML])
+
+    useEffect(() => {
+        if (!highlighter) return
+        const html = highlighter.codeToHtml(code, {
             lang: language ?? 'js',
         })
         setAttributes({ ...attributes, codeHTML: html })
     }, [highlighter, code, attributes, language, setAttributes])
 
     return (
-        <div>
-            <RichText
-                tagName="code"
-                value={attributes.code}
-                onChange={handleChange}
-                placeholder={__('Write code…')}
-                aria-label={__('Code')}
-                // eslint-disable-next-line
-                // @ts-ignore-next-line
-                preserveWhiteSpace
-                __unstablePastePlainText
+        <div className="code-block-pro-editor" ref={textAreaRef}>
+            <Editor
+                value={code}
+                onValueChange={handleChange}
+                padding={24}
+                style={{
+                    backgroundColor: editorBg,
+                    color: cursorColor,
+                }}
+                onKeyDown={(e: KeyboardEvent) => {
+                    if (!textAreaRef.current) return
+                    if (e.key === 'Tab') {
+                        // Tab lock here. Pressing Escape will unlock.
+                        textAreaRef.current.querySelector('textarea')?.focus()
+                    }
+                }}
+                highlight={(code: string) => {
+                    if (!highlighter) return __('Loading...', 'code-block-pro')
+                    return highlighter
+                        .codeToHtml(code, {
+                            lang: language ?? 'js',
+                        })
+                        ?.replace(/<\/?[pre|code][^>]*>/g, '')
+                }}
             />
-            <RichText.Content value={attributes.codeHTML} />
         </div>
     )
 }

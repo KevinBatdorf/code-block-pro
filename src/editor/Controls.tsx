@@ -10,6 +10,12 @@ interface ControlProps {
     setAttributes: (attributes: Attributes) => void
 }
 
+// TODO:
+// Language select (auto detect?)
+// Theme select (show a modal?)
+// Shades of purple?
+// Cache bg and color and use them to preload
+
 export const Controls = ({ attributes, setAttributes }: ControlProps) => {
     return (
         <InspectorControls>

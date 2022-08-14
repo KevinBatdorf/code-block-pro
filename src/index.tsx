@@ -11,6 +11,7 @@ export type Attributes = {
     codeHTML: string
     language: string
     theme: string
+    align: 'wide' | 'full'
 }
 
 registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
@@ -22,6 +23,7 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         codeHTML: { type: 'string' },
         language: { type: 'string' },
         theme: { type: 'string', default: 'nord' },
+        align: { type: 'string', default: 'center' },
     },
 
     title: __('Code Block Pro', 'code-block-pro'),
