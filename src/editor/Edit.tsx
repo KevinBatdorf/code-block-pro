@@ -1,72 +1,66 @@
-import {
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from '@wordpress/element'
+import { useEffect, useRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import Editor from 'react-simple-code-editor'
-import { getHighlighter, Highlighter, setCDN } from 'shiki'
-import type { Attributes } from '..'
+import { useTheme } from '../hooks/useTheme'
+import { AttributesPropsAndSetter } from '../types'
 
-interface EditProps {
-    attributes: Attributes
-    setAttributes: (attributes: Attributes) => void
-}
-export const Edit = ({ attributes, setAttributes }: EditProps) => {
-    const [highlighter, setHighlighter] = useState<Highlighter>()
-    const [editorBg, setEditorBg] = useState<string>()
-    const [cursorColor, setCursorColor] = useState<string>()
-    const { theme, language, code = '' } = attributes
+export const Edit = ({
+    attributes,
+    setAttributes,
+}: AttributesPropsAndSetter) => {
+    const {
+        theme,
+        language: lang,
+        code = '',
+        bgColor: backgroundColor,
+        textColor: color,
+    } = attributes
     const textAreaRef = useRef<HTMLDivElement>(null)
-    const handleChange = (code: string) => {
+    const handleChange = (code: string) =>
         setAttributes({ ...attributes, code })
+    const { highlighter, error, loading } = useTheme('dracula')
+
+    useEffect(() => {
+        if (!highlighter) return
+        setAttributes({
+            bgColor: highlighter.getBackgroundColor(),
+            textColor: highlighter.getForegroundColor(),
+        })
+    }, [theme, highlighter, setAttributes])
+
+    useEffect(() => {
+        if (!highlighter) return
+        setAttributes({ codeHTML: highlighter.codeToHtml(code, { lang }) })
+    }, [highlighter, code, lang, setAttributes])
+
+    if (loading || error) {
+        return (
+            <div
+                className="p-8 px-6 text-center"
+                style={{ backgroundColor, color }}>
+                {error?.message ?? __('Loading...', 'code-block-pro')}
+            </div>
+        )
     }
 
-    useLayoutEffect(() => {
-        setCDN('https://unpkg.com/shiki/')
-        getHighlighter({ theme: 'vitesse-light' }).then(setHighlighter)
-    }, [theme])
-
-    useEffect(() => {
-        if (!highlighter) return
-        setEditorBg(highlighter.getBackgroundColor())
-        setCursorColor(highlighter.getForegroundColor())
-    }, [theme, highlighter, attributes.codeHTML])
-
-    useEffect(() => {
-        if (!highlighter) return
-        const html = highlighter.codeToHtml(code, {
-            lang: language ?? 'js',
-        })
-        setAttributes({ ...attributes, codeHTML: html })
-    }, [highlighter, code, attributes, language, setAttributes])
-
     return (
-        <div className="code-block-pro-editor" ref={textAreaRef}>
+        <div ref={textAreaRef}>
             <Editor
                 value={code}
                 onValueChange={handleChange}
                 padding={24}
-                style={{
-                    backgroundColor: editorBg,
-                    color: cursorColor,
-                }}
-                onKeyDown={(e: KeyboardEvent) => {
-                    if (!textAreaRef.current) return
-                    if (e.key === 'Tab') {
-                        // Tab lock here. Pressing Escape will unlock.
-                        textAreaRef.current.querySelector('textarea')?.focus()
-                    }
-                }}
-                highlight={(code: string) => {
-                    if (!highlighter) return __('Loading...', 'code-block-pro')
-                    return highlighter
-                        .codeToHtml(code, {
-                            lang: language ?? 'js',
-                        })
+                style={{ backgroundColor, color }}
+                // eslint-disable-next-line
+                onKeyDown={(e: any) =>
+                    e.key === 'Tab' &&
+                    // Tab lock here. Pressing Escape will unlock.
+                    textAreaRef.current?.querySelector('textarea')?.focus()
+                }
+                highlight={(code: string) =>
+                    highlighter
+                        ?.codeToHtml(code, { lang })
                         ?.replace(/<\/?[pre|code][^>]*>/g, '')
-                }}
+                }
             />
         </div>
     )

@@ -10,7 +10,11 @@
         "code": { "type": "string" },
         "codeHTML": { "type": "string" },
         "language": { "type": "string" },
-        "theme": { "type": "string" }
+        "theme": { "type": "string", "default": "dracula" },
+        "align": { "type": "string", "default": "center" },
+        "bgColor": { "type": "string", "default": "#282a37" },
+        "textColor": { "type": "string", "default": "#f8f8f2" },
+        "lineNumbers": { "type": "boolean", "default": false }
     },
     "supports": {
         "html": false,

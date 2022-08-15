@@ -1,3 +1,4 @@
+/*! purgecss start ignore */
 .wp-block-kevinbatdorf-code-block-pro pre {
     overflow-wrap: break-word;
     @apply overflow-auto p-6 whitespace-pre-wrap;
