@@ -33,7 +33,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v2
-              if: always()
+              if: failure()
               with:
                   name: cypress-screenshots
                   path: cypress/screenshots
