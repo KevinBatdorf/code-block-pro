@@ -19,15 +19,15 @@
     "devDependencies": {
         "@trivago/prettier-plugin-sort-imports": "^3.3.0",
         "@types/wordpress__block-editor": "^7.0.0",
-        "@types/wordpress__blocks": "^11.0.6",
-        "@typescript-eslint/parser": "^5.33.0",
+        "@types/wordpress__blocks": "^11.0.7",
+        "@typescript-eslint/parser": "^5.33.1",
         "@wordpress/block-editor": "^9.7.0",
         "@wordpress/env": "^5.1.0",
         "@wordpress/scripts": "^23.7.1",
         "@wordpress/url": "^3.16.0",
         "autoprefixer": "^10.4.8",
-        "cypress": "^10.4.0",
-        "eslint": "^8.21.0",
+        "cypress": "^10.5.0",
+        "eslint": "^8.22.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-cypress": "^2.12.1",
         "eslint-plugin-prettier": "^4.2.1",
@@ -42,6 +42,7 @@
         "typescript": "^4.7.4"
     },
     "dependencies": {
+        "@headlessui/react": "^1.6.6",
         "@wordpress/block-editor": "^9.7.0",
         "@wordpress/blocks": "^11.14.0",
         "@wordpress/element": "^4.13.0",

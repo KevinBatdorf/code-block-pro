@@ -9,9 +9,12 @@ export const closeWelcomeGuide = () => {
 }
 
 export const saveDraft = () => {
-    cy.get('.editor-post-save-draft')
-    cy.get('.editor-post-save-draft').click()
-    cy.get('.editor-post-saved-state.is-saved')
+    cy.get('body').then((body) => {
+        if (body.find('.editor-post-save-draft').length > 0) {
+            cy.get('.editor-post-save-draft').click()
+            cy.get('.editor-post-saved-state.is-saved')
+        }
+    })
 }
 
 export const setPostContent = (content) => {

@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n'
 // Language select (auto detect?)
 // Theme select (show a modal?)
 // Shades of purple?
-// Cache bg and color and use them to preload
+// Add select to sidebar to select language
 
 export const SidebarControls = () => (
     <InspectorControls>
