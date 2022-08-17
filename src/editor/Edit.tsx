@@ -9,16 +9,15 @@ export const Edit = ({
     setAttributes,
 }: AttributesPropsAndSetter) => {
     const {
-        theme,
-        language: lang,
+        theme = 'nord',
+        language: lang = 'javascript',
         code = '',
         bgColor: backgroundColor,
         textColor: color,
     } = attributes
     const textAreaRef = useRef<HTMLDivElement>(null)
-    const handleChange = (code: string) =>
-        setAttributes({ ...attributes, code })
-    const { highlighter, error, loading } = useTheme('dracula')
+    const handleChange = (code: string) => setAttributes({ code })
+    const { highlighter, error, loading } = useTheme({ theme, lang })
 
     useEffect(() => {
         if (!highlighter) return

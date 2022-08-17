@@ -1,8 +1,10 @@
+import { Lang, Theme } from 'shiki'
+
 export type Attributes = {
     code: string
     codeHTML: string
-    language: string
-    theme: string
+    language: Lang
+    theme: Theme
     align: 'wide' | 'full'
     bgColor: string
     textColor: string
