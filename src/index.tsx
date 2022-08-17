@@ -28,14 +28,8 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     edit: ({ attributes, setAttributes }) => (
         <>
             <SidebarControls />
-            <LanguageControls
-                attributes={attributes}
-                setAttributes={setAttributes}
-            />
-            <pre
-                {...blockProps({
-                    className: 'code-block-pro-editor',
-                })}>
+            <LanguageControls attributes={attributes} />
+            <pre {...blockProps({ className: 'code-block-pro-editor' })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
             </pre>
         </>

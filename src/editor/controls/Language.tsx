@@ -1,25 +1,18 @@
 import { BlockControls } from '@wordpress/block-editor'
-import { ToolbarGroup, ToolbarButton } from '@wordpress/components'
+import { ToolbarGroup } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import defaultLanguages from '../../defaultLanguages.json'
-import { AttributesPropsAndSetter } from '../../types'
+import { Attributes } from '../../types'
 
-export const LanguageControls = ({
-    attributes,
-    setAttributes,
-}: AttributesPropsAndSetter) => {
+type LanguageProps = { attributes: Attributes }
+export const LanguageControls = ({ attributes }: LanguageProps) => {
     return (
         <BlockControls>
-            <ToolbarGroup>
-                <p>Hi</p>
-                {/* <ToolbarButton
-                    // icon={blockIcon}
-                    label={__('Select language', 'code-block-pro')}
-                    onClick={() => {
-                        //
-                    }}>
-                    {/* {language ?? __('Select language', 'code-block-pro')}
-                </ToolbarButton> */}
+            <ToolbarGroup className="code-block-pro-editor">
+                <div
+                    className="flex justify-center items-center p-1"
+                    title={__('Update in sidebar', 'code-block-pro')}>
+                    {attributes?.language ?? __('Plain text', 'code-block-pro')}
+                </div>
             </ToolbarGroup>
         </BlockControls>
     )
