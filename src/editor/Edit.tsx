@@ -2,6 +2,8 @@ import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import Editor from 'react-simple-code-editor';
 import { useTheme } from '../hooks/useTheme';
+import { useLanguageStore } from '../state/language';
+import { useThemeStore } from '../state/theme';
 import { AttributesPropsAndSetter } from '../types';
 
 export const Edit = ({
@@ -9,15 +11,25 @@ export const Edit = ({
     setAttributes,
 }: AttributesPropsAndSetter) => {
     const {
-        theme = 'nord',
-        language: lang = 'javascript',
+        language,
+        theme,
         code = '',
         bgColor: backgroundColor,
         textColor: color,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
-    const { highlighter, error, loading } = useTheme({ theme, lang });
+    const { previousLanguage } = useLanguageStore();
+    const { previousTheme } = useThemeStore();
+    const { highlighter, error, loading } = useTheme({
+        theme,
+        lang: language ?? previousLanguage,
+    });
+
+    useEffect(() => {
+        if (theme) return;
+        setAttributes({ theme: previousTheme });
+    }, [previousTheme, theme, setAttributes]);
 
     useEffect(() => {
         if (!highlighter) return;
@@ -29,10 +41,14 @@ export const Edit = ({
 
     useEffect(() => {
         if (!highlighter) return;
-        setAttributes({ codeHTML: highlighter.codeToHtml(code, { lang }) });
-    }, [highlighter, code, lang, setAttributes]);
+        setAttributes({
+            codeHTML: highlighter.codeToHtml(code, {
+                lang: language ?? previousLanguage,
+            }),
+        });
+    }, [highlighter, code, language, setAttributes, previousLanguage]);
 
-    if (loading || error) {
+    if ((loading && code) || error) {
         return (
             <div
                 className="p-8 px-6 text-center"
@@ -57,7 +73,9 @@ export const Edit = ({
                 }
                 highlight={(code: string) =>
                     highlighter
-                        ?.codeToHtml(code, { lang })
+                        ?.codeToHtml(code, {
+                            lang: language ?? previousLanguage,
+                        })
                         ?.replace(/<\/?[pre|code][^>]*>/g, '')
                 }
             />

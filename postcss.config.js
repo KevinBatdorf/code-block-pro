@@ -35,6 +35,7 @@ module.exports = ({ mode, file }) => ({
             }),
         // See: https://github.com/WordPress/gutenberg/blob/trunk/packages/postcss-plugins-preset/lib/index.js
         require('autoprefixer')({ grid: true }),
+        require('postcss-safe-important'),
         mode === 'production' &&
             // See: https://github.com/WordPress/gutenberg/blob/trunk/packages/scripts/config/webpack.config.js#L68
             require('cssnano')({

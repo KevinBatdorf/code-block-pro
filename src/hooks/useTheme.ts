@@ -8,13 +8,13 @@ const fetcher = ({ theme, lang }: Params) =>
 let once = false;
 
 export const useTheme = ({ theme, lang }: Params) => {
-    const { data: highlighter, error } = useSWRImmutable(
-        { theme, lang },
-        fetcher,
-    );
     if (!once) {
         once = true;
         setCDN(window.codeBlockPro?.pluginUrl + '/build/shiki/');
     }
+    const { data: highlighter, error } = useSWRImmutable(
+        { theme, lang },
+        fetcher,
+    );
     return { highlighter, error, loading: !highlighter && !error };
 };

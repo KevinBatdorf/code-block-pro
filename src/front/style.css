@@ -1,9 +1,10 @@
 /*! purgecss start ignore */
 .wp-block-kevinbatdorf-code-block-pro pre {
     overflow-wrap: break-word;
-    @apply overflow-auto p-6 whitespace-pre-wrap;
+    @apply overflow-auto p-6 whitespace-pre-wrap text-inherit;
 }
 .wp-block-kevinbatdorf-code-block-pro pre code {
+    @apply m-0 p-0 bg-transparent text-inherit;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         monospace;
 }

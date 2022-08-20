@@ -28,5 +28,8 @@
 .code-block-pro-editor pre {
     @apply m-0;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-        monospace !important;
+    monospace !important;
+}
+.code-block-pro-editor code {
+    @apply m-0 p-0 text-inherit bg-transparent;
 }

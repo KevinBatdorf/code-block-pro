@@ -9,6 +9,9 @@ export type Attributes = {
     bgColor: string;
     textColor: string;
     lineNumbers: boolean;
+    startingLineNumber: number;
+    frame: boolean;
+    renderType: string;
 };
 export interface AttributesPropsAndSetter {
     attributes: Attributes;

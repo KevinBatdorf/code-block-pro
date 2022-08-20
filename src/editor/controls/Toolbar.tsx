@@ -11,7 +11,7 @@ export const ToolbarControls = ({ attributes }: ToolbarProps) => {
                 <div
                     className="flex justify-center items-center p-1"
                     title={__('Update in sidebar', 'code-block-pro')}>
-                    {attributes?.language ?? __('Plain text', 'code-block-pro')}
+                    {attributes?.language}
                 </div>
             </ToolbarGroup>
         </BlockControls>
