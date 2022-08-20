@@ -25,6 +25,7 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         startingLineNumber: { type: 'number', default: 1 },
         frame: { type: 'boolean', default: false },
         renderType: { type: 'string', default: 'code' },
+        label: { type: 'string', default: '' },
     },
 
     title: __('Code Block Pro', 'code-block-pro'),

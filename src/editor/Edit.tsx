@@ -51,9 +51,9 @@ export const Edit = ({
     if ((loading && code) || error) {
         return (
             <div
-                className="p-8 px-6 text-center"
+                className="p-8 px-6 text-left"
                 style={{ backgroundColor, color }}>
-                {error?.message ?? __('Loading...', 'code-block-pro')}
+                {error?.message ?? ''}
             </div>
         );
     }

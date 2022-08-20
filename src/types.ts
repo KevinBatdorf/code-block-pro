@@ -12,6 +12,7 @@ export type Attributes = {
     startingLineNumber: number;
     frame: boolean;
     renderType: string;
+    label: string;
 };
 export interface AttributesPropsAndSetter {
     attributes: Attributes;
