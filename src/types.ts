@@ -14,3 +14,11 @@ export interface AttributesPropsAndSetter {
     attributes: Attributes
     setAttributes: (attrs: Partial<Attributes>) => void
 }
+
+declare global {
+    interface Window {
+        codeBlockPro: {
+            pluginUrl: string
+        }
+    }
+}
