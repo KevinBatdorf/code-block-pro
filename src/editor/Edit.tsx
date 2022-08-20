@@ -1,8 +1,8 @@
-import { useEffect, useRef } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
-import Editor from 'react-simple-code-editor'
-import { useTheme } from '../hooks/useTheme'
-import { AttributesPropsAndSetter } from '../types'
+import { useEffect, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import Editor from 'react-simple-code-editor';
+import { useTheme } from '../hooks/useTheme';
+import { AttributesPropsAndSetter } from '../types';
 
 export const Edit = ({
     attributes,
@@ -14,23 +14,23 @@ export const Edit = ({
         code = '',
         bgColor: backgroundColor,
         textColor: color,
-    } = attributes
-    const textAreaRef = useRef<HTMLDivElement>(null)
-    const handleChange = (code: string) => setAttributes({ code })
-    const { highlighter, error, loading } = useTheme({ theme, lang })
+    } = attributes;
+    const textAreaRef = useRef<HTMLDivElement>(null);
+    const handleChange = (code: string) => setAttributes({ code });
+    const { highlighter, error, loading } = useTheme({ theme, lang });
 
     useEffect(() => {
-        if (!highlighter) return
+        if (!highlighter) return;
         setAttributes({
             bgColor: highlighter.getBackgroundColor(),
             textColor: highlighter.getForegroundColor(),
-        })
-    }, [theme, highlighter, setAttributes])
+        });
+    }, [theme, highlighter, setAttributes]);
 
     useEffect(() => {
-        if (!highlighter) return
-        setAttributes({ codeHTML: highlighter.codeToHtml(code, { lang }) })
-    }, [highlighter, code, lang, setAttributes])
+        if (!highlighter) return;
+        setAttributes({ codeHTML: highlighter.codeToHtml(code, { lang }) });
+    }, [highlighter, code, lang, setAttributes]);
 
     if (loading || error) {
         return (
@@ -39,7 +39,7 @@ export const Edit = ({
                 style={{ backgroundColor, color }}>
                 {error?.message ?? __('Loading...', 'code-block-pro')}
             </div>
-        )
+        );
     }
 
     return (
@@ -62,5 +62,5 @@ export const Edit = ({
                 }
             />
         </div>
-    )
-}
+    );
+};

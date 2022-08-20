@@ -1,3 +1,3 @@
-import './helpers'
-import './commands'
-import './globals'
+import './commands';
+import './globals';
+import './helpers';

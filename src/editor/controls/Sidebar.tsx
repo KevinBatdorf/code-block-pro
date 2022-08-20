@@ -1,6 +1,8 @@
-import { InspectorControls } from '@wordpress/block-editor'
-import { PanelBody, BaseControl } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import { InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, BaseControl, SelectControl } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import defaultLanguages from '../../defaultLanguages.json';
+import { AttributesPropsAndSetter } from '../../types';
 
 // TODO:
 // Language select (auto detect?)
@@ -8,16 +10,39 @@ import { __ } from '@wordpress/i18n'
 // Shades of purple?
 // Add select to sidebar to select language
 
-export const SidebarControls = () => (
-    <InspectorControls>
-        <PanelBody title={__('Settings', 'code-block-pro')}>
-            <BaseControl id="free-subscription">
+export const SidebarControls = ({
+    attributes,
+    setAttributes,
+}: AttributesPropsAndSetter) => {
+    return (
+        <InspectorControls>
+            <PanelBody title={__('Settings', 'code-block-pro')}>
                 <div className="code-block-pro-editor">
-                    <div className="p-4 bg-gray-200 mb-4">
-                        Here will go a notice regarding lifetime subscriptions.
-                    </div>
+                    <BaseControl id="code-block-pro-language-select">
+                        <SelectControl
+                            label={__('Language', 'code-block-pro')}
+                            value={attributes?.language}
+                            onChange={(language) => setAttributes({ language })}
+                            options={[
+                                {
+                                    label: __('Not set', 'code-block-pro'),
+                                    value: '',
+                                },
+                                ...defaultLanguages.map((value) => ({
+                                    label: value,
+                                    value,
+                                })),
+                            ]}
+                        />
+                    </BaseControl>
+                    <BaseControl id="code-block-pro-free-subscription">
+                        <div className="p-4 bg-gray-200 mb-4">
+                            Here will go a notice regarding lifetime
+                            subscriptions.
+                        </div>
+                    </BaseControl>
                 </div>
-            </BaseControl>
-        </PanelBody>
-    </InspectorControls>
-)
+            </PanelBody>
+        </InspectorControls>
+    );
+};

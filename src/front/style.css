@@ -4,5 +4,6 @@
     @apply overflow-auto p-6 whitespace-pre-wrap;
 }
 .wp-block-kevinbatdorf-code-block-pro pre code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        monospace;
 }

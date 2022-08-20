@@ -1,4 +1,4 @@
-const tailwind = require('./tailwind.config')
+const tailwind = require('./tailwind.config');
 
 module.exports = ({ mode, file }) => ({
     ident: 'postcss',
@@ -19,17 +19,17 @@ module.exports = ({ mode, file }) => ({
         (css) =>
             css.walkRules((rule) => {
                 // Removes top level TW styles like *::before {}
-                rule.selector.startsWith('*') && rule.remove()
+                rule.selector.startsWith('*') && rule.remove();
 
                 // This will allow users to override something like
                 // padding within the block styles
                 if (file.endsWith('style.css')) {
                     // This appends the :not() exception to padding and margins
                     if (new RegExp('[:]?[^a-z]-?p[a-z]?-.+').test(rule)) {
-                        rule.selector += ':not([style*="padding"])'
+                        rule.selector += ':not([style*="padding"])';
                     }
                     if (new RegExp('[:]?[^a-z]-?m[a-z]?-.+').test(rule)) {
-                        rule.selector += ':not([style*="margin"])'
+                        rule.selector += ':not([style*="margin"])';
                     }
                 }
             }),
@@ -48,4 +48,4 @@ module.exports = ({ mode, file }) => ({
                 ],
             }),
     ],
-})
+});

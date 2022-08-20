@@ -1,9 +1,9 @@
-const colors = require('tailwindcss/colors')
-delete colors['lightBlue']
-delete colors['warmGray']
-delete colors['trueGray']
-delete colors['coolGray']
-delete colors['blueGray']
+const colors = require('tailwindcss/colors');
+delete colors['lightBlue'];
+delete colors['warmGray'];
+delete colors['trueGray'];
+delete colors['coolGray'];
+delete colors['blueGray'];
 
 // See postcss.config.js for more parsing options.
 module.exports = {
@@ -66,4 +66,4 @@ module.exports = {
         animation: false,
         container: false,
     },
-}
+};

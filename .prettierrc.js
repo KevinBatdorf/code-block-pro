@@ -1,7 +1,7 @@
 module.exports = {
     trailingComma: 'all',
     tabWidth: 4,
-    semi: false,
+    semi: true,
     singleQuote: true,
     bracketSameLine: true,
     importOrder: ['^@wordpress/(.*)$', '<THIRD_PARTY_MODULES>', '^[./]'],
@@ -13,4 +13,4 @@ module.exports = {
             },
         },
     ],
-}
+};

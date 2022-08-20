@@ -1,5 +1,5 @@
-const defaultConfig = require('@wordpress/scripts/config/webpack.config')
-const CopyPlugin = require('copy-webpack-plugin')
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     ...defaultConfig,
@@ -12,4 +12,4 @@ module.exports = {
     experiments: {
         asyncWebAssembly: true,
     },
-}
+};

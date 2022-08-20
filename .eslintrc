@@ -30,7 +30,7 @@
         "array-element-newline": ["error", "consistent"],
         "no-constant-condition": ["error", { "checkLoops": true }],
         "no-multi-spaces": ["error"],
-        "semi": ["error", "never"],
+        "semi": ["error", "always"],
         "space-in-parens": ["error", "never"],
         "key-spacing": ["error", { "afterColon": true }],
         "space-infix-ops": ["error"],

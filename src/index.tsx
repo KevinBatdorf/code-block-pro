@@ -1,13 +1,13 @@
-import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor'
-import { registerBlockType } from '@wordpress/blocks'
-import { __ } from '@wordpress/i18n'
-import blockConfig from './block.json'
-import { Edit } from './editor/Edit'
-import { SidebarControls } from './editor/controls/Sidebar'
-import { ToolbarControls } from './editor/controls/Toolbar'
-import './editor/editor.css'
-import './front/style.css'
-import { Attributes } from './types'
+import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
+import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
+import blockConfig from './block.json';
+import { Edit } from './editor/Edit';
+import { SidebarControls } from './editor/controls/Sidebar';
+import { ToolbarControls } from './editor/controls/Toolbar';
+import './editor/editor.css';
+import './front/style.css';
+import { Attributes } from './types';
 
 registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     ...blockConfig,
@@ -27,7 +27,10 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     title: __('Code Block Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => (
         <>
-            <SidebarControls />
+            <SidebarControls
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <ToolbarControls attributes={attributes} />
             <pre {...blockProps({ className: 'code-block-pro-editor' })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
@@ -39,6 +42,6 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
             <div {...blockProps.save()}>
                 <RichText.Content value={attributes.codeHTML} />
             </div>
-        )
+        );
     },
-})
+});
