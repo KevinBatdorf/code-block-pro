@@ -3,8 +3,8 @@ import { registerBlockType } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import blockConfig from './block.json'
 import { Edit } from './editor/Edit'
-import { LanguageControls } from './editor/controls/Language'
 import { SidebarControls } from './editor/controls/Sidebar'
+import { ToolbarControls } from './editor/controls/Toolbar'
 import './editor/editor.css'
 import './front/style.css'
 import { Attributes } from './types'
@@ -28,7 +28,7 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     edit: ({ attributes, setAttributes }) => (
         <>
             <SidebarControls />
-            <LanguageControls attributes={attributes} />
+            <ToolbarControls attributes={attributes} />
             <pre {...blockProps({ className: 'code-block-pro-editor' })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
             </pre>

@@ -3,8 +3,8 @@ import { ToolbarGroup } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Attributes } from '../../types'
 
-type LanguageProps = { attributes: Attributes }
-export const LanguageControls = ({ attributes }: LanguageProps) => {
+type ToolbarProps = { attributes: Attributes }
+export const ToolbarControls = ({ attributes }: ToolbarProps) => {
     return (
         <BlockControls>
             <ToolbarGroup className="code-block-pro-editor">
