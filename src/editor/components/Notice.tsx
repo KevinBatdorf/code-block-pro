@@ -61,7 +61,7 @@ export const Notice = () => {
                         onChange={setEmail}
                         value={email}
                     />
-                    <Button isPrimary onClick={sendEmail}>
+                    <Button className="-mt-2" isPrimary onClick={sendEmail}>
                         {__('Send', 'code-block-pro')}
                     </Button>
                 </>
