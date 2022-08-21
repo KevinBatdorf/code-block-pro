@@ -5,6 +5,8 @@ addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.code-block-pro-copy-button'),
     );
     buttons.forEach((button) => {
+        // Setting it to block here lets users deactivate the plugin safely
+        button.style.display = 'block';
         button.addEventListener('click', (event) => {
             const b = event.target?.closest('button');
             copy(b?.dataset?.code ?? '');

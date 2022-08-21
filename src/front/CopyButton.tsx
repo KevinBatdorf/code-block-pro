@@ -4,7 +4,7 @@ import { Attributes } from '../types';
 export const CopyButton = ({ attributes }: { attributes: Attributes }) => (
     <button
         data-code={attributes.code}
-        style={{ color: attributes?.textColor ?? 'inherit' }}
+        style={{ color: attributes?.textColor ?? 'inherit', display: 'none' }}
         aria-label={__('Copy', 'code-block-pro')}
         className="code-block-pro-copy-button">
         <svg
