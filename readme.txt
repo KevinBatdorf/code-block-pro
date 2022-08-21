@@ -63,11 +63,6 @@ add_action('wp_enqueue_scripts', function() {
 });
 ```
 
-= The plugin zip is close to 10mb =
-
-To support the 140 languages for free, the plugin includes the ruleset for each language. However, only what you use is loaded into memory, so although the plugin has a footprint at around 10mb, most of the files are unused.
-```
-
 == Screenshots ==
 
 1. Quickly swap over themes in the editor
