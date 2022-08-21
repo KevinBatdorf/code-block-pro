@@ -1,5 +1,4 @@
 import { useEffect, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
 import Editor from 'react-simple-code-editor';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';

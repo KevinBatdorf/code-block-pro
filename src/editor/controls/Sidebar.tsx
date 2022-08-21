@@ -1,13 +1,18 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, BaseControl, SelectControl } from '@wordpress/components';
+import {
+    PanelBody,
+    BaseControl,
+    SelectControl,
+    CheckboxControl,
+} from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Theme } from 'shiki';
+import { ThemePreview } from '../../components/ThemePreview';
 import defaultLanguages from '../../defaultLanguages.json';
 import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
-import { ThemePreview } from '../ThemePreview';
 
 export const SidebarControls = ({
     attributes,
@@ -21,7 +26,7 @@ export const SidebarControls = ({
                 title={__('Language', 'code-block-pro')}
                 initialOpen={true}>
                 <div className="code-block-pro-editor">
-                    <BaseControl id="code-block-pro-language-select">
+                    <BaseControl id="code-block-pro-settings">
                         <SelectControl
                             value={language}
                             onChange={setLanguage}
@@ -31,17 +36,14 @@ export const SidebarControls = ({
                             }))}
                         />
                     </BaseControl>
-                    <BaseControl id="code-block-pro-free-subscription">
-                        <div className="p-4 bg-gray-200 mb-4">
-                            Here will go a notice regarding lifetime
-                            subscriptions.
-                        </div>
-                    </BaseControl>
+                    <div className="p-4 bg-gray-200 mb-4">
+                        Here will go a notice regarding lifetime subscriptions.
+                    </div>
                 </div>
             </PanelBody>
             <PanelBody
                 title={__('Themes', 'code-block-pro')}
-                initialOpen={false}>
+                initialOpen={true}>
                 <div className="code-block-pro-editor">
                     {Object.entries(defaultThemes).map(([slug, name]) => (
                         <BaseControl
@@ -57,7 +59,7 @@ export const SidebarControls = ({
                             key={slug}>
                             <ThemePreview
                                 theme={slug as Theme}
-                                lang={'javascript'}
+                                lang={language}
                                 onClick={() => {
                                     setAttributes({ theme: slug as Theme });
                                     setPreviousTheme(slug as Theme);

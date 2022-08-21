@@ -11,7 +11,22 @@ import { Attributes } from './types';
 
 registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     ...blockConfig,
-    icon: undefined,
+    icon: (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ width: 24, height: 24 }}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="#1e1e1e"
+            strokeWidth="2">
+            <path
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+        </svg>
+    ),
     // Types seem to be mismatched if importing these from block.json
     attributes: {
         code: { type: 'string' },
@@ -28,7 +43,7 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         label: { type: 'string', default: '' },
     },
 
-    title: __('Code Block Pro', 'code-block-pro'),
+    title: __('Code Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => (
         <>
             <SidebarControls
@@ -41,11 +56,9 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
             </pre>
         </>
     ),
-    save: ({ attributes }) => {
-        return (
-            <div {...blockProps.save()}>
-                <RichText.Content value={attributes.codeHTML} />
-            </div>
-        );
-    },
+    save: ({ attributes }) => (
+        <div {...blockProps.save()}>
+            <RichText.Content value={attributes.codeHTML} />
+        </div>
+    ),
 });
