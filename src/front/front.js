@@ -9,7 +9,9 @@ addEventListener('DOMContentLoaded', () => {
         button.style.display = 'block';
         button.addEventListener('click', (event) => {
             const b = event.target?.closest('button');
-            copy(b?.dataset?.code ?? '');
+            copy(b?.dataset?.code ?? '', {
+                format: 'text/plain',
+            });
             b.classList.add('copying');
             setTimeout(() => {
                 b.classList.remove('copying');
