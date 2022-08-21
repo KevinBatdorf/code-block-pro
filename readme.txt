@@ -1,47 +1,74 @@
 === Code Block Pro ===
 Contributors:      kbat82
-Tags:              block
-Tested up to:      5.9
-Stable tag:        0.1.0
+Tags:              block, code, syntax highlighting, vscode, js, php
+Tested up to:      6.0
+Stable tag:        1.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-An example block built using Rust and TypeScript
+Code highlighting powered by the VS Code engine
 
 == Description ==
 
-This is a starter for building Gutenberg Blocks with Rust and TypeScript. You're not limited to Blocks, however.
+This block plugin processes code snippets directly through the same rendering engine that is used by the popular VS Code editor. This provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code. Syntax highlighting perfected.
+
+= Features =
+- Includes 28 themes built in to choose from.
+- Supports over 140 languages
+- Optionally add a copy button to let users copy the code
+- Native Gutenberg block output - no special requirements
+
+= Included VS Code Themes =
+- Dark Plus
+- Dracula Soft
+- Dracula
+- GitHub Dark Dimmed
+- Github Dark
+- Github Light
+- HC Light
+- Light Plus
+- Material Darker
+- Material Default
+- Material Lighter
+- Material Ocean
+- Material Palenight
+- Min Dark
+- Min Light
+- Monokai
+- Nord
+- One Dark Pro
+- Poimandres
+- Rose Pine Dawn
+- Rose Pine Moon
+- Rose Pine
+- Slack Dark
+- Slack Ochin
+- Solarized Dark
+- Solarized Light
+- Vitesse Dark
+- Vitesse Light
 
 == Installation ==
 
 1. Activate the plugin through the 'Plugins' screen in WordPress
 
-
 == Frequently Asked Questions ==
 
-= What is Rust? =
+= I'm not using the Copy feature =
 
-Rust is a systems program that can compile to WebAssembly and be used in the browser via JavaScript.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+You can add the following snippet to your functions.php file to prevent loading the related script. It's only required if you are using the copy feature.
+```
+add_action('wp_enqueue_scripts', function() {
+    wp_dequeue_script('kevinbatdorf-code-block-pro-view-script');
+});
+```
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Quickly swap over themes in the editor
+2. A view from the front end with the copy button
 
 == Changelog ==
 
-= 0.1.0 =
+= 1.0.0 =
 * Release
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.
