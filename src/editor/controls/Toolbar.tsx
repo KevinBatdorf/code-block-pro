@@ -9,7 +9,12 @@ export const ToolbarControls = ({ attributes }: ToolbarProps) => {
         <BlockControls>
             <ToolbarGroup className="code-block-pro-editor">
                 <div
-                    className="flex justify-center items-center p-1"
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '0.25rem',
+                    }}
                     title={__('Update in sidebar', 'code-block-pro')}>
                     {attributes?.language}
                 </div>

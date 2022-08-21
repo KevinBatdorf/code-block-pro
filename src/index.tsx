@@ -41,6 +41,7 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         frame: { type: 'boolean', default: false },
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
+        copyButton: { type: 'boolean', default: false },
     },
 
     title: __('Code Pro', 'code-block-pro'),

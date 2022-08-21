@@ -7,12 +7,13 @@ import {
 } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Theme } from 'shiki';
-import { ThemePreview } from '../../components/ThemePreview';
 import defaultLanguages from '../../defaultLanguages.json';
 import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
+import { Notice } from '../components/Notice';
+import { ThemePreview } from '../components/ThemePreview';
 
 export const SidebarControls = ({
     attributes,
@@ -36,9 +37,7 @@ export const SidebarControls = ({
                             }))}
                         />
                     </BaseControl>
-                    <div className="p-4 bg-gray-200 mb-4">
-                        Here will go a notice regarding lifetime subscriptions.
-                    </div>
+                    <Notice />
                 </div>
             </PanelBody>
             <PanelBody

@@ -18,7 +18,8 @@
         "startingLineNumber": { "type": "number", "default": 1 },
         "frame": { "type": "boolean", "default": false },
         "renderType": { "type": "string", "default": "code" },
-        "label": { "type": "string", "default": "" }
+        "label": { "type": "string", "default": "" },
+        "copyButton": { "type": "boolean", "default": false }
     },
     "supports": {
         "html": false,

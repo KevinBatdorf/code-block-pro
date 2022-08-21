@@ -13,6 +13,7 @@ export type Attributes = {
     frame: boolean;
     renderType: string;
     label: string;
+    copyButton: boolean;
 };
 export interface AttributesPropsAndSetter {
     attributes: Attributes;

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { Lang, Theme } from 'shiki';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../../hooks/useTheme';
 
 type ThemePreviewProps = {
     theme: Theme;
