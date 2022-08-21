@@ -1,4 +1,4 @@
-name: Build development zip file
+name: Build production zip file
 on: push
 jobs:
     build:
