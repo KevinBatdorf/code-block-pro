@@ -42,7 +42,7 @@ export const SidebarControls = ({
             </PanelBody>
             <PanelBody
                 title={__('Themes', 'code-block-pro')}
-                initialOpen={true}>
+                initialOpen={false}>
                 <div className="code-block-pro-editor">
                     {Object.entries(defaultThemes).map(([slug, name]) => (
                         <BaseControl
