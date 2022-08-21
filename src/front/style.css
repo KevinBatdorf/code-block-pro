@@ -1,4 +1,7 @@
 /*! purgecss start ignore */
+.wp-block-kevinbatdorf-code-block-pro {
+    @apply relative;
+}
 .wp-block-kevinbatdorf-code-block-pro pre {
     overflow-wrap: break-word;
     @apply overflow-auto p-6 whitespace-pre-wrap text-inherit;
@@ -6,5 +9,20 @@
 .wp-block-kevinbatdorf-code-block-pro pre code {
     @apply m-0 p-0 bg-transparent text-inherit;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-        monospace;
+    monospace;
+}
+.code-block-pro-copy-button {
+    @apply absolute top-0 right-0 bg-transparent p-2 border-none cursor-pointer;
+}
+.code-block-pro-copy-button .without-check {
+    @apply block;
+}
+.code-block-pro-copy-button .with-check {
+    @apply hidden;
+}
+.code-block-pro-copy-button.copying .without-check {
+    @apply hidden;
+}
+.code-block-pro-copy-button.copying .with-check {
+    @apply block;
 }

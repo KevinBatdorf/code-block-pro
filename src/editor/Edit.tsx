@@ -1,6 +1,7 @@
 import { useEffect, useRef } from '@wordpress/element';
 import Editor from 'react-simple-code-editor';
 import { useTheme } from '../hooks/useTheme';
+import { useGlobalStore } from '../state/global';
 import { useLanguageStore } from '../state/language';
 import { useThemeStore } from '../state/theme';
 import { AttributesPropsAndSetter } from '../types';
@@ -19,11 +20,18 @@ export const Edit = ({
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
     const { previousLanguage } = useLanguageStore();
+    const { previousSettings } = useGlobalStore();
     const { previousTheme } = useThemeStore();
     const { highlighter, error, loading } = useTheme({
         theme,
         lang: language ?? previousLanguage,
     });
+
+    useEffect(() => {
+        if (!attributes.copyButton) {
+            setAttributes({ copyButton: previousSettings.copyButton });
+        }
+    }, [previousSettings, attributes, setAttributes]);
 
     useEffect(() => {
         if (theme) return;

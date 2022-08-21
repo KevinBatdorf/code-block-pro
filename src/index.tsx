@@ -6,6 +6,7 @@ import { Edit } from './editor/Edit';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
+import { CopyButton } from './front/CopyButton';
 import './front/style.css';
 import { Attributes } from './types';
 
@@ -36,12 +37,12 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         align: { type: 'string', default: 'center' },
         bgColor: { type: 'string', default: '#282a37' },
         textColor: { type: 'string', default: '#f8f8f2' },
-        lineNumbers: { type: 'boolean', default: false },
+        lineNumbers: { type: 'boolean' },
         startingLineNumber: { type: 'number', default: 1 },
-        frame: { type: 'boolean', default: false },
+        frame: { type: 'boolean' },
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
-        copyButton: { type: 'boolean', default: false },
+        copyButton: { type: 'boolean' },
     },
 
     title: __('Code Pro', 'code-block-pro'),
@@ -59,7 +60,14 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
     ),
     save: ({ attributes }) => (
         <div {...blockProps.save()}>
-            <RichText.Content value={attributes.codeHTML} />
+            {attributes.code?.length > 0 ? (
+                <>
+                    {attributes.copyButton && (
+                        <CopyButton attributes={attributes} />
+                    )}
+                    <RichText.Content value={attributes.codeHTML} />
+                </>
+            ) : null}
         </div>
     ),
 });

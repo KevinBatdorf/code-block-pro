@@ -14,12 +14,12 @@
         "align": { "type": "string", "default": "center" },
         "bgColor": { "type": "string", "default": "#282a37" },
         "textColor": { "type": "string", "default": "#f8f8f2" },
-        "lineNumbers": { "type": "boolean", "default": false },
+        "lineNumbers": { "type": "boolean" },
         "startingLineNumber": { "type": "number", "default": 1 },
-        "frame": { "type": "boolean", "default": false },
+        "frame": { "type": "boolean" },
         "renderType": { "type": "string", "default": "code" },
         "label": { "type": "string", "default": "" },
-        "copyButton": { "type": "boolean", "default": false }
+        "copyButton": { "type": "boolean" }
     },
     "supports": {
         "html": false,
@@ -28,5 +28,6 @@
     "textdomain": "code-block-pro",
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",
-    "style": "file:./style-index.css"
+    "style": "file:./style-index.css",
+    "viewScript": "file:./front/front.js"
 }

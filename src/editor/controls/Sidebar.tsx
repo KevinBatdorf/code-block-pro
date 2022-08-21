@@ -10,6 +10,7 @@ import { Theme } from 'shiki';
 import defaultLanguages from '../../defaultLanguages.json';
 import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
+import { useGlobalStore } from '../../state/global';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
 import { Notice } from '../components/Notice';
@@ -21,20 +22,35 @@ export const SidebarControls = ({
 }: AttributesPropsAndSetter) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
     const { setPreviousTheme } = useThemeStore();
+    const { setPreviousSettings } = useGlobalStore();
+
     return (
         <InspectorControls>
             <PanelBody
-                title={__('Language', 'code-block-pro')}
+                title={__('Settings', 'code-block-pro')}
                 initialOpen={true}>
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-settings">
                         <SelectControl
+                            label={__('Language', 'code-block-pro')}
                             value={language}
                             onChange={setLanguage}
                             options={defaultLanguages.map((value) => ({
                                 label: value,
                                 value,
                             }))}
+                        />
+                        <CheckboxControl
+                            label={__('Copy Button', 'code-block-pro')}
+                            help={__(
+                                'If checked, users will be able to copy your code snippet to their clipboard.',
+                                'code-block-pro',
+                            )}
+                            checked={attributes.copyButton}
+                            onChange={(value) => {
+                                setPreviousSettings({ copyButton: value });
+                                setAttributes({ copyButton: value });
+                            }}
                         />
                     </BaseControl>
                     <Notice />

@@ -38,6 +38,7 @@ export const Notice = () => {
         return () => clearTimeout(id);
     }, [emailSent, setSeenNotice]);
 
+    return null;
     if (seenNotices.includes('beta-signup')) return null;
     if (emailSent)
         return (
@@ -66,7 +67,7 @@ export const Notice = () => {
                     </Button>
                 </>
             ) : (
-                <div className="relative my-4 pr-6 hover:bg-blue-50 p-1 px-2">
+                <div className="relative bg-blue-50 hover:bg-blue-100 border-t border-blue-100 -m-4 mt-0 p-0 px-4">
                     <button
                         className="absolute top-0 right-0 border-0 mt-1 mr-2 leading-none p-0 bg-transparent cursor-pointer"
                         title={__('Dismiss', 'code-block-pro')}
@@ -76,7 +77,7 @@ export const Notice = () => {
                     </button>
 
                     <button
-                        className="mt-4 mb-2 p-0 underline caret-pink-600 m-0 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-500 text-left text-lg leading-5 font-medium cursor-pointer"
+                        className="my-4 p-0 underline caret-pink-600 m-0 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-500 text-left text-lg leading-5 font-medium cursor-pointer"
                         type="button"
                         title={__('Press here', 'code-block-pro')}
                         onClick={() => setShowEmail(true)}>
