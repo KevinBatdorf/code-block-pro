@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax highlighting, vscode, js, php
 Tested up to:      6.0
-Stable tag:        1.0.0
+Stable tag:        1.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,7 +10,9 @@ Code highlighting powered by the VS Code engine
 
 == Description ==
 
-This block plugin processes code snippets directly through the same rendering engine that is used by the popular VS Code editor. This provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code. Syntax highlighting perfected.
+Show off your beautiful code. This plugin provides you with an editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
+
+Beautiful syntax highlighting made easy.
 
 = Features =
 - Includes 28 themes built in to choose from.
@@ -57,11 +59,11 @@ This block plugin processes code snippets directly through the same rendering en
 = I'm not using the Copy feature =
 
 You can add the following snippet to your functions.php file to prevent loading the related script. It's only required if you are using the copy feature.
-```
+`
 add_action('wp_enqueue_scripts', function() {
     wp_dequeue_script('kevinbatdorf-code-block-pro-view-script');
 });
-```
+`
 
 == Screenshots ==
 
@@ -70,5 +72,9 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+= 1.1.0 =
+- Add filters to hook into output
+- Set copy button on by default
+
 = 1.0.0 =
-* Release
+- Initial release
