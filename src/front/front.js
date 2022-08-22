@@ -8,7 +8,7 @@ addEventListener('DOMContentLoaded', () => {
         // Setting it to block here lets users deactivate the plugin safely
         button.style.display = 'block';
         button.addEventListener('click', (event) => {
-            const b = event.target?.closest('button');
+            const b = event.target?.closest('span');
             copy(b?.dataset?.code ?? '', {
                 format: 'text/plain',
             });

@@ -2,7 +2,10 @@ import { __ } from '@wordpress/i18n';
 import { Attributes } from '../types';
 
 export const CopyButton = ({ attributes }: { attributes: Attributes }) => (
-    <button
+    <span
+        // Using a span to prevent aggressive button styling from themes
+        role="button"
+        tabIndex={0}
         data-code={attributes.code}
         style={{ color: attributes?.textColor ?? 'inherit', display: 'none' }}
         aria-label={__('Copy', 'code-block-pro')}
@@ -27,5 +30,5 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => (
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
             />
         </svg>
-    </button>
+    </span>
 );

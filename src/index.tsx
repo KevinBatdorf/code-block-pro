@@ -1,5 +1,6 @@
 import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';

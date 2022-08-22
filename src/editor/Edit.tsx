@@ -1,4 +1,5 @@
 import { useEffect, useRef } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
 import Editor from 'react-simple-code-editor';
 import { useTheme } from '../hooks/useTheme';
 import { useGlobalStore } from '../state/global';
@@ -48,12 +49,24 @@ export const Edit = ({
 
     useEffect(() => {
         if (!highlighter) return;
+        // applyFilters()
         setAttributes({
-            codeHTML: highlighter.codeToHtml(code, {
-                lang: language ?? previousLanguage,
-            }),
+            codeHTML: applyFilters(
+                'blocks.codeBlockPro.codeHTML',
+                highlighter.codeToHtml(code, {
+                    lang: language ?? previousLanguage,
+                }),
+                attributes,
+            ) as string,
         });
-    }, [highlighter, code, language, setAttributes, previousLanguage]);
+    }, [
+        highlighter,
+        code,
+        language,
+        setAttributes,
+        previousLanguage,
+        attributes,
+    ]);
 
     if ((loading && code) || error) {
         return (

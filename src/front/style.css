@@ -1,5 +1,6 @@
 /*! purgecss start ignore */
 .wp-block-kevinbatdorf-code-block-pro {
+    direction: ltr !important;
     @apply relative;
 }
 .wp-block-kevinbatdorf-code-block-pro pre {
@@ -12,7 +13,7 @@
     monospace;
 }
 .code-block-pro-copy-button {
-    @apply absolute top-0 right-0 bg-transparent p-2 border-none cursor-pointer opacity-30 focus:opacity-100 transition-opacity duration-200 ease-in-out;
+    @apply absolute top-0 right-0 left-auto bg-transparent p-2 border-none cursor-pointer opacity-30 focus:opacity-100 transition-opacity duration-200 ease-in-out leading-none;
 }
 .wp-block-kevinbatdorf-code-block-pro:hover .code-block-pro-copy-button {
     @apply opacity-100;
