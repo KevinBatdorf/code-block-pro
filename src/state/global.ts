@@ -25,7 +25,7 @@ export const useGlobalStore = create<GlobalTypes>()(
                 // If any of these values have changed, we will use these for defaults.
                 // Themes and languages are handled separately.
                 previousSettings: {
-                    copyButton: false,
+                    copyButton: true,
                 },
                 setPreviousSettings(
                     s: Partial<GlobalTypes['previousSettings']>,
