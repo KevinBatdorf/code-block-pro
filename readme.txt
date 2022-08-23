@@ -58,7 +58,7 @@ Beautiful syntax highlighting made easy.
 
 = I'm not using the Copy feature =
 
-You can add the following snippet to your functions.php file to prevent loading the related script. It's only required if you are using the copy feature.
+You can add the following snippet to your functions.php file to prevent loading the related script. The script is only required if you are using the copy feature, so you can safely remove it without concern.
 `
 add_action('wp_enqueue_scripts', function() {
     wp_dequeue_script('kevinbatdorf-code-block-pro-view-script');
