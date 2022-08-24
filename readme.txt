@@ -19,6 +19,7 @@ Beautiful syntax highlighting made easy.
 - Supports over 140 languages
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
+- No JavaScript required - works in headless mode
 
 = Included VS Code Themes =
 - Dark Plus
