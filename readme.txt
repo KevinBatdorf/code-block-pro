@@ -16,7 +16,7 @@ Beautiful syntax highlighting made easy.
 
 = Features =
 - Includes 28 themes built in to choose from.
-- Supports over 140 languages
+- Supports over 140 programming languages
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
 - No frontend JavaScript required - works in headless mode
