@@ -21,6 +21,10 @@ Beautiful syntax highlighting made easy.
 - Native Gutenberg block output - no special requirements
 - No frontend JavaScript required - works in headless mode
 
+= More info =
+- Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
+- View on [GitHub](https://github.com/KevinBatdorf/code-block-pro)
+
 = Included VS Code Themes =
 - Dark Plus
 - Dracula Soft
