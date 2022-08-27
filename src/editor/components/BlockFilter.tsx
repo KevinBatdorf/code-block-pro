@@ -8,6 +8,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import blockConfig from '../../block.json';
 import { blockIcon } from '../../icons';
+import { convertLanguageId } from '../../util/languages';
 
 export const BlockFilter = (
     // eslint-disable-next-line
@@ -22,7 +23,9 @@ export const BlockFilter = (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore-next-line - getBlock not added as a type?
             const currentBlock = select(blockEditorStore).getBlock(clientId);
-            return ['core/code'].includes(currentBlock.name);
+            return ['core/code', 'syntaxhighlighter/code'].includes(
+                currentBlock.name,
+            );
         },
         [clientId],
     );
@@ -40,7 +43,9 @@ export const BlockFilter = (
     const convertBlock = () => {
         const blockData = createBlock(blockConfig.name, {
             // eslint-disable-next-line
-            code: attributes?.content ? decode(attributes.content) : '',
+            code: attributes?.content ? decode(attributes.content) : undefined,
+            // eslint-disable-next-line
+            language: convertLanguage(attributes?.language) ?? 'javascript',
         });
         replaceBlock(clientId, [blockData]);
     };
