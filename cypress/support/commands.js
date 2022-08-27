@@ -4,6 +4,8 @@ import {
     closeWelcomeGuide,
     openBlockInserter,
     closeBlockInserter,
+    openBlockSettingsSideBar,
+    openThemesPanel,
     saveDraft,
     setPostContent,
     wpDataSelect,
@@ -39,10 +41,19 @@ Cypress.Commands.add('closeWelcomeGuide', () => closeWelcomeGuide());
 Cypress.Commands.add('saveDraft', () => saveDraft());
 Cypress.Commands.add('openBlockInserter', () => openBlockInserter());
 Cypress.Commands.add('closeBlockInserter', () => closeBlockInserter());
+Cypress.Commands.add('openBlockSettingsSideBar', () =>
+    openBlockSettingsSideBar(),
+);
+Cypress.Commands.add('openThemesPanel', () => openThemesPanel());
 Cypress.Commands.add('addBlock', (slug) => addBlock(slug));
 Cypress.Commands.add('setPostContent', (content) => setPostContent(content));
 Cypress.Commands.add('getPostContent', (addon = '') => {
     return cy.get(`${BLOCK_CONTAINER} ${addon}`);
+});
+Cypress.Commands.add('focusBlock', (blockName, addon = '') => {
+    cy.get(
+        `${BLOCK_CONTAINER} .wp-block[class$="${blockName}"] ${addon}`,
+    ).click();
 });
 Cypress.Commands.add('getCurrentPostObject', () => {
     cy.wpDataSelect('core/editor', 'getCurrentPost');
@@ -54,3 +65,33 @@ Cypress.Commands.add('wpDataSelect', (store, selector, ...parameters) =>
 // Manage plugins
 Cypress.Commands.add('installPlugin', (slug) => installPlugin(slug));
 Cypress.Commands.add('uninstallPlugin', (slug) => uninstallPlugin(slug));
+
+// Language
+Cypress.Commands.add('setLanguage', (language) => {
+    cy.openBlockSettingsSideBar();
+    cy.get('[data-cy-cbp="language-select"]').select(language);
+    cy.get('[data-cy-cbp="language-select"]')
+        .invoke('val')
+        .should('eq', language);
+});
+Cypress.Commands.add('setTheme', (theme) => {
+    cy.openBlockSettingsSideBar();
+    cy.openThemesPanel();
+    cy.get('div[aria-label="Editor settings"] button')
+        .contains('Themes')
+        .parents('.interface-interface-skeleton__sidebar')
+        .scrollTo('bottom', {
+            duration: 1000,
+        });
+    cy.get(`#code-block-pro-theme-${theme}`).click();
+});
+Cypress.Commands.add('addCode', (code) => {
+    cy.focusBlock('code-block-pro', 'textarea');
+    cy.get('.wp-block[class$="code-block-pro"] textarea')
+        .should('have.focus')
+        .type(code, { delay: 0 });
+    cy.get('.wp-block[class$="code-block-pro"] textarea').should(
+        'have.value',
+        code,
+    );
+});

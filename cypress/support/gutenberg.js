@@ -40,6 +40,31 @@ export const closeBlockInserter = () => {
         }
     });
 };
+export const openBlockSettingsSideBar = () => {
+    cy.get('button[aria-label="Settings"]').then((button) => {
+        if (button.attr('aria-pressed') === 'false') {
+            button.click();
+            cy.get('button[aria-label="Settings"]').should(
+                'have.attr',
+                'aria-pressed',
+                'true',
+            );
+        }
+    });
+};
+export const openThemesPanel = () => {
+    cy.openBlockSettingsSideBar();
+    cy.get('div[aria-label="Editor settings"] button')
+        .contains('Themes')
+        .then((button) => {
+            if (button.attr('aria-expanded') === 'false') {
+                button.click();
+                cy.get('div[aria-label="Editor settings"] button')
+                    .contains('Themes')
+                    .should('have.attr', 'aria-expanded', 'true');
+            }
+        });
+};
 export const addBlock = (slug) => {
     cy.openBlockInserter();
     cy.get(`button[class*="${slug}"]`).click();

@@ -43,9 +43,9 @@ registerBlockType<Attributes>(blockConfig.name, {
                 attributes={attributes}
                 setAttributes={setAttributes}
             />
-            <pre {...blockProps({ className: 'code-block-pro-editor' })}>
+            <div {...blockProps({ className: 'code-block-pro-editor' })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
-            </pre>
+            </div>
         </>
     ),
     save: ({ attributes }) => (
