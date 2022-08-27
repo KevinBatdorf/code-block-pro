@@ -77,6 +77,8 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+- Add button to convert code from the core code block
+
 = 1.1.0 =
 - Add filters to hook into output
 - Set copy button on by default
