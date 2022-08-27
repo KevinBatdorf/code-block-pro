@@ -30,6 +30,8 @@ jobs:
               run: wp-env start
             - name: Cypress run
               uses: cypress-io/github-action@v4
+              with:
+                browser: chrome
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v2
