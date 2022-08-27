@@ -33,6 +33,7 @@ export const SidebarControls = ({
                     <BaseControl id="code-block-pro-settings">
                         <SelectControl
                             label={__('Language', 'code-block-pro')}
+                            data-cy-cbp="language-select"
                             value={language}
                             onChange={setLanguage}
                             options={Object.entries(languages).map(
@@ -75,6 +76,7 @@ export const SidebarControls = ({
                             }
                             key={slug}>
                             <ThemePreview
+                                id={`code-block-pro-theme-${slug}`}
                                 theme={slug as Theme}
                                 lang={language}
                                 onClick={() => {

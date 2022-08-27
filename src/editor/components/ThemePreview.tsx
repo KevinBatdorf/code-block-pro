@@ -4,12 +4,14 @@ import { Lang, Theme } from 'shiki';
 import { useTheme } from '../../hooks/useTheme';
 
 type ThemePreviewProps = {
+    id: string;
     theme: Theme;
     lang: Lang;
     code: string;
     onClick: () => void;
 };
 export const ThemePreview = ({
+    id,
     theme,
     lang,
     onClick,
@@ -74,6 +76,7 @@ float Q_rsqrt( float number )
     }
     return (
         <button
+            id={id}
             type="button"
             onClick={onClick}
             className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-scroll"

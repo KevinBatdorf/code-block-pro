@@ -2,9 +2,9 @@ name: Run Cypress test suite
 on:
     push:
     workflow_dispatch:
-    # schedule:
+    schedule:
     # At 08:00 on Thursday.
-    # - cron: "0 8 * * 4"
+    - cron: "0 8 * * 4"
 jobs:
     test:
         name: Cypress
@@ -30,6 +30,8 @@ jobs:
               run: wp-env start
             - name: Cypress run
               uses: cypress-io/github-action@v4
+              with:
+                browser: chrome
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v2
