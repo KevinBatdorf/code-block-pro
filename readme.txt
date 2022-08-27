@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.1.0
+Stable tag:        1.2.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -219,15 +219,16 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+= 1.1.0 - 2022-08-27 =
 - Feature: Convert code from the core code block
 - Feature: Convert code from SyntaxHighlighter Evolved
 - Feature: Add toolbar language select
 - Feature: Add language "nice names"
 - Fix: Remove line wrap from frontend
 
-= 1.1.0 =
+= 1.1.0 - 2022-08-22 =
 - Feature: Add filters to hook into output
 - Tweak: Set copy button on by default
 
-= 1.0.0 =
+= 1.0.0 - 2022-08-20 =
 - Initial release
