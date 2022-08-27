@@ -37,9 +37,6 @@ export const BlockFilter = (
         return txt.value;
     };
 
-    if (!showMenu) {
-        return <CurrentMenuItems {...props} />;
-    }
     const convertBlock = () => {
         const blockData = createBlock(blockConfig.name, {
             // eslint-disable-next-line
@@ -47,6 +44,11 @@ export const BlockFilter = (
         });
         replaceBlock(clientId, [blockData]);
     };
+
+    if (!showMenu) {
+        return <CurrentMenuItems {...props} />;
+    }
+
     return (
         <>
             {CurrentMenuItems && <CurrentMenuItems {...props} />}
