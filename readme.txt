@@ -219,12 +219,15 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
-- Convert code from the core code block
-- Convert code from SyntaxHighlighter Evolved
+- Feature: Convert code from the core code block
+- Feature: Convert code from SyntaxHighlighter Evolved
+- Feature: Add toolbar language select
+- Feature: Add language "nice names"
+- Fix: Remove line wrap from frontend
 
 = 1.1.0 =
-- Add filters to hook into output
-- Set copy button on by default
+- Feature: Add filters to hook into output
+- Tweak: Set copy button on by default
 
 = 1.0.0 =
 - Initial release
