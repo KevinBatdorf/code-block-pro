@@ -8,6 +8,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import blockConfig from '../../block.json';
 import { blockIcon } from '../../icons';
+import { useLanguageStore } from '../../state/language';
 import { getMainAlias } from '../../util/languages';
 
 export const BlockFilter = (
@@ -18,6 +19,7 @@ export const BlockFilter = (
 ) => {
     // eslint-disable-next-line
     const { attributes, clientId } = props;
+    const { previousLanguage } = useLanguageStore();
     const showMenu = useSelect(
         (select) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -45,7 +47,7 @@ export const BlockFilter = (
             // eslint-disable-next-line
             code: attributes?.content ? decode(attributes.content) : undefined,
             // eslint-disable-next-line
-            language: getMainAlias(attributes?.language) ?? 'javascript',
+            language: getMainAlias(attributes?.language) ?? previousLanguage,
         });
         replaceBlock(clientId, [blockData]);
     };
