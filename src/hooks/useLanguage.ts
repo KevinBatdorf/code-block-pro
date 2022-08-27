@@ -18,8 +18,11 @@ export const useLanguage = ({
     useEffect(() => {
         if (language) return;
         setAttributes({ language: previousLanguage });
-        set(previousLanguage);
     }, [language, previousLanguage, setAttributes]);
+
+    useEffect(() => {
+        set(attributes.language);
+    }, [attributes.language]);
 
     return [language, setLanguage] as [Lang, typeof setLanguage];
 };
