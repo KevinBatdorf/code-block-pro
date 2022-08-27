@@ -5,7 +5,7 @@
 }
 .wp-block-kevinbatdorf-code-block-pro pre {
     overflow-wrap: break-word;
-    @apply overflow-auto p-6 whitespace-pre-wrap text-inherit;
+    @apply overflow-auto p-6 text-inherit;
 }
 .wp-block-kevinbatdorf-code-block-pro pre code {
     @apply m-0 p-0 bg-transparent text-inherit;

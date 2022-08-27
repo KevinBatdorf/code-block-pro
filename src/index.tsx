@@ -4,31 +4,18 @@ import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
+import { BlockFilter } from './editor/components/BlockFilter';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
 import { CopyButton } from './front/CopyButton';
 import './front/style.css';
+import { blockIcon } from './icons';
 import { Attributes } from './types';
 
-registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
+registerBlockType<Attributes>(blockConfig.name, {
     ...blockConfig,
-    icon: (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ width: 24, height: 24 }}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="#1e1e1e"
-            strokeWidth="2">
-            <path
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
-        </svg>
-    ),
+    icon: blockIcon,
     // Types seem to be mismatched if importing these from block.json
     attributes: {
         code: { type: 'string' },
@@ -45,7 +32,6 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         label: { type: 'string', default: '' },
         copyButton: { type: 'boolean' },
     },
-
     title: __('Code Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => (
         <>
@@ -72,3 +58,13 @@ registerBlockType<Attributes>('kevinbatdorf/code-block-pro', {
         </div>
     ),
 });
+
+addFilter(
+    'editor.BlockEdit',
+    blockConfig.name,
+    (CurrentMenuItems) =>
+        // Not sure how to type these incoming props
+        // eslint-disable-next-line
+        (props: any) =>
+            BlockFilter(CurrentMenuItems, props),
+);
