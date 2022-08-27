@@ -81,7 +81,7 @@ Cypress.Commands.add('setTheme', (theme) => {
         .contains('Themes')
         .parents('.interface-interface-skeleton__sidebar')
         .scrollTo('bottom', {
-            duration: 1000,
+            duration: 2000,
         });
     cy.get(`#code-block-pro-theme-${theme}`).click();
 });
