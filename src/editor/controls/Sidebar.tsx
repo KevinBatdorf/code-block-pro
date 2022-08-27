@@ -7,12 +7,12 @@ import {
 } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Theme } from 'shiki';
-import defaultLanguages from '../../defaultLanguages.json';
 import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
+import { languages } from '../../util/languages';
 import { Notice } from '../components/Notice';
 import { ThemePreview } from '../components/ThemePreview';
 
@@ -35,10 +35,12 @@ export const SidebarControls = ({
                             label={__('Language', 'code-block-pro')}
                             value={language}
                             onChange={setLanguage}
-                            options={defaultLanguages.map((value) => ({
-                                label: value,
-                                value,
-                            }))}
+                            options={Object.entries(languages).map(
+                                ([value, label]) => ({
+                                    label,
+                                    value,
+                                }),
+                            )}
                         />
                         <CheckboxControl
                             label={__('Copy Button', 'code-block-pro')}

@@ -39,7 +39,10 @@ registerBlockType<Attributes>(blockConfig.name, {
                 attributes={attributes}
                 setAttributes={setAttributes}
             />
-            <ToolbarControls attributes={attributes} />
+            <ToolbarControls
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <pre {...blockProps({ className: 'code-block-pro-editor' })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
             </pre>

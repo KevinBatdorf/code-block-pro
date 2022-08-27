@@ -55,6 +55,148 @@ Beautiful syntax highlighting made easy.
 - Vitesse Dark
 - Vitesse Light
 
+= Included Coding Languages =
+- ABAP
+- ActionScript 3
+- Ada
+- Apache
+- Apex
+- APL
+- AppleScript
+- ASM
+- Astro
+- Awk
+- Ballerina
+- BAT
+- Berry
+- BibTeX
+- BICEP
+- Blade
+- C
+- Cadence
+- Clarity
+- Clojure
+- CMake
+- COBOL
+- CodeQL
+- CoffeeScript
+- C++
+- Crystal
+- C#
+- CSS
+- CUE
+- D
+- Dart
+- Diff
+- Docker
+- DreamMaker
+- Elixir
+- Elm
+- ERB
+- Erlang
+- Fish
+- F#
+- Gherkin
+- Git Commit
+- Git Rebase
+- Gnuplot
+- Go
+- GraphQL
+- Groovy
+- Hack
+- HAML
+- Handlebars
+- Haskell
+- HCL
+- HLSL
+- HTML
+- INI
+- Java
+- JavaScript
+- Jinja HTML
+- JSON
+- JSONC
+- JSONnet
+- JSSM
+- JSX
+- Julia
+- Kotlin
+- LaTeX
+- LESS
+- Liquid
+- Lisp
+- Logo
+- Lua
+- Make
+- Markdown
+- Marko
+- MATLAB
+- MDX
+- Mermaid
+- Nginx
+- Nim
+- Nix
+- Objective-C
+- Objective-C++
+- OCaml
+- Pascal
+- Perl
+- PHP
+- PLSQL
+- PostCSS
+- PowerShell
+- Prisma
+- Prolog
+- Pug
+- Puppet
+- PureScript
+- Python
+- R
+- Raku
+- Razor
+- Rel
+- RISC-V
+- RST
+- Ruby
+- Rust
+- SAS
+- Sass
+- Scala
+- Scheme
+- SCSS
+- ShaderLab
+- ShellScript
+- Smalltalk
+- Solidity
+- SPARQL
+- SQL
+- SSH Config
+- Stata
+- Stylus
+- Svelte
+- Swift
+- SystemVerilog
+- TASL
+- TCL
+- TeX
+- TOML
+- TSX
+- Turtle
+- Twig
+- TypeScript
+- VB
+- Verilog
+- VHDL
+- VimL
+- Vue HTML
+- Vue
+- WASM
+- Wenyan
+- XML
+- XSL
+- YAML
+- ZenScript
+
 == Installation ==
 
 1. Activate the plugin through the 'Plugins' screen in WordPress

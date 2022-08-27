@@ -8,7 +8,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import blockConfig from '../../block.json';
 import { blockIcon } from '../../icons';
-import { convertLanguageId } from '../../util/languages';
+import { getMainAlias } from '../../util/languages';
 
 export const BlockFilter = (
     // eslint-disable-next-line
@@ -45,7 +45,7 @@ export const BlockFilter = (
             // eslint-disable-next-line
             code: attributes?.content ? decode(attributes.content) : undefined,
             // eslint-disable-next-line
-            language: convertLanguage(attributes?.language) ?? 'javascript',
+            language: getMainAlias(attributes?.language) ?? 'javascript',
         });
         replaceBlock(clientId, [blockData]);
     };
