@@ -3,7 +3,7 @@ on:
     push:
     workflow_dispatch:
     schedule:
-    At 08:00 on Thursday.
+    # At 08:00 on Thursday.
     - cron: "0 8 * * 4"
 jobs:
     test:
