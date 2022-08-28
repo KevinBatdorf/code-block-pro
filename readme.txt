@@ -219,6 +219,8 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+- Fix: Zeros out margins on pre elements for better theme compatability
+
 = 1.2.1 - 2022-08-27 =
 - Fix: Remove nested pre tags (changed to div) in editor
 - Feature: Added test coverage with cypress
