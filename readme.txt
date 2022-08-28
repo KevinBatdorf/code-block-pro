@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.2.1
+Stable tag:        1.2.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -219,6 +219,7 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+= 1.2.2 - 2022-08-29 =
 - Fix: Zeros out margins on pre elements for better theme compatability
 
 = 1.2.1 - 2022-08-27 =
