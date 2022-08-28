@@ -220,7 +220,7 @@ add_action('wp_enqueue_scripts', function() {
 == Changelog ==
 
 = 1.2.2 - 2022-08-29 =
-- Fix: Zeros out margins on pre elements for better theme compatability
+- Fix: Zeros out margins on pre elements for better theme compatibility
 
 = 1.2.1 - 2022-08-27 =
 - Fix: Remove nested pre tags (changed to div) in editor
