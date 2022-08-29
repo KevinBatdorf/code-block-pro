@@ -6,3 +6,4 @@
 /scripts
 /package-lock.json
 /target
+/cypress
