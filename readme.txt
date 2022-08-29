@@ -219,6 +219,10 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+- Fix: Force left text alignment in the editor
+- Tweak: Set WP default alignment to "none"
+- Testing: Add item verification on scroll before click
+
 = 1.2.2 - 2022-08-29 =
 - Fix: Zeros out margins on pre elements for better theme compatibility
 

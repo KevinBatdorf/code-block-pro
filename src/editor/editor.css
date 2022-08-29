@@ -26,7 +26,7 @@
 }
 .code-block-pro-editor textarea,
 .code-block-pro-editor pre {
-    @apply m-0;
+    @apply m-0 text-left;
     direction: ltr !important;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     monospace !important;
