@@ -7,7 +7,7 @@
     @apply overflow-auto p-6 text-inherit m-0;
 }
 .wp-block-kevinbatdorf-code-block-pro pre code {
-    @apply m-0 p-0 bg-transparent text-inherit;
+    @apply m-0 p-0 bg-transparent text-inherit text-left;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     monospace;
 }

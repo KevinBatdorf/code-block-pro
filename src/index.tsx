@@ -22,7 +22,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         codeHTML: { type: 'string' },
         language: { type: 'string' },
         theme: { type: 'string' },
-        align: { type: 'string', default: 'center' },
+        align: { type: 'string', default: 'none' },
         bgColor: { type: 'string', default: '#282a37' },
         textColor: { type: 'string', default: '#f8f8f2' },
         lineNumbers: { type: 'boolean' },
