@@ -20,6 +20,7 @@ Beautiful syntax highlighting made easy.
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
 - No frontend JavaScript required - works in headless mode
+- Supports converting from the default code block
 
 = More info =
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
