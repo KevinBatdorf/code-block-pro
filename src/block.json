@@ -23,7 +23,7 @@
     },
     "supports": {
         "html": false,
-        "align": true
+        "align": ["full", "wide"]
     },
     "textdomain": "code-block-pro",
     "editorScript": "file:./index.js",
