@@ -221,7 +221,7 @@ add_action('wp_enqueue_scripts', function() {
 == Changelog ==
 
 = 1.2.5 - 2022-08-30 =
-- Fix: Force wrapping and overflow for some themes.
+- Fix: Force disable wrapping and overflow for some themes.
 
 = 1.2.4 - 2022-08-30 =
 - Fix: Limit alignments to wide and full only.
