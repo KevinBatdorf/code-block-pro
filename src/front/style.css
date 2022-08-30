@@ -8,7 +8,8 @@
     @apply overflow-auto p-6 text-inherit m-0 whitespace-pre;
 }
 .wp-block-kevinbatdorf-code-block-pro pre code {
-    @apply m-0 p-0 bg-transparent text-inherit text-left;
+    overflow-wrap:normal !important;
+    @apply m-0 p-0 bg-transparent text-inherit text-left whitespace-pre;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     monospace;
 }

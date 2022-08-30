@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.2.5
+Stable tag:        1.2.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -219,6 +219,9 @@ add_action('wp_enqueue_scripts', function() {
 2. A view from the front end with the copy button
 
 == Changelog ==
+
+= 1.2.6 - 2022-08-30 =
+- Fix: Force disable wrapping and overflow for bootstrap based themes.
 
 = 1.2.5 - 2022-08-30 =
 - Fix: Force disable wrapping and overflow for some themes.
