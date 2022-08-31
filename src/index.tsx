@@ -22,7 +22,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         codeHTML: { type: 'string' },
         language: { type: 'string' },
         theme: { type: 'string' },
-        align: { type: 'string', default: 'none' },
+        align: { type: 'string' },
         bgColor: { type: 'string', default: '#282a37' },
         textColor: { type: 'string', default: '#f8f8f2' },
         lineNumbers: { type: 'boolean' },
@@ -31,6 +31,11 @@ registerBlockType<Attributes>(blockConfig.name, {
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
         copyButton: { type: 'boolean' },
+    },
+    // Need to add these here to avoid TS type errors
+    supports: {
+        html: false,
+        align: ['wide', 'full'],
     },
     title: __('Code Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => (

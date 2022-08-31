@@ -11,7 +11,7 @@
         "codeHTML": { "type": "string" },
         "language": { "type": "string" },
         "theme": { "type": "string" },
-        "align": { "type": "string", "default": "none" },
+        "align": { "type": "string" },
         "bgColor": { "type": "string", "default": "#282a37" },
         "textColor": { "type": "string", "default": "#f8f8f2" },
         "lineNumbers": { "type": "boolean" },
@@ -23,7 +23,7 @@
     },
     "supports": {
         "html": false,
-        "align": ["full", "wide"]
+        "align": ["wide", "full"]
     },
     "textdomain": "code-block-pro",
     "editorScript": "file:./index.js",
