@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.2.6
+Stable tag:        1.2.7
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -223,6 +223,9 @@ It's possible you have the Prismatic plugin installed. Currently I don't have a 
 2. A view from the front end with the copy button
 
 == Changelog ==
+
+= 1.2.7 - 2022-08-31 =
+- Fix: Add style overrides for the Hueman theme (and generally good overrides)
 
 = 1.2.6 - 2022-08-30 =
 - Fix: Force disable wrapping and overflow for bootstrap based themes.
