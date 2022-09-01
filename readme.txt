@@ -166,7 +166,7 @@ Beautiful syntax highlighting made easy.
 - Scheme
 - SCSS
 - ShaderLab
-- ShellScript
+- ShellScript (bash, zsh, sh, shell)
 - Smalltalk
 - Solidity
 - SPARQL
@@ -222,7 +222,7 @@ add_action('wp_enqueue_scripts', function() {
 
 
 = 1.2.8 - 2022-08-31 =
-- Compatability: Disable Prismatic. They use an encoding function on all code indescriminately, breaking this plugin.
+- Compatibility: Disable Prismatic. They use an encoding function on all code indiscriminately, breaking this plugin.
 
 = 1.2.7 - 2022-08-31 =
 - Fix: Add style overrides for the Hueman theme (and generally good overrides)
