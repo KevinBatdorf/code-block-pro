@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.2.7
+Stable tag:        1.2.8
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,7 +220,9 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
-- Compatability: Disable Prismatic. They use an encoding function on all code indescriminately.
+
+= 1.2.8 - 2022-08-31 =
+- Compatability: Disable Prismatic. They use an encoding function on all code indescriminately, breaking this plugin.
 
 = 1.2.7 - 2022-08-31 =
 - Fix: Add style overrides for the Hueman theme (and generally good overrides)

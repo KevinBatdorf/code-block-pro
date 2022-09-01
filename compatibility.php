@@ -8,10 +8,12 @@ defined( 'ABSPATH' ) or die;
  * https://plugins.trac.wordpress.org/browser/prismatic/trunk/inc/prismatic-core.php#L59
  * Will monitor that plugin periodically and remove this override if it is updated.
  */
-class Prismatic {
-    static function options_general() {}
-    static function options_prism() {}
-    static function options_highlight() {}
-    static function options_plain() {}
+if (!class_exists('Prismatic')) {
+    class Prismatic {
+        static function options_general() {}
+        static function options_prism() {}
+        static function options_highlight() {}
+        static function options_plain() {}
+    }
+    function prismatic() {}
 }
-function prismatic() {}
