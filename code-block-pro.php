@@ -22,3 +22,5 @@ add_action('admin_init', function () {
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
     ]) . ';');
 });
+
+include_once(__DIR__ . '/compatibility.php');

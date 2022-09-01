@@ -213,16 +213,14 @@ add_action('wp_enqueue_scripts', function() {
 });
 `
 
-= I'm seeing the html output instead of the styled code =
-
-It's possible you have the Prismatic plugin installed. Currently I don't have a workaround set up to support both plugins, so you'll have to deactive Prismatic while evaluating which plugin to use.
-
 == Screenshots ==
 
 1. Quickly swap over themes in the editor
 2. A view from the front end with the copy button
 
 == Changelog ==
+
+- Compatability: Disable Prismatic. They use an encoding function on all code indescriminately.
 
 = 1.2.7 - 2022-08-31 =
 - Fix: Add style overrides for the Hueman theme (and generally good overrides)
