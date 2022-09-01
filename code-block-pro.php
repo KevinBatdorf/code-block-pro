@@ -19,6 +19,8 @@ add_action('init', function () {
 });
 add_action('admin_init', function () {
     wp_add_inline_script('kevinbatdorf-code-block-pro-editor-script', 'window.codeBlockPro = ' . wp_json_encode([
-        'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
+    'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
     ]) . ';');
 });
+
+include_once(__DIR__ . '/compatibility.php');

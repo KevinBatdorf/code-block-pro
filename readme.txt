@@ -224,6 +224,8 @@ It's possible you have the Prismatic plugin installed. Currently I don't have a 
 
 == Changelog ==
 
+- Compatability: Disable Prismatic. They use an encoding function on all code indescriminately.
+
 = 1.2.7 - 2022-08-31 =
 - Fix: Add style overrides for the Hueman theme (and generally good overrides)
 
