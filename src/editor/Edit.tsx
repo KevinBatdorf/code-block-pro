@@ -1,6 +1,7 @@
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import Editor from 'react-simple-code-editor';
+import { Theme } from 'shiki';
 import { useTheme } from '../hooks/useTheme';
 import { useGlobalStore } from '../state/global';
 import { useLanguageStore } from '../state/language';
@@ -17,12 +18,13 @@ export const Edit = ({
         code = '',
         bgColor: backgroundColor,
         textColor: color,
+        fontSize,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
     const { previousLanguage } = useLanguageStore();
     const { previousSettings } = useGlobalStore();
-    const { previousTheme } = useThemeStore();
+    const { previousTheme, previousFontSize } = useThemeStore();
     const { highlighter, error, loading } = useTheme({
         theme,
         lang: language ?? previousLanguage,
@@ -35,9 +37,15 @@ export const Edit = ({
     }, [previousSettings, attributes, setAttributes]);
 
     useEffect(() => {
-        if (theme) return;
-        setAttributes({ theme: previousTheme });
+        if (theme || !previousTheme) return;
+        setAttributes({ theme: previousTheme as Theme });
     }, [previousTheme, theme, setAttributes]);
+
+    useEffect(() => {
+        if (fontSize || !previousFontSize) return;
+        console.log({ previousFontSize });
+        setAttributes({ fontSize: previousFontSize });
+    }, [previousFontSize, fontSize, setAttributes]);
 
     useEffect(() => {
         if (!highlighter) return;

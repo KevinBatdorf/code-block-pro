@@ -8,6 +8,9 @@ export type Attributes = {
     align: 'wide' | 'full';
     bgColor: string;
     textColor: string;
+    fontSize: string;
+    fontFamily: string;
+    lineHeight: string;
     lineNumbers: boolean;
     startingLineNumber: number;
     frame: boolean;
