@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 import { Theme } from 'shiki';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
+import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
 import { languages } from '../../util/languages';
 import { FontSizeSelect } from '../components/FontSelect';
@@ -20,6 +21,7 @@ export const SidebarControls = ({
     setAttributes,
 }: AttributesPropsAndSetter) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
+    const { updateThemeHistory } = useThemeStore();
     const { setPreviousSettings } = useGlobalStore();
 
     return (
@@ -48,8 +50,8 @@ export const SidebarControls = ({
                         <FontSizeSelect
                             value={attributes.fontSize}
                             onChange={(fontSize) => {
-                                console.log({ fontSize });
-                                // setAttributes({ fontSize });
+                                setAttributes({ fontSize });
+                                updateThemeHistory({ ...attributes, fontSize });
                             }}
                         />
                     </BaseControl>
@@ -77,6 +79,7 @@ export const SidebarControls = ({
                     {...attributes}
                     onClick={(slug: Theme) => {
                         setAttributes({ theme: slug });
+                        updateThemeHistory({ ...attributes, theme: slug });
                     }}
                 />
             </PanelBody>

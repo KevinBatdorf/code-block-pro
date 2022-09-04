@@ -2,7 +2,6 @@ import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Lang, Theme } from 'shiki';
 import defaultThemes from '../../defaultThemes.json';
-import { useThemeStore } from '../../state/theme';
 import { ThemePreview } from '../components/ThemePreview';
 
 type ThemeSelectProps = {
@@ -17,8 +16,6 @@ export const ThemeSelect = ({
     code,
     onClick,
 }: ThemeSelectProps) => {
-    const setPreviousTheme = (theme: Theme) =>
-        useThemeStore.setState({ previousTheme: theme });
     return (
         <div className="code-block-pro-editor">
             {Object.entries(defaultThemes).map(([slug, name]) => (
@@ -39,7 +36,6 @@ export const ThemeSelect = ({
                         lang={language}
                         onClick={() => {
                             onClick(slug as Theme);
-                            setPreviousTheme(theme);
                         }}
                         code={code}
                     />

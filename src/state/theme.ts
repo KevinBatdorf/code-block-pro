@@ -1,12 +1,14 @@
 import apiFetch from '@wordpress/api-fetch';
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { Attributes } from '../types';
 
 type ThemeType = {
     previousTheme: string;
     previousLineHeight: string;
     previousFontFamily: string;
     previousFontSize: string;
+    updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/wp/v2/settings';
 const getSettings = async (name: string) => {
@@ -18,11 +20,20 @@ const getSettings = async (name: string) => {
 export const useThemeStore = create<ThemeType>()(
     persist(
         devtools(
-            () => ({
+            (set) => ({
                 previousTheme: 'nord',
                 previousLineHeight: '1.25rem',
                 previousFontFamily: '',
                 previousFontSize: '.875rem',
+                updateThemeHistory(attributes) {
+                    set((state) => ({
+                        ...state,
+                        previousTheme: attributes.theme,
+                        previousLineHeight: attributes.lineHeight,
+                        previousFontFamily: attributes.fontFamily,
+                        previousFontSize: attributes.fontSize,
+                    }));
+                },
             }),
             { name: 'Code Block Pro Theme Settings' },
         ),
