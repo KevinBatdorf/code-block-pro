@@ -220,6 +220,8 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+- Feature: Add header "window controls" style option
+
 = 1.3.0 - 2022-09-04 =
 - Feature: Add font size controls
 - Feature: Add Line height controls
