@@ -221,6 +221,7 @@ add_action('wp_enqueue_scripts', function() {
 == Changelog ==
 
 - Feature: Add font size controls
+- Feature: Add Line height controls
 - Feature: Persist settings in the database instead of localStorage
 - Fix: Fix overflow editor bug
 

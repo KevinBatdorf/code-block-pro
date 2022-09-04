@@ -54,7 +54,10 @@ registerBlockType<Attributes>(blockConfig.name, {
             <div
                 {...blockProps({
                     className: 'code-block-pro-editor',
-                    style: { fontSize: attributes.fontSize },
+                    style: {
+                        fontSize: attributes.fontSize,
+                        lineHeight: attributes.lineHeight,
+                    },
                 })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
             </div>
@@ -65,6 +68,7 @@ registerBlockType<Attributes>(blockConfig.name, {
             {...blockProps.save()}
             style={{
                 fontSize: attributes.fontSize,
+                lineHeight: attributes.lineHeight,
             }}>
             {attributes.code?.length > 0 ? (
                 <>
