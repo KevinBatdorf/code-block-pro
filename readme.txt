@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.2.8
+Stable tag:        1.3.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,6 +220,7 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+= 1.3.0 - 2022-09-04 =
 - Feature: Add font size controls
 - Feature: Add Line height controls
 - Feature: Persist settings in the database instead of localStorage
