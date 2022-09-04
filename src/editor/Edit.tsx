@@ -19,12 +19,14 @@ export const Edit = ({
         bgColor: backgroundColor,
         textColor: color,
         fontSize,
+        lineHeight,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
     const { previousLanguage } = useLanguageStore();
     const { previousSettings } = useGlobalStore();
-    const { previousTheme, previousFontSize } = useThemeStore();
+    const { previousTheme, previousFontSize, previousLineHeight } =
+        useThemeStore();
     const { highlighter, error, loading } = useTheme({
         theme,
         lang: language ?? previousLanguage,
@@ -43,9 +45,13 @@ export const Edit = ({
 
     useEffect(() => {
         if (fontSize || !previousFontSize) return;
-        console.log({ previousFontSize });
         setAttributes({ fontSize: previousFontSize });
     }, [previousFontSize, fontSize, setAttributes]);
+
+    useEffect(() => {
+        if (lineHeight || !previousLineHeight) return;
+        setAttributes({ lineHeight: previousLineHeight });
+    }, [previousLineHeight, lineHeight, setAttributes]);
 
     useEffect(() => {
         if (!highlighter) return;

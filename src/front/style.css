@@ -6,6 +6,7 @@
 .wp-block-kevinbatdorf-code-block-pro pre,
 .wp-block-kevinbatdorf-code-block-pro pre * {
     font-size: inherit !important;
+    line-height: inherit !important;
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre {
     border: 0 !important;
