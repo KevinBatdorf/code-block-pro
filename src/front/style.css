@@ -3,12 +3,12 @@
     direction: ltr !important;
     @apply relative;
 }
-.wp-block-kevinbatdorf-code-block-pro pre {
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre {
     border: 0 !important;
     overflow-wrap:normal !important;
-    @apply overflow-auto p-6 text-inherit m-0 whitespace-pre bg-none border-none border-0;
+    @apply overflow-auto p-6 text-inherit text-left m-0 whitespace-pre bg-none border-none border-0;
 }
-.wp-block-kevinbatdorf-code-block-pro pre code {
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code {
     border: 0 !important;
     background: none !important;
     overflow-wrap:normal !important;
