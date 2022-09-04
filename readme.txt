@@ -17,6 +17,7 @@ Beautiful syntax highlighting made easy.
 = Features =
 - Includes 28 themes built in to choose from.
 - Supports over 140 programming languages
+- Various header styles (coming soon)
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
 - No frontend JavaScript required - works in headless mode
@@ -201,17 +202,6 @@ Beautiful syntax highlighting made easy.
 == Installation ==
 
 1. Activate the plugin through the 'Plugins' screen in WordPress
-
-== Frequently Asked Questions ==
-
-= I'm not using the Copy feature =
-
-You can add the following snippet to your functions.php file to prevent loading the related script. The script is only required if you are using the copy feature, so you can safely remove it without concern.
-`
-add_action('wp_enqueue_scripts', function() {
-    wp_dequeue_script('kevinbatdorf-code-block-pro-view-script');
-});
-`
 
 == Screenshots ==
 
