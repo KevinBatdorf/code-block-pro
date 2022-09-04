@@ -220,6 +220,8 @@ add_action('wp_enqueue_scripts', function() {
 
 == Changelog ==
 
+- Feature: Add font size controls
+- Feature: Persist settings in the database instead of localStorage
 
 = 1.2.8 - 2022-08-31 =
 - Compatibility: Disable Prismatic. They use an encoding function on all code indiscriminately, breaking this plugin.
