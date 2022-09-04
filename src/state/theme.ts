@@ -8,6 +8,7 @@ type ThemeType = {
     previousLineHeight: string;
     previousFontFamily: string;
     previousFontSize: string;
+    previousHeaderType: string;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/wp/v2/settings';
@@ -25,6 +26,7 @@ export const useThemeStore = create<ThemeType>()(
                 previousLineHeight: '1.25rem',
                 previousFontFamily: '',
                 previousFontSize: '.875rem',
+                previousHeaderType: 'headlights',
                 updateThemeHistory(attributes) {
                     set((state) => ({
                         ...state,
@@ -32,6 +34,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousLineHeight: attributes.lineHeight,
                         previousFontFamily: attributes.fontFamily,
                         previousFontSize: attributes.fontSize,
+                        previousHeaderType: attributes.headerType,
                     }));
                 },
             }),

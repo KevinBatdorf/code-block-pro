@@ -16,6 +16,7 @@ function code_block_pro_register_settings() {
                     'previousFontFamily' => [ 'type' => ['string', 'null']],
                     'previousFontSize' => [ 'type' => ['string', 'null']],
                     'previousLineHeight' => [ 'type' => ['string', 'null']],
+                    'previousHeaderType' => [ 'type' => ['string', 'null']],
                 ],
             ],
         ],

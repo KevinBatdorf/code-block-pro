@@ -13,6 +13,7 @@ import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
 import { languages } from '../../util/languages';
 import { FontSizeSelect, FontLineHeightSelect } from '../components/FontSelect';
+import { HeaderSelect } from '../components/HeaderSelect';
 import { Notice } from '../components/Notice';
 import { ThemeSelect } from '../components/ThemeSelect';
 
@@ -74,6 +75,18 @@ export const SidebarControls = ({
                         }}
                     />
                 </div>
+            </PanelBody>
+            <PanelBody
+                title={__('Header Type', 'code-block-pro')}
+                initialOpen={false}>
+                <HeaderSelect
+                    attributes={attributes}
+                    onClick={(headerType: string) => {
+                        console.log({ headerType });
+                        setAttributes({ headerType });
+                        updateThemeHistory({ ...attributes, headerType });
+                    }}
+                />
             </PanelBody>
             <PanelBody
                 title={__('Themes', 'code-block-pro')}

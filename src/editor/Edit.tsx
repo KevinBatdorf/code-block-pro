@@ -1,7 +1,7 @@
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import Editor from 'react-simple-code-editor';
-import { Theme } from 'shiki';
+import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useGlobalStore } from '../state/global';
 import { useLanguageStore } from '../state/language';
@@ -18,40 +18,15 @@ export const Edit = ({
         code = '',
         bgColor: backgroundColor,
         textColor: color,
-        fontSize,
-        lineHeight,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
     const { previousLanguage } = useLanguageStore();
-    const { previousSettings } = useGlobalStore();
-    const { previousTheme, previousFontSize, previousLineHeight } =
-        useThemeStore();
     const { highlighter, error, loading } = useTheme({
         theme,
         lang: language ?? previousLanguage,
     });
-
-    useEffect(() => {
-        if (!attributes.copyButton) {
-            setAttributes({ copyButton: previousSettings.copyButton });
-        }
-    }, [previousSettings, attributes, setAttributes]);
-
-    useEffect(() => {
-        if (theme || !previousTheme) return;
-        setAttributes({ theme: previousTheme as Theme });
-    }, [previousTheme, theme, setAttributes]);
-
-    useEffect(() => {
-        if (fontSize || !previousFontSize) return;
-        setAttributes({ fontSize: previousFontSize });
-    }, [previousFontSize, fontSize, setAttributes]);
-
-    useEffect(() => {
-        if (lineHeight || !previousLineHeight) return;
-        setAttributes({ lineHeight: previousLineHeight });
-    }, [previousLineHeight, lineHeight, setAttributes]);
+    useDefaults({ attributes, setAttributes });
 
     useEffect(() => {
         if (!highlighter) return;
@@ -85,7 +60,7 @@ export const Edit = ({
     if ((loading && code) || error) {
         return (
             <div
-                className="p-8 px-6 text-left"
+                className="p-8 px-4 text-left"
                 style={{ backgroundColor, color }}>
                 {error?.message ?? ''}
             </div>
@@ -97,7 +72,7 @@ export const Edit = ({
             <Editor
                 value={code}
                 onValueChange={handleChange}
-                padding={24}
+                padding={16}
                 style={{ backgroundColor, color }}
                 // eslint-disable-next-line
                 onKeyDown={(e: any) =>

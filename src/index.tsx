@@ -1,15 +1,15 @@
-import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
+import { useBlockProps as blockProps } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
+import { HeaderType } from './editor/components/HeaderType';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
-import { CopyButton } from './front/CopyButton';
-import './front/style.css';
+import { BlockOutput } from './front/BlockOutput';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
 
@@ -29,6 +29,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         fontFamily: { type: 'string' },
         lineHeight: { type: 'string' },
         lineNumbers: { type: 'boolean' },
+        headerType: { type: 'string' },
         startingLineNumber: { type: 'number', default: 1 },
         frame: { type: 'boolean' },
         renderType: { type: 'string', default: 'code' },
@@ -59,27 +60,12 @@ registerBlockType<Attributes>(blockConfig.name, {
                         lineHeight: attributes.lineHeight,
                     },
                 })}>
+                <HeaderType {...attributes} />
                 <Edit attributes={attributes} setAttributes={setAttributes} />
             </div>
         </>
     ),
-    save: ({ attributes }) => (
-        <div
-            {...blockProps.save()}
-            style={{
-                fontSize: attributes.fontSize,
-                lineHeight: attributes.lineHeight,
-            }}>
-            {attributes.code?.length > 0 ? (
-                <>
-                    {attributes.copyButton && (
-                        <CopyButton attributes={attributes} />
-                    )}
-                    <RichText.Content value={attributes.codeHTML} />
-                </>
-            ) : null}
-        </div>
-    ),
+    save: ({ attributes }) => <BlockOutput attributes={attributes} />,
 });
 
 addFilter(
