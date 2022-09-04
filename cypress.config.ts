@@ -7,6 +7,6 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             return require('./cypress/plugins/index.js')(on, config);
         },
-        defaultCommandTimeout: 60000,
+        defaultCommandTimeout: 10_000,
     },
 });
