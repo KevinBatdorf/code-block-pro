@@ -1,27 +1,67 @@
-import { Theme } from 'shiki';
+import apiFetch from '@wordpress/api-fetch';
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { Attributes } from '../types';
 
 type ThemeType = {
-    previousTheme: Theme;
-    setPreviousTheme: (theme: Theme) => void;
+    previousTheme: string;
+    previousLineHeight: string;
+    previousFontFamily: string;
+    previousFontSize: string;
+    updateThemeHistory: (settings: Partial<Attributes>) => void;
+};
+const path = '/wp/v2/settings';
+const getSettings = async (name: string) => {
+    const allSettings = await apiFetch({ path });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore-next-line
+    return allSettings?.[name];
 };
 export const useThemeStore = create<ThemeType>()(
     persist(
         devtools(
             (set) => ({
                 previousTheme: 'nord',
-                setPreviousTheme(theme: Theme) {
-                    set({ previousTheme: theme });
+                previousLineHeight: '1.25rem',
+                previousFontFamily: '',
+                previousFontSize: '.875rem',
+                updateThemeHistory(attributes) {
+                    set((state) => ({
+                        ...state,
+                        previousTheme: attributes.theme,
+                        previousLineHeight: attributes.lineHeight,
+                        previousFontFamily: attributes.fontFamily,
+                        previousFontSize: attributes.fontSize,
+                    }));
                 },
             }),
-            { name: 'Code Block Pro Theme' },
+            { name: 'Code Block Pro Theme Settings' },
         ),
         {
-            name: 'code-block-pro-last-theme',
-            getStorage: () => localStorage,
-            partialize: (state) => ({
-                previousTheme: state?.previousTheme ?? null,
+            name: 'code_block_pro_settings',
+            getStorage: () => ({
+                getItem: async (name: string) => {
+                    const settings = await getSettings(name);
+                    return JSON.stringify({
+                        version: settings.version,
+                        state: settings,
+                    });
+                },
+                setItem: async (name: string, value: string) => {
+                    const { state, version } = JSON.parse(value);
+                    const data = {
+                        [name]: Object.assign(
+                            (await getSettings(name)) ?? {},
+                            state,
+                            version,
+                        ),
+                    };
+                    await apiFetch({ path, method: 'POST', data });
+                },
+                removeItem: async (name: string) => {
+                    const data = { [name]: null };
+                    return await apiFetch({ path, method: 'POST', data });
+                },
             }),
         },
     ),

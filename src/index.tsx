@@ -25,6 +25,9 @@ registerBlockType<Attributes>(blockConfig.name, {
         align: { type: 'string' },
         bgColor: { type: 'string', default: '#282a37' },
         textColor: { type: 'string', default: '#f8f8f2' },
+        fontSize: { type: 'string' },
+        fontFamily: { type: 'string' },
+        lineHeight: { type: 'string' },
         lineNumbers: { type: 'boolean' },
         startingLineNumber: { type: 'number', default: 1 },
         frame: { type: 'boolean' },
@@ -48,13 +51,21 @@ registerBlockType<Attributes>(blockConfig.name, {
                 attributes={attributes}
                 setAttributes={setAttributes}
             />
-            <div {...blockProps({ className: 'code-block-pro-editor' })}>
+            <div
+                {...blockProps({
+                    className: 'code-block-pro-editor',
+                    style: { fontSize: attributes.fontSize },
+                })}>
                 <Edit attributes={attributes} setAttributes={setAttributes} />
             </div>
         </>
     ),
     save: ({ attributes }) => (
-        <div {...blockProps.save()}>
+        <div
+            {...blockProps.save()}
+            style={{
+                fontSize: attributes.fontSize,
+            }}>
             {attributes.code?.length > 0 ? (
                 <>
                     {attributes.copyButton && (

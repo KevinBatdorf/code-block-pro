@@ -5,23 +5,23 @@ import {
     SelectControl,
     CheckboxControl,
 } from '@wordpress/components';
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { Theme } from 'shiki';
-import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
 import { languages } from '../../util/languages';
+import { FontSizeSelect } from '../components/FontSelect';
 import { Notice } from '../components/Notice';
-import { ThemePreview } from '../components/ThemePreview';
+import { ThemeSelect } from '../components/ThemeSelect';
 
 export const SidebarControls = ({
     attributes,
     setAttributes,
 }: AttributesPropsAndSetter) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
-    const { setPreviousTheme } = useThemeStore();
+    const { updateThemeHistory } = useThemeStore();
     const { setPreviousSettings } = useGlobalStore();
 
     return (
@@ -30,9 +30,9 @@ export const SidebarControls = ({
                 title={__('Settings', 'code-block-pro')}
                 initialOpen={true}>
                 <div className="code-block-pro-editor">
-                    <BaseControl id="code-block-pro-settings">
+                    <BaseControl id="code-block-pro-language">
                         <SelectControl
-                            label={__('Language', 'code-block-pro')}
+                            label={__('Code Language', 'code-block-pro')}
                             data-cy-cbp="language-select"
                             value={language}
                             onChange={setLanguage}
@@ -43,6 +43,19 @@ export const SidebarControls = ({
                                 }),
                             )}
                         />
+                    </BaseControl>
+                    <BaseControl
+                        id="code-block-pro-fonts"
+                        label={__('Font Settings', 'code-block-pro')}>
+                        <FontSizeSelect
+                            value={attributes.fontSize}
+                            onChange={(fontSize) => {
+                                setAttributes({ fontSize });
+                                updateThemeHistory({ ...attributes, fontSize });
+                            }}
+                        />
+                    </BaseControl>
+                    <BaseControl id="code-block-pro-extras">
                         <CheckboxControl
                             label={__('Copy Button', 'code-block-pro')}
                             help={__(
@@ -62,32 +75,13 @@ export const SidebarControls = ({
             <PanelBody
                 title={__('Themes', 'code-block-pro')}
                 initialOpen={false}>
-                <div className="code-block-pro-editor">
-                    {Object.entries(defaultThemes).map(([slug, name]) => (
-                        <BaseControl
-                            id={`code-block-pro-theme-${slug}`}
-                            label={
-                                attributes.theme === slug
-                                    ? sprintf(
-                                          __('%s (current)', 'code-block-pro'),
-                                          name,
-                                      )
-                                    : name
-                            }
-                            key={slug}>
-                            <ThemePreview
-                                id={`code-block-pro-theme-${slug}`}
-                                theme={slug as Theme}
-                                lang={language}
-                                onClick={() => {
-                                    setAttributes({ theme: slug as Theme });
-                                    setPreviousTheme(slug as Theme);
-                                }}
-                                code={attributes.code}
-                            />
-                        </BaseControl>
-                    ))}
-                </div>
+                <ThemeSelect
+                    {...attributes}
+                    onClick={(slug: Theme) => {
+                        setAttributes({ theme: slug });
+                        updateThemeHistory({ ...attributes, theme: slug });
+                    }}
+                />
             </PanelBody>
         </InspectorControls>
     );
