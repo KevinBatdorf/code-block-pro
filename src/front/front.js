@@ -16,7 +16,7 @@ addEventListener('DOMContentLoaded', () => {
             b.classList.add('copying');
             setTimeout(() => {
                 b.classList.remove('copying');
-            }, 1000);
+            }, 2000);
         });
     });
 });
