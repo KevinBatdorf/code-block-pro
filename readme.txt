@@ -17,7 +17,8 @@ Beautiful syntax highlighting made easy.
 = Features =
 - Includes 28 themes built in to choose from.
 - Supports over 140 programming languages
-- Various header styles (coming soon)
+- Optionally load programming fonts
+- Various header styles (more coming soon)
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
 - No frontend JavaScript required - works in headless mode
@@ -211,6 +212,7 @@ Beautiful syntax highlighting made easy.
 == Changelog ==
 
 - Feature: Add header "window controls" style option
+- Feature: Add dynamic coding font imports
 
 = 1.3.0 - 2022-09-04 =
 - Feature: Add font size controls

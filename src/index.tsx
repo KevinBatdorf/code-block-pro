@@ -57,6 +57,17 @@ registerBlockType<Attributes>(blockConfig.name, {
                     className: 'code-block-pro-editor',
                     style: {
                         fontSize: attributes.fontSize,
+                        fontFamily: [
+                            attributes.fontFamily,
+                            'ui-monospace',
+                            'SFMono-Regular',
+                            'Menlo',
+                            'Monaco',
+                            'Consolas',
+                            'monospace',
+                        ]
+                            .filter(Boolean)
+                            .join(','),
                         lineHeight: attributes.lineHeight,
                     },
                 })}>

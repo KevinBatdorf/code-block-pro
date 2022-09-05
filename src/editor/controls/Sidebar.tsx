@@ -12,7 +12,11 @@ import { useGlobalStore } from '../../state/global';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
 import { languages } from '../../util/languages';
-import { FontSizeSelect, FontLineHeightSelect } from '../components/FontSelect';
+import {
+    FontSizeSelect,
+    FontLineHeightSelect,
+    FontFamilySelect,
+} from '../components/FontSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
 import { Notice } from '../components/Notice';
 import { ThemeSelect } from '../components/ThemeSelect';
@@ -71,6 +75,16 @@ export const SidebarControls = ({
                             updateThemeHistory({
                                 ...attributes,
                                 lineHeight,
+                            });
+                        }}
+                    />
+                    <FontFamilySelect
+                        value={attributes.fontFamily}
+                        onChange={(fontFamily) => {
+                            setAttributes({ fontFamily });
+                            updateThemeHistory({
+                                ...attributes,
+                                fontFamily,
                             });
                         }}
                     />

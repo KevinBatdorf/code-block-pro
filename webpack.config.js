@@ -6,7 +6,10 @@ module.exports = {
     plugins: [
         ...defaultConfig.plugins,
         new CopyPlugin({
-            patterns: [{ from: 'node_modules/shiki', to: 'shiki' }],
+            patterns: [
+                { from: 'node_modules/shiki', to: 'shiki' },
+                { from: 'src/fonts', to: 'fonts' },
+            ],
         }),
     ],
     experiments: {
