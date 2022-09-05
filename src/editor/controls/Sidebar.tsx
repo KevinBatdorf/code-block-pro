@@ -13,7 +13,7 @@ import { useGlobalStore } from '../../state/global';
 import { useLanguageStore } from '../../state/language';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
-import { getMainAlias, languages } from '../../util/languages';
+import { languages } from '../../util/languages';
 import {
     FontSizeSelect,
     FontLineHeightSelect,
