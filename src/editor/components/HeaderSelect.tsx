@@ -10,7 +10,7 @@ type HeaderSelectProps = {
 export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
     const { headerType, bgColor } = attributes;
     const types = {
-        '': __('None', 'code-block-pro'),
+        none: __('None', 'code-block-pro'),
         headlights: __('Headlights', 'code-block-pro'),
     };
     return (

@@ -18,6 +18,7 @@ export const useDefaults = ({
         previousLineHeight,
         previousHeaderType,
     } = useThemeStore();
+
     useEffect(() => {
         if (copyButton || !previousSettings.copyButton) return;
         setAttributes({ copyButton: previousSettings.copyButton });
@@ -44,6 +45,7 @@ export const useDefaults = ({
     }, [previousLineHeight, lineHeight, setAttributes]);
 
     useEffect(() => {
+        console.log(typeof headerType);
         if (headerType || !previousHeaderType) return;
         setAttributes({ headerType: previousHeaderType });
     }, [previousHeaderType, headerType, setAttributes]);
