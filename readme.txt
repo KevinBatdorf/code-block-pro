@@ -212,13 +212,16 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 
 == Screenshots ==
 
-1. Choose from more than 25 themes
-2. Customize fonts, themes, and behavior
+1. Choose from more than 25 themes.
+2. Customize fonts, themes, and behavior.
+3. Example showing light theme with padding disabled.
 
 == Changelog ==
 
 = 1.5.1 - 2022-09-05 =
+- Tweak: Allow users to disable padding
 - Fix: Fixes a bug where the header type set to none doesn't persist
+- Fix: Clamp font settings were not being persisted
 
 = 1.5.0 - 2022-09-05 =
 - Feature: Add toggle so users can clamp font sizes to reasonable values.

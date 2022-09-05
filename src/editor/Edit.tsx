@@ -18,6 +18,7 @@ export const Edit = ({
         code = '',
         bgColor: backgroundColor,
         textColor: color,
+        disablePadding,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
@@ -72,7 +73,7 @@ export const Edit = ({
             <Editor
                 value={code}
                 onValueChange={handleChange}
-                padding={16}
+                padding={disablePadding ? 0 : 16}
                 style={{ backgroundColor, color }}
                 // eslint-disable-next-line
                 onKeyDown={(e: any) =>
