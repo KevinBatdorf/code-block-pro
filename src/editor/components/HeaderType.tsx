@@ -10,6 +10,7 @@ export const HeaderType = ({ headerType, bgColor }: Partial<Attributes>) => {
                     padding: '16px 0 0 16px',
                     marginBottom: '-1px',
                     width: '100%',
+                    textAlign: 'left',
                     backgroundColor: bgColor,
                 }}>
                 <HeadlightsIcon />
