@@ -24,12 +24,19 @@
 .code-block-pro-editor .npm__react-simple-code-editor__textarea {
     @apply shadow-none;
 }
+.code-block-pro-editor pre,
+.code-block-pro-editor pre * {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
 .code-block-pro-editor textarea,
 .code-block-pro-editor pre {
     @apply m-0 text-left;
     direction: ltr !important;
 }
 .code-block-pro-editor code {
+    font-family: inherit !important;
     @apply m-0 p-0 text-inherit bg-transparent;
 }
 @font-face {
