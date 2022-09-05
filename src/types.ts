@@ -12,6 +12,7 @@ export type Attributes = {
     fontFamily: string;
     lineHeight: string;
     lineNumbers: boolean;
+    clampFonts: boolean;
     headerType: string;
     startingLineNumber: number;
     frame: boolean;
