@@ -1,4 +1,5 @@
-import { FontSizePicker } from '@wordpress/components';
+import { SelectControl, FontSizePicker } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 // This file ignores types as they are outdated from the source
 
@@ -100,6 +101,31 @@ export const FontLineHeightSelect = ({
                     slug: 'relaxed',
                 },
             ]}
+        />
+    );
+};
+export const FontFamilySelect = ({
+    value,
+    onChange,
+}: {
+    value: string;
+    onChange: (v: string) => void;
+}) => {
+    const fonts = {
+        '': __('System Default', 'code-block-pro'),
+        'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
+        'Code-Pro-Fira-Code': 'Fira Code',
+    };
+    return (
+        <SelectControl
+            id="code-block-pro-font-family"
+            label={__('Font Family', 'code-block-pro')}
+            value={value}
+            onChange={onChange}
+            options={Object.entries(fonts).map(([value, label]) => ({
+                label,
+                value,
+            }))}
         />
     );
 };

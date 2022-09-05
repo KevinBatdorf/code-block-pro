@@ -8,11 +8,13 @@ export const useDefaults = ({
     attributes,
     setAttributes,
 }: AttributesPropsAndSetter) => {
-    const { theme, fontSize, lineHeight, copyButton, headerType } = attributes;
+    const { theme, fontSize, fontFamily, lineHeight, copyButton, headerType } =
+        attributes;
     const { previousSettings } = useGlobalStore();
     const {
         previousTheme,
         previousFontSize,
+        previousFontFamily,
         previousLineHeight,
         previousHeaderType,
     } = useThemeStore();
@@ -30,6 +32,11 @@ export const useDefaults = ({
         if (fontSize || !previousFontSize) return;
         setAttributes({ fontSize: previousFontSize });
     }, [previousFontSize, fontSize, setAttributes]);
+
+    useEffect(() => {
+        if (fontFamily || !previousFontFamily) return;
+        setAttributes({ fontFamily: previousFontFamily });
+    }, [previousFontFamily, fontFamily, setAttributes]);
 
     useEffect(() => {
         if (lineHeight || !previousLineHeight) return;

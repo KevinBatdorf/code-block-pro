@@ -28,9 +28,15 @@
 .code-block-pro-editor pre {
     @apply m-0 text-left;
     direction: ltr !important;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    monospace !important;
 }
 .code-block-pro-editor code {
     @apply m-0 p-0 text-inherit bg-transparent;
+}
+@font-face {
+    font-family: 'Code-Pro-Fira-Code';
+    src: url('../fonts/Code-Pro-Fira-Code.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Code-Pro-JetBrains-Mono';
+    src: url('../fonts/Code-Pro-JetBrains-Mono.woff2') format('woff2');
 }

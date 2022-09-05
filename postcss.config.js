@@ -20,18 +20,6 @@ module.exports = ({ mode, file }) => ({
             css.walkRules((rule) => {
                 // Removes top level TW styles like *::before {}
                 rule.selector.startsWith('*') && rule.remove();
-
-                // This will allow users to override something like
-                // padding within the block styles
-                if (file.endsWith('style.css')) {
-                    // This appends the :not() exception to padding and margins
-                    if (new RegExp('[:]?[^a-z]-?p[a-z]?-.+').test(rule)) {
-                        rule.selector += ':not([style*="padding"])';
-                    }
-                    if (new RegExp('[:]?[^a-z]-?m[a-z]?-.+').test(rule)) {
-                        rule.selector += ':not([style*="margin"])';
-                    }
-                }
             }),
         // See: https://github.com/WordPress/gutenberg/blob/trunk/packages/postcss-plugins-preset/lib/index.js
         require('autoprefixer')({ grid: true }),

@@ -16,7 +16,11 @@
 add_action('init', function () {
     register_block_type(__DIR__ . '/build');
     wp_set_script_translations('kevinbatdorf/code-block-pro', 'code-block-pro');
+    wp_add_inline_script('kevinbatdorf-code-block-pro-view-script', 'window.codeBlockPro = ' . wp_json_encode([
+        'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
+    ]) . ';');
 });
+
 add_action('admin_init', function () {
     wp_add_inline_script('kevinbatdorf-code-block-pro-editor-script', 'window.codeBlockPro = ' . wp_json_encode([
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),

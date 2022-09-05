@@ -7,8 +7,23 @@ import './style.css';
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
     <div
         {...blockProps.save()}
+        data-code-block-pro-font-family={attributes.fontFamily}
         style={{
             fontSize: attributes.fontSize,
+            // Tiny check to avoid block invalidation error
+            fontFamily: attributes.fontFamily
+                ? [
+                      attributes.fontFamily,
+                      'ui-monospace',
+                      'SFMono-Regular',
+                      'Menlo',
+                      'Monaco',
+                      'Consolas',
+                      'monospace',
+                  ]
+                      .filter(Boolean)
+                      .join(',')
+                : undefined,
             lineHeight: attributes.lineHeight,
         }}>
         {attributes.code?.length > 0 ? (
