@@ -3,15 +3,17 @@ import {
     PanelBody,
     BaseControl,
     SelectControl,
+    Button,
     CheckboxControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Theme } from 'shiki';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
+import { useLanguageStore } from '../../state/language';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
-import { languages } from '../../util/languages';
+import { getMainAlias, languages } from '../../util/languages';
 import {
     FontSizeSelect,
     FontLineHeightSelect,
@@ -26,6 +28,7 @@ export const SidebarControls = ({
     setAttributes,
 }: AttributesPropsAndSetter) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
+    const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
     const { setPreviousSettings } = useGlobalStore();
 
@@ -49,6 +52,24 @@ export const SidebarControls = ({
                                 }),
                             )}
                         />
+                        {recentLanguages?.length > 0 ? (
+                            <>
+                                <span className="mb-2 block">
+                                    {__('Recently Used', 'code-block-pro')}
+                                </span>
+                                <div className="flex gap-1">
+                                    {recentLanguages?.map((lang) => (
+                                        <Button
+                                            key={lang}
+                                            className="bg-gray-100 text-black no-underline p-1 px-2 "
+                                            variant="link"
+                                            onClick={() => setLanguage(lang)}>
+                                            {languages[lang] ?? lang}
+                                        </Button>
+                                    ))}
+                                </div>
+                            </>
+                        ) : null}
                     </BaseControl>
                     <Notice />
                 </div>

@@ -213,6 +213,8 @@ Beautiful syntax highlighting made easy.
 
 - Feature: Add header "window controls" style option
 - Feature: Add dynamic coding font imports
+- Feature: Add "recent languages" section to quick switch
+- Feature: Add alternate way to transform from core block
 
 = 1.3.0 - 2022-09-04 =
 - Feature: Add font size controls
