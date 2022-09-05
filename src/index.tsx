@@ -1,7 +1,8 @@
 import { useBlockProps as blockProps } from '@wordpress/block-editor';
-import { registerBlockType } from '@wordpress/blocks';
+import { createBlock, registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
+import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
@@ -12,6 +13,7 @@ import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
+import { getMainAlias } from './util/languages';
 
 registerBlockType<Attributes>(blockConfig.name, {
     ...blockConfig,
@@ -77,6 +79,28 @@ registerBlockType<Attributes>(blockConfig.name, {
         </>
     ),
     save: ({ attributes }) => <BlockOutput attributes={attributes} />,
+    transforms: {
+        from: [
+            {
+                type: 'block',
+                blocks: ['core/code', 'syntaxhighlighter/code'],
+                transform: (attrs) => {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore-next-line - Why is this reading the block generic?
+                    const { content, language } = attrs;
+                    const decode = (value: string) => {
+                        const txt = document.createElement('textarea');
+                        txt.innerHTML = value;
+                        return txt.value;
+                    };
+                    return createBlock(blockConfig.name, {
+                        code: content ? decode(content) : undefined,
+                        language: getMainAlias(language) as Lang,
+                    });
+                },
+            },
+        ],
+    },
 });
 
 addFilter(
