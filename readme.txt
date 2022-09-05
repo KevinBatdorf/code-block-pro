@@ -212,8 +212,8 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 
 == Screenshots ==
 
-1. Quickly swap over themes in the editor
-2. An example view from the front end
+1. Choose from more than 25 themes
+2. Customize fonts, themes, and behavior
 
 == Changelog ==
 
