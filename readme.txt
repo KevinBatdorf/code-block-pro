@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.3.0
+Stable tag:        1.4.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -211,6 +211,7 @@ Beautiful syntax highlighting made easy.
 
 == Changelog ==
 
+= 1.4.0 - 2022-09-04 =
 - Feature: Add header "window controls" style option
 - Feature: Add dynamic coding font imports
 - Feature: Add "recent languages" section to quick switch
