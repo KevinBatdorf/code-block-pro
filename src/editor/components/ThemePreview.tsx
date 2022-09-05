@@ -61,19 +61,6 @@ float Q_rsqrt( float number )
         setBg(highlighter.getBackgroundColor());
     }, [highlighter, lang, code, codeSnippet]);
 
-    if (loading || error || !inView) {
-        return (
-            <div
-                ref={(el) => {
-                    if (!el) return;
-                    observer.current.observe(el);
-                }}
-                style={{ minHeight: '200px' }}
-                className="flex items-center justify-center p-6 bg-gray-50">
-                {error?.message || __('Loading...', 'code-block-pro')}
-            </div>
-        );
-    }
     return (
         <button
             id={id}
@@ -81,10 +68,23 @@ float Q_rsqrt( float number )
             onClick={onClick}
             className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-scroll"
             style={{ backgroundColor, minHeight: '50px' }}>
-            <span
-                className="pointer-events-none"
-                dangerouslySetInnerHTML={{ __html: codeRendered }}
-            />
+            {loading || error || !inView ? (
+                <span
+                    id={id}
+                    ref={(el) => {
+                        if (!el) return;
+                        observer.current.observe(el);
+                    }}
+                    style={{ minHeight: '200px' }}
+                    className="flex items-center justify-center p-6 bg-gray-50">
+                    {error?.message || __('Loading...', 'code-block-pro')}
+                </span>
+            ) : (
+                <span
+                    className="pointer-events-none"
+                    dangerouslySetInnerHTML={{ __html: codeRendered }}
+                />
+            )}
         </button>
     );
 };
