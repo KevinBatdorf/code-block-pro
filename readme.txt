@@ -216,7 +216,7 @@ html { font-size: 100% !important; }
 == Screenshots ==
 
 1. Quickly swap over themes in the editor
-2. A view from the front end with the copy button
+2. An example view from the front end
 
 == Changelog ==
 
