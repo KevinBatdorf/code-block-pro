@@ -45,7 +45,6 @@ export const useDefaults = ({
     }, [previousLineHeight, lineHeight, setAttributes]);
 
     useEffect(() => {
-        console.log(typeof headerType);
         if (headerType || !previousHeaderType) return;
         setAttributes({ headerType: previousHeaderType });
     }, [previousHeaderType, headerType, setAttributes]);
