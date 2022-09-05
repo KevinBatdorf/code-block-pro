@@ -220,6 +220,8 @@ html { font-size: 100% !important; }
 
 == Changelog ==
 
+- Show font styling in theme select sidebar
+
 = 1.4.0 - 2022-09-04 =
 - Feature: Add header "window controls" style option
 - Feature: Add dynamic coding font imports

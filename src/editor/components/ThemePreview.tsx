@@ -8,6 +8,9 @@ type ThemePreviewProps = {
     theme: Theme;
     lang: Lang;
     code: string;
+    fontSize: string;
+    lineHeight: string;
+    fontFamily: string;
     onClick: () => void;
 };
 export const ThemePreview = ({
@@ -16,6 +19,9 @@ export const ThemePreview = ({
     lang,
     onClick,
     code,
+    fontSize,
+    lineHeight,
+    fontFamily,
 }: ThemePreviewProps) => {
     const [inView, setInView] = useState(false);
     const { highlighter, error, loading } = useTheme({
@@ -82,6 +88,12 @@ float Q_rsqrt( float number )
             ) : (
                 <span
                     className="pointer-events-none"
+                    style={{
+                        fontSize: fontSize,
+                        // Tiny check to avoid block invalidation error
+                        fontFamily: fontFamily,
+                        lineHeight: lineHeight,
+                    }}
                     dangerouslySetInnerHTML={{ __html: codeRendered }}
                 />
             )}
