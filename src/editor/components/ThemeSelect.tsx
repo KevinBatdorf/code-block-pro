@@ -8,12 +8,18 @@ type ThemeSelectProps = {
     theme: Theme;
     language: Lang;
     code: string;
+    fontSize: string;
+    lineHeight: string;
+    fontFamily: string;
     onClick: (slug: Theme) => void;
 };
 export const ThemeSelect = ({
     theme,
     language,
     code,
+    fontSize,
+    lineHeight,
+    fontFamily,
     onClick,
 }: ThemeSelectProps) => {
     return (
@@ -34,6 +40,9 @@ export const ThemeSelect = ({
                         id={`code-block-pro-theme-${slug}`}
                         theme={slug as Theme}
                         lang={language}
+                        fontSize={fontSize}
+                        lineHeight={lineHeight}
+                        fontFamily={fontFamily}
                         onClick={() => {
                             onClick(slug as Theme);
                         }}

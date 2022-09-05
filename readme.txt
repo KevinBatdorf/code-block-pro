@@ -218,6 +218,7 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 == Changelog ==
 
 - Feature: Add toggle so users can clamp font sizes to reasonable values.
+- Show font styling in theme select sidebar
 
 = 1.4.0 - 2022-09-04 =
 - Feature: Add header "window controls" style option
