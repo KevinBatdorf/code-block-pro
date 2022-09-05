@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.5.0
+Stable tag:        1.5.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -216,6 +216,9 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 2. Customize fonts, themes, and behavior
 
 == Changelog ==
+
+= 1.5.1 - 2022-09-05 =
+- Fix: Fixes a bug where the header type set to none doesn't persist
 
 = 1.5.0 - 2022-09-05 =
 - Feature: Add toggle so users can clamp font sizes to reasonable values.
