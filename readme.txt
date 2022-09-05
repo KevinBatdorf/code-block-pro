@@ -204,6 +204,15 @@ Beautiful syntax highlighting made easy.
 
 1. Activate the plugin through the 'Plugins' screen in WordPress
 
+== Frequently Asked Questions ==
+
+= Font size is too small =
+
+If you're using an old theme that sets the html tag to a very low value, then the code block will size itself relative to that. There isn't a great universal fix for this unless I force a certain behavior for everyone. Typically you can just remove that html style without any effect with the following css (add it anywhere that can load CSS):
+`
+html { font-size: 100% !important; }
+`
+
 == Screenshots ==
 
 1. Quickly swap over themes in the editor
