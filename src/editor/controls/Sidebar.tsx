@@ -109,6 +109,21 @@ export const SidebarControls = ({
                             });
                         }}
                     />
+                    <CheckboxControl
+                        label={__('Clamp Values', 'code-block-pro')}
+                        help={__(
+                            'Check this if your font sizes are unusually large or tiny.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.clampFonts}
+                        onChange={(clampFonts) => {
+                            setAttributes({ clampFonts });
+                            updateThemeHistory({
+                                ...attributes,
+                                clampFonts,
+                            });
+                        }}
+                    />
                 </div>
             </PanelBody>
             <PanelBody
@@ -117,7 +132,6 @@ export const SidebarControls = ({
                 <HeaderSelect
                     attributes={attributes}
                     onClick={(headerType: string) => {
-                        console.log({ headerType });
                         setAttributes({ headerType });
                         updateThemeHistory({ ...attributes, headerType });
                     }}

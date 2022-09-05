@@ -13,6 +13,7 @@ import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
+import { fontFamilyLong, maybeClamp } from './util/fonts';
 import { getMainAlias } from './util/languages';
 
 registerBlockType<Attributes>(blockConfig.name, {
@@ -30,6 +31,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         fontSize: { type: 'string' },
         fontFamily: { type: 'string' },
         lineHeight: { type: 'string' },
+        clampFonts: { type: 'boolean', default: false },
         lineNumbers: { type: 'boolean' },
         headerType: { type: 'string' },
         startingLineNumber: { type: 'number', default: 1 },
@@ -58,19 +60,15 @@ registerBlockType<Attributes>(blockConfig.name, {
                 {...blockProps({
                     className: 'code-block-pro-editor',
                     style: {
-                        fontSize: attributes.fontSize,
-                        fontFamily: [
-                            attributes.fontFamily,
-                            'ui-monospace',
-                            'SFMono-Regular',
-                            'Menlo',
-                            'Monaco',
-                            'Consolas',
-                            'monospace',
-                        ]
-                            .filter(Boolean)
-                            .join(','),
-                        lineHeight: attributes.lineHeight,
+                        fontSize: maybeClamp(
+                            attributes.fontSize,
+                            attributes.clampFonts,
+                        ),
+                        fontFamily: fontFamilyLong(attributes.fontFamily),
+                        lineHeight: maybeClamp(
+                            attributes.lineHeight,
+                            attributes.clampFonts,
+                        ),
                     },
                 })}>
                 <HeaderType {...attributes} />

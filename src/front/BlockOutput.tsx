@@ -1,6 +1,7 @@
 import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
 import { HeaderType } from '../editor/components/HeaderType';
 import { Attributes } from '../types';
+import { fontFamilyLong, maybeClamp } from '../util/fonts';
 import { CopyButton } from './CopyButton';
 import './style.css';
 
@@ -9,22 +10,13 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
         {...blockProps.save()}
         data-code-block-pro-font-family={attributes.fontFamily}
         style={{
-            fontSize: attributes.fontSize,
+            fontSize: maybeClamp(attributes.fontSize, attributes.clampFonts),
             // Tiny check to avoid block invalidation error
-            fontFamily: attributes.fontFamily
-                ? [
-                      attributes.fontFamily,
-                      'ui-monospace',
-                      'SFMono-Regular',
-                      'Menlo',
-                      'Monaco',
-                      'Consolas',
-                      'monospace',
-                  ]
-                      .filter(Boolean)
-                      .join(',')
-                : undefined,
-            lineHeight: attributes.lineHeight,
+            fontFamily: fontFamilyLong(attributes.fontFamily),
+            lineHeight: maybeClamp(
+                attributes.lineHeight,
+                attributes.clampFonts,
+            ),
         }}>
         {attributes.code?.length > 0 ? (
             <>

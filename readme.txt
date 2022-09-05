@@ -208,10 +208,7 @@ Beautiful syntax highlighting made easy.
 
 = Font size is too small =
 
-If you're using an old theme that sets the html tag to a very low value, then the code block will size itself relative to that. There isn't a great universal fix for this unless I force a certain behavior for everyone. Typically you can just remove that html style without any effect with the following css (add it anywhere that can load CSS):
-`
-html { font-size: 100% !important; }
-`
+Look under the "Styling" tab and turn on "Clamp Values", which will compute the rem values relative to a 16px-24px base * the selected rem values. e.g. clamp(20px, 1.25rem, 30px).
 
 == Screenshots ==
 
@@ -220,6 +217,7 @@ html { font-size: 100% !important; }
 
 == Changelog ==
 
+- Feature: Add toggle so users can clamp font sizes to reasonable values.
 - Show font styling in theme select sidebar
 
 = 1.4.0 - 2022-09-04 =

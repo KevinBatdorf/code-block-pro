@@ -18,6 +18,7 @@
         "fontFamily": { "type": "string" },
         "lineHeight": { "type": "string" },
         "lineNumbers": { "type": "boolean" },
+        "clampFonts": { "type": "boolean", "default": false },
         "headerType": { "type": "string" },
         "startingLineNumber": { "type": "number", "default": 1 },
         "frame": { "type": "boolean" },
