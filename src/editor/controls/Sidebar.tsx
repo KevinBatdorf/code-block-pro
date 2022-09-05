@@ -151,18 +151,37 @@ export const SidebarControls = ({
             <PanelBody
                 title={__('Extra Settings', 'code-block-pro')}
                 initialOpen={false}>
-                <CheckboxControl
-                    label={__('Copy Button', 'code-block-pro')}
-                    help={__(
-                        'If checked, users will be able to copy your code snippet to their clipboard.',
-                        'code-block-pro',
-                    )}
-                    checked={attributes.copyButton}
-                    onChange={(value) => {
-                        setPreviousSettings({ copyButton: value });
-                        setAttributes({ copyButton: value });
-                    }}
-                />
+                <BaseControl id="code-block-pro-show-copy-button">
+                    <CheckboxControl
+                        label={__('Copy Button', 'code-block-pro')}
+                        help={__(
+                            'If checked, users will be able to copy your code snippet to their clipboard.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.copyButton}
+                        onChange={(value) => {
+                            setPreviousSettings({ copyButton: value });
+                            setAttributes({ copyButton: value });
+                        }}
+                    />
+                </BaseControl>
+                <BaseControl id="code-block-pro-disable-padding">
+                    <CheckboxControl
+                        label={__('Disable Padding', 'code-block-pro')}
+                        help={__(
+                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.disablePadding}
+                        onChange={(disablePadding) => {
+                            setAttributes({ disablePadding });
+                            updateThemeHistory({
+                                ...attributes,
+                                disablePadding,
+                            });
+                        }}
+                    />
+                </BaseControl>
             </PanelBody>
         </InspectorControls>
     );

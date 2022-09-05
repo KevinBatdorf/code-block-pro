@@ -14,6 +14,7 @@ export type Attributes = {
     lineNumbers: boolean;
     clampFonts: boolean;
     headerType: string;
+    disablePadding: boolean;
     startingLineNumber: number;
     frame: boolean;
     renderType: string;

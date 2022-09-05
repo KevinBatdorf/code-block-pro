@@ -7,7 +7,11 @@ import './style.css';
 
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
     <div
-        {...blockProps.save()}
+        {...blockProps.save({
+            className: attributes.disablePadding
+                ? 'padding-disabled'
+                : undefined,
+        })}
         data-code-block-pro-font-family={attributes.fontFamily}
         style={{
             fontSize: maybeClamp(attributes.fontSize, attributes.clampFonts),

@@ -2,6 +2,7 @@ import { useBlockProps as blockProps } from '@wordpress/block-editor';
 import { createBlock, registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
+import classnames from 'classnames';
 import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
@@ -34,6 +35,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         clampFonts: { type: 'boolean', default: false },
         lineNumbers: { type: 'boolean' },
         headerType: { type: 'string' },
+        disablePadding: { type: 'boolean', default: false },
         startingLineNumber: { type: 'number', default: 1 },
         frame: { type: 'boolean' },
         renderType: { type: 'string', default: 'code' },
@@ -58,7 +60,9 @@ registerBlockType<Attributes>(blockConfig.name, {
             />
             <div
                 {...blockProps({
-                    className: 'code-block-pro-editor',
+                    className: classnames('code-block-pro-editor', {
+                        'padding-disabled': attributes.disablePadding,
+                    }),
                     style: {
                         fontSize: maybeClamp(
                             attributes.fontSize,

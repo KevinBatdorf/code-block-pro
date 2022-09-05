@@ -10,6 +10,7 @@ type ThemeType = {
     previousFontSize: string;
     previousHeaderType: string;
     previousClampFonts: boolean;
+    previousDisablePadding: boolean;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/wp/v2/settings';
@@ -29,6 +30,7 @@ export const useThemeStore = create<ThemeType>()(
                 previousFontSize: '.875rem',
                 previousHeaderType: 'headlights',
                 previousClampFonts: false,
+                previousDisablePadding: false,
                 updateThemeHistory(attributes) {
                     set((state) => ({
                         ...state,
@@ -38,6 +40,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousFontSize: attributes.fontSize,
                         previousHeaderType: attributes.headerType,
                         previousClampFonts: attributes.clampFonts,
+                        previousDisablePadding: attributes.disablePadding,
                     }));
                 },
             }),
