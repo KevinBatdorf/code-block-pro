@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet
 Tested up to:      6.0
-Stable tag:        1.5.1
+Stable tag:        1.5.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -217,6 +217,9 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 3. Example showing light theme with padding disabled.
 
 == Changelog ==
+
+= 1.5.1 - 2022-09-08 =
+- Fix: Fix padding on copy button when padding is disabled
 
 = 1.5.1 - 2022-09-05 =
 - Tweak: Allow users to disable padding
