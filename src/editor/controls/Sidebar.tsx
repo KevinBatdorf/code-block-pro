@@ -1,6 +1,7 @@
 import { InspectorControls } from '@wordpress/block-editor';
 import {
     PanelBody,
+    TextControl,
     BaseControl,
     SelectControl,
     Button,
@@ -31,6 +32,8 @@ export const SidebarControls = ({
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
     const { setPreviousSettings } = useGlobalStore();
+
+    const showHeaderTextEdit = ['simpleString'].includes(attributes.headerType);
 
     return (
         <InspectorControls>
@@ -71,6 +74,20 @@ export const SidebarControls = ({
                             </>
                         ) : null}
                     </BaseControl>
+                    {showHeaderTextEdit && (
+                        <BaseControl id="code-block-pro-header-text">
+                            <TextControl
+                                id="code-block-pro-header-text"
+                                spellCheck={false}
+                                label={__('Header Text', 'code-block-pro')}
+                                placeholder={languages[language]}
+                                onChange={(headerString) => {
+                                    setAttributes({ headerString });
+                                }}
+                                value={attributes.headerString ?? ''}
+                            />
+                        </BaseControl>
+                    )}
                     <Notice />
                 </div>
             </PanelBody>

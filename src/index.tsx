@@ -35,6 +35,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         clampFonts: { type: 'boolean', default: false },
         lineNumbers: { type: 'boolean' },
         headerType: { type: 'string' },
+        headerString: { type: 'string' },
         disablePadding: { type: 'boolean', default: false },
         startingLineNumber: { type: 'number', default: 1 },
         frame: { type: 'boolean' },

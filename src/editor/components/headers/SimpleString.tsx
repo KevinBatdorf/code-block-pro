@@ -1,4 +1,5 @@
 import { colord, AnyColor } from 'colord';
+import { Lang } from 'shiki';
 import { Attributes } from '../../../types';
 import { languages } from '../../../util/languages';
 
@@ -6,6 +7,7 @@ export const SimpleString = ({
     language,
     bgColor,
     textColor,
+    headerString,
 }: Partial<Attributes>) => {
     const bgC = colord(bgColor as AnyColor);
     const bg = bgC.isDark() ? bgC.lighten(0.05) : bgC.darken(0.05);
@@ -23,7 +25,7 @@ export const SimpleString = ({
                 backgroundColor: bg.toHex(),
                 color: text.toHex(),
             }}>
-            {languages[language ?? 'javascript']}
+            {headerString || languages[language as Lang]}
         </span>
     );
 };
