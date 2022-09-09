@@ -7,7 +7,7 @@ import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
-import { HeaderType } from './editor/components/HeaderType';
+import { HeaderType } from './editor/components/HeaderSelect';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';

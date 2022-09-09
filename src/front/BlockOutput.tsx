@@ -1,5 +1,5 @@
 import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
-import { HeaderType } from '../editor/components/HeaderType';
+import { HeaderType } from '../editor/components/HeaderSelect';
 import { Attributes } from '../types';
 import { fontFamilyLong, maybeClamp } from '../util/fonts';
 import { CopyButton } from './CopyButton';
