@@ -215,8 +215,12 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 1. Choose from more than 25 themes.
 2. Customize fonts, themes, and behavior.
 3. Example showing light theme with padding disabled.
+4. Example showing a header with a string using Palenight theme.
 
 == Changelog ==
+
+- Feature: Add additional header styles
+- Feature: Allow overriding the label in the header
 
 = 1.5.1 - 2022-09-08 =
 - Fix: Fix padding on copy button when padding is disabled

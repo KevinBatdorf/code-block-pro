@@ -7,7 +7,7 @@ import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
-import { HeaderType } from './editor/components/HeaderType';
+import { HeaderType } from './editor/components/HeaderSelect';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
@@ -35,6 +35,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         clampFonts: { type: 'boolean', default: false },
         lineNumbers: { type: 'boolean' },
         headerType: { type: 'string' },
+        headerString: { type: 'string' },
         disablePadding: { type: 'boolean', default: false },
         startingLineNumber: { type: 'number', default: 1 },
         frame: { type: 'boolean' },
