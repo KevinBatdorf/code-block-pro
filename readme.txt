@@ -15,7 +15,7 @@ Show off your beautiful code. This plugin provides you with an editor that runs 
 Beautiful syntax highlighting made easy.
 
 = Features =
-- Includes 28 themes built in to choose from.
+- Includes 28 built-in themes to choose from.
 - Supports over 140 programming languages
 - Optionally load programming fonts
 - Various header styles (more coming soon)
