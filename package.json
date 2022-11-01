@@ -48,7 +48,7 @@
         "@headlessui/react": "^1.6.6",
         "@wordpress/block-editor": "^9.8.0",
         "@wordpress/blocks": "^11.15.0",
-        "@wordpress/element": "^4.14.0",
+        "@wordpress/element": "^4.18.0",
         "@wordpress/i18n": "^4.16.0",
         "copy-to-clipboard": "^3.3.2",
         "react-simple-code-editor": "^0.13.0",
