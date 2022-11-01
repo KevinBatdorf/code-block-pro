@@ -22,7 +22,7 @@
         "@types/wordpress__block-editor": "^7.0.0",
         "@types/wordpress__blocks": "^11.0.7",
         "@typescript-eslint/parser": "^5.36.1",
-        "@wordpress/block-editor": "^9.8.0",
+        "@wordpress/block-editor": "^10.3.0",
         "@wordpress/env": "^5.2.0",
         "@wordpress/scripts": "^24.0.0",
         "@wordpress/url": "^3.17.0",
@@ -46,7 +46,7 @@
     },
     "dependencies": {
         "@headlessui/react": "^1.6.6",
-        "@wordpress/block-editor": "^9.8.0",
+        "@wordpress/block-editor": "^10.3.0",
         "@wordpress/blocks": "^11.15.0",
         "@wordpress/element": "^4.14.0",
         "@wordpress/i18n": "^4.16.0",
