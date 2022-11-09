@@ -8,8 +8,18 @@ export const useDefaults = ({
     attributes,
     setAttributes,
 }: AttributesPropsAndSetter) => {
-    const { theme, fontSize, fontFamily, lineHeight, copyButton, headerType } =
-        attributes;
+    const {
+        theme,
+        fontSize,
+        fontFamily,
+        lineHeight,
+        copyButton,
+        headerType,
+        clampFonts,
+        disablePadding,
+        lineNumbers,
+        startingLineNumber,
+    } = attributes;
     const { previousSettings } = useGlobalStore();
     const {
         previousTheme,
@@ -17,6 +27,10 @@ export const useDefaults = ({
         previousFontFamily,
         previousLineHeight,
         previousHeaderType,
+        previousClampFonts,
+        previousDisablePadding,
+        previousLineNumbers,
+        previousStartingLineNumber,
     } = useThemeStore();
 
     useEffect(() => {
@@ -48,4 +62,24 @@ export const useDefaults = ({
         if (headerType || !previousHeaderType) return;
         setAttributes({ headerType: previousHeaderType });
     }, [previousHeaderType, headerType, setAttributes]);
+
+    useEffect(() => {
+        if (clampFonts || !previousClampFonts) return;
+        setAttributes({ clampFonts: previousClampFonts });
+    }, [previousClampFonts, clampFonts, setAttributes]);
+
+    useEffect(() => {
+        if (disablePadding || !previousDisablePadding) return;
+        setAttributes({ disablePadding: previousDisablePadding });
+    }, [previousDisablePadding, disablePadding, setAttributes]);
+
+    useEffect(() => {
+        if (lineNumbers || !previousLineNumbers) return;
+        setAttributes({ lineNumbers: previousLineNumbers });
+    }, [previousLineNumbers, lineNumbers, setAttributes]);
+
+    useEffect(() => {
+        if (startingLineNumber || !previousStartingLineNumber) return;
+        setAttributes({ startingLineNumber: previousStartingLineNumber });
+    }, [previousStartingLineNumber, startingLineNumber, setAttributes]);
 };

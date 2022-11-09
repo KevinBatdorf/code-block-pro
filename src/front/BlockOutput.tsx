@@ -5,6 +5,11 @@ import { fontFamilyLong, maybeClamp } from '../util/fonts';
 import { CopyButton } from './CopyButton';
 import './style.css';
 
+// todo:
+// - add inline styling on code or pre only if the setting is there (should avoid block invalidation)
+// - in editor, Calculate the line width of the last line number for the overlay padding (left only?)
+// - get dynamic color of the line numbers (in attributes already)
+
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
     <div
         {...blockProps.save({

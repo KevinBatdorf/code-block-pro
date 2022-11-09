@@ -3,9 +3,7 @@ import { applyFilters } from '@wordpress/hooks';
 import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
-import { useGlobalStore } from '../state/global';
 import { useLanguageStore } from '../state/language';
-import { useThemeStore } from '../state/theme';
 import { AttributesPropsAndSetter } from '../types';
 
 export const Edit = ({
@@ -27,6 +25,7 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
+    const linePadding = 0;
     useDefaults({ attributes, setAttributes });
 
     useEffect(() => {
@@ -73,7 +72,7 @@ export const Edit = ({
             <Editor
                 value={code}
                 onValueChange={handleChange}
-                padding={disablePadding ? 0 : 16}
+                padding={(disablePadding ? 0 : 16) + linePadding}
                 style={{ backgroundColor, color }}
                 // eslint-disable-next-line
                 onKeyDown={(e: any) =>

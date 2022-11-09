@@ -11,6 +11,8 @@ type ThemeType = {
     previousHeaderType: string;
     previousClampFonts: boolean;
     previousDisablePadding: boolean;
+    previousLineNumbers: boolean;
+    previousStartingLineNumber: number;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/wp/v2/settings';
@@ -31,6 +33,8 @@ export const useThemeStore = create<ThemeType>()(
                 previousHeaderType: 'headlights',
                 previousClampFonts: false,
                 previousDisablePadding: false,
+                previousLineNumbers: false,
+                previousStartingLineNumber: 1,
                 updateThemeHistory(attributes) {
                     set((state) => ({
                         ...state,
@@ -41,6 +45,9 @@ export const useThemeStore = create<ThemeType>()(
                         previousHeaderType: attributes.headerType,
                         previousClampFonts: attributes.clampFonts,
                         previousDisablePadding: attributes.disablePadding,
+                        previousLineNumbers: attributes.lineNumbers,
+                        previousStartingLineNumber:
+                            attributes.startingLineNumber,
                     }));
                 },
             }),

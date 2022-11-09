@@ -35,6 +35,19 @@
     @apply m-0 text-left;
     direction: ltr !important;
 }
+.code-block-pro-editor pre {
+    counter-reset: step;
+    counter-increment: step calc(var(--cbp-start, 1) - 1);
+}
+.code-block-pro-editor pre .line::before {
+    content: counter(step);
+    user-select: none;
+    counter-increment: step;
+    margin-right: 0.75rem;
+    display: inline-block;
+    text-align: right;
+}
+
 .code-block-pro-editor code {
     font-family: inherit !important;
     @apply m-0 p-0 text-inherit bg-transparent;

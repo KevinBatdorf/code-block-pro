@@ -144,6 +144,42 @@ export const SidebarControls = ({
                 </div>
             </PanelBody>
             <PanelBody
+                title={__('Line Numbers', 'code-block-pro')}
+                initialOpen={false}>
+                <div className="code-block-pro-editor">
+                    <BaseControl id="code-block-pro-show-line-numbers">
+                        <CheckboxControl
+                            label={__('Line numbers', 'code-block-pro')}
+                            checked={attributes.lineNumbers}
+                            onChange={(lineNumbers) => {
+                                setAttributes({ lineNumbers });
+                                updateThemeHistory({
+                                    ...attributes,
+                                    lineNumbers,
+                                });
+                            }}
+                        />
+                        {attributes.lineNumbers && (
+                            <BaseControl id="code-block-pro-line-number-start">
+                                <TextControl
+                                    id="code-block-pro-line-number-start"
+                                    spellCheck={false}
+                                    label={__('Start from', 'code-block-pro')}
+                                    onChange={(value) => {
+                                        // Set to 1 if not a string
+                                        const n = Number(value);
+                                        const startingLineNumber =
+                                            isNaN(n) || !n ? 1 : n;
+                                        setAttributes({ startingLineNumber });
+                                    }}
+                                    value={attributes.startingLineNumber ?? ''}
+                                />
+                            </BaseControl>
+                        )}
+                    </BaseControl>
+                </div>
+            </PanelBody>
+            <PanelBody
                 title={__('Header Type', 'code-block-pro')}
                 initialOpen={false}>
                 <HeaderSelect
