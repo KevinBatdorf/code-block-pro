@@ -149,7 +149,11 @@ export const SidebarControls = ({
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-show-line-numbers">
                         <CheckboxControl
-                            label={__('Line numbers', 'code-block-pro')}
+                            label={__('Enable line numbers', 'code-block-pro')}
+                            help={__(
+                                'Enable line numbers and set a starting number.',
+                                'code-block-pro',
+                            )}
                             checked={attributes.lineNumbers}
                             onChange={(lineNumbers) => {
                                 setAttributes({ lineNumbers });
@@ -165,14 +169,10 @@ export const SidebarControls = ({
                                     id="code-block-pro-line-number-start"
                                     spellCheck={false}
                                     label={__('Start from', 'code-block-pro')}
-                                    onChange={(value) => {
-                                        // Set to 1 if not a string
-                                        const n = Number(value);
-                                        const startingLineNumber =
-                                            isNaN(n) || !n ? 1 : n;
+                                    onChange={(startingLineNumber) => {
                                         setAttributes({ startingLineNumber });
                                     }}
-                                    value={attributes.startingLineNumber ?? ''}
+                                    value={attributes.startingLineNumber}
                                 />
                             </BaseControl>
                         )}
@@ -222,7 +222,7 @@ export const SidebarControls = ({
                     <CheckboxControl
                         label={__('Disable Padding', 'code-block-pro')}
                         help={__(
-                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content.',
+                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content. You maybe need to add your own padding with CSS.',
                             'code-block-pro',
                         )}
                         checked={attributes.disablePadding}

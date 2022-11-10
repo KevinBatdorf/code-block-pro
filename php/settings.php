@@ -22,7 +22,6 @@ if (!function_exists('code_block_pro_register_settings')) {
                         'previousClampFonts' => [ 'type' => ['boolean', 'null']],
                         'previousDisablePadding' => [ 'type' => ['boolean', 'null']],
                         'previousLineNumbers' => [ 'type' => ['boolean', 'null']],
-                        'previousStartingLineNumber' => [ 'type' => ['number', 'null']],
                     ],
                 ],
             ],

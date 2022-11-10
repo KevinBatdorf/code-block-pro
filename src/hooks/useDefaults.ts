@@ -18,7 +18,6 @@ export const useDefaults = ({
         clampFonts,
         disablePadding,
         lineNumbers,
-        startingLineNumber,
     } = attributes;
     const { previousSettings } = useGlobalStore();
     const {
@@ -30,7 +29,6 @@ export const useDefaults = ({
         previousClampFonts,
         previousDisablePadding,
         previousLineNumbers,
-        previousStartingLineNumber,
     } = useThemeStore();
 
     useEffect(() => {
@@ -77,9 +75,4 @@ export const useDefaults = ({
         if (lineNumbers || !previousLineNumbers) return;
         setAttributes({ lineNumbers: previousLineNumbers });
     }, [previousLineNumbers, lineNumbers, setAttributes]);
-
-    useEffect(() => {
-        if (startingLineNumber || !previousStartingLineNumber) return;
-        setAttributes({ startingLineNumber: previousStartingLineNumber });
-    }, [previousStartingLineNumber, startingLineNumber, setAttributes]);
 };

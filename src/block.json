@@ -23,6 +23,7 @@
         "headerString": { "type": "string" },
         "disablePadding": { "type": "boolean", "default": false },
         "startingLineNumber": { "type": "number", "default": 1 },
+        "lineNumbersWidth": { "type": "number" },
         "frame": { "type": "boolean" },
         "renderType": { "type": "string", "default": "code" },
         "label": { "type": "string", "default": "" },
