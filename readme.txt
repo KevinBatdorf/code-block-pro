@@ -1,8 +1,8 @@
 === Code Block Pro ===
 Contributors:      kbat82
-Tags:              block, code, syntax, highlighting, snippet
+Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor
 Tested up to:      6.1
-Stable tag:        1.6.0
+Stable tag:        1.7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,6 +220,7 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 
 == Changelog ==
 
+= 1.7.0 - 2022-11-09 =
 - Feature: Add line number support
 
 = 1.6.0 - 2022-09-09 =
