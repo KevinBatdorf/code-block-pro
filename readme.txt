@@ -18,6 +18,7 @@ Beautiful syntax highlighting made easy.
 - Includes 28 built-in themes to choose from.
 - Supports over 140 programming languages
 - Optionally load programming fonts
+- Line numbers (custom starting number)
 - Various header styles (more coming soon)
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
@@ -218,6 +219,8 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 4. Example showing a header with a string using Palenight theme.
 
 == Changelog ==
+
+- Feature: Add line number support
 
 = 1.6.0 - 2022-09-09 =
 - Feature: Add additional header styles

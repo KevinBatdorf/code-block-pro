@@ -16,7 +16,8 @@ export type Attributes = {
     headerType: string;
     headerString?: string;
     disablePadding: boolean;
-    startingLineNumber: number;
+    startingLineNumber: string;
+    lineNumbersWidth: number;
     frame: boolean;
     renderType: string;
     label: string;

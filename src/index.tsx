@@ -3,6 +3,7 @@ import { createBlock, registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
+import { colord, AnyColor } from 'colord';
 import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
@@ -37,7 +38,8 @@ registerBlockType<Attributes>(blockConfig.name, {
         headerType: { type: 'string' },
         headerString: { type: 'string' },
         disablePadding: { type: 'boolean', default: false },
-        startingLineNumber: { type: 'number', default: 1 },
+        startingLineNumber: { type: 'string' },
+        lineNumbersWidth: { type: 'number' },
         frame: { type: 'boolean' },
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
@@ -63,12 +65,23 @@ registerBlockType<Attributes>(blockConfig.name, {
                 {...blockProps({
                     className: classnames('code-block-pro-editor', {
                         'padding-disabled': attributes.disablePadding,
+                        'cbp-has-line-numbers': attributes.lineNumbers,
                     }),
                     style: {
                         fontSize: maybeClamp(
                             attributes.fontSize,
                             attributes.clampFonts,
                         ),
+                        '--cbp-line-number-color': attributes?.lineNumbers
+                            ? attributes.textColor
+                            : undefined,
+                        '--cbp-line-number-start':
+                            Number(attributes?.startingLineNumber) > 1
+                                ? attributes.startingLineNumber
+                                : undefined,
+                        '--cbp-line-number-width': attributes.lineNumbersWidth
+                            ? `${attributes.lineNumbersWidth}px`
+                            : undefined,
                         fontFamily: fontFamilyLong(attributes.fontFamily),
                         lineHeight: maybeClamp(
                             attributes.lineHeight,

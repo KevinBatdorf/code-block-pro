@@ -144,6 +144,42 @@ export const SidebarControls = ({
                 </div>
             </PanelBody>
             <PanelBody
+                title={__('Line Numbers', 'code-block-pro')}
+                initialOpen={false}>
+                <div className="code-block-pro-editor">
+                    <BaseControl id="code-block-pro-show-line-numbers">
+                        <CheckboxControl
+                            label={__('Enable line numbers', 'code-block-pro')}
+                            help={__(
+                                'Enable line numbers and set a starting number.',
+                                'code-block-pro',
+                            )}
+                            checked={attributes.lineNumbers}
+                            onChange={(lineNumbers) => {
+                                setAttributes({ lineNumbers });
+                                updateThemeHistory({
+                                    ...attributes,
+                                    lineNumbers,
+                                });
+                            }}
+                        />
+                        {attributes.lineNumbers && (
+                            <BaseControl id="code-block-pro-line-number-start">
+                                <TextControl
+                                    id="code-block-pro-line-number-start"
+                                    spellCheck={false}
+                                    label={__('Start from', 'code-block-pro')}
+                                    onChange={(startingLineNumber) => {
+                                        setAttributes({ startingLineNumber });
+                                    }}
+                                    value={attributes.startingLineNumber}
+                                />
+                            </BaseControl>
+                        )}
+                    </BaseControl>
+                </div>
+            </PanelBody>
+            <PanelBody
                 title={__('Header Type', 'code-block-pro')}
                 initialOpen={false}>
                 <HeaderSelect
@@ -186,7 +222,7 @@ export const SidebarControls = ({
                     <CheckboxControl
                         label={__('Disable Padding', 'code-block-pro')}
                         help={__(
-                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content.',
+                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content. You maybe need to add your own padding with CSS.',
                             'code-block-pro',
                         )}
                         checked={attributes.disablePadding}
