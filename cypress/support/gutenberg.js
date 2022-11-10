@@ -93,8 +93,13 @@ export const openThemesPanel = () => {
 };
 export const addBlock = (slug) => {
     cy.openBlockInserter();
-    cy.get(`button[class*="${slug}"]`).should('be.visible');
-    cy.get(`button[class*="${slug}"]`).click();
+    cy.window().then((win) => {
+        // If it's not open, open it first
+        cy.waitUntil(() =>
+            win.document.querySelector(`button[class*="${slug}"]`),
+        );
+        cy.get(`button[class*="${slug}"]`).click();
+    });
 };
 export const wpDataSelect = (store, selector, ...parameters) => {
     cy.window().then((win) => {
