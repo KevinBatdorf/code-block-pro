@@ -27,21 +27,26 @@
     background: none;
     overflow-wrap:normal;
     font-family: inherit;
-    @apply m-0 p-0 bg-transparent text-inherit text-left whitespace-pre border-none border-0 rounded-none shadow-none;
+    @apply block w-full m-0 p-0 bg-transparent text-inherit text-left whitespace-pre border-none border-0 rounded-none shadow-none;
+}
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code .line {
+    @apply inline-block w-full;
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code {
     counter-reset: step;
     counter-increment: step calc(var(--cbp-line-number-start, 1) - 1);
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line::before {
+    @apply inline-block text-right opacity-30;
+    margin-right: 12px;
     content: counter(step);
     color: var(--cbp-line-number-color, #999);
     width: var(--cbp-line-number-width, auto);
     user-select: none;
     counter-increment: step;
-    margin-right: 0.75rem;
-    display: inline-block;
-    text-align: right;
+}
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:hover::before {
+    @apply opacity-70 transition-opacity duration-200
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre * {
     font-family: inherit;

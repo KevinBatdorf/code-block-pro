@@ -25,9 +25,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
                 // Tiny check to avoid block invalidation error
                 fontFamily: fontFamilyLong(attributes.fontFamily),
                 '--cbp-line-number-color': attributes?.lineNumbers
-                    ? colord(attributes.textColor as AnyColor)
-                          .alpha(0.45)
-                          .toHex()
+                    ? attributes.textColor
                     : undefined,
                 '--cbp-line-number-start':
                     Number(attributes?.startingLineNumber) > 1

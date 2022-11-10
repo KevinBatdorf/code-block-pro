@@ -1,12 +1,38 @@
 export const closeWelcomeGuide = () => {
     cy.window().then((win) => {
-        if (
-            win.wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
-        ) {
+        // If it's not open, open it first
+        cy.waitUntil(() => {
+            if (
+                win.wp.data
+                    .select('core/edit-post')
+                    .isFeatureActive('welcomeGuide')
+            ) {
+                return true;
+            }
             win.wp.data
                 .dispatch('core/edit-post')
                 .toggleFeature('welcomeGuide');
-        }
+            return false;
+        });
+        const className = '[aria-label="Welcome to the block editor"]';
+        // It's important we open it then wait for the animation to finish
+        cy.get(className).should('be.visible');
+        // Then close it
+        cy.waitUntil(() => {
+            if (
+                !win.wp.data
+                    .select('core/edit-post')
+                    .isFeatureActive('welcomeGuide')
+            ) {
+                return true;
+            }
+            win.wp.data
+                .dispatch('core/edit-post')
+                .toggleFeature('welcomeGuide');
+
+            // And wait again for the animation to finish
+            cy.get(className).should('not.exist');
+        });
     });
 };
 
