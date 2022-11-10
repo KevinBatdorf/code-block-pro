@@ -55,14 +55,14 @@ export const setPostContent = (content) => {
 export const openBlockInserter = () => {
     cy.get('button[aria-label="Toggle block inserter"]').then((button) => {
         if (button.attr('aria-pressed') === 'false') {
-            button.click();
+            cy.get('button[aria-label="Toggle block inserter"]').click();
         }
     });
 };
 export const closeBlockInserter = () => {
     cy.get('button[aria-label="Toggle block inserter"]').then((button) => {
         if (button.attr('aria-pressed') === 'true') {
-            button.click();
+            cy.get('button[aria-label="Toggle block inserter"]').click();
         }
     });
 };
