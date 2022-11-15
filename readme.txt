@@ -1,4 +1,4 @@
-=== Code Block Pro ===
+=== Code Block Pro - Pixel Perfect Syntax Highlighting ===
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor
 Tested up to:      6.1
@@ -10,7 +10,7 @@ Code highlighting powered by the VS Code engine
 
 == Description ==
 
-Show off your beautiful code. This plugin provides you with an editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
+Show off your beautiful code. This plugin provides you with an editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
 
 Beautiful syntax highlighting made easy.
 
