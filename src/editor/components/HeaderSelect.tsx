@@ -43,7 +43,7 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                         id={`code-block-pro-header-${slug}`}
                         type="button"
                         onClick={() => onClick(slug)}
-                        className="p-0 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-scroll">
+                        className="p-0 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto">
                         <span className="pointer-events-none w-full">
                             <HeaderType
                                 headerType={slug}
