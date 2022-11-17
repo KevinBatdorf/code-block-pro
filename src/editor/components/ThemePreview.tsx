@@ -32,7 +32,6 @@ export const ThemePreview = ({
     });
     const [codeRendered, setCode] = useState('');
     const [backgroundColor, setBg] = useState('#ffffff');
-    const [color, setFg] = useState('#000000');
     const observer = useRef<IntersectionObserver>(
         new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
@@ -66,7 +65,6 @@ float Q_rsqrt( float number )
             : highlighter.codeToHtml(codeSnippet, { lang: 'c' });
         setCode(hl);
         setBg(highlighter.getBackgroundColor());
-        setFg(highlighter.getForegroundColor());
     }, [highlighter, lang, code, codeSnippet]);
 
     return (
@@ -83,7 +81,7 @@ float Q_rsqrt( float number )
                         if (!el) return;
                         observer.current.observe(el);
                     }}
-                    style={{ minHeight: '200px', color }}
+                    style={{ minHeight: '200px' }}
                     className="flex items-center justify-center p-6 w-full">
                     {error?.message || __('Loading...', 'code-block-pro')}
                 </span>
