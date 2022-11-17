@@ -34,7 +34,7 @@ export const useDefaults = ({
     } = useThemeStore();
 
     useEffect(() => {
-        if (copyButton || !previousSettings.copyButton) return;
+        if (copyButton !== undefined || !previousSettings.copyButton) return;
         setAttributes({ copyButton: previousSettings.copyButton });
     }, [previousSettings, copyButton, setAttributes]);
 
@@ -69,17 +69,17 @@ export const useDefaults = ({
     }, [previousFooterType, footerType, setAttributes]);
 
     useEffect(() => {
-        if (clampFonts || !previousClampFonts) return;
+        if (clampFonts !== undefined || !previousClampFonts) return;
         setAttributes({ clampFonts: previousClampFonts });
     }, [previousClampFonts, clampFonts, setAttributes]);
 
     useEffect(() => {
-        if (disablePadding || !previousDisablePadding) return;
+        if (disablePadding !== undefined || !previousDisablePadding) return;
         setAttributes({ disablePadding: previousDisablePadding });
     }, [previousDisablePadding, disablePadding, setAttributes]);
 
     useEffect(() => {
-        if (lineNumbers || !previousLineNumbers) return;
+        if (lineNumbers !== undefined || !previousLineNumbers) return;
         setAttributes({ lineNumbers: previousLineNumbers });
     }, [previousLineNumbers, lineNumbers, setAttributes]);
 };
