@@ -55,6 +55,9 @@
     width: auto !important;
     position: initial;
 }
+.code-block-pro-editor .cbp-footer-link {
+    @apply pointer-events-none no-underline;
+}
 
 .code-block-pro-editor code {
     font-family: inherit !important;

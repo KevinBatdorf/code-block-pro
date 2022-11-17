@@ -15,6 +15,7 @@ export const useDefaults = ({
         lineHeight,
         copyButton,
         headerType,
+        footerType,
         clampFonts,
         disablePadding,
         lineNumbers,
@@ -26,6 +27,7 @@ export const useDefaults = ({
         previousFontFamily,
         previousLineHeight,
         previousHeaderType,
+        previousFooterType,
         previousClampFonts,
         previousDisablePadding,
         previousLineNumbers,
@@ -60,6 +62,11 @@ export const useDefaults = ({
         if (headerType || !previousHeaderType) return;
         setAttributes({ headerType: previousHeaderType });
     }, [previousHeaderType, headerType, setAttributes]);
+
+    useEffect(() => {
+        if (footerType || !previousFooterType) return;
+        setAttributes({ footerType: previousFooterType });
+    }, [previousFooterType, footerType, setAttributes]);
 
     useEffect(() => {
         if (clampFonts || !previousClampFonts) return;

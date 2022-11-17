@@ -20,8 +20,9 @@ import {
     FontLineHeightSelect,
     FontFamilySelect,
 } from '../components/FontSelect';
+import { FooterSelect } from '../components/FooterSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
-import { Notice } from '../components/Notice';
+// import { Notice } from '../components/Notice';
 import { ThemeSelect } from '../components/ThemeSelect';
 
 export const SidebarControls = ({
@@ -32,8 +33,12 @@ export const SidebarControls = ({
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
     const { setPreviousSettings } = useGlobalStore();
+    const { headerType, footerType } = attributes;
 
-    const showHeaderTextEdit = ['simpleString'].includes(attributes.headerType);
+    const showHeaderTextEdit = ['simpleString'].includes(headerType);
+    const showFooterTextEdit = ['simpleStringEnd'].includes(footerType);
+    const showFooterLinkEdit = ['simpleStringEnd'].includes(footerType);
+    const showFooterLinkTargetEdit = ['simpleStringEnd'].includes(footerType);
 
     return (
         <InspectorControls>
@@ -89,7 +94,58 @@ export const SidebarControls = ({
                             />
                         </BaseControl>
                     )}
-                    <Notice />
+                    {showFooterTextEdit && (
+                        <BaseControl id="code-block-pro-footer-text">
+                            <TextControl
+                                id="code-block-pro-footer-text"
+                                spellCheck={false}
+                                autoComplete="off"
+                                label={__('Footer Text', 'code-block-pro')}
+                                placeholder={languages[language]}
+                                onChange={(footerString) => {
+                                    setAttributes({ footerString });
+                                }}
+                                value={attributes.footerString ?? ''}
+                            />
+                        </BaseControl>
+                    )}
+                    {showFooterTextEdit && (
+                        <BaseControl id="code-block-pro-footer-link">
+                            <TextControl
+                                id="code-block-pro-footer-link"
+                                spellCheck={false}
+                                type="url"
+                                autoComplete="off"
+                                label={__('Footer Link', 'code-block-pro')}
+                                placeholder="https://example.com"
+                                help={__(
+                                    'Leave blank to disable',
+                                    'code-block-pro',
+                                )}
+                                onChange={(footerLink) => {
+                                    setAttributes({ footerLink });
+                                }}
+                                value={attributes.footerLink ?? ''}
+                            />
+                        </BaseControl>
+                    )}
+                    {showFooterLinkTargetEdit && (
+                        <BaseControl id="code-block-pro-footer-link-target">
+                            <CheckboxControl
+                                id="code-block-pro-footer-link-target"
+                                label={__('Open in new tab?', 'code-block-pro')}
+                                checked={attributes.footerLinkTarget}
+                                onChange={(footerLinkTarget) => {
+                                    setAttributes({ footerLinkTarget });
+                                    updateThemeHistory({
+                                        ...attributes,
+                                        footerLinkTarget,
+                                    });
+                                }}
+                            />
+                        </BaseControl>
+                    )}
+                    {/* <Notice /> */}
                 </div>
             </PanelBody>
             <PanelBody
@@ -186,9 +242,20 @@ export const SidebarControls = ({
                 initialOpen={false}>
                 <HeaderSelect
                     attributes={attributes}
-                    onClick={(headerType: string) => {
+                    onClick={(headerType) => {
                         setAttributes({ headerType });
                         updateThemeHistory({ ...attributes, headerType });
+                    }}
+                />
+            </PanelBody>
+            <PanelBody
+                title={__('Footer Type', 'code-block-pro')}
+                initialOpen={false}>
+                <FooterSelect
+                    attributes={attributes}
+                    onClick={(footerType) => {
+                        setAttributes({ footerType });
+                        updateThemeHistory({ ...attributes, footerType });
                     }}
                 />
             </PanelBody>

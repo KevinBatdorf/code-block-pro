@@ -1,6 +1,6 @@
 import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
 import classNames from 'classnames';
-import { colord, AnyColor } from 'colord';
+import { FooterType } from '../editor/components/FooterSelect';
 import { HeaderType } from '../editor/components/HeaderSelect';
 import { Attributes } from '../types';
 import { fontFamilyLong, maybeClamp } from '../util/fonts';
@@ -12,6 +12,8 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
         {...blockProps.save({
             className: classNames({
                 'padding-disabled': attributes.disablePadding,
+                'padding-bottom-disabled':
+                    attributes?.footerType && attributes?.footerType !== 'none',
                 'cbp-has-line-numbers': attributes.lineNumbers,
             }),
         })}
@@ -47,6 +49,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
                     <CopyButton attributes={attributes} />
                 )}
                 <RichText.Content value={attributes.codeHTML} />
+                <FooterType {...attributes} />
             </>
         ) : null}
     </div>

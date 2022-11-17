@@ -15,6 +15,10 @@ export type Attributes = {
     clampFonts: boolean;
     headerType: string;
     headerString?: string;
+    footerType: string;
+    footerString?: string;
+    footerLink?: string;
+    footerLinkTarget?: boolean;
     disablePadding: boolean;
     startingLineNumber: string;
     lineNumbersWidth: number;
