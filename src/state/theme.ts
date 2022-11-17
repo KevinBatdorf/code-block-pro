@@ -31,7 +31,7 @@ export const useThemeStore = create<ThemeType>()(
                 previousFontFamily: '',
                 previousFontSize: '.875rem',
                 previousHeaderType: 'headlights',
-                previousFooterType: 'none',
+                previousFooterType: '',
                 previousClampFonts: false,
                 previousDisablePadding: false,
                 previousLineNumbers: false,
