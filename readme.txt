@@ -223,8 +223,8 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 
 = 1.8.0 - 2022-11-17 =
 - Feature: Added footer styles
-- Accessability: Increased line number color contrast
-- Accessability: Increased copy button contrast
+- Accessibility: Increased line number color contrast
+- Accessibility: Increased copy button contrast
 - Tweak: Disabled autocomplete on settings inputs
 - Tweak: Added help context to variations that have inputs
 - Fix: Fixed a bug where disabling padding on one block would update all
