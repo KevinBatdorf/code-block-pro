@@ -8,6 +8,7 @@ import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
+import { FooterType } from './editor/components/FooterSelect';
 import { HeaderType } from './editor/components/HeaderSelect';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
@@ -37,6 +38,10 @@ registerBlockType<Attributes>(blockConfig.name, {
         lineNumbers: { type: 'boolean' },
         headerType: { type: 'string' },
         headerString: { type: 'string' },
+        footerType: { type: 'string' },
+        footerString: { type: 'string' },
+        footerLink: { type: 'string' },
+        footerLinkTarget: { type: 'boolean' },
         disablePadding: { type: 'boolean', default: false },
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
@@ -91,6 +96,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                 })}>
                 <HeaderType {...attributes} />
                 <Edit attributes={attributes} setAttributes={setAttributes} />
+                <FooterType {...attributes} />
             </div>
         </>
     ),

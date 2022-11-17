@@ -1,34 +1,28 @@
 import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Attributes } from '../../types';
-import { Headlights } from './headers/Headlights';
-import { HeadlightsMuted } from './headers/HeadlightsMuted';
-import { HeadlightsMutedAlt } from './headers/HeadlightsMutedAlt';
-import { SimpleString } from './headers/SimpleString';
+import { SimpleStringEnd } from './footers/SimpleStringEnd';
 
-type HeaderSelectProps = {
+type FooterSelectProps = {
     attributes: Attributes;
     onClick: (slug: string) => void;
 };
-export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
-    const { headerType, ...attributesWithoutHeaderType }: Partial<Attributes> =
+export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
+    const { footerType, ...attributesWithoutFooterType }: Partial<Attributes> =
         attributes;
     const { bgColor } = attributes;
     const types = {
         none: __('None', 'code-block-pro'),
-        headlights: __('Headlights', 'code-block-pro'),
-        headlightsMuted: __('Headlights muted', 'code-block-pro'),
-        headlightsMutedAlt: __('Headlights muted alt', 'code-block-pro'),
-        simpleString: __('Simple string', 'code-block-pro'),
+        simpleStringEnd: __('Simple string end', 'code-block-pro'),
     };
 
     return (
         <div className="code-block-pro-editor">
             {Object.entries(types).map(([slug, type]) => (
                 <BaseControl
-                    id={`code-block-pro-header-${slug}`}
+                    id={`code-block-pro-footer-${slug}`}
                     label={
-                        headerType === slug
+                        footerType === slug
                             ? sprintf(
                                   __('%s (current)', 'code-block-pro'),
                                   type,
@@ -36,24 +30,24 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                             : type
                     }
                     help={
-                        ['simpleString'].includes(slug)
+                        ['simpleStringEnd'].includes(slug)
                             ? __('Update text in Settings', 'code-block-pro')
                             : undefined
                     }
                     key={slug}>
                     <button
-                        id={`code-block-pro-header-${slug}`}
+                        id={`code-block-pro-footer-${slug}`}
                         type="button"
                         onClick={() => onClick(slug)}
                         className="p-0 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto">
                         <span className="pointer-events-none w-full">
-                            <HeaderType
-                                headerType={slug}
-                                {...attributesWithoutHeaderType}
-                            />
                             <span
                                 className="block w-full h-8"
                                 style={{ backgroundColor: bgColor }}
+                            />
+                            <FooterType
+                                footerType={slug}
+                                {...attributesWithoutFooterType}
                             />
                         </span>
                     </button>
@@ -63,19 +57,10 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
     );
 };
 
-export const HeaderType = (attributes: Partial<Attributes>) => {
-    const { headerType } = attributes;
-    if (headerType === 'headlights') {
-        return <Headlights {...attributes} />;
-    }
-    if (headerType === 'headlightsMuted') {
-        return <HeadlightsMuted {...attributes} />;
-    }
-    if (headerType === 'headlightsMutedAlt') {
-        return <HeadlightsMutedAlt {...attributes} />;
-    }
-    if (headerType === 'simpleString') {
-        return <SimpleString {...attributes} />;
+export const FooterType = (attributes: Partial<Attributes>) => {
+    const { footerType } = attributes;
+    if (footerType === 'simpleStringEnd') {
+        return <SimpleStringEnd {...attributes} />;
     }
     return null;
 };

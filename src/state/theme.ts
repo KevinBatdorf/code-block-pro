@@ -9,6 +9,7 @@ type ThemeType = {
     previousFontFamily: string;
     previousFontSize: string;
     previousHeaderType: string;
+    previousFooterType: string;
     previousClampFonts: boolean;
     previousDisablePadding: boolean;
     previousLineNumbers: boolean;
@@ -30,6 +31,7 @@ export const useThemeStore = create<ThemeType>()(
                 previousFontFamily: '',
                 previousFontSize: '.875rem',
                 previousHeaderType: 'headlights',
+                previousFooterType: 'none',
                 previousClampFonts: false,
                 previousDisablePadding: false,
                 previousLineNumbers: false,
@@ -41,6 +43,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousFontFamily: attributes.fontFamily,
                         previousFontSize: attributes.fontSize,
                         previousHeaderType: attributes.headerType,
+                        previousFooterType: attributes.footerType,
                         previousClampFonts: attributes.clampFonts,
                         previousDisablePadding: attributes.disablePadding,
                         previousLineNumbers: attributes.lineNumbers,

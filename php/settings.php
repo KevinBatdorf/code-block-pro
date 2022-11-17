@@ -19,6 +19,7 @@ if (!function_exists('code_block_pro_register_settings')) {
                         'previousFontSize' => [ 'type' => ['string', 'null']],
                         'previousLineHeight' => [ 'type' => ['string', 'null']],
                         'previousHeaderType' => [ 'type' => ['string', 'null']],
+                        'previousFooterType' => [ 'type' => ['string', 'null']],
                         'previousClampFonts' => [ 'type' => ['boolean', 'null']],
                         'previousDisablePadding' => [ 'type' => ['boolean', 'null']],
                         'previousLineNumbers' => [ 'type' => ['boolean', 'null']],
