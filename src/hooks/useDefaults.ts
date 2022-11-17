@@ -49,7 +49,8 @@ export const useDefaults = ({
     }, [previousFontSize, fontSize, setAttributes]);
 
     useEffect(() => {
-        if (fontFamily || !previousFontFamily) return;
+        if (fontFamily || fontFamily === '' || previousFontFamily === undefined)
+            return;
         setAttributes({ fontFamily: previousFontFamily });
     }, [previousFontFamily, fontFamily, setAttributes]);
 
@@ -64,22 +65,29 @@ export const useDefaults = ({
     }, [previousHeaderType, headerType, setAttributes]);
 
     useEffect(() => {
-        if (footerType || !previousFooterType) return;
+        if (footerType !== undefined || previousFooterType === undefined)
+            return;
         setAttributes({ footerType: previousFooterType });
     }, [previousFooterType, footerType, setAttributes]);
 
     useEffect(() => {
-        if (clampFonts !== undefined || !previousClampFonts) return;
+        if (clampFonts !== undefined || previousClampFonts === undefined)
+            return;
         setAttributes({ clampFonts: previousClampFonts });
     }, [previousClampFonts, clampFonts, setAttributes]);
 
     useEffect(() => {
-        if (disablePadding !== undefined || !previousDisablePadding) return;
+        if (
+            disablePadding !== undefined ||
+            previousDisablePadding === undefined
+        )
+            return;
         setAttributes({ disablePadding: previousDisablePadding });
     }, [previousDisablePadding, disablePadding, setAttributes]);
 
     useEffect(() => {
-        if (lineNumbers !== undefined || !previousLineNumbers) return;
+        if (lineNumbers !== undefined || previousLineNumbers === undefined)
+            return;
         setAttributes({ lineNumbers: previousLineNumbers });
     }, [previousLineNumbers, lineNumbers, setAttributes]);
 };
