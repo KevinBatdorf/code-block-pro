@@ -10,14 +10,18 @@ export const Notice = () => {
     const [email, setEmail] = useState('');
     const [emailSent, setEmailSent] = useState(false);
     const maybeEmail = useSelect((select) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
         const user = select('core').getCurrentUser() as { id: number };
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore-next-line
         const details = select('core').getEntityRecord(
             'root',
             'user',
             user.id,
         ) as { email: string };
         return details?.email;
-    });
+    }, []);
     const sendEmail = () => {
         fetch('https://www.kevinbatdorf.com/api/interest', {
             method: 'POST',

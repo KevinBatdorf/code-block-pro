@@ -20,6 +20,7 @@ export const Edit = ({
         lineNumbersWidth,
         lineNumbers,
         startingLineNumber,
+        footerType,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
@@ -28,6 +29,8 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
+    const hasFooter =
+        attributes?.footerType && attributes?.footerType !== 'none';
     useDefaults({ attributes, setAttributes });
 
     useEffect(() => {
@@ -110,7 +113,7 @@ export const Edit = ({
                 onValueChange={handleChange}
                 padding={{
                     top: disablePadding ? 0 : 16,
-                    bottom: disablePadding ? 0 : 16,
+                    bottom: disablePadding || hasFooter ? 0 : 16,
                     left:
                         (disablePadding ? 0 : 16) +
                         // If line numbers are disabled, just offset the 12px padding

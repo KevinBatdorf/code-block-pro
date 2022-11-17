@@ -3,11 +3,11 @@ import { createBlock, registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
-import { colord, AnyColor } from 'colord';
 import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
+import { FooterType } from './editor/components/FooterSelect';
 import { HeaderType } from './editor/components/HeaderSelect';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
@@ -38,6 +38,10 @@ registerBlockType<Attributes>(blockConfig.name, {
         headerType: { type: 'string' },
         headerString: { type: 'string' },
         disablePadding: { type: 'boolean' },
+        footerType: { type: 'string' },
+        footerString: { type: 'string' },
+        footerLink: { type: 'string' },
+        footerLinkTarget: { type: 'boolean' },
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
         frame: { type: 'boolean' },
@@ -91,6 +95,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                 })}>
                 <HeaderType {...attributes} />
                 <Edit attributes={attributes} setAttributes={setAttributes} />
+                <FooterType {...attributes} />
             </div>
         </>
     ),
