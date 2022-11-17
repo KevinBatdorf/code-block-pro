@@ -61,7 +61,7 @@
     padding: 0;
 }
 .wp-block-kevinbatdorf-code-block-pro:hover .code-block-pro-copy-button {
-    @apply opacity-40;
+    @apply opacity-50;
 }
 /* .wp-block-kevinbatdorf-code-block-pro .code-block-pro-copy-button:active, */
 .wp-block-kevinbatdorf-code-block-pro .code-block-pro-copy-button:hover {
