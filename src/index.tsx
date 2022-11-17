@@ -69,6 +69,9 @@ registerBlockType<Attributes>(blockConfig.name, {
                 {...blockProps({
                     className: classnames('code-block-pro-editor', {
                         'padding-disabled': attributes.disablePadding,
+                        'padding-bottom-disabled':
+                            attributes?.footerType &&
+                            attributes?.footerType !== 'none',
                         'cbp-has-line-numbers': attributes.lineNumbers,
                     }),
                     style: {
