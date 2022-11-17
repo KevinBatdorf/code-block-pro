@@ -21,6 +21,9 @@ export const Edit = ({
         lineNumbers,
         startingLineNumber,
         footerType,
+        fontSize,
+        fontFamily,
+        lineHeight,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
@@ -29,8 +32,7 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
-    const hasFooter =
-        attributes?.footerType && attributes?.footerType !== 'none';
+    const hasFooter = footerType && footerType !== 'none';
     useDefaults({ attributes, setAttributes });
 
     useEffect(() => {
@@ -94,6 +96,9 @@ export const Edit = ({
         error,
         textAreaRef,
         setAttributes,
+        fontSize,
+        fontFamily,
+        lineHeight,
     ]);
 
     if ((loading && code) || error) {

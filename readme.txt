@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor
 Tested up to:      6.1
-Stable tag:        1.7.0
+Stable tag:        1.8.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,8 @@ Beautiful syntax highlighting made easy.
 - Supports over 140 programming languages
 - Optionally load programming fonts
 - Line numbers (custom starting number)
-- Various header styles (more coming soon)
+- Header styles (more coming)
+- Footer styles (more coming)
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
 - No frontend JavaScript required - works in headless mode
@@ -219,6 +220,18 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 4. Example showing a header with a string using Palenight theme.
 
 == Changelog ==
+
+= 1.8.0 - 2022-11-17 =
+- Feature: Added footer styles
+- Accessibility: Increased line number color contrast
+- Accessibility: Increased copy button contrast
+- Tweak: Disabled autocomplete on settings inputs
+- Tweak: Added help context to variations that have inputs
+- Fix: Fixed a bug where disabling padding on one block would update all
+- Fix: Line numbers + disabled padding no longer formats weird in the editor
+- Fix: Scrollbars are now using auto instead of scroll
+- Fix: The loading screen on the theme viewer now fills the container
+- Fix: With line numbers, changing the font now will recalculate the width
 
 = 1.7.0 - 2022-11-09 =
 - Feature: Add line number support

@@ -6,13 +6,13 @@ import { Attributes } from '../types';
 type ThemeType = {
     previousTheme: string;
     previousLineHeight: string;
-    previousFontFamily: string;
+    previousFontFamily?: string;
     previousFontSize: string;
     previousHeaderType: string;
-    previousFooterType: string;
-    previousClampFonts: boolean;
-    previousDisablePadding: boolean;
-    previousLineNumbers: boolean;
+    previousFooterType?: string;
+    previousClampFonts?: boolean;
+    previousDisablePadding?: boolean;
+    previousLineNumbers?: boolean;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/wp/v2/settings';
@@ -28,13 +28,13 @@ export const useThemeStore = create<ThemeType>()(
             (set) => ({
                 previousTheme: 'nord',
                 previousLineHeight: '1.25rem',
-                previousFontFamily: '',
+                previousFontFamily: undefined,
                 previousFontSize: '.875rem',
                 previousHeaderType: 'headlights',
-                previousFooterType: 'none',
-                previousClampFonts: false,
-                previousDisablePadding: false,
-                previousLineNumbers: false,
+                previousFooterType: undefined,
+                previousClampFonts: undefined,
+                previousDisablePadding: undefined,
+                previousLineNumbers: undefined,
                 updateThemeHistory(attributes) {
                     set((state) => ({
                         ...state,
