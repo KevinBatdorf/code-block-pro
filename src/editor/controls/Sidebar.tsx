@@ -79,6 +79,7 @@ export const SidebarControls = ({
                             <TextControl
                                 id="code-block-pro-header-text"
                                 spellCheck={false}
+                                autoComplete="off"
                                 label={__('Header Text', 'code-block-pro')}
                                 placeholder={languages[language]}
                                 onChange={(headerString) => {
@@ -168,6 +169,7 @@ export const SidebarControls = ({
                                 <TextControl
                                     id="code-block-pro-line-number-start"
                                     spellCheck={false}
+                                    autoComplete="off"
                                     label={__('Start from', 'code-block-pro')}
                                     onChange={(startingLineNumber) => {
                                         setAttributes({ startingLineNumber });
