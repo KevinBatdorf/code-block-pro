@@ -50,6 +50,11 @@
     position: absolute;
     left: 18px;
 }
+
+.code-block-pro-editor.cbp-has-line-numbers.padding-disabled pre .line:not(.cbp-line-number-disabled)::before {
+    @apply static;
+}
+
 /* Will make sure the line numbers are full width before calculating */
 .code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-width-forced::before {
     width: auto !important;
