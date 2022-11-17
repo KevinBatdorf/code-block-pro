@@ -32,6 +32,7 @@ export const ThemePreview = ({
     });
     const [codeRendered, setCode] = useState('');
     const [backgroundColor, setBg] = useState('#ffffff');
+    const [color, setFg] = useState('#000000');
     const observer = useRef<IntersectionObserver>(
         new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
@@ -65,6 +66,7 @@ float Q_rsqrt( float number )
             : highlighter.codeToHtml(codeSnippet, { lang: 'c' });
         setCode(hl);
         setBg(highlighter.getBackgroundColor());
+        setFg(highlighter.getForegroundColor());
     }, [highlighter, lang, code, codeSnippet]);
 
     return (
@@ -72,7 +74,7 @@ float Q_rsqrt( float number )
             id={id}
             type="button"
             onClick={onClick}
-            className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-scroll"
+            className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto"
             style={{ backgroundColor, minHeight: '50px' }}>
             {loading || error || !inView ? (
                 <span
@@ -81,8 +83,8 @@ float Q_rsqrt( float number )
                         if (!el) return;
                         observer.current.observe(el);
                     }}
-                    style={{ minHeight: '200px' }}
-                    className="flex items-center justify-center p-6 bg-gray-50">
+                    style={{ minHeight: '200px', color }}
+                    className="flex items-center justify-center p-6 w-full">
                     {error?.message || __('Loading...', 'code-block-pro')}
                 </span>
             ) : (
