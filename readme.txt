@@ -231,6 +231,7 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 - Fix: Line numbers + disabled padding no longer formats weird in the editor
 - Fix: Scrollbars are now using auto instead of scroll
 - Fix: The loading screen on the theme viewer now fills the container
+- Fix: With line numbers, changing the font now will recalculate the width
 
 = 1.7.0 - 2022-11-09 =
 - Feature: Add line number support
