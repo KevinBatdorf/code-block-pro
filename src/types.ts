@@ -22,6 +22,12 @@ export type Attributes = {
     disablePadding: boolean;
     startingLineNumber: string;
     lineNumbersWidth: number;
+    enableHighlighting: boolean;
+    lineHighlights: string;
+    lineHighlightColor: string;
+    enableBlurring: boolean;
+    lineBlurs: string;
+    removeBlurOnHover: boolean;
     frame: boolean;
     renderType: string;
     label: string;

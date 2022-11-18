@@ -24,6 +24,8 @@ import { FooterSelect } from '../components/FooterSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
 // import { Notice } from '../components/Notice';
 import { ThemeSelect } from '../components/ThemeSelect';
+import { BlurControl } from './BlurControl';
+import { HighlightingControl } from './HighlightingControl';
 
 export const SidebarControls = ({
     attributes,
@@ -109,7 +111,7 @@ export const SidebarControls = ({
                             />
                         </BaseControl>
                     )}
-                    {showFooterTextEdit && (
+                    {showFooterLinkEdit && (
                         <BaseControl id="code-block-pro-footer-link">
                             <TextControl
                                 id="code-block-pro-footer-link"
@@ -201,7 +203,7 @@ export const SidebarControls = ({
                 </div>
             </PanelBody>
             <PanelBody
-                title={__('Line Numbers', 'code-block-pro')}
+                title={__('Line Settings', 'code-block-pro')}
                 initialOpen={false}>
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-show-line-numbers">
@@ -235,6 +237,14 @@ export const SidebarControls = ({
                             </BaseControl>
                         )}
                     </BaseControl>
+                    <HighlightingControl
+                        attributes={attributes}
+                        setAttributes={setAttributes}
+                    />
+                    <BlurControl
+                        attributes={attributes}
+                        setAttributes={setAttributes}
+                    />
                 </div>
             </PanelBody>
             <PanelBody

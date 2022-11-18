@@ -39,7 +39,15 @@
     counter-reset: step;
     counter-increment: step calc(var(--cbp-line-number-start, 1) - 1);
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line::before {
+
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line {
+    @apply relative;
+}
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code .line::before {
+    content: '';
+    @apply inline-block;
+}
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:not(.cbp-line-number-disabled)::before {
     @apply inline-block text-right opacity-50 transition-opacity duration-500;
     margin-right: 12px;
     content: counter(step);
@@ -50,6 +58,23 @@
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:hover::before {
     @apply opacity-100;
+}
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code .line.cbp-line-highlight::after {
+    content: '';
+    background: var(--cbp-line-highlight-color, rgb(14 165 233/.2));
+    width: calc(100% + 32px);
+    left: -16px;
+    @apply absolute top-0 h-full;
+}
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).padding-disabled pre code .line.cbp-line-highlight::after {
+    @apply left-0 w-full;
+}
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).cbp-blur-enabled pre code .line:not(.cbp-no-blur) {
+    filter: blur(1px);
+    @apply opacity-40 transition-all duration-200;
+}
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).cbp-blur-enabled.cbp-unblur-on-hover:hover pre code .line:not(.cbp-no-blur) {
+    @apply blur-none opacity-100;
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre * {
     font-family: inherit;

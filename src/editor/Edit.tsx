@@ -1,10 +1,12 @@
 import { useEffect, useLayoutEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
+import { colord } from 'colord';
 import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter } from '../types';
+import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 
 export const Edit = ({
     attributes,
@@ -24,6 +26,8 @@ export const Edit = ({
         fontSize,
         fontFamily,
         lineHeight,
+        lineBlurs,
+        lineHighlights,
     } = attributes;
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) => setAttributes({ code });
@@ -50,17 +54,35 @@ export const Edit = ({
                 'blocks.codeBlockPro.codeHTML',
                 highlighter.codeToHtml(code, {
                     lang: language ?? previousLanguage,
+                    lineOptions: [
+                        ...parseJSONArrayWithRanges(lineHighlights).map(
+                            (line: number) => ({
+                                line,
+                                classes: ['cbp-line-highlight'],
+                            }),
+                        ),
+                        ...parseJSONArrayWithRanges(lineBlurs).map(
+                            (line: number) => ({
+                                line,
+                                classes: ['cbp-no-blur'],
+                            }),
+                        ),
+                    ],
                 }),
                 attributes,
             ) as string,
+            lineHighlightColor: colord(color).alpha(0.2).toRgbString(),
         });
     }, [
         highlighter,
+        color,
         code,
         language,
         setAttributes,
         previousLanguage,
         attributes,
+        lineHighlights,
+        lineBlurs,
     ]);
 
     useLayoutEffect(() => {

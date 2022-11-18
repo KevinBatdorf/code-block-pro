@@ -15,6 +15,8 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
                 'padding-bottom-disabled':
                     attributes?.footerType && attributes?.footerType !== 'none',
                 'cbp-has-line-numbers': attributes.lineNumbers,
+                'cbp-blur-enabled': attributes.enableBlurring,
+                'cbp-unblur-on-hover': attributes.removeBlurOnHover,
             }),
         })}
         data-code-block-pro-font-family={attributes.fontFamily}
@@ -35,6 +37,9 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
                         : undefined,
                 '--cbp-line-number-width': attributes.lineNumbersWidth
                     ? `${attributes.lineNumbersWidth}px`
+                    : undefined,
+                '--cbp-line-highlight-color': attributes?.enableHighlighting
+                    ? attributes.lineHighlightColor
                     : undefined,
                 lineHeight: maybeClamp(
                     attributes.lineHeight,
