@@ -38,6 +38,7 @@
 .code-block-pro-editor.cbp-has-line-numbers pre {
     counter-reset: step;
     counter-increment: step calc(var(--cbp-line-number-start, 1) - 1);
+    padding-right: 0;
 }
 .code-block-pro-editor pre .line {
     @apply relative inline-block w-full;

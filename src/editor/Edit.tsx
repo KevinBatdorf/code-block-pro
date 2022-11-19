@@ -164,7 +164,7 @@ export const Edit = ({
                         // If line numbers are disabled, just offset the 12px padding
                         (lineNumbersWidth ?? -12) +
                         12,
-                    right: disablePadding ? 0 : 16,
+                    right: 0,
                 }}
                 style={{ backgroundColor, color }}
                 // eslint-disable-next-line
