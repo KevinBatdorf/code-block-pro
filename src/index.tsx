@@ -13,6 +13,7 @@ import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
+import { CopyButton } from './front/CopyButton';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
@@ -110,6 +111,9 @@ registerBlockType<Attributes>(blockConfig.name, {
                     },
                 })}>
                 <HeaderType {...attributes} />
+                {attributes.copyButton && (
+                    <CopyButton attributes={attributes} />
+                )}
                 <Edit attributes={attributes} setAttributes={setAttributes} />
                 <FooterType {...attributes} />
             </div>
