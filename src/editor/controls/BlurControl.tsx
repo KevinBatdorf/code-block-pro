@@ -4,7 +4,7 @@ import {
     TextControl,
 } from '@wordpress/components';
 import { useEffect, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import { AttributesPropsAndSetter } from '../../types';
 import { parseStringArrayWithSingleNestedArray } from '../../util/arrayHelpers';
 
@@ -32,7 +32,7 @@ export const BlurControl = ({
             <CheckboxControl
                 label={__('Enable blur emphesis', 'code-block-pro')}
                 help={__(
-                    'Blur surrounding code to focus on specific lines. Blur effect will not show in the editor.',
+                    'Blur surrounding code to focus on specific lines.',
                     'code-block-pro',
                 )}
                 checked={attributes.enableBlurring ?? false}
@@ -48,12 +48,16 @@ export const BlurControl = ({
                             spellCheck={false}
                             autoComplete="off"
                             label={__(
-                                'Ignore blurring on the following',
+                                'Foccus on the following',
                                 'code-block-pro',
                             )}
-                            help={__(
-                                'Try "1,5" or "1,[3,5]" for a range.',
-                                'code-block-pro',
+                            help={sprintf(
+                                __(
+                                    'Try %1$s or %2$s for a range.',
+                                    'code-block-pro',
+                                ),
+                                '1,5',
+                                '1,[3,5]',
                             )}
                             onChange={(lineBlurs) => {
                                 setAttributes({ lineBlurs });

@@ -37,7 +37,7 @@ Beautiful syntax highlighting made easy.
 - GitHub Dark Dimmed
 - Github Dark
 - Github Light
-- HC Light
+- HC Light - temporarily disabled
 - Light Plus
 - Material Darker
 - Material Default

@@ -4,7 +4,7 @@ import {
     TextControl,
 } from '@wordpress/components';
 import { useEffect, useRef } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import { AttributesPropsAndSetter } from '../../types';
 import { parseStringArrayWithSingleNestedArray } from '../../util/arrayHelpers';
 
@@ -31,7 +31,7 @@ export const HighlightingControl = ({
             <CheckboxControl
                 label={__('Enable line highlighting', 'code-block-pro')}
                 help={__(
-                    'Highlight individual lines. Highlights will not show in the editor.',
+                    'Highlight individual lines to bring attention to specific code.',
                     'code-block-pro',
                 )}
                 checked={attributes.enableHighlighting ?? false}
@@ -50,9 +50,13 @@ export const HighlightingControl = ({
                                 'Highlight the following',
                                 'code-block-pro',
                             )}
-                            help={__(
-                                'Try "1,3,4" or "1,[3,5]" for a range. ',
-                                'code-block-pro',
+                            help={sprintf(
+                                __(
+                                    'Try %1$s or %2$s for a range.',
+                                    'code-block-pro',
+                                ),
+                                '1,5',
+                                '1,[3,5]',
                             )}
                             onChange={(lineHighlights) => {
                                 setAttributes({ lineHighlights });

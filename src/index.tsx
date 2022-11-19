@@ -79,6 +79,8 @@ registerBlockType<Attributes>(blockConfig.name, {
                             attributes?.footerType &&
                             attributes?.footerType !== 'none',
                         'cbp-has-line-numbers': attributes.lineNumbers,
+                        'cbp-blur-enabled': attributes.enableBlurring,
+                        'cbp-unblur-on-hover': attributes.removeBlurOnHover,
                     }),
                     style: {
                         fontSize: maybeClamp(
@@ -95,6 +97,10 @@ registerBlockType<Attributes>(blockConfig.name, {
                         '--cbp-line-number-width': attributes.lineNumbersWidth
                             ? `${attributes.lineNumbersWidth}px`
                             : undefined,
+                        '--cbp-line-highlight-color':
+                            attributes?.enableHighlighting
+                                ? attributes.lineHighlightColor
+                                : undefined,
                         fontFamily: fontFamilyLong(attributes.fontFamily),
                         lineHeight: maybeClamp(
                             attributes.lineHeight,

@@ -39,16 +39,21 @@
     counter-reset: step;
     counter-increment: step calc(var(--cbp-line-number-start, 1) - 1);
 }
+.code-block-pro-editor pre .line {
+    @apply relative inline-block w-full;
+}
+.code-block-pro-editor pre .line:empty {
+    @apply block;
+}
 .code-block-pro-editor.cbp-has-line-numbers pre .line:not(.cbp-line-number-disabled)::before {
-    @apply inline-block text-right opacity-50;
+    @apply inline-block text-right opacity-50 absolute;
     margin-right: 12px;
     content: counter(step);
     color: var(--cbp-line-number-color, #999);
     width: var(--cbp-line-number-width, auto);
     user-select: none;
     counter-increment: step;
-    position: absolute;
-    left: 18px;
+    left: -32px
 }
 
 .code-block-pro-editor.cbp-has-line-numbers.padding-disabled pre .line:not(.cbp-line-number-disabled)::before {
@@ -56,12 +61,22 @@
 }
 
 /* Will make sure the line numbers are full width before calculating */
+.code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-width-forced,
+.code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-disabled {
+    @apply inline;
+}
 .code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-width-forced::before {
     width: auto !important;
     position: initial;
 }
 .code-block-pro-editor .cbp-footer-link {
     @apply pointer-events-none no-underline;
+}
+
+.code-block-pro-editor pre .line.cbp-line-highlight::after {
+    /* Just to make it look similar to the front end */
+    left: -100% !important;
+    width: 1000%!important;
 }
 
 .code-block-pro-editor code {
