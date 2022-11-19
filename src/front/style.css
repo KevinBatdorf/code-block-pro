@@ -40,7 +40,7 @@
     counter-increment: step calc(var(--cbp-line-number-start, 1) - 1);
 }
 
-.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line {
+.wp-block-kevinbatdorf-code-block-pro pre code .line {
     @apply relative;
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code .line::before {

@@ -77,6 +77,7 @@
     /* Just to make it look similar to the front end */
     left: -100% !important;
     width: 1000%!important;
+    height: var(--cbp-line-height) !important;
 }
 
 .code-block-pro-editor code {

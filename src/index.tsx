@@ -101,6 +101,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                             attributes?.enableHighlighting
                                 ? attributes.lineHighlightColor
                                 : undefined,
+                        '--cbp-line-height': attributes.lineHeight,
                         fontFamily: fontFamilyLong(attributes.fontFamily),
                         lineHeight: maybeClamp(
                             attributes.lineHeight,
