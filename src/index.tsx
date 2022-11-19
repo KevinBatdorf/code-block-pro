@@ -13,6 +13,7 @@ import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
+import { CopyButton } from './front/CopyButton';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
@@ -44,6 +45,12 @@ registerBlockType<Attributes>(blockConfig.name, {
         footerLinkTarget: { type: 'boolean' },
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
+        enableHighlighting: { type: 'boolean' },
+        lineHighlights: { type: 'string' },
+        lineHighlightColor: { type: 'string' },
+        enableBlurring: { type: 'boolean' },
+        lineBlurs: { type: 'string' },
+        removeBlurOnHover: { type: 'boolean' },
         frame: { type: 'boolean' },
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
@@ -73,6 +80,8 @@ registerBlockType<Attributes>(blockConfig.name, {
                             attributes?.footerType &&
                             attributes?.footerType !== 'none',
                         'cbp-has-line-numbers': attributes.lineNumbers,
+                        'cbp-blur-enabled': attributes.enableBlurring,
+                        'cbp-unblur-on-hover': attributes.removeBlurOnHover,
                     }),
                     style: {
                         fontSize: maybeClamp(
@@ -89,6 +98,11 @@ registerBlockType<Attributes>(blockConfig.name, {
                         '--cbp-line-number-width': attributes.lineNumbersWidth
                             ? `${attributes.lineNumbersWidth}px`
                             : undefined,
+                        '--cbp-line-highlight-color':
+                            attributes?.enableHighlighting
+                                ? attributes.lineHighlightColor
+                                : undefined,
+                        '--cbp-line-height': attributes.lineHeight,
                         fontFamily: fontFamilyLong(attributes.fontFamily),
                         lineHeight: maybeClamp(
                             attributes.lineHeight,
@@ -97,6 +111,9 @@ registerBlockType<Attributes>(blockConfig.name, {
                     },
                 })}>
                 <HeaderType {...attributes} />
+                {attributes.copyButton && (
+                    <CopyButton attributes={attributes} />
+                )}
                 <Edit attributes={attributes} setAttributes={setAttributes} />
                 <FooterType {...attributes} />
             </div>
