@@ -6,7 +6,7 @@ Stable tag:        1.9.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Code highlighting powered by the VS Code engine. Highly performance. No bloat.
+Code highlighting powered by the VS Code engine. Performance focused. No bloat.
 
 == Description ==
 
