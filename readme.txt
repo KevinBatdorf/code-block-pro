@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor, torchlight, shiki
 Tested up to:      6.1
-Stable tag:        1.9.0
+Stable tag:        1.9.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -231,6 +231,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+= 1.9.1 - 2022-11-21 =
+- Fix: Fixed a situations where the highlighter was miscalculating its width
 
 = 1.9.0 - 2022-11-20 =
 - Feature: Added line highlights

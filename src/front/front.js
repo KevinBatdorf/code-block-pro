@@ -37,13 +37,13 @@ addEventListener('DOMContentLoaded', () => {
         const resizeObserver = new ResizeObserver((entries) => {
             entries.forEach((entry) => {
                 // get width of inner code block
+                codeBlock.style.setProperty('--cbp-block-width', '0');
                 const codeWidth =
                     entry.target.querySelector('code').offsetWidth;
                 const computed =
                     codeWidth + 16 === entry.target.scrollWidth
                         ? codeWidth + 16
                         : entry.target.scrollWidth + 16;
-                codeBlock.style.setProperty('--cbp-block-width', '0');
                 codeBlock.style.setProperty(
                     '--cbp-block-width',
                     `${computed}px`,
