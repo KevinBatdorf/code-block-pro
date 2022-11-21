@@ -1,6 +1,6 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82
-Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor, torchlight, shiki
+Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code, torchlight, shiki
 Tested up to:      6.1
 Stable tag:        1.9.1
 License:           GPL-2.0-or-later
