@@ -37,9 +37,14 @@ No bloat
 - View on [GitHub](https://github.com/KevinBatdorf/code-block-pro)
 
 = Tips =
-- Try combining line highlighting with the blur effect to add some extra depth
+- Try combining line highlighting with the blur effect to add some extra depth and focus on the important parts of the code without losing context
 - All settings are per block, but some settings are remembered when you add the next block.
 - Add a link in the code footer (some footers support this, not all) that points to a https://codepen.io demo
+
+= Coming soon =
+- Diff highlighting
+- More themes, headers, footers
+- In browser, safe code execution - experimental
 
 = Included VS Code Themes =
 - Dark Plus
