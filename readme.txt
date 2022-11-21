@@ -12,7 +12,11 @@ Code highlighting powered by the VS Code engine. Performance focused. No bloat.
 
 Show off your beautiful code, don't just display it! This block plugin provides you with a code block editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
 
-Beautiful syntax highlighting made easy.
+Beautiful syntax highlighting that makes sense.
+
+Performance
+Lightweight
+No bloat
 
 = Features =
 - Includes 25+ built-in themes to choose from.
