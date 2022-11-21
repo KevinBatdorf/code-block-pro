@@ -14,23 +14,25 @@ Show off your beautiful code, don't just display it! This block plugin provides 
 
 Beautiful syntax highlighting that makes sense.
 
-Performance
-Lightweight
-No bloat
+= Values =
+- Performance - Focused on web vitals goals by pre-rendering and minimal asset loading.
+- Lightweight - No bloat. Simple functions and clean, maintainable code.
+- Practical/useful - Focused on the user experience and presentation.
+- Beautiful - Your code should look great!
 
 = Features =
 - Includes 25+ built-in themes to choose from.
 - Supports over 140 programming languages
-- Optionally load programming fonts
+- Modern programming web fonts - locally hosted
 - Line numbers
 - Line highlighting
 - Blur highlighting
-- Header styles (more coming)
-- Footer styles (more coming)
-- Optionally add a copy button to let users copy the code
-- Native Gutenberg block output - no special requirements
+- Header styles
+- Footer styles
+- Copy button
+- Native Gutenberg block
 - Core functionality works in headless mode (see FAQ)
-- Supports converting from the default code block
+- Converting from the default code block (and others)
 
 = More info =
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
