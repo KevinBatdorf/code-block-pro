@@ -3,9 +3,9 @@
     "apiVersion": 2,
     "name": "kevinbatdorf/code-block-pro",
     "version": "1.2.0",
-    "title": "Code Block Pro",
+    "title": "Code Block Pro - Beautiful syntax highlighting",
     "category": "common",
-    "description": "Code highlighting powered by the VS Code engine",
+    "description": "Code highlighting powered by the VS Code engine. No overhead.",
     "attributes": {
         "code": { "type": "string" },
         "codeHTML": { "type": "string" },

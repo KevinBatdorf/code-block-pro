@@ -1,34 +1,41 @@
-=== Code Block Pro - Pixel Perfect Syntax Highlighting ===
+=== Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82
-Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor
+Tags:              block, code, syntax, highlighting, snippet, highlighter, JavaScript, php, vs code, editor, torchlight, shiki
 Tested up to:      6.1
-Stable tag:        1.8.0
+Stable tag:        1.9.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Code highlighting powered by the VS Code engine
+Code highlighting powered by the VS Code engine. Highly performance. No bloat.
 
 == Description ==
 
-Show off your beautiful code. This plugin provides you with an editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
+Show off your beautiful code, don't just display it! This block plugin provides you with a code block editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
 
 Beautiful syntax highlighting made easy.
 
 = Features =
-- Includes 28 built-in themes to choose from.
+- Includes 25+ built-in themes to choose from.
 - Supports over 140 programming languages
 - Optionally load programming fonts
-- Line numbers (custom starting number)
+- Line numbers
+- Line highlighting
+- Blur highlighting
 - Header styles (more coming)
 - Footer styles (more coming)
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
-- No frontend JavaScript required - works in headless mode
+- Core functionality works in headless mode (see FAQ)
 - Supports converting from the default code block
 
 = More info =
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
 - View on [GitHub](https://github.com/KevinBatdorf/code-block-pro)
+
+= Tips =
+- Try combining line highlighting with the blur effect to add some extra depth
+- All settings are per block, but some settings are remembered when you add the next block.
+- Add a link in the code footer (some footers support this, not all) that points to a https://codepen.io demo
 
 = Included VS Code Themes =
 - Dark Plus
@@ -208,18 +215,29 @@ Beautiful syntax highlighting made easy.
 
 == Frequently Asked Questions ==
 
-= Font size is too small =
+= Font size is too small/big =
 
 Look under the "Styling" tab and turn on "Clamp Values", which will compute the rem values relative to a 16px-24px base * the selected rem values. e.g. clamp(20px, 1.25rem, 30px).
+
+= How to use in headless =
+
+Themes are rendered inside the editor as you type or make changes, so the code block itself will work without CSS or JavaScript. However, the font loading, copy button, and line highlighting require a tiny bit of JavaScript to funciton. Additionally, line blur uses a tiny bit of CSS which you will need to load in yourself or impliment your own. The code tokens and theme styles are inline though, so no need to manipulate the DOM.
 
 == Screenshots ==
 
 1. Choose from more than 25 themes.
 2. Customize fonts, themes, and behavior.
-3. Example showing light theme with padding disabled.
-4. Example showing a header with a string using Palenight theme.
+3. Disable padding and inline the code for a fluent experience.
+4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+= 1.9.0 - 2022-11-20 =
+- Feature: Added line highlights
+- Feature: Added blur effect to highlight lines
+- Tweak: Added the copy button to the editor preview
+- Tweak: Removed HC Light - will follow up on rendering issues
+- Fix: Selected text no longer leaves padding exposed on the right
 
 = 1.8.0 - 2022-11-17 =
 - Feature: Added footer styles

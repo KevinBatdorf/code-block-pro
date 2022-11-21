@@ -20,7 +20,7 @@
     font-family: inherit;
     @apply overflow-auto text-inherit text-left m-0 whitespace-pre bg-none border-none border-0 rounded-none shadow-none;
 }
-.wp-block-kevinbatdorf-code-block-pro.padding-disabled pre {
+.wp-block-kevinbatdorf-code-block-pro.padding-disabled:not(.code-block-pro-editor) pre {
     @apply p-0;
 }
 .wp-block-kevinbatdorf-code-block-pro.padding-bottom-disabled pre {
@@ -61,10 +61,10 @@
 /* .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:hover::before {
     @apply opacity-100;
 } */
-.wp-block-kevinbatdorf-code-block-pro pre .line.cbp-line-highlight::after {
-    content: '';
+.wp-block-kevinbatdorf-code-block-pro pre .line.cbp-line-highlight .cbp-line-highlighter {
     background: var(--cbp-line-highlight-color, rgb(14 165 233/.2));
-    width: calc(100% + 32px);
+    width: 100%;
+    min-width: calc(var(--cbp-block-width, 100%));
     left: -16px;
     @apply absolute top-0 h-full;
 }
