@@ -21,6 +21,47 @@ addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Handle highlighter
+addEventListener('DOMContentLoaded', () => {
+    const codeBlocks = Array.from(
+        document.querySelectorAll('.wp-block-kevinbatdorf-code-block-pro pre'),
+    );
+
+    codeBlocks.forEach((codeBlock) => {
+        // search for highlights
+        const highlighters = codeBlock.querySelectorAll('.cbp-line-highlight');
+        if (!highlighters.length) return;
+
+        // We need to track the block width so we can adjust the
+        // highlighter width in case of overflow
+        const resizeObserver = new ResizeObserver((entries) => {
+            entries.forEach((entry) => {
+                // get width of inner code block
+                const codeWidth =
+                    entry.target.querySelector('code').offsetWidth;
+                const computed =
+                    codeWidth + 16 === entry.target.scrollWidth
+                        ? codeWidth + 16
+                        : entry.target.scrollWidth + 16;
+                codeBlock.style.setProperty('--cbp-block-width', '0');
+                codeBlock.style.setProperty(
+                    '--cbp-block-width',
+                    `${computed}px`,
+                );
+            });
+        });
+        resizeObserver.observe(codeBlock);
+
+        // add the highlighter
+        highlighters.forEach((highlighter) => {
+            highlighter.insertAdjacentHTML(
+                'beforeend',
+                '<span aria-hidden="true" class="cbp-line-highlighter"></span>',
+            );
+        });
+    });
+});
+
 // Handle font loading
 addEventListener('DOMContentLoaded', () => {
     if (!window.codeBlockPro?.pluginUrl) return;

@@ -8,7 +8,7 @@ export const parseJSONArrayWithRanges = (
                 .map((inner: number | number[]) => {
                     // offset by startingLineNumber
                     const offset = isNaN(Number(startingLineNumber))
-                        ? 1
+                        ? 0
                         : Math.max(Number(startingLineNumber) - 1, 0);
                     // incoming might look like 1, 3, or [4, 8]
                     if (typeof inner === 'number') return inner - offset;

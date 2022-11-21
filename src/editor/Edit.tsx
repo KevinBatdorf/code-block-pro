@@ -160,7 +160,7 @@ export const Edit = ({
                     top: disablePadding ? 0 : 16,
                     bottom: disablePadding || hasFooter ? 0 : 16,
                     left:
-                        (disablePadding ? 0 : 16) +
+                        (disablePadding && !lineNumbersWidth ? 0 : 16) +
                         // If line numbers are disabled, just offset the 12px padding
                         (lineNumbersWidth ?? -12) +
                         12,

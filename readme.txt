@@ -6,11 +6,11 @@ Stable tag:        1.9.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Code highlighting powered by the VS Code engine. No front end overhead.
+Code highlighting powered by the VS Code engine. Highly performance. No bloat.
 
 == Description ==
 
-Show off your beautiful code; don't just display it! This plugin provides you with an editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
+Show off your beautiful code, don't just display it! This block plugin provides you with a code block editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
 
 Beautiful syntax highlighting made easy.
 
@@ -25,7 +25,7 @@ Beautiful syntax highlighting made easy.
 - Footer styles (more coming)
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
-- No frontend JavaScript/css required - works in headless mode (see FAQ)
+- Core functionality works in headless mode (see FAQ)
 - Supports converting from the default code block
 
 = More info =
@@ -221,14 +221,14 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 
 = How to use in headless =
 
-Themes are rendered inside the editor as you type or make changes, so the code itself will work without CSS or JavaScript. However, the font loading and copy button both require a tiny bit of JavaScript to funciton. Additionally, line highlighting and blur both use a tiny bit of CSS which you will need to load in yourself or impliment your own. The code tokens and theme styles are inline though, so no need to manipulate the DOM.
+Themes are rendered inside the editor as you type or make changes, so the code block itself will work without CSS or JavaScript. However, the font loading, copy button, and line highlighting require a tiny bit of JavaScript to funciton. Additionally, line blur uses a tiny bit of CSS which you will need to load in yourself or impliment your own. The code tokens and theme styles are inline though, so no need to manipulate the DOM.
 
 == Screenshots ==
 
 1. Choose from more than 25 themes.
 2. Customize fonts, themes, and behavior.
-3. Example showing light theme with padding disabled.
-4. Example showing a header with a string using Palenight theme.
+3. Disable padding and inline the code for a fluent experience.
+4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
 
