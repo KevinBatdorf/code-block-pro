@@ -15,7 +15,7 @@ Show off your beautiful code, don't just display it! This block plugin provides 
 Beautiful syntax highlighting that makes sense.
 
 = Values =
-- Performance - Focused on web vitals goals by pre-rendering and minimal asset loading.
+- Performance - Focused on web vitals by pre-rendering and minimal asset loading.
 - Lightweight - No bloat. Simple functions and clean, maintainable code.
 - Practical/useful - Focused on the user experience and presentation.
 - Beautiful - Your code should look great!
