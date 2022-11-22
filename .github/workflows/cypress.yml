@@ -22,9 +22,9 @@ jobs:
                   npm run build
                   rm .wp-env.json
             - name: Change WP version
-              uses: jsdaniell/create-json@v1.2.1
+              uses: devops-actions/json-to-file@v1.0.0
               with:
-                  name: 'wp-env.json'
+                  filename: 'wp-env.json'
                   json: '{
                     "core": ${{ matrix.wp-version }},
                     "plugins":["."],
@@ -40,12 +40,12 @@ jobs:
                 browser: chrome
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v3
               if: failure()
               with:
                   name: cypress-screenshots
                   path: cypress/screenshots
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v3
               if: failure()
               with:
                   name: cypress-videos
