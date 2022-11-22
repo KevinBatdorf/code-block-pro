@@ -1,11 +1,19 @@
 // Check support/globals.js for some default checks
 // as well as start up and clean up methods
+before(() => {
+    cy.loginUser();
+});
 beforeEach(() => {
+    cy.visitNewPageEditor();
     cy.addBlock('code-block-pro');
     cy.getPostContent('.wp-block[class$="code-block-pro"]').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
     cy.get('.wp-block[class$="code-block-pro"] textarea').should('have.focus');
+});
+after(() => {
+    cy.saveDraft(); // so we can leave without an alert
+    cy.logoutUser();
 });
 context('Language checks', () => {
     it('Renders properly when switching languages', () => {
