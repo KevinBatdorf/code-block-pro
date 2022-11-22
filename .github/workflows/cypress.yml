@@ -33,7 +33,7 @@ jobs:
                     }
                   }'
             - name: Start server
-              run: wp-env start
+              run: wp-env start --update
             - name: Cypress run
               uses: cypress-io/github-action@v4
               with:
