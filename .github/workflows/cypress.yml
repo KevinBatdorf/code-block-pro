@@ -25,7 +25,13 @@ jobs:
               uses: jsdaniell/create-json@v1.2.1
               with:
                   name: 'wp-env.json'
-                  json: '{"core": ${{ matrix.wp-version }},"plugins":["."]}'
+                  json: '{
+                    "core": ${{ matrix.wp-version }},
+                    "plugins":["."],
+                    "mappings": {
+                      "wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"
+                    }
+                  }'
             - name: Start server
               run: wp-env start
             - name: Cypress run
