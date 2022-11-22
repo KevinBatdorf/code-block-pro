@@ -19,7 +19,9 @@ jobs:
               run: |
                   npm ci
                   npm run build
-                  rm .wp-env.json
+            - name: Maybe remove wp-env
+              if: ${{ matrix.wp-version }}
+              run: rm .wp-env.json
             - name: Change WP version
               uses: devops-actions/json-to-file@v1.0.0
               if: ${{ matrix.wp-version }}
