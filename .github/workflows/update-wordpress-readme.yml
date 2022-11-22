@@ -8,7 +8,7 @@ jobs:
         name: Push to WordPress.org
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
             - name: npm install and build
               run: |
                   npm ci
