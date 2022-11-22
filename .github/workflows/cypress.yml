@@ -23,6 +23,7 @@ jobs:
                   rm .wp-env.json
             - name: Change WP version
               uses: devops-actions/json-to-file@v1.0.0
+              if: ${{ matrix.wp-version }}
               with:
                   filename: 'wp-env.json'
                   json: '{
