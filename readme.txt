@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code, torchlight, shiki
 Tested up to:      6.1
-Stable tag:        1.9.1
+Stable tag:        1.9.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -242,6 +242,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+= 1.9.2 - 2022-11-22 =
+- Compatibility: Adds a method override to allow users to activate when prismatic is installed.
 
 = 1.9.1 - 2022-11-21 =
 - Fix: Fixed a situations where the highlighter was miscalculating its width
