@@ -1,7 +1,7 @@
 {
     "core": null,
-    "plugins": [
-        ".",
-        "https://downloads.wordpress.org/plugin/prismatic.zip"
-    ]
+    "plugins": ["."],
+    "mappings": {
+        "wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"
+    }
 }
