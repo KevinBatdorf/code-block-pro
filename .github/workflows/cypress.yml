@@ -18,7 +18,6 @@ jobs:
             - name: Install server
               run: |
                   npm ci
-                  npm install -g @wordpress/env
                   npm run build
                   rm .wp-env.json
             - name: Change WP version
@@ -34,7 +33,9 @@ jobs:
                     }
                   }'
             - name: Start server
-              run: wp-env start --update
+              run: |
+                  npm install -g @wordpress/env
+                  wp-env start --update
             - name: Cypress run
               uses: cypress-io/github-action@v4
               with:
