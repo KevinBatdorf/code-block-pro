@@ -1,4 +1,7 @@
 {
     "core": null,
-    "plugins": ["."]
+    "plugins": [
+        ".",
+        "https://downloads.wordpress.org/plugin/prismatic.zip"
+    ]
 }
