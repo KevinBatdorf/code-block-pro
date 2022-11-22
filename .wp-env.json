@@ -1,4 +1,7 @@
 {
     "core": null,
-    "plugins": ["."]
+    "plugins": ["."],
+    "mappings": {
+        "wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"
+    }
 }

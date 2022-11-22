@@ -1,6 +1,6 @@
 <?php
 
-defined( 'ABSPATH' ) or die;
+defined('ABSPATH') or die;
 
 /**
  * Prismatic override - https://wordpress.org/plugins/prismatic/
@@ -9,11 +9,25 @@ defined( 'ABSPATH' ) or die;
  * Will monitor that plugin periodically and remove this override if it is updated.
  */
 if (!class_exists('Prismatic')) {
-    class Prismatic {
-        static function options_general() {}
-        static function options_prism() {}
-        static function options_highlight() {}
-        static function options_plain() {}
+    class Prismatic
+    {
+        public static function options_general()
+        {
+        }
+        public static function options_advanced()
+        {
+        }
+        public static function options_prism()
+        {
+        }
+        public static function options_highlight()
+        {
+        }
+        public static function options_plain()
+        {
+        }
     }
-    function prismatic() {}
+    function prismatic()
+    {
+    }
 }
