@@ -20,7 +20,7 @@
         "@redux-devtools/extension": "^3.2.3",
         "@trivago/prettier-plugin-sort-imports": "^3.4.0",
         "@types/wordpress__block-editor": "^7.0.0",
-        "@types/wordpress__blocks": "^11.0.7",
+        "@types/wordpress__blocks": "^11.0.9",
         "@typescript-eslint/parser": "^5.42.1",
         "@wordpress/block-editor": "^10.4.0",
         "@wordpress/env": "^5.6.0",
@@ -48,7 +48,7 @@
     "dependencies": {
         "@headlessui/react": "^1.7.4",
         "@wordpress/block-editor": "^10.4.0",
-        "@wordpress/blocks": "^11.20.0",
+        "@wordpress/blocks": "^11.21.0",
         "@wordpress/element": "^4.19.0",
         "@wordpress/i18n": "^4.21.0",
         "copy-to-clipboard": "^3.3.2",
