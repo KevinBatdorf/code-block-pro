@@ -43,20 +43,23 @@ context('Line settings', () => {
     });
 
     it('Line numbers can start from another value', () => {
-        // cy.openSideBarPanel('Line Settings');
-        // cy.getPostContent('.wp-block[class$="code-block-pro"]').should(
-        //     'not.have.attr',
-        //     'style',
-        //     '--cbp-line-number-start',
-        // );
-        // cy.get('[data-cy="show-line-numbers"]')
-        //     .should('exist')
-        //     .should('be.not.checked');
-        // cy.get('[data-cy="show-line-numbers"]').check().should('be.checked');
-        // cy.get('#code-block-pro-line-number-start').type('5');
-        // cy.getPostContent('.wp-block[class$="code-block-pro"]')
-        //     .parent()
-        //     .invoke('html')
-        //     .should('contain', '--cbp-line-number-start:5');
+        cy.openSideBarPanel('Line Settings');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]').should(
+            'not.have.attr',
+            'style',
+            '--cbp-line-number-start',
+        );
+
+        cy.get('[data-cy="show-line-numbers"]')
+            .uncheck()
+            .should('exist')
+            .should('be.not.checked');
+        cy.get('[data-cy="show-line-numbers"]').check().should('be.checked');
+
+        cy.get('#code-block-pro-line-number-start').type('5');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .parent()
+            .invoke('html')
+            .should('contain', '--cbp-line-number-start:5');
     });
 });
