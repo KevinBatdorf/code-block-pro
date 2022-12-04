@@ -94,24 +94,9 @@ export const openSideBarPanel = (label) => {
         });
 };
 export const addBlock = (slug) => {
-    // If it's not open, open it first
-    cy.openBlockInserter();
     cy.window().then((win) => {
-        cy.waitUntil(() =>
-            win.document.querySelector(`button[class*="${slug}"]`),
-        );
-        cy.get(`button[class*="${slug}"]`).click({ force: true });
-        cy.waitUntil(() => {
-            const blocks = win.wp.data.select('core/block-editor').getBlocks();
-            if (!blocks.length) {
-                // backup to force inject as it's not always available
-                const block = win.wp.blocks.createBlock(
-                    'kevinbatdorf/code-block-pro',
-                );
-                win.wp.data.dispatch('core/block-editor').insertBlock(block);
-            }
-            return blocks.length > 0;
-        });
+        const block = win.wp.blocks.createBlock(slug);
+        win.wp.data.dispatch('core/block-editor').insertBlock(block);
     });
 };
 export const wpDataSelect = (store, selector, ...parameters) => {

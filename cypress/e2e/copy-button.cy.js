@@ -5,7 +5,7 @@ before(() => {
 });
 beforeEach(() => {
     cy.visitNewPageEditor();
-    cy.addBlock('code-block-pro');
+    cy.addBlock('kevinbatdorf/code-block-pro');
     cy.getPostContent('.wp-block[class$="code-block-pro"]').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
