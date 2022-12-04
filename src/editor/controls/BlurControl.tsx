@@ -49,7 +49,7 @@ export const BlurControl = ({
                             spellCheck={false}
                             autoComplete="off"
                             label={__(
-                                'Foccus on the following',
+                                'Focus on the following',
                                 'code-block-pro',
                             )}
                             help={sprintf(
