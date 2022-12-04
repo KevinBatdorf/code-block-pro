@@ -1,6 +1,5 @@
-// Check support/globals.js for some default checks
-// as well as start up and clean up methods
 before(() => {
+    cy.resetDatabase();
     cy.loginUser();
 });
 beforeEach(() => {

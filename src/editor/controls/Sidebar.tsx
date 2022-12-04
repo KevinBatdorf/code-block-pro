@@ -208,6 +208,7 @@ export const SidebarControls = ({
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-show-line-numbers">
                         <CheckboxControl
+                            data-cy="show-line-numbers"
                             label={__('Enable line numbers', 'code-block-pro')}
                             help={__(
                                 'Enable line numbers and set a starting number.',
@@ -285,6 +286,7 @@ export const SidebarControls = ({
                 initialOpen={false}>
                 <BaseControl id="code-block-pro-show-copy-button">
                     <CheckboxControl
+                        data-cy="copy-button"
                         label={__('Copy Button', 'code-block-pro')}
                         help={__(
                             'If checked, users will be able to copy your code snippet to their clipboard.',

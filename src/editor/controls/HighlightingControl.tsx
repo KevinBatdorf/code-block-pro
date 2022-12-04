@@ -29,6 +29,7 @@ export const HighlightingControl = ({
     return (
         <BaseControl id="code-block-pro-show-highlighting">
             <CheckboxControl
+                data-cy="enable-highlighting"
                 label={__('Enable line highlighting', 'code-block-pro')}
                 help={__(
                     'Highlight individual lines to bring attention to specific code.',

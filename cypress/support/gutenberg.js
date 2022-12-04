@@ -69,7 +69,7 @@ export const closeBlockInserter = () => {
 export const openBlockSettingsSideBar = () => {
     cy.get('button[aria-label="Settings"]').then((button) => {
         if (button.attr('aria-pressed') === 'false') {
-            button.click();
+            button.trigger('click');
             cy.get('button[aria-label="Settings"]').should(
                 'have.attr',
                 'aria-pressed',
@@ -78,15 +78,15 @@ export const openBlockSettingsSideBar = () => {
         }
     });
 };
-export const openThemesPanel = () => {
+export const openSideBarPanel = (label) => {
     cy.openBlockSettingsSideBar();
     cy.get('div[aria-label="Editor settings"] button')
-        .contains('Themes')
+        .contains(label)
         .then((button) => {
             if (button.attr('aria-expanded') === 'false') {
-                button.click();
+                button.trigger('click');
                 cy.get('div[aria-label="Editor settings"] button')
-                    .contains('Themes')
+                    .contains(label)
                     .should('have.attr', 'aria-expanded', 'true');
             }
         });

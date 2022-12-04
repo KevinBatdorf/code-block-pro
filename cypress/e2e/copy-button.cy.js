@@ -1,5 +1,6 @@
 before(() => {
     cy.resetDatabase();
+    cy.clearBrowserStorage();
     cy.loginUser();
 });
 beforeEach(() => {
@@ -14,21 +15,19 @@ after(() => {
     cy.saveDraft(); // so we can leave without an alert
     cy.logoutUser();
 });
-context('Language checks', () => {
-    it('Renders properly when switching languages', () => {
-        cy.addCode('const foo = "bar";');
-        cy.setTheme('nord');
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
-            .invoke('html')
-            .should('contain', '<span style="color: #81A1C1">const</span>');
+context('Copy button', () => {
+    it('Renders in the code block', () => {
+        cy.openSideBarPanel('Extra Settings');
 
-        // Switch to ruby
-        cy.setLanguage('ruby');
+        cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')
-            .should(
-                'contain',
-                '<span style="color: #D8DEE9FF">const foo </span>',
-            );
+            .should('contain', 'Copy');
+
+        cy.get('[data-cy="copy-button"]').uncheck().should('not.be.checked');
+
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('not.contain', 'Copy');
     });
 });
