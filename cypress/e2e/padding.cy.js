@@ -77,14 +77,12 @@ context('Line numbers', () => {
             .check()
             .should('be.checked');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
-            'have.css',
-            'padding',
-            '16px 0px 16px 40.4375px',
-        );
-        cy.getPostContent(
-            '.wp-block[class$="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
-        ).should('have.css', 'padding', '16px 0px 16px 40.4375px');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should(
+                'not.include',
+                '0px 0px 0px 4', // more like 40.4375px but varies
+            );
 
         cy.previewCurrentPage();
 
