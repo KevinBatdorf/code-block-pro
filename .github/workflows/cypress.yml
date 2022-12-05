@@ -9,7 +9,7 @@ jobs:
     test:
         name: Cypress
         concurrency:
-            group: ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }}
+            group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }}
             cancel-in-progress: true
         runs-on: ubuntu-latest
         strategy:
