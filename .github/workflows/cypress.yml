@@ -1,4 +1,7 @@
 name: Run Cypress test suite
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 on:
     push:
     workflow_dispatch:
