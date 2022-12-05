@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code, torchlight, shiki
 Tested up to:      6.1
-Stable tag:        1.9.2
+Stable tag:        1.9.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -242,6 +242,12 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+= 1.9.3 - 2022-12-05 =
+- Fix: Adjusted editor padding for line numbers to better match the front end
+- Fix: Removed the TW border default in the editor as it was overriding soem wp defaults
+- Fix: Updated a typo on the word "focus"
+- Testing: Adds coverage for every main feature.
 
 = 1.9.2 - 2022-11-22 =
 - Compatibility: Adds a method override to allow users to activate when prismatic is installed.
