@@ -1,14 +1,20 @@
 import { BLOCK_CONTAINER } from '../constants';
+import { addCode } from './features/code';
+import { setFooter } from './features/footers';
+import { setHeader } from './features/headers';
+import { setLanguage } from './features/language';
+import { setTheme } from './features/theme';
 import {
     addBlock,
     closeWelcomeGuide,
     openBlockInserter,
     closeBlockInserter,
     openBlockSettingsSideBar,
-    openThemesPanel,
+    openSideBarPanel,
     saveDraft,
     setPostContent,
     wpDataSelect,
+    previewCurrentPage,
 } from './gutenberg';
 import { login, logout } from './login-logout';
 import {
@@ -17,6 +23,7 @@ import {
     visitToLoginPage,
 } from './navigate-pages';
 import { installPlugin, uninstallPlugin } from './plugins';
+import { resetDatabase } from './wp-cli';
 
 // Port more commands from WP here:
 // https://github.com/WordPress/gutenberg/tree/trunk/packages/e2e-test-utils/src
@@ -44,7 +51,7 @@ Cypress.Commands.add('closeBlockInserter', () => closeBlockInserter());
 Cypress.Commands.add('openBlockSettingsSideBar', () =>
     openBlockSettingsSideBar(),
 );
-Cypress.Commands.add('openThemesPanel', () => openThemesPanel());
+Cypress.Commands.add('openSideBarPanel', (label) => openSideBarPanel(label));
 Cypress.Commands.add('addBlock', (slug) => addBlock(slug));
 Cypress.Commands.add('setPostContent', (content) => setPostContent(content));
 Cypress.Commands.add('getPostContent', (addon = '') => {
@@ -61,37 +68,18 @@ Cypress.Commands.add('getCurrentPostObject', () => {
 Cypress.Commands.add('wpDataSelect', (store, selector, ...parameters) =>
     wpDataSelect(store, selector, ...parameters),
 );
+Cypress.Commands.add('previewCurrentPage', () => previewCurrentPage());
+
+// Server
+Cypress.Commands.add('resetDatabase', () => resetDatabase());
 
 // Manage plugins
 Cypress.Commands.add('installPlugin', (slug) => installPlugin(slug));
 Cypress.Commands.add('uninstallPlugin', (slug) => uninstallPlugin(slug));
 
-// Language
-Cypress.Commands.add('setLanguage', (language) => {
-    cy.openBlockSettingsSideBar();
-    cy.get('[data-cy-cbp="language-select"]').select(language);
-    cy.get('[data-cy-cbp="language-select"]')
-        .invoke('val')
-        .should('eq', language);
-});
-Cypress.Commands.add('setTheme', (theme) => {
-    cy.openBlockSettingsSideBar();
-    cy.openThemesPanel();
-    cy.get('div[aria-label="Editor settings"] button')
-        .contains('Themes')
-        .parents('.interface-interface-skeleton__sidebar')
-        .scrollTo('bottom');
-    cy.get(`#code-block-pro-theme-${theme}`).should('exist');
-    cy.get(`#code-block-pro-theme-${theme}`).click();
-});
-Cypress.Commands.add('addCode', (code) => {
-    cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class$="code-block-pro"] textarea')
-        .should('have.focus')
-        .type(code);
-    cy.get('.wp-block[class$="code-block-pro"] textarea').clear().type(code);
-    cy.get('.wp-block[class$="code-block-pro"] textarea').should(
-        'have.value',
-        code,
-    );
-});
+// Features
+Cypress.Commands.add('setLanguage', (language) => setLanguage(language));
+Cypress.Commands.add('setTheme', (theme) => setTheme(theme));
+Cypress.Commands.add('addCode', (code) => addCode(code));
+Cypress.Commands.add('setHeader', (header) => setHeader(header));
+Cypress.Commands.add('setFooter', (footer) => setFooter(footer));

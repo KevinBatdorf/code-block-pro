@@ -159,11 +159,12 @@ export const Edit = ({
                 padding={{
                     top: disablePadding ? 0 : 16,
                     bottom: disablePadding || hasFooter ? 0 : 16,
-                    left:
-                        (disablePadding && !lineNumbersWidth ? 0 : 16) +
-                        // If line numbers are disabled, just offset the 12px padding
-                        (lineNumbersWidth ?? -12) +
-                        12,
+                    left: (() => {
+                        if (!lineNumbers && disablePadding) return 0;
+                        if (!lineNumbers) return 16;
+                        if (disablePadding) return (lineNumbersWidth ?? 0) + 16;
+                        return (lineNumbersWidth ?? 0) + 32;
+                    })(),
                     right: 0,
                 }}
                 style={{ backgroundColor, color }}

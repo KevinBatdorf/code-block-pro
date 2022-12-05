@@ -3,6 +3,9 @@ on: push
 jobs:
     build:
         name: Build zip file
+        concurrency:
+            group: production - ${{ github.event.pull_request.number || github.ref }}
+            cancel-in-progress: true
         runs-on: ubuntu-latest
         steps:
             - name: Check out code

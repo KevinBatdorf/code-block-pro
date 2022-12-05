@@ -55,7 +55,9 @@ export const setPostContent = (content) => {
 export const openBlockInserter = () => {
     cy.get('button[aria-label="Toggle block inserter"]').then((button) => {
         if (button.attr('aria-pressed') === 'false') {
-            cy.get('button[aria-label="Toggle block inserter"]').click();
+            cy.get('button[aria-label="Toggle block inserter"]').click({
+                force: true,
+            });
         }
     });
 };
@@ -69,7 +71,7 @@ export const closeBlockInserter = () => {
 export const openBlockSettingsSideBar = () => {
     cy.get('button[aria-label="Settings"]').then((button) => {
         if (button.attr('aria-pressed') === 'false') {
-            button.click();
+            button.trigger('click');
             cy.get('button[aria-label="Settings"]').should(
                 'have.attr',
                 'aria-pressed',
@@ -78,31 +80,36 @@ export const openBlockSettingsSideBar = () => {
         }
     });
 };
-export const openThemesPanel = () => {
+export const openSideBarPanel = (label) => {
     cy.openBlockSettingsSideBar();
     cy.get('div[aria-label="Editor settings"] button')
-        .contains('Themes')
+        .contains(label)
         .then((button) => {
             if (button.attr('aria-expanded') === 'false') {
-                button.click();
+                button.trigger('click');
                 cy.get('div[aria-label="Editor settings"] button')
-                    .contains('Themes')
+                    .contains(label)
                     .should('have.attr', 'aria-expanded', 'true');
             }
         });
 };
 export const addBlock = (slug) => {
-    cy.openBlockInserter();
     cy.window().then((win) => {
-        // If it's not open, open it first
-        cy.waitUntil(() =>
-            win.document.querySelector(`button[class*="${slug}"]`),
-        );
-        cy.get(`button[class*="${slug}"]`).click();
+        const block = win.wp.blocks.createBlock(slug);
+        win.wp.data.dispatch('core/block-editor').insertBlock(block);
     });
 };
 export const wpDataSelect = (store, selector, ...parameters) => {
     cy.window().then((win) => {
         return win.wp.data.select(store)[selector](...parameters);
     });
+};
+
+export const previewCurrentPage = () => {
+    cy.saveDraft();
+    cy.url().then((url) => {
+        const page = url.split('post=')[1].split('&')[0];
+        cy.visit(`/?page_id=${page}&preview=true`);
+    });
+    cy.get('body').should('not.be.empty');
 };

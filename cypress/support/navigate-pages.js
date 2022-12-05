@@ -1,14 +1,13 @@
 import { addQueryArgs } from '@wordpress/url';
-import { SERVER_URL } from '../constants';
 
 export const visitToLoginPage = (query = '') => {
     const question = query.startsWith('?') ? '' : '?';
-    cy.visit(`${SERVER_URL}/wp-login.php${question}${query}`);
+    cy.visit(`wp-login.php${question}${query}`);
 };
 
 export const visitAdminPage = (adminPath = '', query = '') => {
     const question = query.startsWith('?') ? '' : '?';
-    cy.visit(`${SERVER_URL}/wp-admin/${adminPath}${question}${query}`);
+    cy.visit(`wp-admin/${adminPath}${question}${query}`);
 };
 
 export const visitPageEditor = (query, skipWelcomeGuide = true) => {

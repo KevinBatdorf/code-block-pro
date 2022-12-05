@@ -151,63 +151,12 @@ export const SidebarControls = ({
                 </div>
             </PanelBody>
             <PanelBody
-                title={__('Styling', 'code-block-pro')}
-                initialOpen={false}>
-                <div className="code-block-pro-editor">
-                    <h2 className="m-0">{__('Font Size', 'code-block-pro')}</h2>
-                    <FontSizeSelect
-                        value={attributes.fontSize}
-                        onChange={(fontSize) => {
-                            setAttributes({ fontSize });
-                            updateThemeHistory({ ...attributes, fontSize });
-                        }}
-                    />
-                    <h2 className="m-0">
-                        {__('Line Height', 'code-block-pro')}
-                    </h2>
-                    <FontLineHeightSelect
-                        value={attributes.lineHeight}
-                        onChange={(lineHeight) => {
-                            setAttributes({ lineHeight });
-                            updateThemeHistory({
-                                ...attributes,
-                                lineHeight,
-                            });
-                        }}
-                    />
-                    <FontFamilySelect
-                        value={attributes.fontFamily}
-                        onChange={(fontFamily) => {
-                            setAttributes({ fontFamily });
-                            updateThemeHistory({
-                                ...attributes,
-                                fontFamily,
-                            });
-                        }}
-                    />
-                    <CheckboxControl
-                        label={__('Clamp Values', 'code-block-pro')}
-                        help={__(
-                            'Check this if your font sizes are unusually large or tiny.',
-                            'code-block-pro',
-                        )}
-                        checked={attributes.clampFonts}
-                        onChange={(clampFonts) => {
-                            setAttributes({ clampFonts });
-                            updateThemeHistory({
-                                ...attributes,
-                                clampFonts,
-                            });
-                        }}
-                    />
-                </div>
-            </PanelBody>
-            <PanelBody
                 title={__('Line Settings', 'code-block-pro')}
                 initialOpen={false}>
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-show-line-numbers">
                         <CheckboxControl
+                            data-cy="show-line-numbers"
                             label={__('Enable line numbers', 'code-block-pro')}
                             help={__(
                                 'Enable line numbers and set a starting number.',
@@ -281,10 +230,77 @@ export const SidebarControls = ({
                 />
             </PanelBody>
             <PanelBody
+                title={__('Styling', 'code-block-pro')}
+                initialOpen={false}>
+                <div
+                    className="code-block-pro-editor"
+                    data-cy="font-size-select">
+                    <h2 className="m-0">{__('Font Size', 'code-block-pro')}</h2>
+                    <FontSizeSelect
+                        value={attributes.fontSize}
+                        onChange={(fontSize) => {
+                            setAttributes({ fontSize });
+                            updateThemeHistory({ ...attributes, fontSize });
+                        }}
+                    />
+                </div>
+                <div
+                    className="code-block-pro-editor"
+                    data-cy="font-line-height-select">
+                    <h2 className="m-0">
+                        {__('Line Height', 'code-block-pro')}
+                    </h2>
+                    <FontLineHeightSelect
+                        value={attributes.lineHeight}
+                        onChange={(lineHeight) => {
+                            setAttributes({ lineHeight });
+                            updateThemeHistory({
+                                ...attributes,
+                                lineHeight,
+                            });
+                        }}
+                    />
+                </div>
+                <div
+                    className="code-block-pro-editor"
+                    data-cy="font-family-select">
+                    <FontFamilySelect
+                        value={attributes.fontFamily}
+                        onChange={(fontFamily) => {
+                            setAttributes({ fontFamily });
+                            updateThemeHistory({
+                                ...attributes,
+                                fontFamily,
+                            });
+                        }}
+                    />
+                </div>
+                <div className="code-block-pro-editor" data-cy="clamp-fonts">
+                    <div className="mt-6">
+                        <CheckboxControl
+                            label={__('Clamp Values', 'code-block-pro')}
+                            help={__(
+                                'Check this if your font sizes are unusually large or tiny.',
+                                'code-block-pro',
+                            )}
+                            checked={attributes.clampFonts}
+                            onChange={(clampFonts) => {
+                                setAttributes({ clampFonts });
+                                updateThemeHistory({
+                                    ...attributes,
+                                    clampFonts,
+                                });
+                            }}
+                        />
+                    </div>
+                </div>
+            </PanelBody>
+            <PanelBody
                 title={__('Extra Settings', 'code-block-pro')}
                 initialOpen={false}>
                 <BaseControl id="code-block-pro-show-copy-button">
                     <CheckboxControl
+                        data-cy="copy-button"
                         label={__('Copy Button', 'code-block-pro')}
                         help={__(
                             'If checked, users will be able to copy your code snippet to their clipboard.',
@@ -299,6 +315,7 @@ export const SidebarControls = ({
                 </BaseControl>
                 <BaseControl id="code-block-pro-disable-padding">
                     <CheckboxControl
+                        data-cy="disable-padding"
                         label={__('Disable Padding', 'code-block-pro')}
                         help={__(
                             'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content. You maybe need to add your own padding with CSS.',
