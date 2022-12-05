@@ -15,7 +15,7 @@
 .code-block-pro-editor *:after,
 .code-block-pro-editor *:before {
     box-sizing: border-box;
-    border: 0 solid #e5e7eb;
+    /* border: 0 solid #e5e7eb; */
 }
 @tailwind base;
 @tailwind components;
