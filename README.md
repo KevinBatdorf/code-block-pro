@@ -22,7 +22,7 @@ View this block plugin [on WordPress.org](https://wordpress.org/plugins/code-blo
 ## Tips
 - Try combining line highlighting with the blur effect to add some extra depth
 - All settings are per block, but some settings are remembered when you add the next block.
-- Add a link in the code footer (some footers support this, not all) that points to a https://codepen.io demo
+- Add a link in the code footer (some footers support this, not all) that points to a https://codepen.io demo.
 
 ## Example Screenshots
 ![alt text](.wordpress-org/screenshot-3.png "Example 3")
