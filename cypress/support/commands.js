@@ -14,6 +14,7 @@ import {
     saveDraft,
     setPostContent,
     wpDataSelect,
+    previewCurrentPage,
 } from './gutenberg';
 import { login, logout } from './login-logout';
 import {
@@ -67,6 +68,7 @@ Cypress.Commands.add('getCurrentPostObject', () => {
 Cypress.Commands.add('wpDataSelect', (store, selector, ...parameters) =>
     wpDataSelect(store, selector, ...parameters),
 );
+Cypress.Commands.add('previewCurrentPage', () => previewCurrentPage());
 
 // Server
 Cypress.Commands.add('resetDatabase', () => resetDatabase());

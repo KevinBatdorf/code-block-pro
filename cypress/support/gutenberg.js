@@ -104,3 +104,12 @@ export const wpDataSelect = (store, selector, ...parameters) => {
         return win.wp.data.select(store)[selector](...parameters);
     });
 };
+
+export const previewCurrentPage = () => {
+    cy.saveDraft();
+    cy.url().then((url) => {
+        const page = url.split('post=')[1].split('&')[0];
+        cy.visit(`/?page_id=${page}&preview=true`);
+    });
+    cy.get('body').should('not.be.empty');
+};
