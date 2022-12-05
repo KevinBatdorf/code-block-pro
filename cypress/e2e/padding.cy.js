@@ -104,26 +104,26 @@ context('Line numbers', () => {
             .check()
             .should('be.checked');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
-            'have.css',
-            'padding',
-            '0px 0px 0px 24.4375px',
-        );
-        cy.getPostContent(
-            '.wp-block[class$="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
-        ).should('have.css', 'padding', '0px 0px 0px 24.4375px');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should(
+                'include',
+                '0px 0px 0px 2', // more like 24.4375px but varies
+            );
 
         // Tests that the padding expands as the line number width grows
         cy.addCode('1\n2\n3\n4\n5\n6\n7\n8\n9\n10');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
-            'have.css',
-            'padding',
-            '0px 0px 0px 32.8594px',
-        );
-        cy.getPostContent(
-            '.wp-block[class$="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
-        ).should('have.css', 'padding', '0px 0px 0px 32.8594px');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should(
+                'not.include',
+                '0px 0px 0px 2', // more like 32.8594px but varies
+            )
+            .should(
+                'include',
+                '0px 0px 0px 3', // more like 32.8594px but varies
+            );
 
         cy.previewCurrentPage();
 
