@@ -243,6 +243,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Fix: Removes inner focus outline from Gutenberg update
+
 = 1.9.3 - 2022-12-05 =
 - Fix: Adjusted editor padding for line numbers to better match the front end
 - Fix: Removed the TW border default in the editor as it was overriding some wp defaults
