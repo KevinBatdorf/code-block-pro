@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.1
-Stable tag:        1.9.3
+Stable tag:        1.10.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -243,9 +243,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.10.0 - 2022-12-21 =
 - Feature: Add footer with left aligned text
 - Tweak: Load scripts (copy button, highlight) on multiple lifecycle points
-- Tweak: Make the above scripts idempotent so they can run multiple times
+- Tweak: Make the above scripts idempotent so they can run multiple times safely
 - Fix: Removes inner focus outline from Gutenberg update
 
 = 1.9.3 - 2022-12-05 =
