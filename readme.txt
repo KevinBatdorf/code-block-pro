@@ -243,6 +243,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Add footer with left aligned text
 - Tweak: Load scripts (copy button, highlight) on multiple lifecycle points
 - Tweak: Make the above scripts idempotent so they can run multiple times
 

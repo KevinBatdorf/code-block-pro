@@ -37,10 +37,12 @@ export const SidebarControls = ({
     const { setPreviousSettings } = useGlobalStore();
     const { headerType, footerType } = attributes;
 
+    const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
+
     const showHeaderTextEdit = ['simpleString'].includes(headerType);
-    const showFooterTextEdit = ['simpleStringEnd'].includes(footerType);
-    const showFooterLinkEdit = ['simpleStringEnd'].includes(footerType);
-    const showFooterLinkTargetEdit = ['simpleStringEnd'].includes(footerType);
+    const showFooterTextEdit = footersNeedingLinks.includes(footerType);
+    const showFooterLinkEdit = footersNeedingLinks.includes(footerType);
+    const showFooterLinkTargetEdit = footersNeedingLinks.includes(footerType);
 
     return (
         <InspectorControls>
