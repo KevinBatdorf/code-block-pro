@@ -2,6 +2,7 @@ import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Attributes } from '../../types';
 import { SimpleStringEnd } from './footers/SimpleStringEnd';
+import { SimpleStringStart } from './footers/SimpleStringStart';
 
 type FooterSelectProps = {
     attributes: Attributes;
@@ -14,6 +15,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
     const types = {
         none: __('None', 'code-block-pro'),
         simpleStringEnd: __('Simple string end', 'code-block-pro'),
+        simpleStringStart: __('Simple string start', 'code-block-pro'),
     };
 
     return (
@@ -30,7 +32,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
                             : type
                     }
                     help={
-                        ['simpleStringEnd'].includes(slug)
+                        ['simpleStringEnd', 'SimpleStringStart'].includes(slug)
                             ? __('Update text in Settings', 'code-block-pro')
                             : undefined
                     }
@@ -61,6 +63,9 @@ export const FooterType = (attributes: Partial<Attributes>) => {
     const { footerType } = attributes;
     if (footerType === 'simpleStringEnd') {
         return <SimpleStringEnd {...attributes} />;
+    }
+    if (footerType === 'simpleStringStart') {
+        return <SimpleStringStart {...attributes} />;
     }
     return null;
 };

@@ -1,11 +1,13 @@
 import copy from 'copy-to-clipboard';
 
-// Handle copy button
-addEventListener('DOMContentLoaded', () => {
+const handleCopyButton = () => {
     const buttons = Array.from(
-        document.querySelectorAll('.code-block-pro-copy-button'),
+        document.querySelectorAll(
+            '.code-block-pro-copy-button:not(.cbp-cb-loaded)',
+        ),
     );
     buttons.forEach((button) => {
+        button.classList.add('cbp-cb-loaded');
         // Setting it to block here lets users deactivate the plugin safely
         button.style.display = 'block';
         button.addEventListener('click', (event) => {
@@ -19,16 +21,18 @@ addEventListener('DOMContentLoaded', () => {
             }, 2000);
         });
     });
-});
+};
 
-// Handle highlighter
-addEventListener('DOMContentLoaded', () => {
+const handleHighlighter = () => {
     const codeBlocks = Array.from(
-        document.querySelectorAll('.wp-block-kevinbatdorf-code-block-pro pre'),
+        document.querySelectorAll(
+            '.wp-block-kevinbatdorf-code-block-pro pre:not(.cbp-hl-loaded)',
+        ),
     );
 
     codeBlocks.forEach((codeBlock) => {
-        // search for highlights
+        codeBlock.classList.add('cbp-hl-loaded');
+        // Search for highlights
         const highlighters = codeBlock.querySelectorAll('.cbp-line-highlight');
         if (!highlighters.length) return;
 
@@ -60,18 +64,18 @@ addEventListener('DOMContentLoaded', () => {
             );
         });
     });
-});
+};
 
-// Handle font loading
-addEventListener('DOMContentLoaded', () => {
+const handleFontLoading = () => {
     if (!window.codeBlockPro?.pluginUrl) return;
+    const elements = Array.from(
+        document.querySelectorAll(
+            '[data-code-block-pro-font-family]:not(.cbp-ff-loaded)',
+        ) || [],
+    );
+    elements.forEach((e) => e.classList.add('cbp-ff-loaded'));
     const fontsToLoad = new Set(
-        Array.from(
-            document.querySelectorAll('[data-code-block-pro-font-family]') ??
-                [],
-        )
-            .map((f) => f.dataset.codeBlockProFontFamily)
-            .filter(Boolean),
+        elements.map((f) => f.dataset.codeBlockProFontFamily).filter(Boolean),
     );
     [...fontsToLoad].forEach(async (fontName) => {
         const font = new FontFace(
@@ -81,4 +85,15 @@ addEventListener('DOMContentLoaded', () => {
         await font.load();
         document.fonts.add(font);
     });
-});
+};
+
+const runAll = () => {
+    handleCopyButton();
+    handleHighlighter();
+    handleFontLoading();
+};
+
+// Functions are idempotent, so we can run them on load and DOMContentLoaded
+runAll();
+window.addEventListener('DOMContentLoaded', runAll);
+window.addEventListener('load', runAll);
