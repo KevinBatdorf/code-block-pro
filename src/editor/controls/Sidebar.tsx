@@ -8,7 +8,6 @@ import {
     CheckboxControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Theme } from 'shiki';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useLanguageStore } from '../../state/language';
@@ -22,8 +21,7 @@ import {
 } from '../components/FontSelect';
 import { FooterSelect } from '../components/FooterSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
-// import { Notice } from '../components/Notice';
-import { ThemeSelect } from '../components/ThemeSelect';
+import { ThemesPanel } from '../components/ThemesPanel';
 import { BlurControl } from './BlurControl';
 import { HighlightingControl } from './HighlightingControl';
 
@@ -149,7 +147,6 @@ export const SidebarControls = ({
                             />
                         </BaseControl>
                     )}
-                    {/* <Notice /> */}
                 </div>
             </PanelBody>
             <PanelBody
@@ -220,17 +217,10 @@ export const SidebarControls = ({
                     }}
                 />
             </PanelBody>
-            <PanelBody
-                title={__('Themes', 'code-block-pro')}
-                initialOpen={false}>
-                <ThemeSelect
-                    {...attributes}
-                    onClick={(slug: Theme) => {
-                        setAttributes({ theme: slug });
-                        updateThemeHistory({ ...attributes, theme: slug });
-                    }}
-                />
-            </PanelBody>
+            <ThemesPanel
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <PanelBody
                 title={__('Styling', 'code-block-pro')}
                 initialOpen={false}>

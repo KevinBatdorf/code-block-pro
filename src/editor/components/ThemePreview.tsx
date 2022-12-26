@@ -72,7 +72,7 @@ float Q_rsqrt( float number )
             id={id}
             type="button"
             onClick={onClick}
-            className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto"
+            className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto max-h-80 overflow-y-hidden"
             style={{ backgroundColor, minHeight: '50px' }}>
             {loading || error || !inView ? (
                 <span

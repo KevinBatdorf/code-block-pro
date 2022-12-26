@@ -5,6 +5,7 @@ import {
     useRef,
 } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
+import { sprintf, __ } from '@wordpress/i18n';
 import { colord } from 'colord';
 import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
@@ -140,6 +141,22 @@ export const Edit = ({
         fontFamily,
         lineHeight,
     ]);
+
+    if (!loading && !highlighter && code) {
+        return (
+            <div
+                className="p-8 px-4 text-left"
+                style={{ backgroundColor, color }}>
+                {sprintf(
+                    __(
+                        'Theme %s not found. Please select a different theme.',
+                        'code-block-pro',
+                    ),
+                    theme,
+                )}
+            </div>
+        );
+    }
 
     if ((loading && code) || error) {
         return (
