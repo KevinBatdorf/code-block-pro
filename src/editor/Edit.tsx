@@ -142,7 +142,7 @@ export const Edit = ({
         lineHeight,
     ]);
 
-    if (!loading && !highlighter && code) {
+    if (!loading && !highlighter) {
         return (
             <div
                 className="p-8 px-4 text-left"
