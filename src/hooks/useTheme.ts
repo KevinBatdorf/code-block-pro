@@ -18,7 +18,7 @@ let once = false;
 export const useTheme = ({ theme, lang, ready = true }: Params) => {
     if (!once) {
         once = true;
-        const assetDir = window.codeBlockPro?.pluginUrl + '/build/shiki/';
+        const assetDir = window.codeBlockPro?.pluginUrl + 'build/shiki/';
         setCDN(
             applyFilters('blocks.codeBlockPro.assetDir', assetDir) as string,
         );

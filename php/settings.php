@@ -7,6 +7,7 @@ add_action('rest_api_init', 'code_block_pro_register_settings');
 if (!function_exists('code_block_pro_register_settings')) {
     function code_block_pro_register_settings()
     {
+        // This one should have been named "theme settings" or simliar
         register_setting('code_block_pro_settings', 'code_block_pro_settings', [
             'type' => 'object',
             'show_in_rest' => [
@@ -23,6 +24,24 @@ if (!function_exists('code_block_pro_register_settings')) {
                         'previousClampFonts' => [ 'type' => ['boolean', 'null']],
                         'previousDisablePadding' => [ 'type' => ['boolean', 'null']],
                         'previousLineNumbers' => [ 'type' => ['boolean', 'null']],
+                    ],
+                ],
+            ],
+        ]);
+        register_setting('code_block_pro_settings_2', 'code_block_pro_settings_2', [
+            'type' => 'object',
+            'default' => [
+                'version' => 0,
+                'seenNotices' => [],
+                'hiddenThemes' => [],
+            ],
+            'show_in_rest' => [
+                'schema' => [
+                    'type' => 'object',
+                    'properties' => [
+                        "version" => [ 'type' => ['string', 'number'] ],
+                        'seenNotices' => [ 'type' => ['array', 'null']],
+                        'hiddenThemes' => [ 'type' => ['array', 'null']],
                     ],
                 ],
             ],
