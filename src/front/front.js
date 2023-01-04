@@ -87,13 +87,15 @@ const handleFontLoading = () => {
     });
 };
 
-const runAll = () => {
+const init = () => {
     handleCopyButton();
     handleHighlighter();
     handleFontLoading();
 };
 
 // Functions are idempotent, so we can run them on load and DOMContentLoaded
-runAll();
-window.addEventListener('DOMContentLoaded', runAll);
-window.addEventListener('load', runAll);
+init();
+// Useful for when the DOM is modified or loaded in late
+window.codeBlockProInit = init;
+window.addEventListener('DOMContentLoaded', init);
+window.addEventListener('load', init);
