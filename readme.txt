@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.1
-Stable tag:        1.10.0
+Stable tag:        1.11.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -238,9 +238,12 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-- Feature: Add theme visibility manager to scope visible themes
+
+= 1.11.0 - 2023-01-03 =
+- Feature: Add theme name text search
+- Feature: Add theme visibility manager to limit visible themes
 - Tweak: Show better error when theme is missing
-- Fix: Fix course url double slash
+- Fix: Renderer source url has a double slash
 
 = 1.10.0 - 2022-12-21 =
 - Feature: Add footer with left aligned text
