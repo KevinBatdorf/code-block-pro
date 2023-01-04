@@ -1,6 +1,7 @@
+import { useEffect, useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
-import { getHighlighter, Lang, setCDN, Theme } from 'shiki';
+import { getHighlighter, Lang, setCDN, Theme, setWasm } from 'shiki';
 import useSWRImmutable from 'swr/immutable';
 
 type Params = { theme: Theme; lang: Lang; ready?: boolean };
@@ -16,6 +17,7 @@ const fetcher = ({ theme, lang, ready }: Params) => {
 let once = false;
 
 export const useTheme = ({ theme, lang, ready = true }: Params) => {
+    const [wasmLoaded, setWasmFileLoaded] = useState(false);
     if (!once) {
         once = true;
         const assetDir = window.codeBlockPro?.pluginUrl + 'build/shiki/';
@@ -24,9 +26,18 @@ export const useTheme = ({ theme, lang, ready = true }: Params) => {
         );
     }
     const { data: highlighter, error } = useSWRImmutable(
-        { theme, lang, ready },
+        { theme, lang, ready: ready && wasmLoaded },
         fetcher,
     );
+    useEffect(() => {
+        const assetDir = window.codeBlockPro?.pluginUrl + 'build/shiki/';
+        fetch(assetDir + 'dist/onig.wasm')
+            .then((res) => res.arrayBuffer())
+            .then((wasmBuffer) => {
+                setWasm(wasmBuffer);
+                setWasmFileLoaded(true);
+            });
+    }, []);
 
     return { highlighter, error, loading: !highlighter && !error };
 };
