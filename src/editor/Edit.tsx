@@ -161,7 +161,7 @@ export const Edit = ({
     if ((loading && code) || error) {
         return (
             <div
-                className="p-8 px-4 text-left"
+                className="p-6 px-4 text-left"
                 style={{ backgroundColor, color }}>
                 {error?.message ?? ''}
             </div>
