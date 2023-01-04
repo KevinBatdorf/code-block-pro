@@ -53,7 +53,7 @@
         "@wordpress/i18n": "^4.24.0",
         "copy-to-clipboard": "^3.3.3",
         "react-simple-code-editor": "^0.13.1",
-        "shiki": "^0.12.1",
+        "shiki": "^0.11.1",
         "swr": "^2.0.0",
         "zustand": "^4.2.0"
     }
