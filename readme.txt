@@ -240,6 +240,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 = 1.11.2 - 2023-01-04 =
 - Fix: Update shiki renderer wasm loader to use ArrayBuffer
+- Tweak: Expose init function as global to allow late init
 
 = 1.11.1 - 2023-01-04 =
 - Fix: Revert code parser as there is a wasm loading error
