@@ -7,7 +7,7 @@ import useSWRImmutable from 'swr/immutable';
 type Params = { theme: Theme; lang: Lang; ready?: boolean };
 
 const fetcher = ({ theme, lang, ready }: Params) => {
-    if (!ready) throw new Error(__('Loading...', 'code-block-pro'));
+    if (!ready) throw new Error();
     const themeFiltered = applyFilters(
         'blocks.codeBlockPro.theme',
         theme,
@@ -39,5 +39,9 @@ export const useTheme = ({ theme, lang, ready = true }: Params) => {
             });
     }, []);
 
-    return { highlighter, error, loading: !highlighter && !error };
+    return {
+        highlighter,
+        error,
+        loading: (!highlighter && !error) || !wasmLoaded,
+    };
 };
