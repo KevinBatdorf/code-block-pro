@@ -239,6 +239,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 
+= 1.11.1 - 2023-01-04 =
+- Fix: Revert code parser as there is a wasm loading error
+
 = 1.11.0 - 2023-01-03 =
 - Feature: Add theme name text search
 - Feature: Add theme visibility manager to limit visible themes
