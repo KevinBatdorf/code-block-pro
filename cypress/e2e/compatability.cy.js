@@ -1,12 +1,13 @@
+beforeEach(() => {
+    cy.resetDatabase();
+    cy.loginUser();
+});
+afterEach(() => {
+    // make sure we can uninstall prismatic
+    cy.uninstallPlugin('prismatic');
+    cy.logoutUser();
+});
 context('Compatability checks', () => {
-    before(() => {
-        cy.loginUser();
-    });
-    after(() => {
-        // make sure we can uninstall prismatic
-        cy.uninstallPlugin('prismatic');
-        cy.logoutUser();
-    });
     it('Installs alongside Prismatic with no errors', () => {
         cy.installPlugin('prismatic');
         // make sure we don't see thhe word fatal or error

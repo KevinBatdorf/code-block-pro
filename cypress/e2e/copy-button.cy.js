@@ -1,9 +1,7 @@
-before(() => {
+beforeEach(() => {
     cy.resetDatabase();
     cy.clearBrowserStorage();
     cy.loginUser();
-});
-beforeEach(() => {
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
     cy.getPostContent('.wp-block[class$="code-block-pro"]').should('exist');
@@ -11,7 +9,7 @@ beforeEach(() => {
     cy.focusBlock('code-block-pro', 'textarea');
     cy.get('.wp-block[class$="code-block-pro"] textarea').should('have.focus');
 });
-after(() => {
+afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
     cy.logoutUser();
 });
