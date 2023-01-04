@@ -38,4 +38,29 @@ context('Theme checks', () => {
             .invoke('html')
             .should('contain', '<span style="color: #91B4D5">const</span>');
     });
+
+    it('Themes can be disabled and hidden from view', () => {
+        cy.openSideBarPanel('Themes');
+        cy.get('div[aria-label="Editor settings"] button')
+            .contains('Themes')
+            .parents('.interface-interface-skeleton__sidebar')
+            .scrollTo('bottom');
+        cy.get('#code-block-pro-theme-nord').should('exist');
+        cy.get('[data-cy="manage-themes"]').should('exist').click();
+        cy.get('.components-modal__header-heading').should(
+            'have.text',
+            'Manage Themes',
+        );
+        cy.get('#code-block-pro-theme-manager label').contains('Nord').click();
+        cy.get('[aria-label="Close dialog"]').click();
+        cy.get('#code-block-pro-theme-nord').should('not.exist');
+    });
+
+    it('Themes can be filtered via search', () => {
+        cy.openSideBarPanel('Themes');
+        cy.get('#code-block-pro-theme-monokai').should('exist');
+        cy.get('#code-block-pro-search-themes').type('monokai');
+        cy.get('#code-block-pro-theme-monokai').should('exist');
+        cy.get('#code-block-pro-theme-dracula').should('not.exist');
+    });
 });

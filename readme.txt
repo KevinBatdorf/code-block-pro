@@ -43,11 +43,6 @@ Beautiful syntax highlighting that makes sense.
 - All settings are per block, but some settings are remembered when you add the next block.
 - Add a link in the code footer (some footers support this, not all) that points to a https://codepen.io demo
 
-= Coming soon =
-- Diff highlighting
-- More themes, headers, footers
-- In browser, safe code execution - experimental
-
 = Included VS Code Themes =
 - Dark Plus
 - Dracula Soft
@@ -242,6 +237,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+- Feature: Add theme visibility manager to scope visible themes
+- Tweak: Show better error when theme is missing
+- Fix: Fix course url double slash
 
 = 1.10.0 - 2022-12-21 =
 - Feature: Add footer with left aligned text

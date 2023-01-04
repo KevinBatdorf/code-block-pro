@@ -11,8 +11,8 @@ View this block plugin [on WordPress.org](https://wordpress.org/plugins/code-blo
 - Line numbers
 - Line highlighting
 - Blur highlighting
-- Header styles (more coming)
-- Footer styles (more coming)
+- Header styles
+- Footer styles
 - Optionally add a copy button to let users copy the code
 - Native Gutenberg block output - no special requirements
 - Core functionality works in headless mode (see FAQ)

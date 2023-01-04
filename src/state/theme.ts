@@ -58,7 +58,7 @@ export const useThemeStore = create<ThemeType>()(
                 getItem: async (name: string) => {
                     const settings = await getSettings(name);
                     return JSON.stringify({
-                        version: settings.version,
+                        version: settings?.version ?? 0,
                         state: settings,
                     });
                 },
