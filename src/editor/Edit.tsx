@@ -4,7 +4,9 @@ import {
     useLayoutEffect,
     useRef,
 } from '@wordpress/element';
+import { escapeHTML } from '@wordpress/escape-html';
 import { applyFilters } from '@wordpress/hooks';
+import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
 import { colord } from 'colord';
 import Editor from 'react-simple-code-editor';
@@ -39,7 +41,8 @@ export const Edit = ({
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
-    const handleChange = (code: string) => setAttributes({ code });
+    const handleChange = (code: string) =>
+        setAttributes({ code: escapeHTML(code) });
     const { previousLanguage } = useLanguageStore();
     const { highlighter, error, loading } = useTheme({
         theme,
@@ -80,7 +83,7 @@ export const Edit = ({
         setAttributes({
             codeHTML: applyFilters(
                 'blocks.codeBlockPro.codeHTML',
-                highlighter.codeToHtml(code, {
+                highlighter.codeToHtml(decodeEntities(code), {
                     lang: language ?? previousLanguage,
                     lineOptions: [...getHighlights(), ...getBlurs()],
                 }),
@@ -171,7 +174,7 @@ export const Edit = ({
     return (
         <div ref={textAreaRef}>
             <Editor
-                value={code}
+                value={decodeEntities(code)}
                 onValueChange={handleChange}
                 padding={{
                     top: disablePadding ? 0 : 16,
@@ -193,7 +196,7 @@ export const Edit = ({
                 }
                 highlight={(code: string) =>
                     highlighter
-                        ?.codeToHtml(code, {
+                        ?.codeToHtml(decodeEntities(code), {
                             lang: language ?? previousLanguage,
                             lineOptions: [...getHighlights(), ...getBlurs()],
                         })
