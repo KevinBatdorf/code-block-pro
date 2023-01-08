@@ -238,6 +238,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Fix: encode and deocde html entities
+
 = 1.11.2 - 2023-01-04 =
 - Fix: Update shiki renderer wasm loader to use ArrayBuffer
 - Tweak: Expose init function as global to allow late init
