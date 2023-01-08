@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.1
-Stable tag:        1.11.2
+Stable tag:        1.11.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -238,7 +238,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-- Fix: encode and deocde html entities
+= 1.11.3 - 2023-01-08 =
+- Fix: Encode and deocde html entities to prevent script tag bug
 
 = 1.11.2 - 2023-01-04 =
 - Fix: Update shiki renderer wasm loader to use ArrayBuffer

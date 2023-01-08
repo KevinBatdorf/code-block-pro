@@ -1,7 +1,7 @@
 {
     "name": "code-block-pro",
     "version": "0.1.0",
-    "description": "My amazing block",
+    "description": "Code Block Pro - Beautiful syntax highlighting",
     "author": "Kevin Batdorf",
     "license": "GPL-2.0-or-later",
     "main": "build/index.js",
