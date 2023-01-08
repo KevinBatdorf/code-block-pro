@@ -239,7 +239,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 = 1.11.3 - 2023-01-08 =
-- Fix: Encode and deocde html entities to prevent script tag bug
+- Fix: Encode and decode html entities to prevent script tag bug
 
 = 1.11.2 - 2023-01-04 =
 - Fix: Update shiki renderer wasm loader to use ArrayBuffer
