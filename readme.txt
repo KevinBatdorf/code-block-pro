@@ -12,7 +12,7 @@ Code highlighting powered by the VS Code engine. Performance focused. No bloat.
 
 Show off your beautiful code, don't just display it! This block plugin provides you with a code block editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
 
-Beautiful syntax highlighting that makes sense.
+Beautiful syntax highlighting that makes sense. Visit [code-block-pro.com](https://code-block-pro.com/?utm_campaign=plugin&utm_source=readme-body&utm_medium=textlink) to learn more.
 
 = Values =
 - Performance first - Web vitals. Pre-rendering. Minimal asset loading.
@@ -72,6 +72,8 @@ Beautiful syntax highlighting that makes sense.
 - Solarized Light
 - Vitesse Dark
 - Vitesse Light
+
+Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes?utm_campaign=themes&utm_source=readme-body&utm_medium=textlink)
 
 = Included Coding Languages =
 - ABAP
