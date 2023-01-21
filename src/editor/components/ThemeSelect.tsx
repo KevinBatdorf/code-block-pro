@@ -1,11 +1,11 @@
-import { BaseControl } from '@wordpress/components';
+import { BaseControl, ExternalLink } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Lang, Theme } from 'shiki';
 import defaultThemes from '../../defaultThemes.json';
 import { useSettingsStore } from '../../state/settings';
+import { getPriorityThemes } from '../../util/themes';
 import { ThemePreview } from '../components/ThemePreview';
-import { Notice } from './Notice';
 
 type ThemeSelectProps = {
     theme: Theme;
@@ -29,19 +29,58 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
         .map(([slug, { name, priority }]) => ({ name, slug, priority }))
         .sort((a, b) => (a.priority === b.priority ? 0 : a.priority ? -1 : 1));
 
+    const priorityThemes = getPriorityThemes();
+
     return (
         <div className="code-block-pro-editor">
-            {themesSorted.map(({ name, slug }) => (
+            {props.search?.length > 0 ? (
+                <BaseControl id="add-on-themes">
+                    {priorityThemes?.length > 0 ? null : (
+                        <div className="font-semibold text-base">
+                            <ExternalLink href="https://code-block-pro.com/?utm_campaign=notice&utm_source=search">
+                                {__(
+                                    'Get 25+ more themes here',
+                                    'code-block-pro',
+                                )}
+                            </ExternalLink>
+                        </div>
+                    )}
+                </BaseControl>
+            ) : null}
+            {themesSorted.slice(0, 4).map(({ name, slug }) => (
                 <ThemeItem key={slug} slug={slug} name={name} {...props} />
             ))}
-            <BaseControl id="add-on-themes">
-                <Notice
-                    seenKey={'add-on-themes'}
-                    href="https://code-block-pro.com"
-                    callback={console.log}
-                    message={'Click here for more themes'}
-                />
-            </BaseControl>
+            {props.search?.length > 0 ? null : (
+                <BaseControl id="add-on-themes">
+                    {priorityThemes?.length > 0 ? null : (
+                        <div className="font-semibold text-base">
+                            <ExternalLink href="https://code-block-pro.com/themes?utm_campaign=notice&utm_source=mid-themes">
+                                {__(
+                                    'Get 25+ more themes here',
+                                    'code-block-pro',
+                                )}
+                            </ExternalLink>
+                        </div>
+                    )}
+                </BaseControl>
+            )}
+            {themesSorted.slice(4).map(({ name, slug }) => (
+                <ThemeItem key={slug} slug={slug} name={name} {...props} />
+            ))}
+            {props.search?.length > 0 ? null : (
+                <BaseControl id="add-on-themes">
+                    {priorityThemes?.length > 0 ? null : (
+                        <div className="font-semibold text-base">
+                            <ExternalLink href="https://code-block-pro.com/themes?utm_campaign=notice&utm_source=below-themes">
+                                {__(
+                                    'Get 25+ more themes here',
+                                    'code-block-pro',
+                                )}
+                            </ExternalLink>
+                        </div>
+                    )}
+                </BaseControl>
+            )}
         </div>
     );
 };

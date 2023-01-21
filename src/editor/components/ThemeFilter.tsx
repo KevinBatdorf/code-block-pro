@@ -1,15 +1,16 @@
 import {
     BaseControl,
     ToggleControl,
+    ExternalLink,
     Button,
     TextControl,
     Modal,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
-import defaultThemes from '../../defaultThemes.json';
+import classNames from 'classnames';
 import { useSettingsStore } from '../../state/settings';
+import { getNormalThemes, getPriorityThemes } from '../../util/themes';
 
 export const ThemeFilter = ({
     search,
@@ -53,15 +54,7 @@ const ThemeVisibilitySelector = ({
     closeModal: () => void;
 }) => {
     const { hiddenThemes, toggleHiddenTheme } = useSettingsStore();
-    const themes = applyFilters(
-        'blocks.codeBlockPro.themes',
-        defaultThemes,
-    ) as Record<string, { name: string; priority?: boolean }>;
-    const themesNormalized = Object.entries(themes).map(
-        ([slug, { name, priority }]) => ({ name, slug, priority }),
-    );
-    const themesPriority = themesNormalized.filter(({ priority }) => priority);
-    const themesNormal = themesNormalized.filter(({ priority }) => !priority);
+    const priorityThemes = getPriorityThemes();
     return (
         <Modal
             title={__('Manage Themes', 'code-block-pro')}
@@ -70,13 +63,13 @@ const ThemeVisibilitySelector = ({
             <div
                 id="code-block-pro-theme-manager"
                 className="flex flex-col gap-4">
-                {themesPriority?.length > 0 ? (
+                {priorityThemes?.length > 0 ? (
                     <div className="flex flex-col gap-4 bg-gray-100 p-4">
                         <h2 className="m-0 my-2 text-center">
                             {__('Priority themes', 'code-block-pro')}
                         </h2>
                         <div className="md:grid gap-3 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {themesPriority.map(({ name, slug }) => (
+                            {priorityThemes.map(({ name, slug }) => (
                                 <ToggleControl
                                     key={slug}
                                     checked={!hiddenThemes.includes(slug)}
@@ -87,8 +80,14 @@ const ThemeVisibilitySelector = ({
                         </div>
                     </div>
                 ) : null}
-                <div className="md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-4">
-                    {themesNormal.map(({ name, slug }) => (
+                <div
+                    className={classNames(
+                        'md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3',
+                        {
+                            'p-4': priorityThemes?.length > 0,
+                        },
+                    )}>
+                    {getNormalThemes().map(({ name, slug }) => (
                         <ToggleControl
                             key={slug}
                             checked={!hiddenThemes.includes(slug)}
@@ -97,6 +96,13 @@ const ThemeVisibilitySelector = ({
                         />
                     ))}
                 </div>
+                {priorityThemes?.length > 0 ? null : (
+                    <div className="font-semibold text-base">
+                        <ExternalLink href="https://code-block-pro.com/themes?utm_campaign=notice&utm_source=manage-themes">
+                            {__('Get 25+ more themes here', 'code-block-pro')}
+                        </ExternalLink>
+                    </div>
+                )}
             </div>
         </Modal>
     );
