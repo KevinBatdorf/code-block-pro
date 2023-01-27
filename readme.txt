@@ -85,6 +85,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Apex
 - APL
 - AppleScript
+- Ara
 - ASM
 - Astro
 - Awk
@@ -109,6 +110,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - CUE
 - D
 - Dart
+- DAX
 - Diff
 - Docker
 - DreamMaker
@@ -167,6 +169,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - PLSQL
 - PostCSS
 - PowerShell
+- Power Query
 - Prisma
 - Prolog
 - Pug
@@ -241,6 +244,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+- Added Ara, Power Query, and DAX language support
 
 = 1.11.3 - 2023-01-08 =
 - Fix: Encode and decode html entities to prevent script tag bug

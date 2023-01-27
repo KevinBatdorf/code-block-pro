@@ -6,11 +6,26 @@
     "github-dark": { "name": "Github Dark" },
     "github-light": { "name": "Github Light" },
     "light-plus": { "name": "Light Plus" },
-    "material-darker": { "name": "Material Darker" },
-    "material-default": { "name": "Material Default" },
-    "material-lighter": { "name": "Material Lighter" },
-    "material-ocean": { "name": "Material Ocean" },
-    "material-palenight": { "name": "Material Palenight" },
+    "material-darker": {
+        "name": "Material Darker",
+        "alias": "material-theme-darker"
+    },
+    "material-default": {
+        "name": "Material Default",
+        "alias": "material-theme"
+    },
+    "material-lighter": {
+        "name": "Material Lighter",
+        "alias": "material-theme-lighter"
+    },
+    "material-ocean": {
+        "name": "Material Ocean",
+        "alias": "material-theme-ocean"
+    },
+    "material-palenight": {
+        "name": "Material Palenight",
+        "alias": "material-theme-palenight"
+    },
     "min-dark": { "name": "Min Dark" },
     "min-light": { "name": "Min Light" },
     "monokai": { "name": "Monokai" },

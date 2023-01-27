@@ -1,3 +1,5 @@
+import themes from '../../src/defaultThemes.json';
+
 beforeEach(() => {
     cy.resetDatabase();
     cy.loginUser();
@@ -60,5 +62,19 @@ context('Theme checks', () => {
         cy.get('#code-block-pro-search-themes').type('monokai');
         cy.get('#code-block-pro-theme-monokai').should('exist');
         cy.get('#code-block-pro-theme-dracula').should('not.exist');
+    });
+
+    it('Themes render properly', () => {
+        cy.mockIntersectionObserver();
+        cy.openSideBarPanel('Themes');
+        Object.keys(themes)
+            .sort(() => Math.random() - 0.5)
+            .forEach((theme) => {
+                cy.setTheme(theme);
+                cy.get(`#code-block-pro-theme-${theme}`)
+                    .should('exist')
+                    .should('not.have.text', 'Loading...')
+                    .should('not.have.text', 'ssembly');
+            });
     });
 });

@@ -4,7 +4,9 @@ export const setTheme = (theme) => {
     cy.get('div[aria-label="Editor settings"] button')
         .contains('Themes')
         .parents('.interface-interface-skeleton__sidebar')
-        .scrollTo('bottom');
+        .scrollTo('bottom', {
+            duration: 0,
+        });
     cy.get(`#code-block-pro-theme-${theme}`).should('exist');
     cy.get(`#code-block-pro-theme-${theme}`).click();
 };
