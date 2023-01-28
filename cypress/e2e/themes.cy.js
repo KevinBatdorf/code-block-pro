@@ -1,3 +1,5 @@
+import themes from '../../src/defaultThemes.json';
+
 const { MORE_THEMES_URL } = require('../constants');
 
 beforeEach(() => {
@@ -85,5 +87,19 @@ context('Theme checks', () => {
             cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
             cy.get('[aria-label="Close dialog"]').click();
         });
+    });
+
+    it('Themes render properly', () => {
+        cy.mockIntersectionObserver();
+        cy.openSideBarPanel('Themes');
+        Object.keys(themes)
+            .sort(() => Math.random() - 0.5)
+            .forEach((theme) => {
+                cy.setTheme(theme);
+                cy.get(`#code-block-pro-theme-${theme}`)
+                    .should('exist')
+                    .should('not.have.text', 'Loading...')
+                    .should('not.have.text', 'ssembly');
+            });
     });
 });
