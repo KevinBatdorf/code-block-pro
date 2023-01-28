@@ -35,6 +35,7 @@ export const codeAliases = {
     typescript: ['ts'],
     vb: ['cmd'],
     viml: ['vim', 'vimscript'],
+    yaml: ['yml'],
     wenyan: ['文言'],
     codeql: ['ql'],
 };

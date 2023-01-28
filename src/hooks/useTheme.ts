@@ -2,6 +2,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import { getHighlighter, Lang, setCDN, Theme, setWasm } from 'shiki';
 import useSWRImmutable from 'swr/immutable';
+import defaultThemes from '../defaultThemes.json';
 
 type Params = { theme: Theme; lang: Lang; ready?: boolean };
 
@@ -11,7 +12,19 @@ const fetcher = ({ theme, lang, ready }: Params) => {
         'blocks.codeBlockPro.theme',
         theme,
     ) as Theme;
-    return getHighlighter({ langs: [lang], theme: themeFiltered });
+    // If the theme has an alias, use that instead
+    // i.e. it was renamed upstream
+    const themeAlias = (
+        defaultThemes as Record<
+            string,
+            { name: string; priority?: boolean; alias?: string }
+        >
+    )?.[themeFiltered]['alias'] as Theme;
+
+    return getHighlighter({
+        langs: [lang],
+        theme: themeAlias ?? themeFiltered,
+    });
 };
 let once = false;
 
