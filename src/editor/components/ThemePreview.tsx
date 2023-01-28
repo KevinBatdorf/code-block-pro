@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from '@wordpress/element';
+import { decodeEntities } from '@wordpress/html-entities';
 import { __ } from '@wordpress/i18n';
 import { Lang, Theme } from 'shiki';
 import { useTheme } from '../../hooks/useTheme';
+import { fontFamilyLong, maybeClamp } from '../../util/fonts';
 
 type ThemePreviewProps = {
     id: string;
@@ -11,6 +13,7 @@ type ThemePreviewProps = {
     fontSize: string;
     lineHeight: string;
     fontFamily: string;
+    clampFonts: boolean;
     onClick: () => void;
 };
 export const ThemePreview = ({
@@ -22,6 +25,7 @@ export const ThemePreview = ({
     fontSize,
     lineHeight,
     fontFamily,
+    clampFonts,
 }: ThemePreviewProps) => {
     const [inView, setInView] = useState(false);
     const { highlighter, error, loading } = useTheme({
@@ -61,8 +65,10 @@ float Q_rsqrt( float number )
     useEffect(() => {
         if (!highlighter) return;
         const hl = code
-            ? highlighter.codeToHtml(code, { lang })
-            : highlighter.codeToHtml(codeSnippet, { lang: 'c' });
+            ? highlighter.codeToHtml(decodeEntities(code), { lang })
+            : highlighter.codeToHtml(decodeEntities(codeSnippet), {
+                  lang: 'c',
+              });
         setCode(hl);
         setBg(highlighter.getBackgroundColor());
     }, [highlighter, lang, code, codeSnippet]);
@@ -72,7 +78,7 @@ float Q_rsqrt( float number )
             id={id}
             type="button"
             onClick={onClick}
-            className="p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto max-h-80 overflow-y-hidden"
+            className="cbp-theme-preview p-4 px-3 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto max-h-80 overflow-y-hidden"
             style={{ backgroundColor, minHeight: '50px' }}>
             {loading || error || !inView ? (
                 <span
@@ -89,10 +95,9 @@ float Q_rsqrt( float number )
                 <span
                     className="pointer-events-none"
                     style={{
-                        fontSize: fontSize,
-                        // Tiny check to avoid block invalidation error
-                        fontFamily: fontFamily,
-                        lineHeight: lineHeight,
+                        fontSize: maybeClamp(fontSize, clampFonts),
+                        fontFamily: fontFamilyLong(fontFamily),
+                        lineHeight: maybeClamp(lineHeight, clampFonts),
                     }}
                     dangerouslySetInnerHTML={{ __html: codeRendered }}
                 />

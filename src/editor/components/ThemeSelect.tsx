@@ -15,6 +15,7 @@ type ThemeSelectProps = {
     lineHeight: string;
     fontFamily: string;
     search: string;
+    clampFonts: boolean;
     onClick: (slug: Theme) => void;
 };
 export const ThemeSelect = (props: ThemeSelectProps) => {
@@ -47,7 +48,7 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                     )}
                 </BaseControl>
             ) : null}
-            {themesSorted.slice(0, 4).map(({ name, slug }) => (
+            {themesSorted.slice(0, 9).map(({ name, slug }) => (
                 <ThemeItem key={slug} slug={slug} name={name} {...props} />
             ))}
             {props.search?.length > 0 ? null : (
@@ -64,7 +65,7 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                     )}
                 </BaseControl>
             )}
-            {themesSorted.slice(4).map(({ name, slug }) => (
+            {themesSorted.slice(9).map(({ name, slug }) => (
                 <ThemeItem key={slug} slug={slug} name={name} {...props} />
             ))}
             {props.search?.length > 0 ? null : (
@@ -94,6 +95,7 @@ const ThemeItem = ({
     fontSize,
     lineHeight,
     fontFamily,
+    clampFonts,
     onClick,
 }: { slug: string; name: string } & ThemeSelectProps) => (
     <BaseControl
@@ -110,6 +112,7 @@ const ThemeItem = ({
             fontSize={fontSize}
             lineHeight={lineHeight}
             fontFamily={fontFamily}
+            clampFonts={clampFonts}
             onClick={() => {
                 onClick(slug as Theme);
             }}
