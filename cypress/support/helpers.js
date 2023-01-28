@@ -13,11 +13,11 @@ Cypress.Commands.add('clearBrowserStorage', () => {
 });
 export const mockIntersectionObserver = () => {
     cy.window().then((win) => {
-        win.IntersectionObserver = function (cb, options) {
+        win.IntersectionObserver = function (cb, options = {}) {
             const instance = {
                 thresholds: Array.isArray(options.threshold)
                     ? options.threshold
-                    : [options.threshold],
+                    : [options?.threshold ?? 0],
                 root: options.root,
                 rootMargin: options.rootMargin,
                 time: Date.now(),
