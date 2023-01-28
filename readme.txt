@@ -22,6 +22,8 @@ Visit [code-block-pro.com](https://code-block-pro.com/?utm_campaign=plugin&utm_s
 - Practical/useful - Focused on the user experience and presentation.
 - Beautiful - Your code should look great!
 
+Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
+
 = Features =
 - Includes 25+ built-in themes to choose from.
 - Supports over 140 programming languages
