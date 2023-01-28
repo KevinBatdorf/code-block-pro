@@ -1,9 +1,10 @@
 Code highlighting powered by the VS Code engine
 
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/kevinbatdorf.svg?style=social&label=Follow%20%40kevinbatdorf)](https://twitter.com/kevinbatdorf)
-
+Read more at [code-block-pro.com](https://code-block-pro.com?utm_campaign=plugin&utm_source=gh-readme&utm_medium=textlink)
+View all themes at [code-block-pro.com/themes](https://code-block-pro.com/themes?utm_campaign=themes&utm_source=gh-readme&utm_medium=textlink)
 View this block plugin [on WordPress.org](https://wordpress.org/plugins/code-block-pro)
 
+[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/kevinbatdorf.svg?style=social&label=Follow%20%40kevinbatdorf)](https://twitter.com/kevinbatdorf)
 ## Features
 - Includes 25+ built-in themes to choose from.
 - Supports over 140 programming languages
