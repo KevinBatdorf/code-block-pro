@@ -1,5 +1,7 @@
 import themes from '../../src/defaultThemes.json';
 
+const { MORE_THEMES_URL } = require('../constants');
+
 beforeEach(() => {
     cy.resetDatabase();
     cy.loginUser();
@@ -62,6 +64,29 @@ context('Theme checks', () => {
         cy.get('#code-block-pro-search-themes').type('monokai');
         cy.get('#code-block-pro-theme-monokai').should('exist');
         cy.get('#code-block-pro-theme-dracula').should('not.exist');
+    });
+
+    it('Themes CTA shows twice in panel and once in modal', () => {
+        cy.openSideBarPanel('Themes');
+        cy.get(`[href^="${MORE_THEMES_URL}"]`).should('have.length', 2);
+        cy.get('[data-cy="manage-themes"]').should('exist').click();
+        cy.get(`[href^="${MORE_THEMES_URL}"]`).should('exist');
+        cy.get('[aria-label="Close dialog"]').click();
+    });
+
+    it('Theme CTA "more themes" link can be removed', () => {
+        cy.window().then((win) => {
+            win.wp.hooks.addFilter(
+                'blocks.codeBlockPro.themes',
+                'testing-testing',
+                () => ({ nord: { name: 'Nord', priority: true } }),
+            );
+            cy.openSideBarPanel('Themes');
+            cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
+            cy.get('[data-cy="manage-themes"]').should('exist').click();
+            cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
+            cy.get('[aria-label="Close dialog"]').click();
+        });
     });
 
     it('Themes render properly', () => {
