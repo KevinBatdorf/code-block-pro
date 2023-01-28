@@ -19,7 +19,7 @@ const fetcher = ({ theme, lang, ready }: Params) => {
             string,
             { name: string; priority?: boolean; alias?: string }
         >
-    )?.[themeFiltered]['alias'] as Theme;
+    )?.[themeFiltered]?.['alias'] as Theme;
 
     return getHighlighter({
         langs: [lang],

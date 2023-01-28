@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.1
-Stable tag:        1.11.3
+Stable tag:        1.12.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,8 @@ Visit [code-block-pro.com](https://code-block-pro.com/?utm_campaign=plugin&utm_s
 - Lightweight - No bloat. Simple functions. Clean, maintainable code.
 - Practical/useful - Focused on the user experience and presentation.
 - Beautiful - Your code should look great!
+
+Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 
 = Features =
 - Includes 25+ built-in themes to choose from.
@@ -245,7 +247,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-- Added Ara, Power Query, and DAX language support
+= 1.12.0 - 2023-01-28 =
+- Feature: Added Ara, Power Query, and DAX language support
+- Fix: Fixed preview output on theme selection
+- Fix: Fixed theme selection font rendering (to match preview better)
 
 = 1.11.3 - 2023-01-08 =
 - Fix: Encode and decode html entities to prevent script tag bug
