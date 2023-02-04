@@ -1,43 +1,44 @@
-import { Lang } from 'shiki';
+import { Lang as LangShiki } from 'shiki';
 import defaultLanguages from '../defaultLanguages.json';
+import { Lang } from '../types';
 
 export const codeAliases = {
     'actionscript-3': ['as3'],
-    cpp: ['arduino'],
-    xml: ['coldfusion'],
-    pascal: ['delphi'],
-    java: ['javafx'],
-    javascript: ['jscript', 'js'],
-    matlab: ['matlabkey'],
-    'objective-c': ['objc'],
     bat: ['batch'],
     berry: ['be'],
     cadence: ['cdc'],
     clojure: ['clj'],
-    csharp: ['c#'],
+    codeql: ['ql'],
+    cpp: ['arduino'],
+    csharp: ['c#', 'cs'],
     erlang: ['erl'],
     fsharp: ['f#'],
     haskell: ['hs'],
     handlebars: ['hbs'],
+    'html-ruby-erb': ['erb'],
+    java: ['javafx'],
+    javascript: ['jscript', 'js'],
     jssm: ['fsl'],
     make: ['makefile'],
     markdown: ['md'],
+    matlab: ['matlabkey'],
+    'objective-c': ['objc'],
+    pascal: ['delphi'],
     powershell: ['ps', 'ps1'],
     pug: ['jade'],
     python: ['py'],
     raku: ['perl6'],
     ruby: ['rb'],
     rust: ['rs'],
-    'html-ruby-erb': ['erb'],
     shaderlab: ['shader'],
     shellscript: ['shell', 'bash', 'sh', 'zsh'],
     stylus: ['styl'],
     typescript: ['ts'],
     vb: ['cmd'],
     viml: ['vim', 'vimscript'],
-    yaml: ['yml'],
     wenyan: ['文言'],
-    codeql: ['ql'],
+    xml: ['coldfusion'],
+    yaml: ['yml'],
 };
 
 export const getMainAlias = (
@@ -55,6 +56,8 @@ export const removeAliases = (
     const aliasesToRemove = Object.values(codeAliases).flat();
     return Object.keys(langs).reduce((acc, key) => {
         if (!aliasesToRemove.includes(key)) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             acc[key as Lang] = langs[key as Lang];
         }
         return acc;
@@ -62,3 +65,9 @@ export const removeAliases = (
 };
 
 export const languages = removeAliases(defaultLanguages);
+
+/** Get the language shown in the editor, which could differ from the front */
+export const getEditorLanguage = (language: string): LangShiki => {
+    if (language === 'ansi') return 'shellscript';
+    return language as LangShiki;
+};

@@ -86,6 +86,6 @@ Cypress.Commands.add('uninstallPlugin', (slug) => uninstallPlugin(slug));
 // Features
 Cypress.Commands.add('setLanguage', (language) => setLanguage(language));
 Cypress.Commands.add('setTheme', (theme) => setTheme(theme));
-Cypress.Commands.add('addCode', (code) => addCode(code));
+Cypress.Commands.add('addCode', (code, opts) => addCode(code, opts));
 Cypress.Commands.add('setHeader', (header) => setHeader(header));
 Cypress.Commands.add('setFooter', (footer) => setFooter(footer));

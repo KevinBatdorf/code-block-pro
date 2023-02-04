@@ -55,9 +55,20 @@ export const SidebarControls = ({
                             data-cy-cbp="language-select"
                             value={language}
                             onChange={setLanguage}
+                            help={
+                                language === 'ansi'
+                                    ? __(
+                                          'Some code themes may not render ANSI correctly. Control sequences render only on the front.',
+                                          'code-block-pro',
+                                      )
+                                    : null
+                            }
                             options={Object.entries(languages).map(
                                 ([value, label]) => ({
-                                    label,
+                                    label: label.replace(
+                                        'ANSI',
+                                        'ANSI (experimental)',
+                                    ),
                                     value,
                                 }),
                             )}

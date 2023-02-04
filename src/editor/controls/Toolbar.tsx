@@ -8,9 +8,8 @@ import {
     MenuGroup,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { Lang } from 'shiki';
 import { useLanguage } from '../../hooks/useLanguage';
-import { AttributesPropsAndSetter } from '../../types';
+import { AttributesPropsAndSetter, Lang } from '../../types';
 import { languages } from '../../util/languages';
 
 export const ToolbarControls = ({
@@ -33,7 +32,10 @@ export const ToolbarControls = ({
                             onClick={onToggle}
                             aria-expanded={isOpen}
                             aria-haspopup="true">
-                            {languages[language] ?? language}
+                            {(languages[language] ?? language).replace(
+                                'ANSI',
+                                'ANSI (experimental)',
+                            )}
                         </Button>
                     )}
                 />

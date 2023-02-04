@@ -3,7 +3,6 @@ import { createBlock, registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
-import { Lang } from 'shiki';
 import blockConfig from './block.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
@@ -15,7 +14,7 @@ import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
 import { CopyButton } from './front/CopyButton';
 import { blockIcon } from './icons';
-import { Attributes } from './types';
+import { Attributes, Lang } from './types';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
 import { getMainAlias } from './util/languages';
 

@@ -1,9 +1,10 @@
 import { BaseControl, ExternalLink } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { sprintf, __ } from '@wordpress/i18n';
-import { Lang, Theme } from 'shiki';
+import { Theme } from 'shiki';
 import defaultThemes from '../../defaultThemes.json';
 import { useSettingsStore } from '../../state/settings';
+import { Lang } from '../../types';
 import { getPriorityThemes } from '../../util/themes';
 import { ThemePreview } from '../components/ThemePreview';
 

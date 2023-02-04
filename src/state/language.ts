@@ -1,6 +1,6 @@
-import { Lang } from 'shiki';
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { Lang } from '../types';
 
 type LanguageType = {
     previousLanguage: Lang;

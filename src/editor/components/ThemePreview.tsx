@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __ } from '@wordpress/i18n';
-import { Lang, Theme } from 'shiki';
+import { Theme } from 'shiki';
 import { useTheme } from '../../hooks/useTheme';
+import { Lang } from '../../types';
 import { fontFamilyLong, maybeClamp } from '../../util/fonts';
 
 type ThemePreviewProps = {
@@ -64,6 +65,11 @@ float Q_rsqrt( float number )
 
     useEffect(() => {
         if (!highlighter) return;
+        if ((lang as string) === 'ansi' && code) {
+            setCode(highlighter.ansiToHtml(code));
+            setBg(highlighter.getBackgroundColor());
+            return;
+        }
         const hl = code
             ? highlighter.codeToHtml(decodeEntities(code), { lang })
             : highlighter.codeToHtml(decodeEntities(codeSnippet), {

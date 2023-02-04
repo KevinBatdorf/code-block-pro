@@ -83,6 +83,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - ABAP
 - ActionScript 3
 - Ada
+- ANSI (control codes rendered)
 - Apache
 - Apex
 - APL
@@ -246,6 +247,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 4. Use highlighting and blur to focus on parts of the code.
 
 == Changelog ==
+
+- Feature: Added ANSI rendering support - some themes do not look perfect yet
 
 = 1.12.0 - 2023-01-28 =
 - Feature: Added Ara, Power Query, and DAX language support

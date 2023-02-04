@@ -1,6 +1,5 @@
 import { colord, AnyColor } from 'colord';
-import { Lang } from 'shiki';
-import { Attributes } from '../../../types';
+import { Attributes, Lang } from '../../../types';
 import { languages } from '../../../util/languages';
 
 export const SimpleString = ({
