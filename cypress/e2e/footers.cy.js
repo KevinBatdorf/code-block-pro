@@ -98,7 +98,7 @@ context('Footers', () => {
         cy.get('[data-cy="see-more-line"]')
             .should('exist')
             .should('have.value', '')
-            .type('4');
+            .type('3');
 
         cy.previewCurrentPage();
 
