@@ -13,8 +13,9 @@ import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
-import { AttributesPropsAndSetter } from '../types';
+import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
+import { getEditorLanguage } from '../util/languages';
 
 export const Edit = ({
     attributes,
@@ -88,34 +89,34 @@ export const Edit = ({
 
     useEffect(() => {
         if (!highlighter) return;
-        setAttributes({
-            codeHTML: applyFilters(
-                'blocks.codeBlockPro.codeHTML',
-                highlighter.codeToHtml(decodeEntities(code), {
-                    lang: language ?? previousLanguage,
-                    lineOptions: [
-                        ...getHighlights(),
-                        ...getBlurs(),
-                        expandable
-                            ? {
-                                  line: Number(seeMoreAfterLine),
-                                  classes: [
-                                      'cbp-see-more-line',
-                                      seeMoreTransition
-                                          ? 'cbp-see-more-transition'
-                                          : '',
-                                  ],
-                              }
-                            : {},
-                    ],
-                }),
-                attributes,
-            ) as string,
-            lineHighlightColor: colord(color)
-                .saturate(0.5)
-                .alpha(0.2)
-                .toRgbString(),
-        });
+        const l = (language ?? previousLanguage) as Lang | 'ansi';
+        const lang = getEditorLanguage(l);
+        const c = decodeEntities(code);
+        const lineOptions = [...getHighlights(), ...getBlurs(), expandable
+            ? {
+                  line: Number(seeMoreAfterLine),
+                  classes: [
+                      'cbp-see-more-line',
+                      seeMoreTransition
+                          ? 'cbp-see-more-transition'
+                          : '',
+                  ],
+              }
+            : {}];
+        const rendered =
+            l === 'ansi'
+                ? highlighter.ansiToHtml(c, { lineOptions })
+                : highlighter.codeToHtml(c, { lang, lineOptions });
+        const codeHTML = applyFilters(
+            'blocks.codeBlockPro.codeHTML',
+            rendered,
+            attributes,
+        ) as string;
+        const lineHighlightColor = colord(color)
+            .saturate(0.5)
+            .alpha(0.2)
+            .toRgbString();
+        setAttributes({ codeHTML, lineHighlightColor });
     }, [
         highlighter,
         expandable,
@@ -222,7 +223,9 @@ export const Edit = ({
                 highlight={(code: string) =>
                     highlighter
                         ?.codeToHtml(decodeEntities(code), {
-                            lang: language ?? previousLanguage,
+                            lang: getEditorLanguage(
+                                language ?? previousLanguage,
+                            ),
                             lineOptions: [...getHighlights(), ...getBlurs()],
                         })
                         ?.replace(/<\/?[pre|code][^>]*>/g, '')

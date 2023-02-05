@@ -1,7 +1,6 @@
 import { useEffect, useState } from '@wordpress/element';
-import { Lang } from 'shiki';
 import { useLanguageStore } from '../state/language';
-import { AttributesPropsAndSetter } from '../types';
+import { AttributesPropsAndSetter, Lang } from '../types';
 
 export const useLanguage = ({
     attributes,

@@ -37,7 +37,7 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 - Native Gutenberg block
 - Core functionality works in headless mode (see FAQ)
 - Converting from the default code block (and others)
-- Max height with scrollable section
+- Max height with scrollable section (optional expand button)
 
 = More info =
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
@@ -84,6 +84,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - ABAP
 - ActionScript 3
 - Ada
+- ANSI (control codes rendered)
 - Apache
 - Apex
 - APL
@@ -250,7 +251,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 - Feature: Add scrollable max height area with no button (see Footer type)
 - Feature: Add expanding code area with max height based online number
-- Fix: Disabled font ligatures int he editor as it broke cursor positioning on wraps
+- Feature: Added ANSI rendering support - some themes do not look perfect yet
+- Fix: Disabled font ligatures in the editor as it broke cursor positioning on wraps
 
 = 1.12.0 - 2023-01-28 =
 - Feature: Added Ara, Power Query, and DAX language support

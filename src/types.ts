@@ -1,4 +1,6 @@
-import { Lang, Theme } from 'shiki';
+import { Lang as LangShiki, Theme } from 'shiki';
+
+export type Lang = LangShiki | 'ansi';
 
 export type Attributes = {
     code: string;

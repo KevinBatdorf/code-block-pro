@@ -3,8 +3,9 @@ import { applyFilters } from '@wordpress/hooks';
 import { getHighlighter, Lang, setCDN, Theme, setWasm } from 'shiki';
 import useSWRImmutable from 'swr/immutable';
 import defaultThemes from '../defaultThemes.json';
+import { getEditorLanguage } from '../util/languages';
 
-type Params = { theme: Theme; lang: Lang; ready?: boolean };
+type Params = { theme: Theme; lang: Lang | 'ansi'; ready?: boolean };
 
 const fetcher = ({ theme, lang, ready }: Params) => {
     if (!ready) throw new Error();
@@ -22,7 +23,7 @@ const fetcher = ({ theme, lang, ready }: Params) => {
     )?.[themeFiltered]?.['alias'] as Theme;
 
     return getHighlighter({
-        langs: [lang],
+        langs: [getEditorLanguage(lang)],
         theme: themeAlias ?? themeFiltered,
     });
 };
