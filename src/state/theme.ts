@@ -82,15 +82,3 @@ export const useThemeStore = create<ThemeType>()(
         },
     ),
 );
-export const useThemeStoreReady = () => {
-    const [hydrated, setHydrated] = useState(useThemeStore.persist.hasHydrated);
-    useEffect(() => {
-        const unsubFinishHydration = useThemeStore.persist.onFinishHydration(
-            () => setHydrated(true),
-        );
-        return () => {
-            unsubFinishHydration();
-        };
-    }, []);
-    return hydrated;
-};
