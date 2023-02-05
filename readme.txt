@@ -250,6 +250,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 - Feature: Add scrollable max height area with no button (see Footer type)
 - Feature: Add expanding code area with max height based online number
+- Fix: Disabled font ligatures int he editor as it broke cursor positioning on wraps
 
 = 1.12.0 - 2023-01-28 =
 - Feature: Added Ara, Power Query, and DAX language support

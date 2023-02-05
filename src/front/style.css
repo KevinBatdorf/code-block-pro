@@ -68,7 +68,7 @@
     left: -16px;
     @apply absolute top-0 h-full;
 }
-.wp-block-kevinbatdorf-code-block-pro.padding-disabled pre .line.cbp-line-highlight::after {
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).padding-disabled pre .line.cbp-line-highlight::after {
     @apply left-0 w-full;
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled pre .line:not(.cbp-no-blur) {

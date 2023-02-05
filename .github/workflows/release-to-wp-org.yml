@@ -13,6 +13,7 @@ jobs:
             - name: npm install and build
               run: |
                   npm ci
+                  npx eslint --max-warnings 0 .
                   npm run build
               env:
                   CI: true
