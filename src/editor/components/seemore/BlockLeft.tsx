@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { colord, AnyColor } from 'colord';
 import { Attributes } from '../../../types';
 
-export const SeeMoreRight = ({
+export const BlockLeft = ({
     bgColor,
     textColor,
     seeMoreString,
@@ -20,7 +20,7 @@ export const SeeMoreRight = ({
             style={{
                 display: context === 'front' ? 'none' : 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-end',
+                alignItems: 'flex-start',
                 width: '100%',
                 backgroundColor: 'transparent',
                 fontSize: '12px',

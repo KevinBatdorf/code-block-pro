@@ -1,48 +1,43 @@
 import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Attributes } from '../../types';
-import { SimpleStringEnd } from './footers/SimpleStringEnd';
-import { SimpleStringStart } from './footers/SimpleStringStart';
+import { BlockLeft } from './seemore/BlockLeft';
+import { BlockRight } from './seemore/BlockRight';
+import { RoundCenter } from './seemore/RoundCenter';
 
-type FooterSelectProps = {
+type SeeMoreSelectProps = {
     attributes: Attributes;
     onClick: (slug: string) => void;
 };
-export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
-    const { footerType, ...attributesWithoutFooterType }: Partial<Attributes> =
-        attributes;
+export const SeeMoreSelect = ({ attributes, onClick }: SeeMoreSelectProps) => {
+    const {
+        seeMoreType,
+        ...attributesWithoutSeeMoreType
+    }: Partial<Attributes> = attributes;
     const { bgColor } = attributes;
     const types = {
         none: __('None', 'code-block-pro'),
-        simpleStringEnd: __('Simple string end', 'code-block-pro'),
-        simpleStringStart: __('Simple string start', 'code-block-pro'),
+        roundCenter: __('See more center', 'code-block-pro'),
+        blockLeft: __('See more left', 'code-block-pro'),
+        blockRight: __('See more right', 'code-block-pro'),
     };
 
     return (
         <div className="code-block-pro-editor">
             {Object.entries(types).map(([slug, type]) => (
                 <BaseControl
-                    id={`code-block-pro-footer-${slug}`}
+                    id={`code-block-pro-see-more-${slug}`}
                     label={
-                        footerType === slug
+                        seeMoreType === slug || !seeMoreType
                             ? sprintf(
                                   __('%s (current)', 'code-block-pro'),
                                   type,
                               )
                             : type
                     }
-                    help={
-                        ['simpleStringEnd', 'simpleStringStart'].includes(slug)
-                            ? // Settings refers to the panel that can be expanded
-                              __(
-                                  'Update extras in the Settings panel',
-                                  'code-block-pro',
-                              )
-                            : undefined
-                    }
                     key={slug}>
                     <button
-                        id={`code-block-pro-footer-${slug}`}
+                        id={`code-block-pro-see-more-${slug}`}
                         type="button"
                         onClick={() => onClick(slug)}
                         className="p-0 border flex items-start w-full text-left outline-none cursor-pointer no-underline ring-offset-2 ring-offset-white focus:shadow-none focus:ring-wp overflow-x-auto">
@@ -51,9 +46,9 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
                                 className="block w-full h-8"
                                 style={{ backgroundColor: bgColor }}
                             />
-                            <FooterType
-                                footerType={slug}
-                                {...attributesWithoutFooterType}
+                            <SeeMoreType
+                                seeMoreType={slug}
+                                {...attributesWithoutSeeMoreType}
                             />
                         </span>
                     </button>
@@ -63,13 +58,18 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
     );
 };
 
-export const FooterType = (props: Partial<Attributes>) => {
-    const { footerType } = props;
-    if (footerType === 'simpleStringEnd') {
-        return <SimpleStringEnd {...props} />;
+export const SeeMoreType = (
+    props: Partial<Attributes> & { context?: string },
+) => {
+    const { seeMoreType, context } = props;
+    if (seeMoreType === 'roundCenter') {
+        return <RoundCenter {...props} context={context} />;
     }
-    if (footerType === 'simpleStringStart') {
-        return <SimpleStringStart {...props} />;
+    if (seeMoreType === 'blockLeft') {
+        return <BlockLeft {...props} context={context} />;
+    }
+    if (seeMoreType === 'blockRight') {
+        return <BlockRight {...props} context={context} />;
     }
 
     return null;

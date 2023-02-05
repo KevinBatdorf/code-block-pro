@@ -128,7 +128,9 @@ const handleSeeMore = () => {
             '.cbp-see-more-simple-btn',
         );
         if (!button) return;
-        button.style.transition = `all ${animationSpeed / 1.5}s linear`;
+        button.style.transition = `all ${
+            Math.max(animationSpeed, 1) / 1.5
+        }s linear`;
 
         const handle = (event) => {
             event.preventDefault();
@@ -137,7 +139,10 @@ const handleSeeMore = () => {
             setTimeout(() => {
                 button.style.opacity = 0;
                 button.style.transform = 'translateY(-100%)';
-                setTimeout(() => button.remove(), animationSpeed * 1000);
+                setTimeout(
+                    () => button.remove(),
+                    Math.max(animationSpeed, 1) * 1000,
+                );
             }, animationSpeed * 1000);
         };
         button.addEventListener('click', handle);

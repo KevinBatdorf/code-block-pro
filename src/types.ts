@@ -15,11 +15,14 @@ export type Attributes = {
     lineHeight: string;
     lineNumbers: boolean;
     clampFonts: boolean;
+    editorHeight: string;
     headerType: string;
     headerString?: string;
     footerType: string;
     footerString?: string;
     footerLink?: string;
+    enableMaxHeight?: boolean;
+    seeMoreType?: string;
     seeMoreString?: string;
     seeMoreAfterLine?: string;
     seeMoreTransition?: boolean;
