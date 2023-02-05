@@ -247,6 +247,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Fix: Disabled font ligatures int he editor as it broke cursor positioning on wraps
+
 = 1.12.0 - 2023-01-28 =
 - Feature: Added Ara, Power Query, and DAX language support
 - Fix: Fixed preview output on theme selection
