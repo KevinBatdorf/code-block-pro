@@ -8,6 +8,7 @@ import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
 import { FooterType } from './editor/components/FooterSelect';
 import { HeaderType } from './editor/components/HeaderSelect';
+import { SeeMoreType } from './editor/components/SeeMoreSelect';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
@@ -34,6 +35,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         fontFamily: { type: 'string' },
         lineHeight: { type: 'string' },
         clampFonts: { type: 'boolean' },
+        editorHeight: { type: 'string' },
         lineNumbers: { type: 'boolean' },
         headerType: { type: 'string' },
         headerString: { type: 'string' },
@@ -42,6 +44,8 @@ registerBlockType<Attributes>(blockConfig.name, {
         footerString: { type: 'string' },
         footerLink: { type: 'string' },
         footerLinkTarget: { type: 'boolean' },
+        enableMaxHeight: { type: 'boolean' },
+        seeMoreType: { type: 'string' },
         seeMoreString: { type: 'string' },
         seeMoreAfterLine: { type: 'string' },
         seeMoreTransition: { type: 'boolean' },
@@ -64,82 +68,66 @@ registerBlockType<Attributes>(blockConfig.name, {
         align: ['wide', 'full'],
     },
     title: __('Code Pro', 'code-block-pro'),
-    edit: ({ attributes, setAttributes }) => {
-        const footerNeedsPadding = [
-            'seeMoreLeft',
-            'seeMoreRight',
-            'maxHeightNoButton',
-        ].includes(attributes.footerType);
-        console.log(
-            attributes?.footerType &&
-                attributes?.footerType !== 'none' &&
-                !footerNeedsPadding,
-        );
-        return (
-            <>
-                <SidebarControls
-                    attributes={attributes}
-                    setAttributes={setAttributes}
-                />
-                <ToolbarControls
-                    attributes={attributes}
-                    setAttributes={setAttributes}
-                />
-                <div
-                    {...blockProps({
-                        className: classnames('code-block-pro-editor', {
-                            'padding-disabled': attributes.disablePadding,
-                            'padding-bottom-disabled':
-                                attributes?.footerType &&
-                                attributes?.footerType !== 'none' &&
-                                !footerNeedsPadding,
-                            'cbp-has-line-numbers': attributes.lineNumbers,
-                            'cbp-blur-enabled': attributes.enableBlurring,
-                            'cbp-unblur-on-hover': attributes.removeBlurOnHover,
-                        }),
-                        style: {
-                            fontSize: maybeClamp(
-                                attributes.fontSize,
-                                attributes.clampFonts,
-                            ),
-                            '--cbp-line-number-color': attributes?.lineNumbers
-                                ? attributes.textColor
+    edit: ({ attributes, setAttributes }) => (
+        <>
+            <SidebarControls
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
+            <ToolbarControls
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
+            <div
+                {...blockProps({
+                    className: classnames('code-block-pro-editor', {
+                        'padding-disabled': attributes.disablePadding,
+                        'padding-bottom-disabled':
+                            attributes?.footerType &&
+                            attributes?.footerType !== 'none',
+                        'cbp-has-line-numbers': attributes.lineNumbers,
+                        'cbp-blur-enabled': attributes.enableBlurring,
+                        'cbp-unblur-on-hover': attributes.removeBlurOnHover,
+                    }),
+                    style: {
+                        fontSize: maybeClamp(
+                            attributes.fontSize,
+                            attributes.clampFonts,
+                        ),
+                        '--cbp-line-number-color': attributes?.lineNumbers
+                            ? attributes.textColor
+                            : undefined,
+                        '--cbp-line-number-start':
+                            Number(attributes?.startingLineNumber) > 1
+                                ? attributes.startingLineNumber
                                 : undefined,
-                            '--cbp-line-number-start':
-                                Number(attributes?.startingLineNumber) > 1
-                                    ? attributes.startingLineNumber
-                                    : undefined,
-                            '--cbp-line-number-width':
-                                attributes.lineNumbersWidth
-                                    ? `${attributes.lineNumbersWidth}px`
-                                    : undefined,
-                            '--cbp-line-highlight-color':
-                                attributes?.enableHighlighting
-                                    ? attributes.lineHighlightColor
-                                    : undefined,
-                            '--cbp-line-height': attributes.lineHeight,
-                            // Disabled as ligatures will break the editor line widths
-                            // fontFamily: fontFamilyLong(attributes.fontFamily),
-                            fontFamily: fontFamilyLong(''),
-                            lineHeight: maybeClamp(
-                                attributes.lineHeight,
-                                attributes.clampFonts,
-                            ),
-                        },
-                    })}>
-                    <HeaderType {...attributes} />
-                    {attributes.copyButton && (
-                        <CopyButton attributes={attributes} />
-                    )}
-                    <Edit
-                        attributes={attributes}
-                        setAttributes={setAttributes}
-                    />
-                    <FooterType {...attributes} />
-                </div>
-            </>
-        );
-    },
+                        '--cbp-line-number-width': attributes.lineNumbersWidth
+                            ? `${attributes.lineNumbersWidth}px`
+                            : undefined,
+                        '--cbp-line-highlight-color':
+                            attributes?.enableHighlighting
+                                ? attributes.lineHighlightColor
+                                : undefined,
+                        '--cbp-line-height': attributes.lineHeight,
+                        // Disabled as ligatures will break the editor line widths
+                        // fontFamily: fontFamilyLong(attributes.fontFamily),
+                        fontFamily: fontFamilyLong(''),
+                        lineHeight: maybeClamp(
+                            attributes.lineHeight,
+                            attributes.clampFonts,
+                        ),
+                    },
+                })}>
+                <HeaderType {...attributes} />
+                {attributes.copyButton && (
+                    <CopyButton attributes={attributes} />
+                )}
+                <Edit attributes={attributes} setAttributes={setAttributes} />
+                <FooterType {...attributes} />
+                <SeeMoreType {...attributes} />
+            </div>
+        </>
+    ),
     save: ({ attributes }) => <BlockOutput attributes={attributes} />,
     transforms: {
         from: [

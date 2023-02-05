@@ -41,6 +41,8 @@ export const Edit = ({
         enableHighlighting,
         seeMoreAfterLine,
         seeMoreTransition,
+        enableMaxHeight,
+        editorHeight,
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
@@ -51,13 +53,7 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
-    const expandable = [
-        'seeMoreLeft',
-        'seeMoreRight',
-        'seeMoreCenter',
-        'maxHeightNoButton',
-    ].includes(footerType);
-    const hasFooter = footerType && footerType !== 'none' && !expandable;
+    const hasFooter = footerType && footerType !== 'none';
     useDefaults({ attributes, setAttributes });
 
     const getHighlights = useCallback(() => {
@@ -92,17 +88,19 @@ export const Edit = ({
         const l = (language ?? previousLanguage) as Lang | 'ansi';
         const lang = getEditorLanguage(l);
         const c = decodeEntities(code);
-        const lineOptions = [...getHighlights(), ...getBlurs(), expandable
-            ? {
-                  line: Number(seeMoreAfterLine),
-                  classes: [
-                      'cbp-see-more-line',
-                      seeMoreTransition
-                          ? 'cbp-see-more-transition'
-                          : '',
-                  ],
-              }
-            : {}];
+        const lineOptions = [
+            ...getHighlights(),
+            ...getBlurs(),
+            enableMaxHeight && !Number.isNaN(seeMoreAfterLine)
+                ? {
+                      line: Number(seeMoreAfterLine),
+                      classes: [
+                          'cbp-see-more-line',
+                          seeMoreTransition ? 'cbp-see-more-transition' : '',
+                      ],
+                  }
+                : {},
+        ];
         const rendered =
             l === 'ansi'
                 ? highlighter.ansiToHtml(c, { lineOptions })
@@ -119,11 +117,11 @@ export const Edit = ({
         setAttributes({ codeHTML, lineHighlightColor });
     }, [
         highlighter,
-        expandable,
         seeMoreAfterLine,
         seeMoreTransition,
         color,
         code,
+        enableMaxHeight,
         language,
         setAttributes,
         previousLanguage,
@@ -198,7 +196,14 @@ export const Edit = ({
     }
 
     return (
-        <div ref={textAreaRef}>
+        <div
+            ref={textAreaRef}
+            style={{
+                maxHeight: Number(editorHeight)
+                    ? Number(editorHeight)
+                    : undefined,
+                overflow: Number(editorHeight) ? 'auto' : undefined,
+            }}>
             <Editor
                 value={decodeEntities(code)}
                 onValueChange={handleChange}

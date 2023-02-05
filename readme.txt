@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.1
-Stable tag:        1.12.0
+Stable tag:        1.13.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -246,9 +246,11 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 2. Customize fonts, themes, and behavior.
 3. Disable padding and inline the code for a fluent experience.
 4. Use highlighting and blur to focus on parts of the code.
+5. ANSI support for rendering control sequences
 
 == Changelog ==
 
+= 1.13.0 - 2023-02-05 =
 - Feature: Add scrollable max height area with no button (see Footer type)
 - Feature: Add expanding code area with max height based online number
 - Feature: Added ANSI rendering support - some themes do not look perfect yet

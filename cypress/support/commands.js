@@ -2,6 +2,7 @@ import { BLOCK_CONTAINER } from '../constants';
 import { addCode } from './features/code';
 import { setFooter } from './features/footers';
 import { setHeader } from './features/headers';
+import { setHeightDesign, enableMaxHeight } from './features/height';
 import { setLanguage } from './features/language';
 import { setTheme } from './features/theme';
 import {
@@ -89,3 +90,5 @@ Cypress.Commands.add('setTheme', (theme) => setTheme(theme));
 Cypress.Commands.add('addCode', (code, opts) => addCode(code, opts));
 Cypress.Commands.add('setHeader', (header) => setHeader(header));
 Cypress.Commands.add('setFooter', (footer) => setFooter(footer));
+Cypress.Commands.add('setHeightDesign', (footer) => setHeightDesign(footer));
+Cypress.Commands.add('enableMaxHeight', (footer) => enableMaxHeight(footer));
