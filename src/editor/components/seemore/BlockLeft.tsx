@@ -30,13 +30,13 @@ export const BlockLeft = ({
                 lineHeight: '1',
                 position: 'relative',
                 marginBottom: hasFooter || inEditor ? 0 : '-16px',
-                height: hasFooter && !inEditor ? 0 : '32px',
+                height: hasFooter && !inEditor ? '16px' : '32px',
             }}>
             {/* span is used to avoid theme button styling */}
             <span
-                role={context === 'front' ? 'button' : 'presentation'}
+                role={inEditor ? 'presentation' : 'button'}
+                tabIndex={inEditor ? -1 : 0}
                 className="cbp-see-more-simple-btn cbp-see-more-simple-btn-hover"
-                tabIndex={0}
                 style={{
                     color,
                     backgroundColor,
