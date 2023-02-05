@@ -111,7 +111,7 @@ context('Footers', () => {
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
     });
 
-    it.only('Calculates the height with headers', () => {
+    it('Calculates the height with headers', () => {
         cy.setHeader('headlights');
         cy.setFooter('none');
         cy.setFooter('seeMoreCenter');
