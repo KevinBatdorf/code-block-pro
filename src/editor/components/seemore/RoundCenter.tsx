@@ -16,6 +16,7 @@ export const RoundCenter = ({
         : textC.darken(0.15).toHex();
     const bg = bgC.isDark() ? bgC.lighten(0.1) : bgC.darken(0.1);
     const hasFooter = footerType !== 'none';
+    const inEditor = context === 'editor';
     return (
         <div
             className="cbp-see-more-container"
@@ -28,7 +29,8 @@ export const RoundCenter = ({
                 lineHeight: '1',
                 position: 'relative',
                 paddingTop: hasFooter ? 0 : '4px',
-                height: hasFooter ? undefined : '32px',
+                marginBottom: hasFooter || inEditor ? 0 : '-16px',
+                height: hasFooter && !inEditor ? 0 : '32px',
             }}>
             {/* bg 50% height at top */}
             {!hasFooter && (

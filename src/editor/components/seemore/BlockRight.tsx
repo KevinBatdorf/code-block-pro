@@ -8,12 +8,15 @@ export const BlockRight = ({
     seeMoreString,
     disablePadding,
     context,
+    footerType,
 }: Partial<Attributes> & { context?: string }) => {
     const backgroundColor = colord(bgColor as AnyColor).toHex();
     const textC = colord(textColor as AnyColor);
     const color = textC.isDark()
         ? textC.lighten(0.05).toHex()
         : textC.darken(0.05).toHex();
+    const hasFooter = footerType !== 'none';
+    const inEditor = context === 'editor';
     return (
         <div
             className="cbp-see-more-container"
@@ -26,6 +29,8 @@ export const BlockRight = ({
                 fontSize: '12px',
                 lineHeight: '1',
                 position: 'relative',
+                marginBottom: hasFooter || inEditor ? 0 : '-16px',
+                height: hasFooter && !inEditor ? 0 : '32px',
             }}>
             {/* span is used to avoid theme button styling */}
             <span

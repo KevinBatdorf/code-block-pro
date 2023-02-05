@@ -48,6 +48,7 @@ export const SeeMoreSelect = ({ attributes, onClick }: SeeMoreSelectProps) => {
                             />
                             <SeeMoreType
                                 seeMoreType={slug}
+                                context="editor"
                                 {...attributesWithoutSeeMoreType}
                             />
                         </span>
