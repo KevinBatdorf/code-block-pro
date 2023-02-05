@@ -51,6 +51,11 @@ export const Edit = ({
         lang: language ?? previousLanguage,
     });
     const hasFooter = footerType && footerType !== 'none';
+    const expandable = [
+        'seeMoreLeft',
+        'seeMoreRight',
+        'seeMoreCenter',
+    ].includes(footerType);
     useDefaults({ attributes, setAttributes });
 
     const getHighlights = useCallback(() => {
@@ -90,7 +95,7 @@ export const Edit = ({
                     lineOptions: [
                         ...getHighlights(),
                         ...getBlurs(),
-                        footerType === 'seeMoreSimple'
+                        expandable
                             ? {
                                   line: Number(seeMoreAfterLine),
                                   classes: [
@@ -112,6 +117,9 @@ export const Edit = ({
         });
     }, [
         highlighter,
+        expandable,
+        seeMoreAfterLine,
+        seeMoreTransition,
         color,
         code,
         language,

@@ -65,63 +65,80 @@ registerBlockType<Attributes>(blockConfig.name, {
         align: ['wide', 'full'],
     },
     title: __('Code Pro', 'code-block-pro'),
-    edit: ({ attributes, setAttributes }) => (
-        <>
-            <SidebarControls
-                attributes={attributes}
-                setAttributes={setAttributes}
-            />
-            <ToolbarControls
-                attributes={attributes}
-                setAttributes={setAttributes}
-            />
-            <div
-                {...blockProps({
-                    className: classnames('code-block-pro-editor', {
-                        'padding-disabled': attributes.disablePadding,
-                        'padding-bottom-disabled':
-                            attributes?.footerType &&
-                            attributes?.footerType !== 'none',
-                        'cbp-has-line-numbers': attributes.lineNumbers,
-                        'cbp-blur-enabled': attributes.enableBlurring,
-                        'cbp-unblur-on-hover': attributes.removeBlurOnHover,
-                    }),
-                    style: {
-                        fontSize: maybeClamp(
-                            attributes.fontSize,
-                            attributes.clampFonts,
-                        ),
-                        '--cbp-line-number-color': attributes?.lineNumbers
-                            ? attributes.textColor
-                            : undefined,
-                        '--cbp-line-number-start':
-                            Number(attributes?.startingLineNumber) > 1
-                                ? attributes.startingLineNumber
+    edit: ({ attributes, setAttributes }) => {
+        const hasExpandableFooter = [
+            'seeMoreLeft',
+            'seeMoreRight',
+            'seeMoreCenter',
+        ].includes(attributes.footerType);
+        console.log(
+            attributes?.footerType &&
+                attributes?.footerType !== 'none' &&
+                !hasExpandableFooter,
+        );
+        return (
+            <>
+                <SidebarControls
+                    attributes={attributes}
+                    setAttributes={setAttributes}
+                />
+                <ToolbarControls
+                    attributes={attributes}
+                    setAttributes={setAttributes}
+                />
+                <div
+                    {...blockProps({
+                        className: classnames('code-block-pro-editor', {
+                            'padding-disabled': attributes.disablePadding,
+                            'padding-bottom-disabled':
+                                attributes?.footerType &&
+                                attributes?.footerType !== 'none' &&
+                                !hasExpandableFooter,
+                            'cbp-has-line-numbers': attributes.lineNumbers,
+                            'cbp-blur-enabled': attributes.enableBlurring,
+                            'cbp-unblur-on-hover': attributes.removeBlurOnHover,
+                        }),
+                        style: {
+                            fontSize: maybeClamp(
+                                attributes.fontSize,
+                                attributes.clampFonts,
+                            ),
+                            '--cbp-line-number-color': attributes?.lineNumbers
+                                ? attributes.textColor
                                 : undefined,
-                        '--cbp-line-number-width': attributes.lineNumbersWidth
-                            ? `${attributes.lineNumbersWidth}px`
-                            : undefined,
-                        '--cbp-line-highlight-color':
-                            attributes?.enableHighlighting
-                                ? attributes.lineHighlightColor
-                                : undefined,
-                        '--cbp-line-height': attributes.lineHeight,
-                        fontFamily: fontFamilyLong(attributes.fontFamily),
-                        lineHeight: maybeClamp(
-                            attributes.lineHeight,
-                            attributes.clampFonts,
-                        ),
-                    },
-                })}>
-                <HeaderType {...attributes} />
-                {attributes.copyButton && (
-                    <CopyButton attributes={attributes} />
-                )}
-                <Edit attributes={attributes} setAttributes={setAttributes} />
-                <FooterType {...attributes} />
-            </div>
-        </>
-    ),
+                            '--cbp-line-number-start':
+                                Number(attributes?.startingLineNumber) > 1
+                                    ? attributes.startingLineNumber
+                                    : undefined,
+                            '--cbp-line-number-width':
+                                attributes.lineNumbersWidth
+                                    ? `${attributes.lineNumbersWidth}px`
+                                    : undefined,
+                            '--cbp-line-highlight-color':
+                                attributes?.enableHighlighting
+                                    ? attributes.lineHighlightColor
+                                    : undefined,
+                            '--cbp-line-height': attributes.lineHeight,
+                            fontFamily: fontFamilyLong(attributes.fontFamily),
+                            lineHeight: maybeClamp(
+                                attributes.lineHeight,
+                                attributes.clampFonts,
+                            ),
+                        },
+                    })}>
+                    <HeaderType {...attributes} />
+                    {attributes.copyButton && (
+                        <CopyButton attributes={attributes} />
+                    )}
+                    <Edit
+                        attributes={attributes}
+                        setAttributes={setAttributes}
+                    />
+                    <FooterType {...attributes} />
+                </div>
+            </>
+        );
+    },
     save: ({ attributes }) => <BlockOutput attributes={attributes} />,
     transforms: {
         from: [

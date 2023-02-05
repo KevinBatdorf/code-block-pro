@@ -108,17 +108,27 @@ const handleSeeMore = () => {
             pre.style.transition = `max-height ${animationSpeed}s linear`;
         }
 
-        pre.style.maxHeight = `${line.offsetTop + line.offsetHeight}px`;
+        // current line line-height
+        const lineHeight = parseFloat(window.getComputedStyle(line).lineHeight);
+        pre.style.maxHeight = `${
+            line.offsetTop + lineHeight - line.offsetHeight * 0.25
+        }px`;
 
         const button = line
             .closest(containerClass)
             .querySelector('.cbp-see-more-simple-btn');
         if (!button) return;
         button.style.opacity = 1;
-        button.addEventListener('click', (event) => {
+        const handle = (event) => {
             event.preventDefault();
             pre.style.maxHeight = initialHeight + 'px';
-            setTimeout(() => button.remove(), animationSpeed * 1000);
+            setTimeout(() => {
+                button.closest('.cbp-see-more-container').remove();
+            }, animationSpeed * 1000);
+        };
+        button.addEventListener('click', handle);
+        button.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') handle(event);
         });
     });
 };

@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { colord, AnyColor } from 'colord';
 import { Attributes } from '../../../types';
 
-export const SeeMoreSimple = ({
+export const SeeMoreRight = ({
     bgColor,
     textColor,
     seeMoreString,
@@ -16,25 +16,17 @@ export const SeeMoreSimple = ({
         : textC.darken(0.05).toHex();
     return (
         <div
+            className="cbp-see-more-container"
             style={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-start',
+                alignItems: 'flex-end',
                 width: '100%',
                 backgroundColor: 'transparent',
                 fontSize: '12px',
                 lineHeight: '1',
                 position: 'relative',
             }}>
-            {/* Footer padding is normally disabled, but since this button is opacity: 0 on start, if the JS fails it will look bad with the padding at 0 */}
-            <span
-                aria-hidden={true}
-                style={{
-                    width: '100%',
-                    height: 10,
-                    backgroundColor,
-                }}
-            />
             {/* span is used to avoid theme button styling */}
             <span
                 role="button"
@@ -43,7 +35,7 @@ export const SeeMoreSimple = ({
                 style={{
                     color,
                     backgroundColor,
-                    padding: disablePadding ? 0 : '10px 16px',
+                    padding: disablePadding ? '10px 0 0' : '10px 16px',
                     cursor: 'default',
                     opacity: context === 'front' ? 0 : 1,
                 }}>

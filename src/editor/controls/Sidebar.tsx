@@ -42,7 +42,12 @@ export const SidebarControls = ({
     const showFooterTextEdit = footersNeedingLinks.includes(footerType);
     const showFooterLinkEdit = footersNeedingLinks.includes(footerType);
     const showFooterLinkTargetEdit = footersNeedingLinks.includes(footerType);
-    console.log({ attributes });
+    const showSeeMoreEdit = [
+        'seeMoreLeft',
+        'seeMoreRight',
+        'seeMoreCenter',
+    ].includes(footerType);
+
     return (
         <InspectorControls>
             <PanelBody
@@ -148,7 +153,7 @@ export const SidebarControls = ({
                             />
                         </BaseControl>
                     )}
-                    {footerType === 'seeMoreSimple' && (
+                    {showSeeMoreEdit && (
                         <SeeMoreControl
                             attributes={attributes}
                             setAttributes={setAttributes}

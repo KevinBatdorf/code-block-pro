@@ -20,7 +20,7 @@ export const SimpleStringStart = ({
             style={{
                 display: 'flex',
                 alignItems: 'flex-end',
-                padding: disablePadding ? '10px 0 0 0' : '10px 10px 10px 16px',
+                padding: disablePadding ? '10px 0 0 0' : '10px',
                 width: '100%',
                 justifyContent: 'flex-start',
                 backgroundColor: bgC.toHex(),

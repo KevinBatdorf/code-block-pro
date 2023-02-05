@@ -1,7 +1,9 @@
 import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Attributes } from '../../types';
-import { SeeMoreSimple } from './footers/SeeMoreSimple';
+import { SeeMoreCenter } from './footers/SeeMoreCenter';
+import { SeeMoreLeft } from './footers/SeeMoreLeft';
+import { SeeMoreRight } from './footers/SeeMoreRight';
 import { SimpleStringEnd } from './footers/SimpleStringEnd';
 import { SimpleStringStart } from './footers/SimpleStringStart';
 
@@ -17,7 +19,9 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
         none: __('None', 'code-block-pro'),
         simpleStringEnd: __('Simple string end', 'code-block-pro'),
         simpleStringStart: __('Simple string start', 'code-block-pro'),
-        seeMoreSimple: __('See more', 'code-block-pro'),
+        seeMoreCenter: __('See more center', 'code-block-pro'),
+        seeMoreLeft: __('See more', 'code-block-pro'),
+        seeMoreRight: __('See more right', 'code-block-pro'),
     };
 
     return (
@@ -37,7 +41,9 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
                         [
                             'simpleStringEnd',
                             'simpleStringStart',
-                            'seeMoreSimple',
+                            'seeMoreLeft',
+                            'seeMoreRight',
+                            'seeMoreCenter',
                         ].includes(slug)
                             ? // Settings refers to the panel that can be expanded
                               __(
@@ -79,8 +85,15 @@ export const FooterType = (
     if (footerType === 'simpleStringStart') {
         return <SimpleStringStart {...props} />;
     }
-    if (footerType === 'seeMoreSimple') {
-        return <SeeMoreSimple {...props} context={context} />;
+    if (footerType === 'seeMoreCenter') {
+        return <SeeMoreCenter {...props} context={context} />;
     }
+    if (footerType === 'seeMoreLeft') {
+        return <SeeMoreLeft {...props} context={context} />;
+    }
+    if (footerType === 'seeMoreRight') {
+        return <SeeMoreRight {...props} context={context} />;
+    }
+
     return null;
 };
