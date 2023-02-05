@@ -61,7 +61,8 @@ context('Styling', () => {
             .should('contain', 'line-height: 1.5rem');
     });
 
-    it('Font family can be changed', () => {
+    it.only('Font family can be changed', () => {
+        cy.addCode('const foo = "bar";');
         cy.openSideBarPanel('Styling');
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
@@ -72,9 +73,20 @@ context('Styling', () => {
             .select('Fira Code')
             .should('have.value', 'Code-Pro-Fira-Code');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.previewCurrentPage();
+
+        cy.get('.wp-block-kevinbatdorf-code-block-pro')
             .invoke('attr', 'style')
-            .should('contain', 'font-family: Code-Pro-Fira-Code');
+            .should('contain', 'font-family:Code-Pro-Fira-Code');
+
+        cy.go('back');
+
+        cy.focusBlock('code-block-pro', 'textarea');
+        cy.get('.wp-block[class$="code-block-pro"] textarea').should(
+            'have.focus',
+        );
+
+        cy.openSideBarPanel('Styling');
 
         cy.get('#code-block-pro-font-family')
             .select('JetBrains Mono')
@@ -82,7 +94,9 @@ context('Styling', () => {
             .select('System Default')
             .should('have.value', '');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.previewCurrentPage();
+
+        cy.get('.wp-block-kevinbatdorf-code-block-pro')
             .invoke('attr', 'style')
             .should('not.contain', 'font-family');
     });
