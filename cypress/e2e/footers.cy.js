@@ -26,6 +26,7 @@ context('Footers', () => {
             .siblings()
             .should('have.length', 2);
     });
+
     it('Can accept text inputs on some footers', () => {
         // Remove the header/footer if there
         cy.setHeader('none');
@@ -45,11 +46,68 @@ context('Footers', () => {
         cy.get('#code-block-pro-footer-text')
             .should('exist')
             .should('have.value', '')
-            .type('Hello WordPress');
+            .type('foo-bar-baz-lets-go');
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')
-            .should('contain', 'Hello WordPress')
+            .should('contain', 'foo-bar-baz-lets-go')
             .should('not.contain', 'Ruby')
             .should('not.contain', 'JavaScript');
+    });
+
+    it('Some footers can expand height', () => {
+        // Remove the header/footer if there
+        cy.setHeader('none');
+        cy.setFooter('none');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('not.contain', 'Expand');
+        cy.setFooter('seeMoreLeft');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', 'Expand');
+
+        cy.openSideBarPanel('Settings');
+        cy.get('[data-cy="see-more-text"]')
+            .should('exist')
+            .should('have.value', '')
+            .type('foo-bar-baz-lets-go');
+
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', 'foo-bar-baz-lets-go')
+            .should('not.contain', 'Expand');
+
+        cy.addCode(
+            'const foo = "1";\nconst foo = "2";\nconst foo = "3";\nconst foo = "4";\nconst foo = "5";',
+        );
+
+        cy.previewCurrentPage();
+
+        cy.get('.wp-block-kevinbatdorf-code-block-pro').should(
+            'contain',
+            'foo = "5"',
+        );
+
+        cy.go('back');
+
+        cy.focusBlock('code-block-pro', 'textarea');
+        cy.get('.wp-block[class$="code-block-pro"] textarea').should(
+            'have.focus',
+        );
+
+        cy.get('[data-cy="see-more-line"]')
+            .should('exist')
+            .should('have.value', '')
+            .type('3');
+
+        cy.previewCurrentPage();
+
+        cy.contains('foo = "5"').should('not.be.visible');
+
+        cy.get('.cbp-see-more-simple-btn').click();
+
+        cy.contains('foo = "5"').should('be.visible');
+
+        cy.get('.cbp-see-more-simple-btn').should('not.exist');
     });
 });

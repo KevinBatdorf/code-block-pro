@@ -29,6 +29,7 @@ export const SeeMoreControl = ({
         <>
             <BaseControl id="code-block-pro-see-more-text">
                 <TextControl
+                    data-cy="see-more-text"
                     spellCheck={false}
                     autoComplete="off"
                     label={__('See more text', 'code-block-pro')}
@@ -39,6 +40,7 @@ export const SeeMoreControl = ({
             </BaseControl>
             <BaseControl id="code-block-pro-see-more-line">
                 <TextControl
+                    data-cy="see-more-line"
                     spellCheck={false}
                     autoComplete="off"
                     label={__('Hide after line', 'code-block-pro')}

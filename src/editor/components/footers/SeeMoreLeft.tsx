@@ -29,8 +29,8 @@ export const SeeMoreLeft = ({
             }}>
             {/* span is used to avoid theme button styling */}
             <span
-                role="button"
-                className="cbp-see-more-simple-btn"
+                role={context === 'front' ? 'button' : 'presentation'}
+                className="cbp-see-more-simple-btn cbp-see-more-simple-btn-hover"
                 tabIndex={0}
                 style={{
                     color,

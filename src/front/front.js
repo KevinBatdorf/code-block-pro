@@ -126,6 +126,7 @@ const handleSeeMore = () => {
         button.style.transition = `all ${animationSpeed / 1.5}s linear`;
         const handle = (event) => {
             event.preventDefault();
+            button.classList.remove('cbp-see-more-simple-btn-hover');
             pre.style.maxHeight = initialHeight + 'px';
             setTimeout(() => {
                 button.style.opacity = 0;

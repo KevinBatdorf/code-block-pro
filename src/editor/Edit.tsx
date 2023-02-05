@@ -50,12 +50,12 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
-    const hasFooter = footerType && footerType !== 'none';
     const expandable = [
         'seeMoreLeft',
         'seeMoreRight',
         'seeMoreCenter',
     ].includes(footerType);
+    const hasFooter = footerType && footerType !== 'none' && !expandable;
     useDefaults({ attributes, setAttributes });
 
     const getHighlights = useCallback(() => {
