@@ -21,6 +21,7 @@ jobs:
             - name: Install server
               run: |
                   npm ci
+                  npx eslint --max-warnings 0 .
                   npm run build
             - name: Maybe remove .wp-env.json
               if: ${{ matrix.wp-version }}

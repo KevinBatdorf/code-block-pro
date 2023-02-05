@@ -103,7 +103,9 @@ registerBlockType<Attributes>(blockConfig.name, {
                                 ? attributes.lineHighlightColor
                                 : undefined,
                         '--cbp-line-height': attributes.lineHeight,
-                        fontFamily: fontFamilyLong(attributes.fontFamily),
+                        // Disabled as ligatures will break the editor line widths
+                        // fontFamily: fontFamilyLong(attributes.fontFamily),
+                        fontFamily: fontFamilyLong(''),
                         lineHeight: maybeClamp(
                             attributes.lineHeight,
                             attributes.clampFonts,
