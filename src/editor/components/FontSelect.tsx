@@ -120,10 +120,7 @@ export const FontFamilySelect = ({
         <SelectControl
             id="code-block-pro-font-family"
             label={__('Font Family', 'code-block-pro')}
-            help={__(
-                'Fonts only show on the front end of your site.',
-                'code-block-pro',
-            )}
+            help={__('Fonts only render on the frontend.', 'code-block-pro')}
             value={value}
             onChange={onChange}
             options={Object.entries(fonts).map(([value, label]) => ({
