@@ -19,15 +19,15 @@ export const SeeMoreCenter = ({
         <div
             className="cbp-see-more-container"
             style={{
-                display: 'flex',
+                display: context === 'front' ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 width: '100%',
                 fontSize: '12px',
                 lineHeight: '1',
                 position: 'relative',
-                paddingTop: '16px',
-                height: '50px',
+                paddingTop: '4px',
+                height: '32px',
             }}>
             {/* bg 50% height at top */}
             <div
@@ -51,7 +51,6 @@ export const SeeMoreCenter = ({
                     backgroundColor: bg.toHex(),
                     padding: '6px 14px',
                     cursor: 'default',
-                    opacity: context === 'front' ? 0 : 1,
                     position: 'relative',
                     borderRadius: '6px',
                 }}>

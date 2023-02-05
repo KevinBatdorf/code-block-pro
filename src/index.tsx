@@ -66,15 +66,13 @@ registerBlockType<Attributes>(blockConfig.name, {
     },
     title: __('Code Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => {
-        const hasExpandableFooter = [
-            'seeMoreLeft',
-            'seeMoreRight',
-            'seeMoreCenter',
-        ].includes(attributes.footerType);
+        const footerNeedsPadding = ['seeMoreLeft', 'seeMoreRight'].includes(
+            attributes.footerType,
+        );
         console.log(
             attributes?.footerType &&
                 attributes?.footerType !== 'none' &&
-                !hasExpandableFooter,
+                !footerNeedsPadding,
         );
         return (
             <>
@@ -93,7 +91,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                             'padding-bottom-disabled':
                                 attributes?.footerType &&
                                 attributes?.footerType !== 'none' &&
-                                !hasExpandableFooter,
+                                !footerNeedsPadding,
                             'cbp-has-line-numbers': attributes.lineNumbers,
                             'cbp-blur-enabled': attributes.enableBlurring,
                             'cbp-unblur-on-hover': attributes.removeBlurOnHover,

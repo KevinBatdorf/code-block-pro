@@ -8,16 +8,14 @@ import { CopyButton } from './CopyButton';
 import './style.css';
 
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
-    const hasExpandableFooter = [
-        'seeMoreLeft',
-        'seeMoreRight',
-        'seeMoreCenter',
-    ].includes(attributes.footerType);
+    const footerNeedsPadding = ['seeMoreLeft', 'seeMoreRight'].includes(
+        attributes.footerType,
+    );
     console.log(
         attributes.footerType,
         attributes?.footerType &&
             attributes?.footerType !== 'none' &&
-            !hasExpandableFooter,
+            !footerNeedsPadding,
     );
     return (
         <div
@@ -27,7 +25,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                     'padding-bottom-disabled':
                         attributes?.footerType &&
                         attributes?.footerType !== 'none' &&
-                        !hasExpandableFooter,
+                        !footerNeedsPadding,
                     'cbp-has-line-numbers': attributes.lineNumbers,
                     'cbp-blur-enabled': attributes.enableBlurring,
                     'cbp-unblur-on-hover': attributes.removeBlurOnHover,

@@ -18,7 +18,7 @@ export const SeeMoreRight = ({
         <div
             className="cbp-see-more-container"
             style={{
-                display: 'flex',
+                display: context === 'front' ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-end',
                 width: '100%',
@@ -37,7 +37,6 @@ export const SeeMoreRight = ({
                     backgroundColor,
                     padding: disablePadding ? '10px 0 0' : '10px 16px',
                     cursor: 'default',
-                    opacity: context === 'front' ? 0 : 1,
                 }}>
                 {seeMoreString || __('Expand', 'code-block-pro')}
             </span>

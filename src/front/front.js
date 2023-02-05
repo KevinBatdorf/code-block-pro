@@ -105,25 +105,32 @@ const handleSeeMore = () => {
                 line.closest('code').children,
             ).filter((l) => l.offsetTop < line.offsetTop)?.length;
             animationSpeed = 0.5 + (lineCount - linesBeforeCurrent) * 0.01;
-            pre.style.transition = `max-height ${animationSpeed}s linear`;
+            pre.style.transition = `max-height ${animationSpeed}s ease-out`;
         }
 
         // current line line-height
         const lineHeight = parseFloat(window.getComputedStyle(line).lineHeight);
         pre.style.maxHeight = `${
-            line.offsetTop + lineHeight - line.offsetHeight * 0.25
+            line.offsetTop + lineHeight - line.offsetHeight
         }px`;
 
-        const button = line
+        const buttonContainer = line
             .closest(containerClass)
-            .querySelector('.cbp-see-more-simple-btn');
+            .querySelector('.cbp-see-more-container');
+        if (!buttonContainer) return;
+        buttonContainer.style.display = 'flex';
+        const button = buttonContainer.querySelector(
+            '.cbp-see-more-simple-btn',
+        );
         if (!button) return;
-        button.style.opacity = 1;
+        button.style.transition = `all ${animationSpeed / 1.5}s linear`;
         const handle = (event) => {
             event.preventDefault();
             pre.style.maxHeight = initialHeight + 'px';
             setTimeout(() => {
-                button.closest('.cbp-see-more-container').remove();
+                button.style.opacity = 0;
+                button.style.transform = 'translateY(-100%)';
+                setTimeout(() => button.remove(), animationSpeed * 1000);
             }, animationSpeed * 1000);
         };
         button.addEventListener('click', handle);
