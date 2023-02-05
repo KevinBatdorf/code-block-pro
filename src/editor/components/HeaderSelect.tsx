@@ -37,7 +37,11 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                     }
                     help={
                         ['simpleString'].includes(slug)
-                            ? __('Update text in Settings', 'code-block-pro')
+                            ? // Settings refers to the panel that can be expanded
+                              __(
+                                  'Update extras in the Settings panel',
+                                  'code-block-pro',
+                              )
                             : undefined
                     }
                     key={slug}>

@@ -1,4 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useState } from '@wordpress/element';
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { Attributes } from '../types';
@@ -81,3 +82,15 @@ export const useThemeStore = create<ThemeType>()(
         },
     ),
 );
+export const useThemeStoreReady = () => {
+    const [hydrated, setHydrated] = useState(useThemeStore.persist.hasHydrated);
+    useEffect(() => {
+        const unsubFinishHydration = useThemeStore.persist.onFinishHydration(
+            () => setHydrated(true),
+        );
+        return () => {
+            unsubFinishHydration();
+        };
+    }, []);
+    return hydrated;
+};

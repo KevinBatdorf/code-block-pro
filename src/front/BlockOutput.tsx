@@ -54,7 +54,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
                     <CopyButton attributes={attributes} />
                 )}
                 <RichText.Content value={attributes.codeHTML} />
-                <FooterType {...attributes} />
+                <FooterType {...attributes} context="front" />
             </>
         ) : null}
     </div>

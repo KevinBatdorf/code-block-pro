@@ -1,5 +1,7 @@
 import copy from 'copy-to-clipboard';
 
+const containerClass = '.wp-block-kevinbatdorf-code-block-pro';
+
 const handleCopyButton = () => {
     const buttons = Array.from(
         document.querySelectorAll(
@@ -25,9 +27,7 @@ const handleCopyButton = () => {
 
 const handleHighlighter = () => {
     const codeBlocks = Array.from(
-        document.querySelectorAll(
-            '.wp-block-kevinbatdorf-code-block-pro pre:not(.cbp-hl-loaded)',
-        ),
+        document.querySelectorAll(`${containerClass} pre:not(.cbp-hl-loaded)`),
     );
 
     codeBlocks.forEach((codeBlock) => {
@@ -87,7 +87,41 @@ const handleFontLoading = () => {
     });
 };
 
+const handleSeeMore = () => {
+    const seeMoreLine = Array.from(
+        document.querySelectorAll(
+            `${containerClass}:not(.cbp-see-more-loaded) .cbp-see-more-line`,
+        ),
+    );
+    seeMoreLine.forEach((line) => {
+        line.closest(containerClass).classList.add('cbp-see-more-loaded');
+        const pre = line.closest('pre');
+        const initialHeight = pre.offsetHeight;
+        let animationSpeed = 0;
+
+        if (line.classList.contains('cbp-see-more-transition')) {
+            const lineCount = pre.querySelectorAll('code > *').length;
+            animationSpeed = 1 + lineCount * 0.005;
+            pre.style.transition = `max-height ${animationSpeed}s ease-in-out`;
+        }
+
+        pre.style.maxHeight = `${line.offsetTop + line.offsetHeight}px`;
+
+        const button = line
+            .closest(containerClass)
+            .querySelector('.cbp-see-more-simple-btn');
+        if (!button) return;
+        button.style.opacity = 1;
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            pre.style.maxHeight = initialHeight + 'px';
+            setTimeout(() => button.remove(), animationSpeed * 1000);
+        });
+    });
+};
+
 const init = () => {
+    handleSeeMore();
     handleCopyButton();
     handleHighlighter();
     handleFontLoading();

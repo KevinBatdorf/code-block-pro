@@ -38,6 +38,8 @@ export const Edit = ({
         lineHighlights,
         enableBlurring,
         enableHighlighting,
+        seeMoreAfterLine,
+        seeMoreTransition,
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
@@ -85,7 +87,21 @@ export const Edit = ({
                 'blocks.codeBlockPro.codeHTML',
                 highlighter.codeToHtml(decodeEntities(code), {
                     lang: language ?? previousLanguage,
-                    lineOptions: [...getHighlights(), ...getBlurs()],
+                    lineOptions: [
+                        ...getHighlights(),
+                        ...getBlurs(),
+                        footerType === 'seeMoreSimple'
+                            ? {
+                                  line: Number(seeMoreAfterLine),
+                                  classes: [
+                                      'cbp-see-more-line',
+                                      seeMoreTransition
+                                          ? 'cbp-see-more-transition'
+                                          : '',
+                                  ],
+                              }
+                            : {},
+                    ],
                 }),
                 attributes,
             ) as string,
