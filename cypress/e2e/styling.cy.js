@@ -61,7 +61,7 @@ context('Styling', () => {
             .should('contain', 'line-height: 1.5rem');
     });
 
-    it.only('Font family can be changed', () => {
+    it('Font family can be changed', () => {
         cy.addCode('const foo = "bar";');
         cy.openSideBarPanel('Styling');
 
