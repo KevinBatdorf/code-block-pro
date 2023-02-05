@@ -37,6 +37,7 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 - Native Gutenberg block
 - Core functionality works in headless mode (see FAQ)
 - Converting from the default code block (and others)
+- Max height with scrollable section
 
 = More info =
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
@@ -247,6 +248,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Add scrollable max height area with no button (see Footer type)
+- Feature: Add expanding code area with max height based online number
 - Fix: Disabled font ligatures int he editor as it broke cursor positioning on wraps
 
 = 1.12.0 - 2023-01-28 =

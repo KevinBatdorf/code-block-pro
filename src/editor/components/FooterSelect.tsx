@@ -1,6 +1,10 @@
 import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Attributes } from '../../types';
+import { MaxHeightNoButton } from './footers/MaxHeightNoButton';
+import { SeeMoreCenter } from './footers/SeeMoreCenter';
+import { SeeMoreLeft } from './footers/SeeMoreLeft';
+import { SeeMoreRight } from './footers/SeeMoreRight';
 import { SimpleStringEnd } from './footers/SimpleStringEnd';
 import { SimpleStringStart } from './footers/SimpleStringStart';
 
@@ -16,6 +20,10 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
         none: __('None', 'code-block-pro'),
         simpleStringEnd: __('Simple string end', 'code-block-pro'),
         simpleStringStart: __('Simple string start', 'code-block-pro'),
+        seeMoreCenter: __('See more center', 'code-block-pro'),
+        seeMoreLeft: __('See more left', 'code-block-pro'),
+        seeMoreRight: __('See more right', 'code-block-pro'),
+        maxHeightNoButton: __('Max height scroll', 'code-block-pro'),
     };
 
     return (
@@ -32,8 +40,19 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
                             : type
                     }
                     help={
-                        ['simpleStringEnd', 'SimpleStringStart'].includes(slug)
-                            ? __('Update text in Settings', 'code-block-pro')
+                        [
+                            'simpleStringEnd',
+                            'simpleStringStart',
+                            'seeMoreLeft',
+                            'seeMoreRight',
+                            'seeMoreCenter',
+                            'maxHeightNoButton',
+                        ].includes(slug)
+                            ? // Settings refers to the panel that can be expanded
+                              __(
+                                  'Update extras in the Settings panel',
+                                  'code-block-pro',
+                              )
                             : undefined
                     }
                     key={slug}>
@@ -59,13 +78,28 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
     );
 };
 
-export const FooterType = (attributes: Partial<Attributes>) => {
-    const { footerType } = attributes;
+export const FooterType = (
+    props: Partial<Attributes> & { context?: string },
+) => {
+    const { footerType, context } = props;
     if (footerType === 'simpleStringEnd') {
-        return <SimpleStringEnd {...attributes} />;
+        return <SimpleStringEnd {...props} />;
     }
     if (footerType === 'simpleStringStart') {
-        return <SimpleStringStart {...attributes} />;
+        return <SimpleStringStart {...props} />;
     }
+    if (footerType === 'seeMoreCenter') {
+        return <SeeMoreCenter {...props} context={context} />;
+    }
+    if (footerType === 'seeMoreLeft') {
+        return <SeeMoreLeft {...props} context={context} />;
+    }
+    if (footerType === 'seeMoreRight') {
+        return <SeeMoreRight {...props} context={context} />;
+    }
+    if (footerType === 'maxHeightNoButton') {
+        return <MaxHeightNoButton />;
+    }
+
     return null;
 };

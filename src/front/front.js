@@ -1,5 +1,7 @@
 import copy from 'copy-to-clipboard';
 
+const containerClass = '.wp-block-kevinbatdorf-code-block-pro';
+
 const handleCopyButton = () => {
     const buttons = Array.from(
         document.querySelectorAll(
@@ -25,9 +27,7 @@ const handleCopyButton = () => {
 
 const handleHighlighter = () => {
     const codeBlocks = Array.from(
-        document.querySelectorAll(
-            '.wp-block-kevinbatdorf-code-block-pro pre:not(.cbp-hl-loaded)',
-        ),
+        document.querySelectorAll(`${containerClass} pre:not(.cbp-hl-loaded)`),
     );
 
     codeBlocks.forEach((codeBlock) => {
@@ -87,7 +87,68 @@ const handleFontLoading = () => {
     });
 };
 
+const handleSeeMore = () => {
+    const seeMoreLines = Array.from(
+        document.querySelectorAll(
+            `${containerClass}:not(.cbp-see-more-loaded) .cbp-see-more-line`,
+        ),
+    );
+    seeMoreLines.forEach((line) => {
+        const currentContainer = line.closest(containerClass);
+        currentContainer.classList.add('cbp-see-more-loaded');
+        const pre = line.closest('pre');
+        const initialHeight = pre.offsetHeight;
+        let animationSpeed = 0;
+
+        if (line.classList.contains('cbp-see-more-transition')) {
+            const lineCount = pre.querySelectorAll('code > *').length;
+            const linesBeforeCurrent = Array.from(
+                line.closest('code').children,
+            ).filter((l) => l.offsetTop < line.offsetTop)?.length;
+            animationSpeed = 0.5 + (lineCount - linesBeforeCurrent) * 0.01;
+            pre.style.transition = `max-height ${animationSpeed}s ease-out`;
+        }
+
+        // if the first child it a span then get the height of that span
+        const headerHeight =
+            currentContainer.children[0].tagName === 'SPAN'
+                ? currentContainer.children[0].offsetHeight
+                : 0;
+        const lineHeight = parseFloat(window.getComputedStyle(line).lineHeight);
+        pre.style.maxHeight = `${
+            line.offsetTop + lineHeight + (lineHeight - 16) - headerHeight
+        }px`;
+
+        const buttonContainer = line
+            .closest(containerClass)
+            .querySelector('.cbp-see-more-container');
+        if (!buttonContainer) return;
+        buttonContainer.style.display = 'flex';
+        const button = buttonContainer.querySelector(
+            '.cbp-see-more-simple-btn',
+        );
+        if (!button) return;
+        button.style.transition = `all ${animationSpeed / 1.5}s linear`;
+
+        const handle = (event) => {
+            event.preventDefault();
+            button.classList.remove('cbp-see-more-simple-btn-hover');
+            pre.style.maxHeight = initialHeight + 'px';
+            setTimeout(() => {
+                button.style.opacity = 0;
+                button.style.transform = 'translateY(-100%)';
+                setTimeout(() => button.remove(), animationSpeed * 1000);
+            }, animationSpeed * 1000);
+        };
+        button.addEventListener('click', handle);
+        button.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') handle(event);
+        });
+    });
+};
+
 const init = () => {
+    handleSeeMore();
     handleCopyButton();
     handleHighlighter();
     handleFontLoading();

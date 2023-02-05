@@ -38,6 +38,8 @@ export const Edit = ({
         lineHighlights,
         enableBlurring,
         enableHighlighting,
+        seeMoreAfterLine,
+        seeMoreTransition,
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,13 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
-    const hasFooter = footerType && footerType !== 'none';
+    const expandable = [
+        'seeMoreLeft',
+        'seeMoreRight',
+        'seeMoreCenter',
+        'maxHeightNoButton',
+    ].includes(footerType);
+    const hasFooter = footerType && footerType !== 'none' && !expandable;
     useDefaults({ attributes, setAttributes });
 
     const getHighlights = useCallback(() => {
@@ -85,7 +93,21 @@ export const Edit = ({
                 'blocks.codeBlockPro.codeHTML',
                 highlighter.codeToHtml(decodeEntities(code), {
                     lang: language ?? previousLanguage,
-                    lineOptions: [...getHighlights(), ...getBlurs()],
+                    lineOptions: [
+                        ...getHighlights(),
+                        ...getBlurs(),
+                        expandable
+                            ? {
+                                  line: Number(seeMoreAfterLine),
+                                  classes: [
+                                      'cbp-see-more-line',
+                                      seeMoreTransition
+                                          ? 'cbp-see-more-transition'
+                                          : '',
+                                  ],
+                              }
+                            : {},
+                    ],
                 }),
                 attributes,
             ) as string,
@@ -96,6 +118,9 @@ export const Edit = ({
         });
     }, [
         highlighter,
+        expandable,
+        seeMoreAfterLine,
+        seeMoreTransition,
         color,
         code,
         language,

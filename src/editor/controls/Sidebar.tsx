@@ -24,6 +24,7 @@ import { HeaderSelect } from '../components/HeaderSelect';
 import { ThemesPanel } from '../components/ThemesPanel';
 import { BlurControl } from './BlurControl';
 import { HighlightingControl } from './HighlightingControl';
+import { SeeMoreControl } from './SeeMoreControl';
 
 export const SidebarControls = ({
     attributes,
@@ -41,6 +42,12 @@ export const SidebarControls = ({
     const showFooterTextEdit = footersNeedingLinks.includes(footerType);
     const showFooterLinkEdit = footersNeedingLinks.includes(footerType);
     const showFooterLinkTargetEdit = footersNeedingLinks.includes(footerType);
+    const showSeeMoreEdit = [
+        'seeMoreLeft',
+        'seeMoreRight',
+        'seeMoreCenter',
+        'maxHeightNoButton',
+    ].includes(footerType);
 
     return (
         <InspectorControls>
@@ -146,6 +153,12 @@ export const SidebarControls = ({
                                 }}
                             />
                         </BaseControl>
+                    )}
+                    {showSeeMoreEdit && (
+                        <SeeMoreControl
+                            attributes={attributes}
+                            setAttributes={setAttributes}
+                        />
                     )}
                 </div>
             </PanelBody>
