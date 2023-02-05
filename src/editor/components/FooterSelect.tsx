@@ -21,7 +21,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
         simpleStringEnd: __('Simple string end', 'code-block-pro'),
         simpleStringStart: __('Simple string start', 'code-block-pro'),
         seeMoreCenter: __('See more center', 'code-block-pro'),
-        seeMoreLeft: __('See more', 'code-block-pro'),
+        seeMoreLeft: __('See more left', 'code-block-pro'),
         seeMoreRight: __('See more right', 'code-block-pro'),
         maxHeightNoButton: __('Max height scroll', 'code-block-pro'),
     };
