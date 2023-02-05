@@ -202,7 +202,7 @@ export const Edit = ({
                 maxHeight: Number(editorHeight)
                     ? Number(editorHeight)
                     : undefined,
-                overflow: Number(editorHeight) ? 'hidden' : undefined,
+                overflow: Number(editorHeight) ? 'auto' : undefined,
             }}>
             <Editor
                 value={decodeEntities(code)}

@@ -4,7 +4,7 @@ import {
     TextControl,
     PanelBody,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { AttributesPropsAndSetter } from '../../types';
 import { SeeMoreSelect } from './SeeMoreSelect';
@@ -13,6 +13,9 @@ export const HeightPanel = ({
     attributes,
     setAttributes,
 }: AttributesPropsAndSetter) => {
+    const [editorHeight, setEditorHeight] = useState(
+        attributes?.editorHeight ?? false,
+    );
     const [enableMaxHeight, setEnableMaxHeight] = useState(
         attributes?.enableMaxHeight ?? false,
     );
@@ -25,15 +28,18 @@ export const HeightPanel = ({
     const [seeMoreTransition, setSeeMoreTransition] = useState(
         attributes?.seeMoreTransition ?? false,
     );
+    const open = useRef(Number(attributes?.editorHeight) > 0);
 
     useEffect(() => {
         setAttributes({
+            editorHeight,
             seeMoreString,
             seeMoreAfterLine,
             seeMoreTransition,
             enableMaxHeight,
         });
     }, [
+        editorHeight,
         seeMoreString,
         seeMoreAfterLine,
         seeMoreTransition,
@@ -44,7 +50,7 @@ export const HeightPanel = ({
     return (
         <PanelBody
             title={__('Max Height', 'code-block-pro')}
-            initialOpen={false}>
+            initialOpen={open.current}>
             <BaseControl id="code-block-pro-editor-height">
                 <TextControl
                     spellCheck={false}
@@ -53,14 +59,12 @@ export const HeightPanel = ({
                     type="number"
                     label={__('Max editor height', 'code-block-pro')}
                     help={__(
-                        'Admin only. Just to help manage the height of long snippets.',
+                        'Admin only. Set to 0 to disable.',
                         'code-block-pro',
                     )}
                     placeholder={'0'}
-                    onChange={(editorHeight) => {
-                        setAttributes({ editorHeight });
-                    }}
-                    value={attributes.editorHeight ?? '0'}
+                    onChange={setEditorHeight}
+                    value={editorHeight}
                 />
             </BaseControl>
             <BaseControl id="code-block-pro-see-more-enabled">
