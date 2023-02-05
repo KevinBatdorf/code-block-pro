@@ -68,7 +68,7 @@
     left: -16px;
     @apply absolute top-0 h-full;
 }
-.wp-block-kevinbatdorf-code-block-pro.padding-disabled pre .line.cbp-line-highlight::after {
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).padding-disabled pre .line.cbp-line-highlight::after {
     @apply left-0 w-full;
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled pre .line:not(.cbp-no-blur) {
@@ -80,6 +80,12 @@
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre * {
     font-family: inherit;
+}
+.cbp-see-more-simple-btn-hover {
+    @apply transition-none;
+}
+.cbp-see-more-simple-btn-hover:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }
 .code-block-pro-copy-button {
     border: 0;

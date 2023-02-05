@@ -22,7 +22,7 @@
     },
     "ignorePatterns": ["node_modules/", "pkg/", "build/"],
     "parser": "@typescript-eslint/parser",
-    "plugins": [],
+    "plugins": ["no-only-tests"],
     "rules": {
         "require-await": "error",
         "quotes": ["error", "single", { "avoidEscape": true }],
@@ -33,6 +33,7 @@
         "semi": ["error", "always"],
         "space-in-parens": ["error", "never"],
         "key-spacing": ["error", { "afterColon": true }],
+        "no-only-tests/no-only-tests": "warn",
         "space-infix-ops": ["error"],
         "space-before-function-paren": [
             "error",

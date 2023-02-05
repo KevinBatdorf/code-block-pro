@@ -20,6 +20,9 @@ export type Attributes = {
     footerType: string;
     footerString?: string;
     footerLink?: string;
+    seeMoreString?: string;
+    seeMoreAfterLine?: string;
+    seeMoreTransition?: boolean;
     footerLinkTarget?: boolean;
     disablePadding: boolean;
     startingLineNumber: string;

@@ -39,6 +39,8 @@ export const Edit = ({
         lineHighlights,
         enableBlurring,
         enableHighlighting,
+        seeMoreAfterLine,
+        seeMoreTransition,
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
@@ -49,7 +51,13 @@ export const Edit = ({
         theme,
         lang: language ?? previousLanguage,
     });
-    const hasFooter = footerType && footerType !== 'none';
+    const expandable = [
+        'seeMoreLeft',
+        'seeMoreRight',
+        'seeMoreCenter',
+        'maxHeightNoButton',
+    ].includes(footerType);
+    const hasFooter = footerType && footerType !== 'none' && !expandable;
     useDefaults({ attributes, setAttributes });
 
     const getHighlights = useCallback(() => {
@@ -84,7 +92,17 @@ export const Edit = ({
         const l = (language ?? previousLanguage) as Lang | 'ansi';
         const lang = getEditorLanguage(l);
         const c = decodeEntities(code);
-        const lineOptions = [...getHighlights(), ...getBlurs()];
+        const lineOptions = [...getHighlights(), ...getBlurs(), expandable
+            ? {
+                  line: Number(seeMoreAfterLine),
+                  classes: [
+                      'cbp-see-more-line',
+                      seeMoreTransition
+                          ? 'cbp-see-more-transition'
+                          : '',
+                  ],
+              }
+            : {}];
         const rendered =
             l === 'ansi'
                 ? highlighter.ansiToHtml(c, { lineOptions })
@@ -101,6 +119,9 @@ export const Edit = ({
         setAttributes({ codeHTML, lineHighlightColor });
     }, [
         highlighter,
+        expandable,
+        seeMoreAfterLine,
+        seeMoreTransition,
         color,
         code,
         language,
