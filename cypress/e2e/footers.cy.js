@@ -156,13 +156,11 @@ context('Footers', () => {
         );
         cy.openSideBarPanel('Settings');
         cy.setHeader('headlights');
-        cy.setFooter('seeMoreRight');
+        cy.setFooter('maxHeightNoButton');
 
         cy.previewCurrentPage();
 
         cy.contains('foo = "5"').should('not.be.visible');
-        cy.get('.cbp-see-more-simple-btn').click();
-        cy.contains('foo = "5"').should('be.visible');
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
     });
 });

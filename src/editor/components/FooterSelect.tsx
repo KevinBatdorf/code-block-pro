@@ -23,7 +23,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
         seeMoreCenter: __('See more center', 'code-block-pro'),
         seeMoreLeft: __('See more', 'code-block-pro'),
         seeMoreRight: __('See more right', 'code-block-pro'),
-        maxHeightNoButton: __('Max height no button', 'code-block-pro'),
+        maxHeightNoButton: __('Max height scroll', 'code-block-pro'),
     };
 
     return (
