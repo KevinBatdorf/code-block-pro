@@ -54,6 +54,7 @@ export const Edit = ({
         'seeMoreLeft',
         'seeMoreRight',
         'seeMoreCenter',
+        'maxHeightNoButton',
     ].includes(footerType);
     const hasFooter = footerType && footerType !== 'none' && !expandable;
     useDefaults({ attributes, setAttributes });

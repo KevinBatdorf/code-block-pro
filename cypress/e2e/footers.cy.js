@@ -98,7 +98,7 @@ context('Footers', () => {
         cy.get('[data-cy="see-more-line"]')
             .should('exist')
             .should('have.value', '')
-            .type('3');
+            .type('4');
 
         cy.previewCurrentPage();
 
@@ -108,6 +108,61 @@ context('Footers', () => {
 
         cy.contains('foo = "5"').should('be.visible');
 
+        cy.get('.cbp-see-more-simple-btn').should('not.exist');
+    });
+
+    it.only('Calculates the height with headers', () => {
+        cy.setHeader('headlights');
+        cy.setFooter('none');
+        cy.setFooter('seeMoreCenter');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', 'Expand');
+
+        cy.addCode(
+            'const foo = "1";\nconst foo = "2";\nconst foo = "3";\nconst foo = "4";\nconst foo = "5";',
+        );
+
+        cy.previewCurrentPage();
+
+        cy.get('.wp-block-kevinbatdorf-code-block-pro').should(
+            'contain',
+            'foo = "5"',
+        );
+
+        cy.go('back');
+        cy.focusBlock('code-block-pro', 'textarea');
+        cy.get('.wp-block[class$="code-block-pro"] textarea').should(
+            'have.focus',
+        );
+
+        cy.openSideBarPanel('Settings');
+        cy.get('[data-cy="see-more-line"]')
+            .should('exist')
+            .should('have.value', '')
+            .type('3');
+
+        cy.previewCurrentPage();
+
+        cy.contains('foo = "5"').should('not.be.visible');
+        cy.get('.cbp-see-more-simple-btn').click();
+        cy.contains('foo = "5"').should('be.visible');
+        cy.get('.cbp-see-more-simple-btn').should('not.exist');
+
+        cy.go('back');
+        cy.focusBlock('code-block-pro', 'textarea');
+        cy.get('.wp-block[class$="code-block-pro"] textarea').should(
+            'have.focus',
+        );
+        cy.openSideBarPanel('Settings');
+        cy.setHeader('headlights');
+        cy.setFooter('seeMoreRight');
+
+        cy.previewCurrentPage();
+
+        cy.contains('foo = "5"').should('not.be.visible');
+        cy.get('.cbp-see-more-simple-btn').click();
+        cy.contains('foo = "5"').should('be.visible');
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
     });
 });

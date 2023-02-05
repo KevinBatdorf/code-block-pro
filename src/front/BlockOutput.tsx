@@ -8,9 +8,11 @@ import { CopyButton } from './CopyButton';
 import './style.css';
 
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
-    const footerNeedsPadding = ['seeMoreLeft', 'seeMoreRight'].includes(
-        attributes.footerType,
-    );
+    const footerNeedsPadding = [
+        'seeMoreLeft',
+        'seeMoreRight',
+        'maxHeightNoButton',
+    ].includes(attributes.footerType);
     console.log(
         attributes.footerType,
         attributes?.footerType &&

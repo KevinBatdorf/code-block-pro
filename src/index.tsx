@@ -66,9 +66,11 @@ registerBlockType<Attributes>(blockConfig.name, {
     },
     title: __('Code Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => {
-        const footerNeedsPadding = ['seeMoreLeft', 'seeMoreRight'].includes(
-            attributes.footerType,
-        );
+        const footerNeedsPadding = [
+            'seeMoreLeft',
+            'seeMoreRight',
+            'maxHeightNoButton',
+        ].includes(attributes.footerType);
         console.log(
             attributes?.footerType &&
                 attributes?.footerType !== 'none' &&

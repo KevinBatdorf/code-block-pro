@@ -88,13 +88,14 @@ const handleFontLoading = () => {
 };
 
 const handleSeeMore = () => {
-    const seeMoreLine = Array.from(
+    const seeMoreLines = Array.from(
         document.querySelectorAll(
             `${containerClass}:not(.cbp-see-more-loaded) .cbp-see-more-line`,
         ),
     );
-    seeMoreLine.forEach((line) => {
-        line.closest(containerClass).classList.add('cbp-see-more-loaded');
+    seeMoreLines.forEach((line) => {
+        const currentContainer = line.closest(containerClass);
+        currentContainer.classList.add('cbp-see-more-loaded');
         const pre = line.closest('pre');
         const initialHeight = pre.offsetHeight;
         let animationSpeed = 0;
@@ -108,10 +109,14 @@ const handleSeeMore = () => {
             pre.style.transition = `max-height ${animationSpeed}s ease-out`;
         }
 
-        // current line line-height
+        // if the first child it a span then get the height of that span
+        const headerHeight =
+            currentContainer.children[0].tagName === 'SPAN'
+                ? currentContainer.children[0].offsetHeight
+                : 0;
         const lineHeight = parseFloat(window.getComputedStyle(line).lineHeight);
         pre.style.maxHeight = `${
-            line.offsetTop + lineHeight - line.offsetHeight
+            line.offsetTop + lineHeight + (lineHeight - 16) - headerHeight
         }px`;
 
         const buttonContainer = line
@@ -124,6 +129,7 @@ const handleSeeMore = () => {
         );
         if (!button) return;
         button.style.transition = `all ${animationSpeed / 1.5}s linear`;
+
         const handle = (event) => {
             event.preventDefault();
             button.classList.remove('cbp-see-more-simple-btn-hover');

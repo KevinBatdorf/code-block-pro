@@ -46,6 +46,7 @@ export const SidebarControls = ({
         'seeMoreLeft',
         'seeMoreRight',
         'seeMoreCenter',
+        'maxHeightNoButton',
     ].includes(footerType);
 
     return (

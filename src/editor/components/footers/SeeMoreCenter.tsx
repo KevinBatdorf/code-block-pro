@@ -6,7 +6,6 @@ export const SeeMoreCenter = ({
     bgColor,
     textColor,
     seeMoreString,
-    disablePadding,
     context,
 }: Partial<Attributes> & { context?: string }) => {
     const bgC = colord(bgColor as AnyColor);

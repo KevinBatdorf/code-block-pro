@@ -1,6 +1,7 @@
 import { BaseControl } from '@wordpress/components';
 import { sprintf, __ } from '@wordpress/i18n';
 import { Attributes } from '../../types';
+import { MaxHeightNoButton } from './footers/MaxHeightNoButton';
 import { SeeMoreCenter } from './footers/SeeMoreCenter';
 import { SeeMoreLeft } from './footers/SeeMoreLeft';
 import { SeeMoreRight } from './footers/SeeMoreRight';
@@ -22,6 +23,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
         seeMoreCenter: __('See more center', 'code-block-pro'),
         seeMoreLeft: __('See more', 'code-block-pro'),
         seeMoreRight: __('See more right', 'code-block-pro'),
+        maxHeightNoButton: __('Max height no button', 'code-block-pro'),
     };
 
     return (
@@ -44,6 +46,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
                             'seeMoreLeft',
                             'seeMoreRight',
                             'seeMoreCenter',
+                            'maxHeightNoButton',
                         ].includes(slug)
                             ? // Settings refers to the panel that can be expanded
                               __(
@@ -93,6 +96,9 @@ export const FooterType = (
     }
     if (footerType === 'seeMoreRight') {
         return <SeeMoreRight {...props} context={context} />;
+    }
+    if (footerType === 'maxHeightNoButton') {
+        return <MaxHeightNoButton />;
     }
 
     return null;
