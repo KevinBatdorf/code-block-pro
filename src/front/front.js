@@ -101,8 +101,11 @@ const handleSeeMore = () => {
 
         if (line.classList.contains('cbp-see-more-transition')) {
             const lineCount = pre.querySelectorAll('code > *').length;
-            animationSpeed = 1 + lineCount * 0.005;
-            pre.style.transition = `max-height ${animationSpeed}s ease-in-out`;
+            const linesBeforeCurrent = Array.from(
+                line.closest('code').children,
+            ).filter((l) => l.offsetTop < line.offsetTop)?.length;
+            animationSpeed = 0.5 + (lineCount - linesBeforeCurrent) * 0.01;
+            pre.style.transition = `max-height ${animationSpeed}s linear`;
         }
 
         pre.style.maxHeight = `${line.offsetTop + line.offsetHeight}px`;
