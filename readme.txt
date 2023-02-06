@@ -251,7 +251,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 = 1.13.0 - 2023-02-05 =
-- Feature: Add scrollable max height area with no button (see Footer type)
+- Feature: Add scrollable max height area with no button (Max Height panel)
 - Feature: Add expanding code area with max height based online number
 - Feature: Added ANSI rendering support - some themes do not look perfect yet
 - Fix: Disabled font ligatures in the editor as it broke cursor positioning on wraps
