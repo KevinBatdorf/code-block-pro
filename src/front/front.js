@@ -115,9 +115,7 @@ const handleSeeMore = () => {
                 ? currentContainer.children[0].offsetHeight
                 : 0;
         const lineHeight = parseFloat(window.getComputedStyle(line).lineHeight);
-        pre.style.maxHeight = `${
-            line.offsetTop + lineHeight + (lineHeight - 16) - headerHeight
-        }px`;
+        pre.style.maxHeight = `${line.offsetTop + lineHeight - headerHeight}px`;
 
         const buttonContainer = line
             .closest(containerClass)
@@ -128,6 +126,9 @@ const handleSeeMore = () => {
             '.cbp-see-more-simple-btn',
         );
         if (!button) return;
+        if (currentContainer.classList.contains('padding-disabled')) {
+            button.classList.remove('cbp-see-more-simple-btn-hover');
+        }
         button.style.transition = `all ${
             Math.max(animationSpeed, 1) / 1.5
         }s linear`;

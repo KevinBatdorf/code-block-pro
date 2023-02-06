@@ -48,6 +48,7 @@ export const SeeMoreSelect = ({ attributes, onClick }: SeeMoreSelectProps) => {
                             />
                             <SeeMoreType
                                 seeMoreType={slug}
+                                context="editor"
                                 {...attributesWithoutSeeMoreType}
                             />
                         </span>
@@ -61,7 +62,8 @@ export const SeeMoreSelect = ({ attributes, onClick }: SeeMoreSelectProps) => {
 export const SeeMoreType = (
     props: Partial<Attributes> & { context?: string },
 ) => {
-    const { seeMoreType, context } = props;
+    const { seeMoreType, enableMaxHeight, context } = props;
+    if (!enableMaxHeight) return null;
     if (seeMoreType === 'roundCenter') {
         return <RoundCenter {...props} context={context} />;
     }

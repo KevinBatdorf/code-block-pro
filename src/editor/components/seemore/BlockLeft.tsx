@@ -8,12 +8,15 @@ export const BlockLeft = ({
     seeMoreString,
     disablePadding,
     context,
+    footerType,
 }: Partial<Attributes> & { context?: string }) => {
     const backgroundColor = colord(bgColor as AnyColor).toHex();
     const textC = colord(textColor as AnyColor);
     const color = textC.isDark()
         ? textC.lighten(0.05).toHex()
         : textC.darken(0.05).toHex();
+    const hasFooter = footerType !== 'none';
+    const inEditor = context === 'editor';
     return (
         <div
             className="cbp-see-more-container"
@@ -26,12 +29,14 @@ export const BlockLeft = ({
                 fontSize: '12px',
                 lineHeight: '1',
                 position: 'relative',
+                marginBottom: hasFooter || inEditor ? 0 : '-16px',
+                height: hasFooter && !inEditor ? '16px' : '32px',
             }}>
             {/* span is used to avoid theme button styling */}
             <span
-                role={context === 'front' ? 'button' : 'presentation'}
+                role={inEditor ? 'presentation' : 'button'}
+                tabIndex={inEditor ? -1 : 0}
                 className="cbp-see-more-simple-btn cbp-see-more-simple-btn-hover"
-                tabIndex={0}
                 style={{
                     color,
                     backgroundColor,
