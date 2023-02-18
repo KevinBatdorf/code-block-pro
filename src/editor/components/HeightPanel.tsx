@@ -57,11 +57,11 @@ export const HeightPanel = ({
                     autoComplete="off"
                     data-cy-cbp="editor-height"
                     type="number"
-                    label={__('Max editor height', 'code-block-pro')}
-                    help={__(
-                        'Admin only. Set to 0 to disable.',
+                    label={__(
+                        'Max editor height (admin only)',
                         'code-block-pro',
                     )}
+                    help={__('Set to 0 to disable.', 'code-block-pro')}
                     placeholder={'0'}
                     onChange={setEditorHeight}
                     value={editorHeight}
@@ -69,7 +69,11 @@ export const HeightPanel = ({
             </BaseControl>
             <BaseControl id="code-block-pro-see-more-enabled">
                 <CheckboxControl
-                    label={__('Enable max height', 'code-block-pro')}
+                    label={__('Enable frontend max height', 'code-block-pro')}
+                    help={__(
+                        'Enable this, then select a specific line number below.',
+                        'code-block-pro',
+                    )}
                     data-cy="enable-max-height"
                     checked={enableMaxHeight}
                     onChange={setEnableMaxHeight}

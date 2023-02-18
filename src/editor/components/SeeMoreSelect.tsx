@@ -28,7 +28,8 @@ export const SeeMoreSelect = ({ attributes, onClick }: SeeMoreSelectProps) => {
                 <BaseControl
                     id={`code-block-pro-see-more-${slug}`}
                     label={
-                        seeMoreType === slug || !seeMoreType
+                        seeMoreType === slug ||
+                        (!seeMoreType && slug === 'none')
                             ? sprintf(
                                   __('%s (current)', 'code-block-pro'),
                                   type,
