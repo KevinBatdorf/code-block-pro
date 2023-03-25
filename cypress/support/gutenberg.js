@@ -26,13 +26,17 @@ export const closeWelcomeGuide = () => {
             ) {
                 return true;
             }
+            console.log(
+                win.wp.data
+                    .select('core/edit-post')
+                    .isFeatureActive('welcomeGuide'),
+            );
             win.wp.data
                 .dispatch('core/edit-post')
                 .toggleFeature('welcomeGuide');
-
-            // And wait again for the animation to finish
-            cy.get(className).should('not.exist');
         });
+        // And wait again for the animation to finish
+        cy.get(className).should('not.exist');
     });
 };
 
