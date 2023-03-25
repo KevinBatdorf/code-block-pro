@@ -26,11 +26,6 @@ export const closeWelcomeGuide = () => {
             ) {
                 return true;
             }
-            console.log(
-                win.wp.data
-                    .select('core/edit-post')
-                    .isFeatureActive('welcomeGuide'),
-            );
             win.wp.data
                 .dispatch('core/edit-post')
                 .toggleFeature('welcomeGuide');
