@@ -1,7 +1,7 @@
 import { useEffect, useRef } from '@wordpress/element';
 import { Theme } from 'shiki';
 import { useGlobalStore } from '../state/global';
-import { useThemeStore } from '../state/theme';
+import { useThemeStore, useThemeStoreReady } from '../state/theme';
 import { AttributesPropsAndSetter } from '../types';
 
 export const useDefaults = ({
@@ -32,79 +32,80 @@ export const useDefaults = ({
         previousDisablePadding,
         previousLineNumbers,
     } = useThemeStore();
+    const ready = useThemeStoreReady();
     const once = useRef(false);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (copyButton !== undefined || !previousSettings.copyButton) return;
         setAttributes({ copyButton: previousSettings.copyButton });
-    }, [previousSettings, copyButton, setAttributes]);
+    }, [ready, previousSettings, copyButton, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (theme || !previousTheme) return;
         setAttributes({ theme: previousTheme as Theme });
-    }, [previousTheme, theme, setAttributes]);
+    }, [ready, previousTheme, theme, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (fontSize || !previousFontSize) return;
         setAttributes({ fontSize: previousFontSize });
-    }, [previousFontSize, fontSize, setAttributes]);
+    }, [ready, previousFontSize, fontSize, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (fontFamily || fontFamily === '' || previousFontFamily === undefined)
             return;
         setAttributes({ fontFamily: previousFontFamily });
-    }, [previousFontFamily, fontFamily, setAttributes]);
+    }, [ready, previousFontFamily, fontFamily, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (lineHeight || !previousLineHeight) return;
         setAttributes({ lineHeight: previousLineHeight });
-    }, [previousLineHeight, lineHeight, setAttributes]);
+    }, [ready, previousLineHeight, lineHeight, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (headerType || !previousHeaderType) return;
         setAttributes({ headerType: previousHeaderType });
-    }, [previousHeaderType, headerType, setAttributes]);
+    }, [ready, previousHeaderType, headerType, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (footerType !== undefined || previousFooterType === undefined)
             return;
         setAttributes({ footerType: previousFooterType });
-    }, [previousFooterType, footerType, setAttributes]);
+    }, [ready, previousFooterType, footerType, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (clampFonts !== undefined || previousClampFonts === undefined)
             return;
         setAttributes({ clampFonts: previousClampFonts });
-    }, [previousClampFonts, clampFonts, setAttributes]);
+    }, [ready, previousClampFonts, clampFonts, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (
             disablePadding !== undefined ||
             previousDisablePadding === undefined
         )
             return;
         setAttributes({ disablePadding: previousDisablePadding });
-    }, [previousDisablePadding, disablePadding, setAttributes]);
+    }, [ready, previousDisablePadding, disablePadding, setAttributes]);
 
     useEffect(() => {
-        if (once.current) return;
+        if (once.current || !ready) return;
         if (lineNumbers !== undefined || previousLineNumbers === undefined)
             return;
         setAttributes({ lineNumbers: previousLineNumbers });
-    }, [previousLineNumbers, lineNumbers, setAttributes]);
+    }, [ready, previousLineNumbers, lineNumbers, setAttributes]);
 
     useEffect(() => {
         requestAnimationFrame(() => {
             once.current = true;
         });
-    }, []);
+    }, [ready]);
 };
