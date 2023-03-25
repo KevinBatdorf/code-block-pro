@@ -14,7 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                wp-version: [null, '"WordPress/WordPress#master"']
+                wp-version: [null, '"WordPress/WordPress#6.2-branch"']
         steps:
             - name: Clone repo
               uses: actions/checkout@v3

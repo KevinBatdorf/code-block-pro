@@ -29,10 +29,9 @@ export const closeWelcomeGuide = () => {
             win.wp.data
                 .dispatch('core/edit-post')
                 .toggleFeature('welcomeGuide');
-
-            // And wait again for the animation to finish
-            cy.get(className).should('not.exist');
         });
+        // And wait again for the animation to finish
+        cy.get(className).should('not.exist');
     });
 };
 

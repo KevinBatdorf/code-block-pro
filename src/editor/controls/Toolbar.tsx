@@ -32,7 +32,7 @@ export const ToolbarControls = ({
                             onClick={onToggle}
                             aria-expanded={isOpen}
                             aria-haspopup="true">
-                            {(languages[language] ?? language).replace(
+                            {(languages[language] ?? language)?.replace(
                                 'ANSI',
                                 'ANSI (experimental)',
                             )}
