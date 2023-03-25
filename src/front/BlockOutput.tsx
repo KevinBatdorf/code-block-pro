@@ -1,4 +1,5 @@
 import { RichText, useBlockProps as blockProps } from '@wordpress/block-editor';
+import { applyFilters } from '@wordpress/hooks';
 import classNames from 'classnames';
 import { FooterType } from '../editor/components/FooterSelect';
 import { HeaderType } from '../editor/components/HeaderSelect';
@@ -46,6 +47,11 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => (
                     attributes.lineHeight,
                     attributes.clampFonts,
                 ),
+                ...(applyFilters(
+                    'blocks.codeBlockPro.additionalOutputAttributes',
+                    {},
+                    attributes,
+                ) as object),
             } as React.CSSProperties
         }>
         {attributes.code?.length > 0 ? (

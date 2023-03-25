@@ -1,4 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
+import { useEffect, useState } from '@wordpress/element';
 import create from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { Attributes } from '../types';
@@ -81,3 +82,18 @@ export const useThemeStore = create<ThemeType>()(
         },
     ),
 );
+
+// const useThemeStoreReady =
+/* Hook useful for when you need to wait on the async state to hydrate */
+export const useThemeStoreReady = () => {
+    const [hydrated, setHydrated] = useState(useThemeStore.persist.hasHydrated);
+    useEffect(() => {
+        const unsubFinishHydration = useThemeStore.persist.onFinishHydration(
+            () => setHydrated(true),
+        );
+        return () => {
+            unsubFinishHydration();
+        };
+    }, []);
+    return hydrated;
+};

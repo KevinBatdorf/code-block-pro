@@ -1,6 +1,6 @@
 import { useBlockProps as blockProps } from '@wordpress/block-editor';
 import { createBlock, registerBlockType } from '@wordpress/blocks';
-import { addFilter } from '@wordpress/hooks';
+import { addFilter, applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 import blockConfig from './block.json';
@@ -116,6 +116,11 @@ registerBlockType<Attributes>(blockConfig.name, {
                             attributes.lineHeight,
                             attributes.clampFonts,
                         ),
+                        ...(applyFilters(
+                            'blocks.codeBlockPro.additionalEditorAttributes',
+                            {},
+                            attributes,
+                        ) as object),
                     },
                 })}>
                 <HeaderType {...attributes} />
