@@ -24,7 +24,7 @@
         "@typescript-eslint/parser": "5.50.0",
         "@wordpress/block-editor": "11.3.0",
         "@wordpress/env": "5.11.0",
-        "@wordpress/scripts": "25.3.0",
+        "@wordpress/scripts": "26.0.0",
         "@wordpress/url": "3.27.0",
         "autoprefixer": "10.4.13",
         "copy-webpack-plugin": "11.0.0",
