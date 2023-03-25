@@ -14,15 +14,18 @@ afterEach(() => {
 });
 context('Footers', () => {
     it('Renders no footer on insert and can swap', () => {
-        cy.getPostContent('.wp-block[class$="code-block-pro"] > div')
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .find('div')
             .siblings()
             .should('have.length', 2);
         cy.setFooter('simpleStringEnd');
-        cy.getPostContent('.wp-block[class$="code-block-pro"] > div')
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .find('div')
             .siblings()
             .should('have.length', 3);
         cy.setFooter('none');
-        cy.getPostContent('.wp-block[class$="code-block-pro"] > div')
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .find('div')
             .siblings()
             .should('have.length', 2);
     });

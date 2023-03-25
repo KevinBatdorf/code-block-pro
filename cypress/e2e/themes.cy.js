@@ -54,7 +54,7 @@ context('Theme checks', () => {
             'Manage Themes',
         );
         cy.get('#code-block-pro-theme-manager label').contains('Nord').click();
-        cy.get('[aria-label="Close dialog"]').click();
+        cy.get('.code-block-pro-editor [aria-label^="Close"]').click();
         cy.get('#code-block-pro-theme-nord').should('not.exist');
     });
 
@@ -71,7 +71,7 @@ context('Theme checks', () => {
         cy.get(`[href^="${MORE_THEMES_URL}"]`).should('have.length', 2);
         cy.get('[data-cy="manage-themes"]').should('exist').click();
         cy.get(`[href^="${MORE_THEMES_URL}"]`).should('exist');
-        cy.get('[aria-label="Close dialog"]').click();
+        cy.get('.code-block-pro-editor [aria-label^="Close"]').click();
     });
 
     it('Theme CTA "more themes" link can be removed', () => {
@@ -85,7 +85,7 @@ context('Theme checks', () => {
             cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
             cy.get('[data-cy="manage-themes"]').should('exist').click();
             cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
-            cy.get('[aria-label="Close dialog"]').click();
+            cy.get('.code-block-pro-editor [aria-label^="Close"]').click();
         });
     });
 
