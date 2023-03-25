@@ -36,72 +36,72 @@ export const useDefaults = ({
     const once = useRef(false);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (copyButton !== undefined || !previousSettings.copyButton) return;
         setAttributes({ copyButton: previousSettings.copyButton });
-    }, [ready, previousSettings, copyButton, setAttributes]);
+    }, [previousSettings, copyButton, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (theme || !previousTheme) return;
         setAttributes({ theme: previousTheme as Theme });
-    }, [ready, previousTheme, theme, setAttributes]);
+    }, [previousTheme, theme, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (fontSize || !previousFontSize) return;
         setAttributes({ fontSize: previousFontSize });
-    }, [ready, previousFontSize, fontSize, setAttributes]);
+    }, [previousFontSize, fontSize, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (fontFamily || fontFamily === '' || previousFontFamily === undefined)
             return;
         setAttributes({ fontFamily: previousFontFamily });
-    }, [ready, previousFontFamily, fontFamily, setAttributes]);
+    }, [previousFontFamily, fontFamily, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (lineHeight || !previousLineHeight) return;
         setAttributes({ lineHeight: previousLineHeight });
-    }, [ready, previousLineHeight, lineHeight, setAttributes]);
+    }, [previousLineHeight, lineHeight, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (headerType || !previousHeaderType) return;
         setAttributes({ headerType: previousHeaderType });
-    }, [ready, previousHeaderType, headerType, setAttributes]);
+    }, [previousHeaderType, headerType, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (footerType !== undefined || previousFooterType === undefined)
             return;
         setAttributes({ footerType: previousFooterType });
-    }, [ready, previousFooterType, footerType, setAttributes]);
+    }, [previousFooterType, footerType, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (clampFonts !== undefined || previousClampFonts === undefined)
             return;
         setAttributes({ clampFonts: previousClampFonts });
-    }, [ready, previousClampFonts, clampFonts, setAttributes]);
+    }, [previousClampFonts, clampFonts, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (
             disablePadding !== undefined ||
             previousDisablePadding === undefined
         )
             return;
         setAttributes({ disablePadding: previousDisablePadding });
-    }, [ready, previousDisablePadding, disablePadding, setAttributes]);
+    }, [previousDisablePadding, disablePadding, setAttributes]);
 
     useEffect(() => {
-        if (once.current || !ready) return;
+        if (once.current) return;
         if (lineNumbers !== undefined || previousLineNumbers === undefined)
             return;
         setAttributes({ lineNumbers: previousLineNumbers });
-    }, [ready, previousLineNumbers, lineNumbers, setAttributes]);
+    }, [previousLineNumbers, lineNumbers, setAttributes]);
 
     useEffect(() => {
         requestAnimationFrame(() => {
