@@ -9,12 +9,24 @@ jobs:
     test:
         name: Cypress
         concurrency:
-            group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }}
+            group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}
             cancel-in-progress: true
         runs-on: ubuntu-latest
         strategy:
             matrix:
                 wp-version: [null, '"WordPress/WordPress#6.2-branch"']
+                spec: [
+                  "compatability",
+                  "copy-button",
+                  "footers",
+                  "headers",
+                  "height",
+                  "language",
+                  "lines",
+                  "padding",
+                  "styling",
+                  "themes",
+                ]
         steps:
             - name: Clone repo
               uses: actions/checkout@v3
@@ -45,7 +57,7 @@ jobs:
             - name: Cypress run
               uses: cypress-io/github-action@v4
               with:
-                browser: chrome
+                spec: cypress/e2e/${{ matrix.spec }}.cy.js
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v3
