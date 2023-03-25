@@ -1,6 +1,8 @@
 name: Run Cypress on push
 on:
     push:
+        branches-ignore:
+          - main
     workflow_dispatch:
 jobs:
     test:
