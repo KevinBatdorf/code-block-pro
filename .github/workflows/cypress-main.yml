@@ -1,13 +1,15 @@
-name: Run Cypress test suite
+name: Run Cypress on main
 on:
     push:
+        branches:
+          - main
     workflow_dispatch:
     schedule:
     # At 08:00 daily
     - cron: "0 8 * * *"
 jobs:
     test:
-        name: Cypress
+        name: Cypress Main
         continue-on-error: true
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}

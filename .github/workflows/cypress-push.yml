@@ -1,0 +1,54 @@
+name: Run Cypress on push
+on:
+    push:
+    workflow_dispatch:
+jobs:
+    test:
+        name: Cypress Push
+        continue-on-error: true
+        concurrency:
+            group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.spec }}
+            cancel-in-progress: true
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                spec: [
+                  "compatability",
+                  "copy-button",
+                  "footers",
+                  "headers",
+                  "height",
+                  "language",
+                  "lines",
+                  "padding",
+                  "styling",
+                  "themes",
+                ]
+        steps:
+            - name: Clone repo
+              uses: actions/checkout@v3
+            - name: Install server
+              run: |
+                  npm ci
+                  npx eslint --max-warnings 0 .
+                  npm run build
+            - name: Start server
+              run: |
+                  npm install -g @wordpress/env
+                  wp-env start --update
+            - name: Cypress run
+              uses: cypress-io/github-action@v4
+              with:
+                spec: cypress/e2e/${{ matrix.spec }}.cy.js
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - uses: actions/upload-artifact@v3
+              if: failure()
+              with:
+                  name: cypress-screenshots
+                  path: cypress/screenshots
+            - uses: actions/upload-artifact@v3
+              if: failure()
+              with:
+                  name: cypress-videos
+                  path: cypress/videos
