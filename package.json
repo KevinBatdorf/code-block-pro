@@ -51,7 +51,7 @@
         "@wordpress/block-editor": "11.3.0",
         "@wordpress/blocks": "12.3.0",
         "@wordpress/edit-post": "^7.4.0",
-        "@wordpress/element": "5.3.0",
+        "@wordpress/element": "5.6.0",
         "@wordpress/escape-html": "^2.26.0",
         "@wordpress/hooks": "3.26.0",
         "@wordpress/html-entities": "^3.26.0",
