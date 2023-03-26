@@ -9,7 +9,6 @@ import { applyFilters } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
 import { colord } from 'colord';
-import React from 'react';
 import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
