@@ -28,4 +28,41 @@ context('Copy button', () => {
             .invoke('html')
             .should('not.contain', 'Copy');
     });
+
+    it('Copies code on click', () => {
+        const text = 'const foo = "bar";';
+        cy.addCode(text);
+        cy.previewCurrentPage();
+
+        cy.get('.wp-block-kevinbatdorf-code-block-pro [aria-label="Copy"]')
+            .should('exist')
+            .realClick();
+        cy.window().then((win) => {
+            win.navigator.clipboard.readText().then((clipText) => {
+                expect(clipText).to.equal(text);
+            });
+        });
+    });
+
+    // Does seem to work 🤷
+    // it.only('Copies code on keypress', () => {
+    //     const text = 'const foo = "bar";';
+    //     cy.addCode(text);
+    //     cy.previewCurrentPage();
+
+    //     cy.window().then((win) => {
+    //         // First add some gibberish to the clipboard
+    //         win.navigator.clipboard.writeText('heyyooooo');
+    //         win.navigator.clipboard.readText().then((clipText) => {
+    //             expect(clipText).to.not.equal(text);
+    //         });
+    //         cy.get('.wp-block-kevinbatdorf-code-block-pro [aria-label="Copy"]')
+    //             .should('exist')
+    //             .focus()
+    //             .realPress('Enter');
+    //         win.navigator.clipboard.readText().then((clipText) => {
+    //             expect(clipText).to.equal(text);
+    //         });
+    //     });
+    // });
 });

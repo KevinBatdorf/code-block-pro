@@ -12,8 +12,12 @@ const handleCopyButton = () => {
         button.classList.add('cbp-cb-loaded');
         // Setting it to block here lets users deactivate the plugin safely
         button.style.display = 'block';
-        button.addEventListener('click', (event) => {
-            const b = event.target?.closest('span');
+        const handler = (event) => {
+            const { type, key, target } = event;
+            // if keydown event, make sure it's enter or space
+            if (type === 'keydown' && !['Enter', ' '].includes(key)) return;
+            event.preventDefault();
+            const b = target?.closest('span');
             copy(b?.dataset?.code ?? '', {
                 format: 'text/plain',
             });
@@ -21,7 +25,10 @@ const handleCopyButton = () => {
             setTimeout(() => {
                 b.classList.remove('copying');
             }, 2000);
-        });
+        };
+        ['click', 'keydown'].forEach((evt) =>
+            button.addEventListener(evt, handler),
+        );
     });
 };
 
@@ -147,7 +154,7 @@ const handleSeeMore = () => {
             }, animationSpeed * 1000);
         };
         button.addEventListener('click', handle);
-        button.addEventListener('keypress', (event) => {
+        button.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') handle(event);
         });
     });
