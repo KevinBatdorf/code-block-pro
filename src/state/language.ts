@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { Lang } from '../types';
 
@@ -35,13 +35,6 @@ export const useLanguageStore = create<LanguageType>()(
             }),
             { name: 'Code Block Pro Language' },
         ),
-        {
-            name: 'code-block-pro-last-language',
-            getStorage: () => localStorage,
-            partialize: (state) => ({
-                previousLanguage: state?.previousLanguage ?? null,
-                recentLanguages: state?.recentLanguages ?? [],
-            }),
-        },
+        { name: 'code-block-pro-last-language' },
     ),
 );

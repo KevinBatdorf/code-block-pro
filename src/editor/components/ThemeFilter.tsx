@@ -62,7 +62,7 @@ const ThemeVisibilitySelector = ({
             className="code-block-pro-editor">
             <div
                 id="code-block-pro-theme-manager"
-                className="flex flex-col gap-4">
+                className="flex flex-col gap-4 mt-2">
                 {priorityThemes?.length > 0 ? (
                     <div className="flex flex-col gap-4 bg-gray-100 p-4">
                         <h2 className="m-0 my-2 text-center">
