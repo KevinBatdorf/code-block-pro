@@ -39,10 +39,9 @@ jobs:
                   npx eslint --max-warnings 0 .
                   npm run build
             - name: Get Latest WP Branch
-              id: latest-wp-branch
               if: ${{ matrix.wp-version }}
               run: |
-                  echo "::set-output name=branch::$(curl -L -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/WordPress/WordPress/branches\?per_page\=100 | jq '.[].name' | awk '/-branch/' | sort -V | tail -n1 | tr -d '"')"
+                  echo "branch=$(curl -L -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/WordPress/WordPress/branches\?per_page\=100 | jq '.[].name' | awk '/-branch/' | sort -V | tail -n1 | tr -d '"') >> $GITHUB_ENV"
             - name: Maybe remove .wp-env.json
               if: ${{ matrix.wp-version }}
               run: rm .wp-env.json
@@ -52,7 +51,7 @@ jobs:
               with:
                   name: '.wp-env.json'
                   json: '{
-                    "core": "WordPress/WordPress#${{ steps.latest-wp-branch.outputs.branch }}",
+                    "core": "WordPress/WordPress#${{ env.branch }}",
                     "plugins":["."],
                     "mappings": {
                       "wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"
