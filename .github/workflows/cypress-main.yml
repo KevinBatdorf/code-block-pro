@@ -62,6 +62,7 @@ jobs:
               run: |
                   npm install -g @wordpress/env
                   wp-env start --update
+                  wp-env run cli core version
             - name: Cypress run
               uses: cypress-io/github-action@v4
               with:
