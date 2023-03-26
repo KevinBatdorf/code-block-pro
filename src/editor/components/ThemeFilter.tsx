@@ -7,6 +7,7 @@ import {
     Modal,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classNames from 'classnames';
 import { useSettingsStore } from '../../state/settings';
@@ -34,13 +35,21 @@ export const ThemeFilter = ({
                         onChange={setSearch}
                         value={search}
                     />
-                    <Button
-                        className="block -mt-4 mb-4"
-                        data-cy="manage-themes"
-                        variant="link"
-                        onClick={openModal}>
-                        {__('Manage themes', 'code-block-pro')}
-                    </Button>
+                    <div className="-mt-4 mb-4 flex flex-wrap gap-2">
+                        <Button
+                            data-cy="manage-themes"
+                            variant="secondary"
+                            isSmall
+                            onClick={openModal}>
+                            {__('Manage themes', 'code-block-pro')}
+                        </Button>
+                        {
+                            applyFilters(
+                                'blocks.codeBlockPro.themesPanelButtons',
+                                null,
+                            ) as JSX.Element | null
+                        }
+                    </div>
                 </BaseControl>
             </div>
             {modalOpen && <ThemeVisibilitySelector closeModal={closeModal} />}
