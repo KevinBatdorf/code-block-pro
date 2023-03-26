@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 jobs:
     test:
-        name: Cypress Push
+        name: WordPress (${{ matrix.spec }})
         continue-on-error: true
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.spec }}
