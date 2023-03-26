@@ -44,7 +44,7 @@ context('Copy button', () => {
         });
     });
 
-    // Does seem to work 🤷
+    // Doesn't seem to work 🤷
     // it.only('Copies code on keypress', () => {
     //     const text = 'const foo = "bar";';
     //     cy.addCode(text);
