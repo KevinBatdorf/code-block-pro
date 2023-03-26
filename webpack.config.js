@@ -3,6 +3,10 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     ...defaultConfig,
+    devServer: {
+        ...defaultConfig.devServer,
+        host: 'wordpress.test',
+    },
     plugins: [
         ...defaultConfig.plugins,
         new CopyPlugin({

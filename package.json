@@ -13,6 +13,7 @@
         "packages-update": "wp-scripts packages-update",
         "plugin-zip": "wp-scripts plugin-zip",
         "start": "wp-scripts start",
+        "start:hot": "wp-scripts start --hot",
         "eject": "node scripts/eject.mjs",
         "rename": "node scripts/rename.mjs"
     },
