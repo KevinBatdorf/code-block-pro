@@ -13,11 +13,9 @@ export const HeightPanel = ({
     attributes,
     setAttributes,
 }: AttributesPropsAndSetter) => {
-    const [editorHeight, setEditorHeight] = useState(
-        attributes?.editorHeight ?? false,
-    );
+    const [editorHeight, setEditorHeight] = useState(attributes?.editorHeight);
     const [enableMaxHeight, setEnableMaxHeight] = useState(
-        attributes?.enableMaxHeight ?? false,
+        attributes?.enableMaxHeight,
     );
     const [seeMoreString, setSeeMoreString] = useState(
         attributes?.seeMoreString ?? '',

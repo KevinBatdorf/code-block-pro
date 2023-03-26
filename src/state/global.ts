@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 type GlobalTypes = {
@@ -28,12 +28,6 @@ export const useGlobalStore = create<GlobalTypes>()(
             }),
             { name: 'Code Block Pro Globals' },
         ),
-        {
-            name: 'code-block-pro-last-globals',
-            getStorage: () => localStorage,
-            partialize: (state) => ({
-                previousSettings: state?.previousSettings ?? {},
-            }),
-        },
+        { name: 'code-block-pro-last-globals' },
     ),
 );
