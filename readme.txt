@@ -1,8 +1,8 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
-Tested up to:      6.1
-Stable tag:        1.13.0
+Tested up to:      6.2
+Stable tag:        1.14.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -249,6 +249,16 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.14.0 - 2023-03-26 =
+- Feature: Added theme identifier to toolbar
+- Feature: Added some filters for attributes and buttons
+- Tweak: Updated various styles
+- Testing: Updated Cypress to test against latest RC on main push
+- Testing: Integration tests now run concurrently to isolate flakey failures
+- Fix: Added custom endpoint for settings, allowing edit_post cap users
+- Fix: Removed a type conversion to false, causing dirty posts on focus
+- Accessibility: Added keydown events to frontend copy button
 
 = 1.13.0 - 2023-02-05 =
 - Feature: Add scrollable max height area with no button (Max Height panel)
