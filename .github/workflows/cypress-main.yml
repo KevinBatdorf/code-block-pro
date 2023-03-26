@@ -9,7 +9,7 @@ on:
     - cron: "0 8 * * *"
 jobs:
     test:
-        name: Cypress ${{ matrix.wp-version }} (${{ matrix.spec }})
+        name: Cypress ${{ matrix.wp-version }}: (${{ matrix.spec }})
         continue-on-error: true
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}
@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                wp-version: [null, '6.2-branch']
+                wp-version: [null, '6.2']
                 spec: [
                   "compatability",
                   "copy-button",
@@ -47,7 +47,7 @@ jobs:
               with:
                   name: '.wp-env.json'
                   json: '{
-                    "core": "WordPress/WordPress#${{ matrix.wp-version }}",
+                    "core": "WordPress/WordPress#${{ matrix.wp-version }}-branch",
                     "plugins":["."],
                     "mappings": {
                       "wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"
