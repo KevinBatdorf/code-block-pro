@@ -9,7 +9,7 @@ on:
     - cron: "0 8 * * *"
 jobs:
     test:
-        name: Cypress ${{ matrix.wp-version }}: (${{ matrix.spec }})
+        name: Cypress ${{ matrix.wp-version }} (${{ matrix.spec }})
         continue-on-error: true
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}
