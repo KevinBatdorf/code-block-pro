@@ -10,7 +10,7 @@ on:
 jobs:
     test:
         name: WordPress ${{ matrix.wp-version }} (${{ matrix.spec }})
-        continue-on-error: true
+        fail-fast: false
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}
             cancel-in-progress: true

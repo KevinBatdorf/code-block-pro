@@ -7,7 +7,6 @@ on:
 jobs:
     test:
         name: WordPress (${{ matrix.spec }})
-        continue-on-error: true
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.spec }}
             cancel-in-progress: true
