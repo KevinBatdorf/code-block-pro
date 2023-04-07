@@ -23,6 +23,7 @@ jobs:
                   "language",
                   "lines",
                   "padding",
+                  "permissions",
                   "styling",
                   "themes",
                 ]
