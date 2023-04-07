@@ -250,6 +250,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Add notice to users who do not have permission to update
+
 = 1.14.0 - 2023-03-26 =
 - Feature: Added theme identifier to toolbar
 - Feature: Added some filters for attributes and buttons

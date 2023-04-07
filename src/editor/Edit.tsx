@@ -16,11 +16,13 @@ import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { getEditorLanguage } from '../util/languages';
+import { MissingPermissionsTip } from './components/misc/MissingPermissions';
 
 export const Edit = ({
     attributes,
     setAttributes,
-}: AttributesPropsAndSetter) => {
+    canEdit,
+}: AttributesPropsAndSetter & { canEdit: boolean }) => {
     const {
         language,
         theme,
@@ -204,6 +206,11 @@ export const Edit = ({
                     : undefined,
                 overflow: Number(editorHeight) ? 'auto' : undefined,
             }}>
+            {canEdit ? null : (
+                <div className="absolute inset-0 z-10 bg-white bg-opacity-70">
+                    <MissingPermissionsTip />
+                </div>
+            )}
             <Editor
                 value={decodeEntities(code)}
                 onValueChange={handleChange}
@@ -218,7 +225,11 @@ export const Edit = ({
                     })(),
                     right: 0,
                 }}
-                style={{ backgroundColor, color }}
+                style={{
+                    backgroundColor,
+                    color,
+                    minHeight: canEdit ? undefined : 200,
+                }}
                 // eslint-disable-next-line
                 onKeyDown={(e: any) =>
                     e.key === 'Tab' &&

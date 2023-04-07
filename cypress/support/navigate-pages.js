@@ -10,15 +10,16 @@ export const visitAdminPage = (adminPath = '', query = '') => {
     cy.visit(`wp-admin/${adminPath}${question}${query}`);
 };
 
-export const visitPageEditor = (query, skipWelcomeGuide = true) => {
+const visitEditor = (query) => {
     query = addQueryArgs('', {
         post_type: 'page',
         ...query,
     }).slice(1);
 
     cy.visitAdminPage('post-new.php', query);
-
-    if (skipWelcomeGuide) {
-        cy.closeWelcomeGuide();
-    }
+    cy.closeWelcomeGuide();
 };
+export const visitPageEditor = (query) =>
+    visitEditor({ ...query, post_type: 'page' });
+export const visitPostEditor = (query) =>
+    visitEditor({ ...query, post_type: 'post' });

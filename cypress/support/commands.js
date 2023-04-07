@@ -21,11 +21,12 @@ import { mockIntersectionObserver } from './helpers';
 import { login, logout } from './login-logout';
 import {
     visitPageEditor,
+    visitPostEditor,
     visitAdminPage,
     visitToLoginPage,
 } from './navigate-pages';
 import { installPlugin, uninstallPlugin } from './plugins';
-import { resetDatabase } from './wp-cli';
+import { resetDatabase, updateUserRole } from './wp-cli';
 
 // Port more commands from WP here:
 // https://github.com/WordPress/gutenberg/tree/trunk/packages/e2e-test-utils/src
@@ -35,9 +36,8 @@ Cypress.Commands.add('visitLoginPage', (query) => visitToLoginPage(query));
 Cypress.Commands.add('visitAdminPage', (path, query) =>
     visitAdminPage(path, query),
 );
-Cypress.Commands.add('visitNewPageEditor', (query, skipWelcomeGuide) =>
-    visitPageEditor(query, skipWelcomeGuide),
-);
+Cypress.Commands.add('visitNewPageEditor', (query) => visitPageEditor(query));
+Cypress.Commands.add('visitNewPostEditor', (query) => visitPostEditor(query));
 
 // Login logout
 Cypress.Commands.add('loginUser', (username, password) =>
@@ -79,6 +79,7 @@ Cypress.Commands.add('mockIntersectionObserver', () =>
 
 // Server
 Cypress.Commands.add('resetDatabase', () => resetDatabase());
+Cypress.Commands.add('updateUserRole', (cap) => updateUserRole(cap));
 
 // Manage plugins
 Cypress.Commands.add('installPlugin', (slug) => installPlugin(slug));
