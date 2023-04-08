@@ -10,12 +10,12 @@ on:
 jobs:
     test:
         name: WordPress ${{ matrix.wp-version }} (${{ matrix.spec }})
-        continue-on-error: true
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}
             cancel-in-progress: true
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
                 wp-version: [null, 'Next']
                 spec: [
