@@ -36,7 +36,7 @@ export const computeLineHighlightColor = (
     return colord(color).saturate(0.5).alpha(0.2).toRgbString();
 };
 
-export const computeLineNumbersColor = (attributes: Attributes) => {
+export const findLineNumberColor = (attributes: Attributes) => {
     const themes = applyFilters(
         'blocks.codeBlockPro.themes',
         defaultThemes,
@@ -46,4 +46,19 @@ export const computeLineNumbersColor = (attributes: Attributes) => {
         return themes?.[attributes?.theme]?.styles?.['line-number-color'];
     }
     return attributes.textColor;
+};
+
+export const findBackgroundColor = (attributes: Partial<Attributes>) => {
+    const themes = applyFilters(
+        'blocks.codeBlockPro.themes',
+        defaultThemes,
+    ) as ThemeOption;
+    // set in the theme, use that
+    if (
+        attributes?.theme &&
+        themes?.[attributes?.theme]?.styles?.['color-background']
+    ) {
+        return themes?.[attributes?.theme]?.styles?.['color-background'];
+    }
+    return attributes.bgColor;
 };
