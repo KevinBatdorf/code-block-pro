@@ -8,13 +8,13 @@ import { escapeHTML } from '@wordpress/escape-html';
 import { applyFilters } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
-import { colord } from 'colord';
 import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
+import { computeLineHighlightColor } from '../util/colors';
 import { getEditorLanguage } from '../util/languages';
 import { MissingPermissionsTip } from './components/misc/MissingPermissions';
 
@@ -112,10 +112,8 @@ export const Edit = ({
             rendered,
             attributes,
         ) as string;
-        const lineHighlightColor = colord(color)
-            .saturate(0.5)
-            .alpha(0.2)
-            .toRgbString();
+        const lineHighlightColor = computeLineHighlightColor(color, attributes);
+        console.log({ color, lineHighlightColor });
         setAttributes({ codeHTML, lineHighlightColor });
     }, [
         highlighter,

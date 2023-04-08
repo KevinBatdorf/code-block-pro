@@ -17,6 +17,7 @@ import { BlockOutput } from './front/BlockOutput';
 import { CopyButton } from './front/CopyButton';
 import { blockIcon } from './icons';
 import { Attributes, Lang, ThemeOption } from './types';
+import { computeLineNumbersColor } from './util/colors';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
 import { getMainAlias } from './util/languages';
 
@@ -108,7 +109,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                                 attributes.clampFonts,
                             ),
                             '--cbp-line-number-color': attributes?.lineNumbers
-                                ? attributes.textColor
+                                ? computeLineNumbersColor(attributes)
                                 : undefined,
                             '--cbp-line-number-start':
                                 Number(attributes?.startingLineNumber) > 1

@@ -67,6 +67,8 @@ export type CustomStyles = {
     'token-string-expression'?: string; // --shiki-token-string-expression
     'token-punctuation'?: string; // --shiki-token-punctuation
     'token-link'?: string; // --shiki-token-link
+    'line-background'?: string; // custom for this app
+    'line-number-color'?: string; // custom for this app
 };
 export type HelpUrl = {
     text: string;

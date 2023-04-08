@@ -52,9 +52,9 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                     )}
                 </BaseControl>
             ) : priorityThemes?.length > 0 ? null : (
-                <div className="font-semibold text-base mb-4">
+                <div className="text-sm mb-4">
                     <ExternalLink href="https://github.com/KevinBatdorf/code-block-pro/discussions/168">
-                        {__('Looking for light/dark mode?', 'code-block-pro')}
+                        {__('Need both light and dark mode?', 'code-block-pro')}
                     </ExternalLink>
                 </div>
             )}

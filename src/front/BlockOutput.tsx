@@ -6,6 +6,7 @@ import { FooterType } from '../editor/components/FooterSelect';
 import { HeaderType } from '../editor/components/HeaderSelect';
 import { SeeMoreType } from '../editor/components/SeeMoreSelect';
 import { Attributes, ThemeOption } from '../types';
+import { computeLineNumbersColor } from '../util/colors';
 import { fontFamilyLong, maybeClamp } from '../util/fonts';
 import { CopyButton } from './CopyButton';
 import './style.css';
@@ -40,7 +41,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                     // Tiny check to avoid block invalidation error
                     fontFamily: fontFamilyLong(attributes.fontFamily),
                     '--cbp-line-number-color': attributes?.lineNumbers
-                        ? attributes.textColor
+                        ? computeLineNumbersColor(attributes)
                         : undefined,
                     '--cbp-line-number-start':
                         Number(attributes?.startingLineNumber) > 1
