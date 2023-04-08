@@ -54,3 +54,32 @@ declare global {
         };
     }
 }
+
+export type CustomStyles = {
+    'color-text'?: string; // --shiki-color-text
+    'color-background'?: string; // --shiki-color-background
+    'token-constant'?: string; // --shiki-token-constant
+    'token-string'?: string; // --shiki-token-string
+    'token-comment'?: string; // --shiki-token-comment
+    'token-keyword'?: string; // --shiki-token-keyword
+    'token-parameter'?: string; // --shiki-token-parameter
+    'token-function'?: string; // --shiki-token-function
+    'token-string-expression'?: string; // --shiki-token-string-expression
+    'token-punctuation'?: string; // --shiki-token-punctuation
+    'token-link'?: string; // --shiki-token-link
+};
+export type HelpUrl = {
+    text: string;
+    url: string;
+};
+
+export type ThemeOption = Record<
+    string,
+    {
+        name: string;
+        priority?: boolean;
+        custom?: boolean;
+        styles?: CustomStyles;
+        helpUrl?: HelpUrl;
+    }
+>;

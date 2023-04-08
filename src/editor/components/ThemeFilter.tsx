@@ -11,7 +11,11 @@ import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classNames from 'classnames';
 import { useSettingsStore } from '../../state/settings';
-import { getNormalThemes, getPriorityThemes } from '../../util/themes';
+import {
+    getCustomThemes,
+    getNormalThemes,
+    getPriorityThemes,
+} from '../../util/themes';
 
 export const ThemeFilter = ({
     search,
@@ -78,14 +82,16 @@ const ThemeVisibilitySelector = ({
                             {__('Priority themes', 'code-block-pro')}
                         </h2>
                         <div className="md:grid gap-3 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {priorityThemes.map(({ name, slug }) => (
-                                <ToggleControl
-                                    key={slug}
-                                    checked={!hiddenThemes.includes(slug)}
-                                    label={name}
-                                    onChange={() => toggleHiddenTheme(slug)}
-                                />
-                            ))}
+                            {[...getCustomThemes(), ...priorityThemes].map(
+                                ({ name, slug }) => (
+                                    <ToggleControl
+                                        key={slug}
+                                        checked={!hiddenThemes.includes(slug)}
+                                        label={name}
+                                        onChange={() => toggleHiddenTheme(slug)}
+                                    />
+                                ),
+                            )}
                         </div>
                     </div>
                 ) : null}
