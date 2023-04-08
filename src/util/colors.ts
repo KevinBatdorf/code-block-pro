@@ -30,7 +30,6 @@ export const computeLineHighlightColor = (
             .trim();
         const computed =
             maybeColor || getComputedStyle(doc).getPropertyValue('--cbp-text');
-        console.log({ maybeColor, computed });
         return colord(computed).saturate(0.5).alpha(0.2).toRgbString();
     }
 

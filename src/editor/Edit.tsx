@@ -113,7 +113,6 @@ export const Edit = ({
             attributes,
         ) as string;
         const lineHighlightColor = computeLineHighlightColor(color, attributes);
-        console.log({ color, lineHighlightColor });
         setAttributes({ codeHTML, lineHighlightColor });
     }, [
         highlighter,
