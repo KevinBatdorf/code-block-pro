@@ -1,8 +1,9 @@
 import { useEffect, useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
-import { getHighlighter, Lang, setCDN, Theme, setWasm } from 'shiki';
+import { getHighlighter, setCDN, Theme, setWasm } from 'shiki';
 import useSWRImmutable from 'swr/immutable';
 import defaultThemes from '../defaultThemes.json';
+import { Lang } from '../types';
 import { getEditorLanguage } from '../util/languages';
 
 type Params = { theme: Theme; lang: Lang | 'ansi'; ready?: boolean };
@@ -23,7 +24,7 @@ const fetcher = ({ theme, lang, ready }: Params) => {
     )?.[themeFiltered]?.['alias'] as Theme;
 
     return getHighlighter({
-        langs: [getEditorLanguage(lang)],
+        langs: lang === 'plaintext' ? undefined : [getEditorLanguage(lang)],
         theme: themeAlias ?? themeFiltered,
     });
 };
