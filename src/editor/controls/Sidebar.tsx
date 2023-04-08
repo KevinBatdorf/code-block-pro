@@ -23,13 +23,15 @@ import { FooterSelect } from '../components/FooterSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
 import { HeightPanel } from '../components/HeightPanel';
 import { ThemesPanel } from '../components/ThemesPanel';
+import { MissingPermissionsTip } from '../components/misc/MissingPermissions';
 import { BlurControl } from './BlurControl';
 import { HighlightingControl } from './HighlightingControl';
 
 export const SidebarControls = ({
     attributes,
     setAttributes,
-}: AttributesPropsAndSetter) => {
+    canEdit,
+}: AttributesPropsAndSetter & { canEdit: boolean }) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
@@ -45,6 +47,7 @@ export const SidebarControls = ({
 
     return (
         <InspectorControls>
+            {canEdit ? null : <MissingPermissionsTip />}
             <PanelBody
                 title={__('Settings', 'code-block-pro')}
                 initialOpen={true}>

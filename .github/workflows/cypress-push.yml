@@ -2,7 +2,7 @@ name: Run Cypress on push
 on:
     push:
         branches-ignore:
-          - main
+            - main
     workflow_dispatch:
 jobs:
     test:
@@ -14,18 +14,20 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                spec: [
-                  "compatability",
-                  "copy-button",
-                  "footers",
-                  "headers",
-                  "height",
-                  "language",
-                  "lines",
-                  "padding",
-                  "styling",
-                  "themes",
-                ]
+                spec:
+                    [
+                        'compatability',
+                        'copy-button',
+                        'footers',
+                        'headers',
+                        'height',
+                        'language',
+                        'lines',
+                        'padding',
+                        'permissions',
+                        'styling',
+                        'themes',
+                    ]
         steps:
             - name: Clone repo
               uses: actions/checkout@v3
@@ -41,7 +43,7 @@ jobs:
             - name: Cypress run
               uses: cypress-io/github-action@v4
               with:
-                spec: cypress/e2e/${{ matrix.spec }}.cy.js
+                  spec: cypress/e2e/${{ matrix.spec }}.cy.js
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v3

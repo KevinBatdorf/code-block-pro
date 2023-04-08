@@ -19,7 +19,7 @@ context('Line numbers', () => {
 
         cy.get('[data-cy="show-line-numbers"]')
             .should('exist')
-            .should('be.not.checked');
+            .should('not.be.checked');
         cy.getPostContent('.wp-block[class$="code-block-pro"]').should(
             'not.have.class',
             'cbp-has-line-numbers',
