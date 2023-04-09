@@ -1,13 +1,10 @@
 import { colord, AnyColor } from 'colord';
 import { Attributes, Lang } from '../../../types';
+import { findBackgroundColor, findTextColor } from '../../../util/colors';
 import { languages } from '../../../util/languages';
 
-export const SimpleString = ({
-    language,
-    bgColor,
-    textColor,
-    headerString,
-}: Partial<Attributes>) => {
+export const SimpleString = (attributes: Partial<Attributes>) => {
+    const { language, bgColor, textColor, headerString } = attributes;
     const bgC = colord(bgColor as AnyColor);
     let bg = bgC.isDark()
         ? bgC.lighten(0.05).toHex()
@@ -18,10 +15,10 @@ export const SimpleString = ({
         : textC.darken(0.05).toHex();
 
     if (bgColor?.startsWith('var(')) {
-        bg = bgColor;
+        bg = findBackgroundColor(attributes) ?? bgColor;
     }
     if (textColor?.startsWith('var(')) {
-        text = textColor;
+        text = findTextColor(attributes) ?? textColor;
     }
     return (
         <span

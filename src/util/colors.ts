@@ -62,3 +62,18 @@ export const findBackgroundColor = (attributes: Partial<Attributes>) => {
     }
     return attributes.bgColor;
 };
+
+export const findTextColor = (attributes: Partial<Attributes>) => {
+    const themes = applyFilters(
+        'blocks.codeBlockPro.themes',
+        defaultThemes,
+    ) as ThemeOption;
+    // set in the theme, use that
+    if (
+        attributes?.theme &&
+        themes?.[attributes?.theme]?.styles?.['color-text']
+    ) {
+        return themes?.[attributes?.theme]?.styles?.['color-text'];
+    }
+    return attributes.textColor;
+};
