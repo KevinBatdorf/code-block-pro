@@ -1,6 +1,7 @@
 import { Attributes } from '../../../types';
+import { findBackgroundColor } from '../../../util/colors';
 
-export const Headlights = ({ bgColor }: Partial<Attributes>) => (
+export const Headlights = (attributes: Partial<Attributes>) => (
     <span
         style={{
             display: 'block',
@@ -8,7 +9,7 @@ export const Headlights = ({ bgColor }: Partial<Attributes>) => (
             marginBottom: '-1px',
             width: '100%',
             textAlign: 'left',
-            backgroundColor: bgColor,
+            backgroundColor: findBackgroundColor(attributes),
         }}>
         <svg
             xmlns="http://www.w3.org/2000/svg"

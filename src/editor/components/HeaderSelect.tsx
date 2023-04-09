@@ -5,11 +5,15 @@ import { Headlights } from './headers/Headlights';
 import { HeadlightsMuted } from './headers/HeadlightsMuted';
 import { HeadlightsMutedAlt } from './headers/HeadlightsMutedAlt';
 import { SimpleString } from './headers/SimpleString';
+import { UnsupportedTheme } from './misc/Unsupported';
 
 type HeaderSelectProps = {
     attributes: Attributes;
     onClick: (slug: string) => void;
 };
+
+const unsupportedWithCssVars = ['headlightsMutedAlt'];
+
 export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
     const { headerType, ...attributesWithoutHeaderType }: Partial<Attributes> =
         attributes;
@@ -21,6 +25,7 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
         headlightsMutedAlt: __('Headlights muted alt', 'code-block-pro'),
         simpleString: __('Simple string', 'code-block-pro'),
     };
+    const isUnsupported = bgColor?.startsWith('var(');
 
     return (
         <div className="code-block-pro-editor">
@@ -61,6 +66,9 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                             />
                         </span>
                     </button>
+                    {isUnsupported && unsupportedWithCssVars.includes(slug) && (
+                        <UnsupportedTheme />
+                    )}
                 </BaseControl>
             ))}
         </div>
@@ -68,7 +76,12 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
 };
 
 export const HeaderType = (attributes: Partial<Attributes>) => {
-    const { headerType } = attributes;
+    const { headerType, bgColor } = attributes;
+    const isACustomTheme = bgColor?.startsWith('var(');
+    if (isACustomTheme && unsupportedWithCssVars.includes(headerType ?? '')) {
+        return null;
+    }
+
     if (headerType === 'headlights') {
         return <Headlights {...attributes} />;
     }

@@ -9,9 +9,20 @@ export const SimpleString = ({
     headerString,
 }: Partial<Attributes>) => {
     const bgC = colord(bgColor as AnyColor);
-    const bg = bgC.isDark() ? bgC.lighten(0.05) : bgC.darken(0.05);
+    let bg = bgC.isDark()
+        ? bgC.lighten(0.05).toHex()
+        : bgC.darken(0.05).toHex();
     const textC = colord(textColor as AnyColor);
-    const text = textC.isDark() ? textC.lighten(0.05) : textC.darken(0.05);
+    let text = textC.isDark()
+        ? textC.lighten(0.05).toHex()
+        : textC.darken(0.05).toHex();
+
+    if (bgColor?.startsWith('var(')) {
+        bg = bgColor;
+    }
+    if (textColor?.startsWith('var(')) {
+        text = textColor;
+    }
     return (
         <span
             style={{
@@ -21,8 +32,8 @@ export const SimpleString = ({
                 marginBottom: '-2px',
                 width: '100%',
                 textAlign: 'left',
-                backgroundColor: bg.toHex(),
-                color: text.toHex(),
+                backgroundColor: bg,
+                color: text,
             }}>
             {headerString || languages[language as Lang]}
         </span>

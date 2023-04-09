@@ -4,6 +4,7 @@ import { addFilter, applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 import blockConfig from './block.json';
+import defaultThemes from './defaultThemes.json';
 import { Edit } from './editor/Edit';
 import { BlockFilter } from './editor/components/BlockFilter';
 import { FooterType } from './editor/components/FooterSelect';
@@ -15,7 +16,8 @@ import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
 import { CopyButton } from './front/CopyButton';
 import { blockIcon } from './icons';
-import { Attributes, Lang } from './types';
+import { Attributes, Lang, ThemeOption } from './types';
+import { findLineNumberColor } from './util/colors';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
 import { getMainAlias } from './util/languages';
 
@@ -72,6 +74,13 @@ registerBlockType<Attributes>(blockConfig.name, {
         // Restricts users without unfiltered HTML access
         const hasPermission = window.codeBlockPro.canSaveHtml;
         setAttributes = hasPermission ? setAttributes : () => undefined;
+
+        // To add custom styles
+        const themes = applyFilters(
+            'blocks.codeBlockPro.themes',
+            defaultThemes,
+        ) as ThemeOption;
+        const styles = themes[attributes.theme]?.styles;
         return (
             <>
                 <SidebarControls
@@ -100,7 +109,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                                 attributes.clampFonts,
                             ),
                             '--cbp-line-number-color': attributes?.lineNumbers
-                                ? attributes.textColor
+                                ? findLineNumberColor(attributes)
                                 : undefined,
                             '--cbp-line-number-start':
                                 Number(attributes?.startingLineNumber) > 1
@@ -121,6 +130,13 @@ registerBlockType<Attributes>(blockConfig.name, {
                             lineHeight: maybeClamp(
                                 attributes.lineHeight,
                                 attributes.clampFonts,
+                            ),
+                            ...Object.entries(styles ?? {}).reduce(
+                                (acc, [key, value]) => ({
+                                    ...acc,
+                                    [`--shiki-${key}`]: value,
+                                }),
+                                {},
                             ),
                             ...(applyFilters(
                                 'blocks.codeBlockPro.additionalEditorAttributes',

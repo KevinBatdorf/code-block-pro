@@ -9,12 +9,14 @@ import {
     MenuGroup,
 } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore-next-line - store is not typed
 import { store as editPostStore } from '@wordpress/edit-post';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
-import { AttributesPropsAndSetter, Lang } from '../../types';
+import { AttributesPropsAndSetter, Lang, ThemeOption } from '../../types';
 import { languages } from '../../util/languages';
 
 export const ToolbarControls = ({
@@ -26,7 +28,7 @@ export const ToolbarControls = ({
     const themes = applyFilters(
         'blocks.codeBlockPro.themes',
         defaultThemes,
-    ) as Record<string, { name: string; priority?: boolean }>;
+    ) as ThemeOption;
 
     const { openGeneralSidebar } = useDispatch(editPostStore);
 
@@ -66,11 +68,20 @@ export const ToolbarControls = ({
                         )}>
                         <span className="flex mx-2">
                             <span
-                                style={{ backgroundColor: bgColor }}
+                                style={{
+                                    backgroundColor:
+                                        themes[theme]?.styles?.[
+                                            'color-background'
+                                        ] ?? bgColor,
+                                }}
                                 className="w-3 h-3 border border-gray-400 border-solid border-1 rounded-full inline-block"
                             />
                             <span
-                                style={{ backgroundColor: textColor }}
+                                style={{
+                                    backgroundColor:
+                                        themes[theme]?.styles?.['color-text'] ??
+                                        textColor,
+                                }}
                                 className="w-3 h-3 border border-gray-400 border-solid border-1 rounded-full inline-block transform -translate-x-1"
                             />
                         </span>
