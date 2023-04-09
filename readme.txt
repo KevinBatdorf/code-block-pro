@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.14.0
+Stable tag:        1.15.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Pascal
 - Perl
 - PHP
+- Plaintext
 - PLSQL
 - PostCSS
 - PowerShell
@@ -250,7 +251,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.15.0 - 2023-04-08 =
 - Feature: Add notice to users who do not have permission to update
+- Feature: Added hooks to allow users to add their own themes (or via the theme pack)
+- Feature: Add plaintext option to allow rendering as text
 
 = 1.14.0 - 2023-03-26 =
 - Feature: Added theme identifier to toolbar
