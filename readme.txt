@@ -94,7 +94,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Astro
 - Awk
 - Ballerina
-- BAT
+- BAT (Batchfile)
 - Berry
 - BibTeX
 - BICEP
@@ -116,7 +116,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Dart
 - DAX
 - Diff
-- Docker
+- Dockerfile
 - DreamMaker
 - Elixir
 - Elm
@@ -124,9 +124,13 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Erlang
 - Fish
 - F#
+- GDResource (Godot)
+- GDScript (Godot)
+- GDShader (Godot)
 - Gherkin
 - Git Commit
 - Git Rebase
+- GLSL
 - Gnuplot
 - Go
 - GraphQL
@@ -138,24 +142,28 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - HCL
 - HLSL
 - HTML
+- HTTP
 - INI
 - Java
 - JavaScript
 - Jinja HTML
+- Jison
 - JSON
+- JSON5
 - JSONC
 - JSONnet
 - JSSM
 - JSX
 - Julia
 - Kotlin
+- Kusto
 - LaTeX
 - LESS
 - Liquid
 - Lisp
 - Logo
 - Lua
-- Make
+- Makefile
 - Markdown
 - Marko
 - MATLAB
@@ -173,10 +181,11 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Plaintext
 - PLSQL
 - PostCSS
-- PowerShell
 - Power Query
+- PowerShell
 - Prisma
 - Prolog
+- Protocol Buffers
 - Pug
 - Puppet
 - PureScript
@@ -184,6 +193,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - R
 - Raku
 - Razor
+- Windows Registry
 - Rel
 - RISC-V
 - RST
@@ -195,7 +205,9 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Scheme
 - SCSS
 - ShaderLab
-- ShellScript (bash, zsh, sh, shell)
+- Bash
+- ShellScript
+- Zsh
 - Smalltalk
 - Solidity
 - SPARQL
@@ -214,6 +226,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Turtle
 - Twig
 - TypeScript
+- V
 - VB
 - Verilog
 - VHDL
@@ -222,6 +235,8 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Vue
 - WASM
 - Wenyan
+- WGSL
+- Wolfram
 - XML
 - XSL
 - YAML
@@ -250,6 +265,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+- Feature: Added new language grammars: GD Script, GD Resource, GD Shader, GLSL, Http, Jison, JSON5, Kusto (kql), Protocol Buffers (.proto), Windows Registry (.reg), V, WGSL, and Wolfram
+- Tweak: Removed toolbar language select and added functionality to focus on the sidebar setting
+- Refactor: Moved header/footer settings out of the language select into their own panels
 
 = 1.15.0 - 2023-04-08 =
 - Feature: Add notice to users who do not have permission to update

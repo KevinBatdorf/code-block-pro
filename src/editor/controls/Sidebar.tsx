@@ -7,6 +7,11 @@ import {
     Button,
     CheckboxControl,
 } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore-next-line - store is not typed
+import { store as editPostStore } from '@wordpress/edit-post';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
@@ -35,7 +40,7 @@ export const SidebarControls = ({
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
-    const { setPreviousSettings } = useGlobalStore();
+    const { setPreviousSettings, bringAttentionToPanel } = useGlobalStore();
     const { headerType, footerType } = attributes;
 
     const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
@@ -44,13 +49,24 @@ export const SidebarControls = ({
     const showFooterTextEdit = footersNeedingLinks.includes(footerType);
     const showFooterLinkEdit = footersNeedingLinks.includes(footerType);
     const showFooterLinkTargetEdit = footersNeedingLinks.includes(footerType);
+    const [bringAttention, setBringAttention] = useState<string | false>(false);
+    const { openGeneralSidebar, closeGeneralSidebar } =
+        useDispatch(editPostStore);
+
+    useEffect(() => {
+        if (!bringAttentionToPanel) return;
+        closeGeneralSidebar('edit-post/block').then(() => {
+            setBringAttention(bringAttentionToPanel);
+            openGeneralSidebar('edit-post/block');
+        });
+    }, [bringAttentionToPanel, closeGeneralSidebar, openGeneralSidebar]);
 
     return (
         <InspectorControls>
             {canEdit ? null : <MissingPermissionsTip />}
             <PanelBody
-                title={__('Settings', 'code-block-pro')}
-                initialOpen={true}>
+                title={__('Language', 'code-block-pro')}
+                initialOpen={bringAttention === 'language-select'}>
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-language">
                         <SelectControl
@@ -96,72 +112,6 @@ export const SidebarControls = ({
                             </>
                         ) : null}
                     </BaseControl>
-                    {showHeaderTextEdit && (
-                        <BaseControl id="code-block-pro-header-text">
-                            <TextControl
-                                id="code-block-pro-header-text"
-                                spellCheck={false}
-                                autoComplete="off"
-                                label={__('Header Text', 'code-block-pro')}
-                                placeholder={languages[language]}
-                                onChange={(headerString) => {
-                                    setAttributes({ headerString });
-                                }}
-                                value={attributes.headerString ?? ''}
-                            />
-                        </BaseControl>
-                    )}
-                    {showFooterTextEdit && (
-                        <BaseControl id="code-block-pro-footer-text">
-                            <TextControl
-                                id="code-block-pro-footer-text"
-                                spellCheck={false}
-                                autoComplete="off"
-                                label={__('Footer Text', 'code-block-pro')}
-                                placeholder={languages[language]}
-                                onChange={(footerString) => {
-                                    setAttributes({ footerString });
-                                }}
-                                value={attributes.footerString ?? ''}
-                            />
-                        </BaseControl>
-                    )}
-                    {showFooterLinkEdit && (
-                        <BaseControl id="code-block-pro-footer-link">
-                            <TextControl
-                                id="code-block-pro-footer-link"
-                                spellCheck={false}
-                                type="url"
-                                autoComplete="off"
-                                label={__('Footer Link', 'code-block-pro')}
-                                placeholder="https://example.com"
-                                help={__(
-                                    'Leave blank to disable',
-                                    'code-block-pro',
-                                )}
-                                onChange={(footerLink) => {
-                                    setAttributes({ footerLink });
-                                }}
-                                value={attributes.footerLink ?? ''}
-                            />
-                        </BaseControl>
-                    )}
-                    {showFooterLinkTargetEdit && (
-                        <BaseControl id="code-block-pro-footer-link-target">
-                            <CheckboxControl
-                                id="code-block-pro-footer-link-target"
-                                label={__('Open in new tab?', 'code-block-pro')}
-                                checked={attributes.footerLinkTarget}
-                                onChange={(footerLinkTarget) => {
-                                    setAttributes({ footerLinkTarget });
-                                    updateThemeHistory({
-                                        ...attributes,
-                                        footerLinkTarget,
-                                    });
-                                }}
-                            />
-                        </BaseControl>
-                    )}
                 </div>
             </PanelBody>
             <PanelBody
@@ -213,6 +163,21 @@ export const SidebarControls = ({
             <PanelBody
                 title={__('Header Type', 'code-block-pro')}
                 initialOpen={false}>
+                {showHeaderTextEdit && (
+                    <BaseControl id="code-block-pro-header-text">
+                        <TextControl
+                            id="code-block-pro-header-text"
+                            spellCheck={false}
+                            autoComplete="off"
+                            label={__('Header Text', 'code-block-pro')}
+                            placeholder={languages[language]}
+                            onChange={(headerString) => {
+                                setAttributes({ headerString });
+                            }}
+                            value={attributes.headerString ?? ''}
+                        />
+                    </BaseControl>
+                )}
                 <HeaderSelect
                     attributes={attributes}
                     onClick={(headerType) => {
@@ -224,6 +189,57 @@ export const SidebarControls = ({
             <PanelBody
                 title={__('Footer Type', 'code-block-pro')}
                 initialOpen={false}>
+                {showFooterTextEdit && (
+                    <BaseControl id="code-block-pro-footer-text">
+                        <TextControl
+                            id="code-block-pro-footer-text"
+                            spellCheck={false}
+                            autoComplete="off"
+                            label={__('Footer Text', 'code-block-pro')}
+                            placeholder={languages[language]}
+                            onChange={(footerString) => {
+                                setAttributes({ footerString });
+                            }}
+                            value={attributes.footerString ?? ''}
+                        />
+                    </BaseControl>
+                )}
+                {showFooterLinkEdit && (
+                    <BaseControl id="code-block-pro-footer-link">
+                        <TextControl
+                            id="code-block-pro-footer-link"
+                            spellCheck={false}
+                            type="url"
+                            autoComplete="off"
+                            label={__('Footer Link', 'code-block-pro')}
+                            placeholder="https://example.com"
+                            help={__(
+                                'Leave blank to disable',
+                                'code-block-pro',
+                            )}
+                            onChange={(footerLink) => {
+                                setAttributes({ footerLink });
+                            }}
+                            value={attributes.footerLink ?? ''}
+                        />
+                    </BaseControl>
+                )}
+                {showFooterLinkTargetEdit && (
+                    <BaseControl id="code-block-pro-footer-link-target">
+                        <CheckboxControl
+                            id="code-block-pro-footer-link-target"
+                            label={__('Open in new tab?', 'code-block-pro')}
+                            checked={attributes.footerLinkTarget}
+                            onChange={(footerLinkTarget) => {
+                                setAttributes({ footerLinkTarget });
+                                updateThemeHistory({
+                                    ...attributes,
+                                    footerLinkTarget,
+                                });
+                            }}
+                        />
+                    </BaseControl>
+                )}
                 <FooterSelect
                     attributes={attributes}
                     onClick={(footerType) => {
@@ -233,6 +249,7 @@ export const SidebarControls = ({
                 />
             </PanelBody>
             <ThemesPanel
+                bringAttentionToThemes={bringAttention === 'theme-select'}
                 attributes={attributes}
                 setAttributes={setAttributes}
             />

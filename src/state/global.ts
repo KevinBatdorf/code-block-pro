@@ -5,9 +5,11 @@ type GlobalTypes = {
     previousSettings: {
         copyButton: boolean;
     };
+    bringAttentionToPanel: false | string;
     setPreviousSettings: (
         settings: Partial<GlobalTypes['previousSettings']>,
     ) => void;
+    setBringAttentionToPanel: (b: false | string) => void;
 };
 
 export const useGlobalStore = create<GlobalTypes>()(
@@ -25,9 +27,20 @@ export const useGlobalStore = create<GlobalTypes>()(
                         previousSettings: { ...state.previousSettings, ...s },
                     }));
                 },
+                bringAttentionToPanel: false,
+                setBringAttentionToPanel: (bringAttentionToPanel) => {
+                    set(() => ({ bringAttentionToPanel }));
+                },
             }),
             { name: 'Code Block Pro Globals' },
         ),
-        { name: 'code-block-pro-last-globals' },
+        {
+            name: 'code-block-pro-last-globals',
+            partialize: (state) => {
+                return {
+                    previousSettings: state.previousSettings,
+                };
+            },
+        },
     ),
 );
