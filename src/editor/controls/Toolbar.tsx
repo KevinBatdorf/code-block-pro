@@ -1,19 +1,11 @@
 import { BlockControls } from '@wordpress/block-editor';
-import {
-    ToolbarGroup,
-    ToolbarButton,
-    Dropdown,
-    Button,
-    NavigableMenu,
-    MenuItem,
-    MenuGroup,
-} from '@wordpress/components';
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import defaultThemes from '../../defaultThemes.json';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
-import { AttributesPropsAndSetter, Lang, ThemeOption } from '../../types';
+import { AttributesPropsAndSetter, ThemeOption } from '../../types';
 import { languages } from '../../util/languages';
 
 export const ToolbarControls = ({
@@ -76,34 +68,3 @@ export const ToolbarControls = ({
         </BlockControls>
     );
 };
-type LanguageSetterAndGetter = {
-    language: Lang;
-    setLanguage: (language: Lang) => void;
-};
-const DropdownLanguageSelect = ({
-    language,
-    setLanguage,
-}: LanguageSetterAndGetter) => (
-    <NavigableMenu
-        orientation="vertical"
-        role="menu"
-        style={{
-            minWidth: '200px',
-        }}>
-        <MenuGroup label={__('Select language', 'code-block-pro')}>
-            {Object.entries(languages).map(([value, label]) => (
-                <MenuItem
-                    key={value}
-                    role="menuitem"
-                    style={{ width: '100%' }}
-                    isSelected={language === value}
-                    variant={language === value ? 'primary' : undefined}
-                    onClick={() => {
-                        setLanguage(value as Lang);
-                    }}>
-                    {label}
-                </MenuItem>
-            ))}
-        </MenuGroup>
-    </NavigableMenu>
-);

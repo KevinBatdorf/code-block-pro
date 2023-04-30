@@ -30,7 +30,8 @@ context('Permissions', () => {
             'cbp-has-line-numbers',
         );
 
-        cy.get('[data-cy="show-line-numbers"]').check().should('be.checked');
+        cy.get('[data-cy="show-line-numbers"]').check();
+        cy.get('[data-cy="show-line-numbers"]').should('be.checked');
         cy.getPostContent('.wp-block[class$="code-block-pro"]').should(
             'not.have.class', // changed here
             'cbp-has-line-numbers',
