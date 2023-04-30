@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.15.0
+Stable tag:        1.16.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -266,6 +266,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.16.0 - 2023-04-30 =
 - Feature: Added new language grammars: GD Script, GD Resource, GD Shader, GLSL, Http, Jison, JSON5, Kusto (kql), Protocol Buffers (.proto), Windows Registry (.reg), V, WGSL, and Wolfram
 - Tweak: Removed toolbar language select and added functionality to focus on the sidebar setting
 - Refactor: Moved header/footer settings out of the language select into their own panels
