@@ -30,9 +30,12 @@ context('Styling', () => {
             'aria-checked',
             'false',
         );
-        cy.get('[data-cy="font-size-select"] [aria-label="Normal"]')
-            .click()
-            .should('have.attr', 'aria-checked', 'true');
+        cy.get('[data-cy="font-size-select"] [aria-label="Normal"]').click();
+        cy.get('[data-cy="font-size-select"] [aria-label="Normal"]').should(
+            'have.attr',
+            'aria-checked',
+            'true',
+        );
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('attr', 'style')
@@ -52,9 +55,12 @@ context('Styling', () => {
         cy.get(
             '[data-cy="font-line-height-select"] [aria-label="Normal"]',
         ).should('have.attr', 'aria-checked', 'false');
-        cy.get('[data-cy="font-line-height-select"] [aria-label="Normal"]')
-            .click()
-            .should('have.attr', 'aria-checked', 'true');
+        cy.get(
+            '[data-cy="font-line-height-select"] [aria-label="Normal"]',
+        ).click();
+        cy.get(
+            '[data-cy="font-line-height-select"] [aria-label="Normal"]',
+        ).should('have.attr', 'aria-checked', 'true');
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('attr', 'style')
@@ -69,9 +75,11 @@ context('Styling', () => {
             .invoke('attr', 'style')
             .should('not.contain', 'font-family');
 
-        cy.get('#code-block-pro-font-family')
-            .select('Fira Code')
-            .should('have.value', 'Code-Pro-Fira-Code');
+        cy.get('#code-block-pro-font-family').select('Fira Code');
+        cy.get('#code-block-pro-font-family').should(
+            'have.value',
+            'Code-Pro-Fira-Code',
+        );
 
         cy.previewCurrentPage();
 
@@ -88,11 +96,13 @@ context('Styling', () => {
 
         cy.openSideBarPanel('Styling');
 
-        cy.get('#code-block-pro-font-family')
-            .select('JetBrains Mono')
-            .should('have.value', 'Code-Pro-JetBrains-Mono')
-            .select('System Default')
-            .should('have.value', '');
+        cy.get('#code-block-pro-font-family').select('JetBrains Mono');
+        cy.get('#code-block-pro-font-family').should(
+            'have.value',
+            'Code-Pro-JetBrains-Mono',
+        );
+        cy.get('#code-block-pro-font-family').select('System Default');
+        cy.get('#code-block-pro-font-family').should('have.value', '');
 
         cy.previewCurrentPage();
 

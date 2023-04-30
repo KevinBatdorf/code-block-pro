@@ -49,7 +49,8 @@ context('Line numbers', () => {
 
         cy.addCode('line 1\nline 2\nline 3');
 
-        cy.get('[data-cy="disable-padding"').check().should('be.checked');
+        cy.get('[data-cy="disable-padding"').check();
+        cy.get('[data-cy="disable-padding"').should('be.checked');
 
         cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
             'have.css',
@@ -71,11 +72,10 @@ context('Line numbers', () => {
         cy.addCode('line 1\nline 2\nline 3');
 
         cy.openSideBarPanel('Line Settings');
-        cy.get('[data-cy="show-line-numbers"]')
-            .should('exist')
-            .should('be.not.checked')
-            .check()
-            .should('be.checked');
+        cy.get('[data-cy="show-line-numbers"]').should('exist');
+        cy.get('[data-cy="show-line-numbers"]').should('be.not.checked');
+        cy.get('[data-cy="show-line-numbers"]').check();
+        cy.get('[data-cy="show-line-numbers"]').should('be.checked');
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')
@@ -92,15 +92,15 @@ context('Line numbers', () => {
     });
 
     it('Line numbers enabled, padding disabled', () => {
-        cy.get('[data-cy="disable-padding"').check().should('be.checked');
+        cy.get('[data-cy="disable-padding"').check();
+        cy.get('[data-cy="disable-padding"').should('be.checked');
         cy.addCode('line 1\nline 2\nline 3');
 
         cy.openSideBarPanel('Line Settings');
-        cy.get('[data-cy="show-line-numbers"]')
-            .should('exist')
-            .should('be.not.checked')
-            .check()
-            .should('be.checked');
+        cy.get('[data-cy="show-line-numbers"]').should('exist');
+        cy.get('[data-cy="show-line-numbers"]').should('be.not.checked');
+        cy.get('[data-cy="show-line-numbers"]').check();
+        cy.get('[data-cy="show-line-numbers"]').should('be.checked');
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')

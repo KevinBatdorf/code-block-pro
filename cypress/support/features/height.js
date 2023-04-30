@@ -12,9 +12,8 @@ export const setHeightDesign = (height) => {
 export const enableMaxHeight = () => {
     cy.openBlockSettingsSideBar();
     cy.openSideBarPanel('Max Height');
-    cy.get('[data-cy="enable-max-height"]')
-        .should('exist')
-        .should('not.be.checked')
-        .check()
-        .should('be.checked');
+    cy.get('[data-cy="enable-max-height"]').should('exist');
+    cy.get('[data-cy="enable-max-height"]').should('not.be.checked');
+    cy.get('[data-cy="enable-max-height"]').check();
+    cy.get('[data-cy="enable-max-height"]').should('be.checked');
 };

@@ -22,7 +22,8 @@ context('Copy button', () => {
             .invoke('html')
             .should('contain', 'Copy');
 
-        cy.get('[data-cy="copy-button"]').uncheck().should('not.be.checked');
+        cy.get('[data-cy="copy-button"]').uncheck();
+        cy.get('[data-cy="copy-button"]').should('not.be.checked');
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')

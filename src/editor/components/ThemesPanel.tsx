@@ -9,14 +9,17 @@ import { ThemeFilter } from './ThemeFilter';
 import { ThemeSelect } from './ThemeSelect';
 
 export const ThemesPanel = ({
+    bringAttentionToThemes,
     attributes,
     setAttributes,
-}: AttributesPropsAndSetter) => {
+}: AttributesPropsAndSetter & { bringAttentionToThemes?: boolean }) => {
     const { updateThemeHistory } = useThemeStore();
     const [search, setSearch] = useState<string>('');
     const ready = useSettingsStoreReady();
     return (
-        <PanelBody title={__('Themes', 'code-block-pro')} initialOpen={false}>
+        <PanelBody
+            title={__('Themes', 'code-block-pro')}
+            initialOpen={bringAttentionToThemes ?? false}>
             {ready && <ThemeFilter search={search} setSearch={setSearch} />}
             {ready && (
                 <ThemeSelect

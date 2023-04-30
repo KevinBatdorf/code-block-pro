@@ -35,7 +35,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
                         ['simpleStringEnd', 'simpleStringStart'].includes(slug)
                             ? // Settings refers to the panel that can be expanded
                               __(
-                                  'Update extras in the Settings panel',
+                                  'Update extra settings above',
                                   'code-block-pro',
                               )
                             : undefined
