@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.16.0
+Stable tag:        1.16.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -266,6 +266,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.16.1 - 2023-05-01 =
 - Tweak: Removes the filtering of bash and zsh filtering
 - Fix: Better language sorting (by label instead of key)
 - Fix: Fix typo in Wolfram language key
