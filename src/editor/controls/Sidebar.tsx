@@ -42,6 +42,9 @@ export const SidebarControls = ({
     const { updateThemeHistory } = useThemeStore();
     const { setPreviousSettings, bringAttentionToPanel } = useGlobalStore();
     const { headerType, footerType } = attributes;
+    const languagesSorted = new Map(
+        Object.entries(languages).sort((a, b) => a[1].localeCompare(b[1])),
+    );
 
     const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
 
@@ -83,7 +86,7 @@ export const SidebarControls = ({
                                       )
                                     : null
                             }
-                            options={Object.entries(languages).map(
+                            options={[...languagesSorted.entries()].map(
                                 ([value, label]) => ({
                                     label: label.replace(
                                         'ANSI',

@@ -266,6 +266,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Tweak: Removes the filtering of bash and zsh filtering
+- Fix: Better language sorting (by label instead of key)
+- Fix: Fix typo in Wolfram language key
+
 = 1.16.0 - 2023-04-30 =
 - Feature: Added new language grammars: GD Script, GD Resource, GD Shader, GLSL, Http, Jison, JSON5, Kusto (kql), Protocol Buffers (.proto), Windows Registry (.reg), V, WGSL, and Wolfram
 - Tweak: Removed toolbar language select and added functionality to focus on the sidebar setting
