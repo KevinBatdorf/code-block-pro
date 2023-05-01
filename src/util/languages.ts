@@ -69,7 +69,6 @@ export const languages = removeAliases(defaultLanguages);
 
 /** Get the language shown in the editor, which could differ from the front */
 export const getEditorLanguage = (language: string): LangShiki => {
-    console.log(language);
     if (language === 'ansi') return 'shellscript';
     return language as LangShiki;
 };
