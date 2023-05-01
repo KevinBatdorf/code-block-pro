@@ -266,6 +266,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Tweak: Removes the filtering of bash and zsh filtering
 - Fix: Better language sorting (by label instead of key)
 - Fix: Fix typo in Wolfram language key
 
