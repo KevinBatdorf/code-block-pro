@@ -32,7 +32,7 @@ export const codeAliases = {
     ruby: ['rb'],
     rust: ['rs'],
     shaderlab: ['shader'],
-    shellscript: ['shell', 'sh', 'zsh'],
+    shellscript: ['shell', 'sh'],
     stylus: ['styl'],
     typescript: ['ts'],
     vb: ['cmd'],
