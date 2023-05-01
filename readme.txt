@@ -80,6 +80,36 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 
 Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes?utm_campaign=themes&utm_source=readme-body&utm_medium=textlink)
 
+= Theme Pack (Paid) Includes =
+- Custom Dynamic Theme [read more](https://github.com/KevinBatdorf/code-block-pro/discussions/168)
+- Ayu Dark
+- Ayu Mirage
+- Ayu Light
+- Night Owl
+- Night Owl Light
+- Noctis
+- Noctis Azureus
+- Noctis Bordo
+- Noctis Hibernus
+- Noctis Lilac
+- Noctis Lux
+- Noctis Minimus
+- Noctis Obscuro
+- Noctis Sereno
+- Noctis Uva
+- Noctis Viola
+- Palenight
+- Pico 8
+- Shades of Purple
+- Shades of Purple Super Dark
+- Synthwave '84
+- Tokyo Night
+- Tokyo Night Storm
+- Tokyo Night Light
+- Winter is Coming
+- Winter is Coming Light
+- Winter is Coming Dark
+
 = Included Coding Languages =
 - ABAP
 - ActionScript 3
