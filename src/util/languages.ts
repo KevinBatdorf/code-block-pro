@@ -19,6 +19,7 @@ export const codeAliases = {
     java: ['javafx'],
     javascript: ['jscript', 'js'],
     jssm: ['fsl'],
+    kusto: ['kql'],
     make: ['makefile'],
     markdown: ['md'],
     matlab: ['matlabkey'],
@@ -31,7 +32,7 @@ export const codeAliases = {
     ruby: ['rb'],
     rust: ['rs'],
     shaderlab: ['shader'],
-    shellscript: ['shell', 'bash', 'sh', 'zsh'],
+    shellscript: ['shell', 'sh', 'zsh'],
     stylus: ['styl'],
     typescript: ['ts'],
     vb: ['cmd'],
@@ -68,6 +69,7 @@ export const languages = removeAliases(defaultLanguages);
 
 /** Get the language shown in the editor, which could differ from the front */
 export const getEditorLanguage = (language: string): LangShiki => {
+    console.log(language);
     if (language === 'ansi') return 'shellscript';
     return language as LangShiki;
 };
