@@ -12,8 +12,8 @@ View this block plugin [on WordPress.org](https://wordpress.org/plugins/code-blo
 - Supports over 140 programming languages
 - Optionally load programming fonts
 - Line numbers
-- Line highlighting
-- Blur highlighting
+- Line highlighting (static and on hover)
+- Blur highlighting (with reveal on hover)
 - Header styles
 - Footer styles
 - Optionally add a copy button to let users copy the code

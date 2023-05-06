@@ -29,8 +29,8 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 - Supports over 140 programming languages
 - Modern programming web fonts - locally hosted
 - Line numbers
-- Line highlighting
-- Blur highlighting
+- Line highlighting (static and on hover)
+- Blur highlighting (with reveal on hover)
 - Header styles
 - Footer styles
 - Copy button
