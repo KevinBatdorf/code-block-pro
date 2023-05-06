@@ -14,6 +14,7 @@ type ThemeType = {
     previousClampFonts?: boolean;
     previousDisablePadding?: boolean;
     previousLineNumbers?: boolean;
+    previousHighlightingHover?: boolean;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/code-block-pro/v1/settings';
@@ -36,6 +37,7 @@ export const useThemeStore = create<ThemeType>()(
                 previousClampFonts: undefined,
                 previousDisablePadding: undefined,
                 previousLineNumbers: undefined,
+                previousHighlightingHover: undefined,
                 updateThemeHistory(attributes) {
                     set((state) => ({
                         ...state,
@@ -48,6 +50,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousClampFonts: attributes.clampFonts,
                         previousDisablePadding: attributes.disablePadding,
                         previousLineNumbers: attributes.lineNumbers,
+                        previousHighlightingHover: attributes.highlightingHover,
                     }));
                 },
             }),

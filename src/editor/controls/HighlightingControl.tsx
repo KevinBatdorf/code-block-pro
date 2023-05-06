@@ -30,7 +30,7 @@ export const HighlightingControl = ({
         <BaseControl id="code-block-pro-show-highlighting">
             <CheckboxControl
                 data-cy="enable-highlighting"
-                label={__('Enable line highlighting', 'code-block-pro')}
+                label={__('Line highlights', 'code-block-pro')}
                 help={__(
                     'Highlight individual lines to bring attention to specific code.',
                     'code-block-pro',
@@ -67,6 +67,18 @@ export const HighlightingControl = ({
                     </div>
                 </BaseControl>
             )}
+            <CheckboxControl
+                data-cy="enable-highlighting-hover"
+                label={__('Line highlights on hover', 'code-block-pro')}
+                help={__(
+                    'Every line will be highlighted when hovered.',
+                    'code-block-pro',
+                )}
+                checked={attributes.highlightingHover ?? false}
+                onChange={(highlightingHover) => {
+                    setAttributes({ highlightingHover });
+                }}
+            />
         </BaseControl>
     );
 };

@@ -19,6 +19,7 @@ export const useDefaults = ({
         clampFonts,
         disablePadding,
         lineNumbers,
+        highlightingHover,
     } = attributes;
     const { previousSettings } = useGlobalStore();
     const {
@@ -31,6 +32,7 @@ export const useDefaults = ({
         previousClampFonts,
         previousDisablePadding,
         previousLineNumbers,
+        previousHighlightingHover,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
@@ -102,6 +104,16 @@ export const useDefaults = ({
             return;
         setAttributes({ lineNumbers: previousLineNumbers });
     }, [previousLineNumbers, lineNumbers, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (
+            highlightingHover !== undefined ||
+            previousHighlightingHover === undefined
+        )
+            return;
+        setAttributes({ highlightingHover: previousHighlightingHover });
+    }, [previousHighlightingHover, highlightingHover, setAttributes]);
 
     useEffect(() => {
         requestAnimationFrame(() => {

@@ -54,6 +54,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
         enableHighlighting: { type: 'boolean' },
+        highlightingHover: { type: 'boolean' },
         lineHighlights: { type: 'string' },
         lineHighlightColor: { type: 'string' },
         enableBlurring: { type: 'boolean' },
@@ -102,6 +103,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                             'cbp-has-line-numbers': attributes.lineNumbers,
                             'cbp-blur-enabled': attributes.enableBlurring,
                             'cbp-unblur-on-hover': attributes.removeBlurOnHover,
+                            'cbp-highlight-hover': attributes.highlightingHover,
                         }),
                         style: {
                             fontSize: maybeClamp(
@@ -120,7 +122,8 @@ registerBlockType<Attributes>(blockConfig.name, {
                                     ? `${attributes.lineNumbersWidth}px`
                                     : undefined,
                             '--cbp-line-highlight-color':
-                                attributes?.enableHighlighting
+                                attributes?.enableHighlighting ||
+                                attributes?.highlightingHover
                                     ? attributes.lineHighlightColor
                                     : undefined,
                             '--cbp-line-height': attributes.lineHeight,

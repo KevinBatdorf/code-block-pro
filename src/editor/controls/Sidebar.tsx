@@ -124,7 +124,7 @@ export const SidebarControls = ({
                     <BaseControl id="code-block-pro-show-line-numbers">
                         <CheckboxControl
                             data-cy="show-line-numbers"
-                            label={__('Enable line numbers', 'code-block-pro')}
+                            label={__('Line numbers', 'code-block-pro')}
                             help={__(
                                 'Enable line numbers and set a starting number.',
                                 'code-block-pro',

@@ -31,6 +31,7 @@ export type Attributes = {
     startingLineNumber: string;
     lineNumbersWidth: number;
     enableHighlighting: boolean;
+    highlightingHover: boolean;
     lineHighlights: string;
     lineHighlightColor: string;
     enableBlurring: boolean;
