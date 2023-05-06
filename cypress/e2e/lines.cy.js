@@ -83,12 +83,46 @@ context('Line highlights', () => {
         );
 
         // check ranges too
-        cy.get('#code-block-pro-show-highlighted-lines').clear();
-        cy.get('#code-block-pro-show-highlighted-lines').type('[2,4]');
+        cy.get('#code-block-pro-show-highlighted-lines').clear({ force: true });
+        cy.get('#code-block-pro-show-highlighted-lines').type('[2,4]', {
+            force: true,
+        });
 
         cy.getPostContent(
             '.wp-block[class$="code-block-pro"] .cbp-line-highlight',
         ).should('have.length', 3);
+    });
+    it('Line numbers can be highlighted on hover', () => {
+        cy.openSideBarPanel('Line Settings');
+        cy.get('[data-cy="show-line-numbers"]').check();
+        cy.get('[data-cy="show-line-numbers"]').should('be.checked');
+        cy.addCode('line 1\nline 2\nline 3\nline 4\nline 5');
+
+        cy.get('.wp-block[class$="code-block-pro"] .cbp-line-highlight').should(
+            'not.exist',
+        );
+
+        cy.previewCurrentPage();
+
+        cy.get('.cbp-line-highlighter').should('not.exist');
+
+        cy.go('back');
+        cy.focusBlock('code-block-pro', 'textarea');
+        cy.get('.wp-block[class$="code-block-pro"] textarea').should(
+            'have.focus',
+        );
+
+        cy.openSideBarPanel('Line Settings');
+        cy.get('[data-cy="enable-highlighting-hover"]').check();
+        cy.get('[data-cy="enable-highlighting-hover"]').should('be.checked');
+
+        cy.get('.wp-block[class$="code-block-pro"] .cbp-line-highlight').should(
+            'not.exist',
+        );
+
+        cy.previewCurrentPage();
+
+        cy.get('.cbp-line-highlighter').should('have.length', 5);
     });
 });
 
