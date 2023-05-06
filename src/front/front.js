@@ -34,14 +34,23 @@ const handleCopyButton = () => {
 
 const handleHighlighter = () => {
     const codeBlocks = Array.from(
-        document.querySelectorAll(`${containerClass} pre:not(.cbp-hl-loaded)`),
+        document.querySelectorAll(`${containerClass}:not(.cbp-hl-loaded)`),
     );
 
     codeBlocks.forEach((codeBlock) => {
         codeBlock.classList.add('cbp-hl-loaded');
         // Search for highlights
-        const highlighters = codeBlock.querySelectorAll('.cbp-line-highlight');
-        if (!highlighters.length) return;
+        const highlighters = new Set(
+            codeBlock.querySelectorAll('.cbp-line-highlight'),
+        );
+        // If the codeblock has .cbp-highlight-hover, then get all lines
+        if (codeBlock.classList.contains('cbp-highlight-hover')) {
+            codeBlock
+                .querySelectorAll('span.line')
+                .forEach((line) => console.log(line) || highlighters.add(line));
+        }
+
+        if (!highlighters.size) return;
 
         // We need to track the block width so we can adjust the
         // highlighter width in case of overflow
@@ -62,6 +71,8 @@ const handleHighlighter = () => {
             });
         });
         resizeObserver.observe(codeBlock);
+
+        console.log(highlighters);
 
         // add the highlighter
         highlighters.forEach((highlighter) => {

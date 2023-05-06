@@ -61,12 +61,12 @@
 /* .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:hover::before {
     @apply opacity-100;
 } */
+.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover pre .line:hover .cbp-line-highlighter,
 .wp-block-kevinbatdorf-code-block-pro pre .line.cbp-line-highlight .cbp-line-highlighter {
+    @apply w-full pointer-events-none absolute top-0 h-full transition duration-100 ease-in-out;
     background: var(--cbp-line-highlight-color, rgb(14 165 233/.2));
-    width: 100%;
     min-width: calc(var(--cbp-block-width, 100%));
     left: -16px;
-    @apply absolute top-0 h-full;
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).padding-disabled pre .line.cbp-line-highlight::after {
     @apply left-0 w-full;

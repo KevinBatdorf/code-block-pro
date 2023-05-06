@@ -29,6 +29,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                     'cbp-has-line-numbers': attributes.lineNumbers,
                     'cbp-blur-enabled': attributes.enableBlurring,
                     'cbp-unblur-on-hover': attributes.removeBlurOnHover,
+                    'cbp-highlight-hover': attributes.highlightingHover,
                 }),
             })}
             data-code-block-pro-font-family={attributes.fontFamily}
@@ -50,9 +51,11 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                     '--cbp-line-number-width': attributes.lineNumbersWidth
                         ? `${attributes.lineNumbersWidth}px`
                         : undefined,
-                    '--cbp-line-highlight-color': attributes?.enableHighlighting
-                        ? attributes.lineHighlightColor
-                        : undefined,
+                    '--cbp-line-highlight-color':
+                        attributes?.enableHighlighting ||
+                        attributes?.highlightingHover
+                            ? attributes.lineHighlightColor
+                            : undefined,
                     lineHeight: maybeClamp(
                         attributes.lineHeight,
                         attributes.clampFonts,

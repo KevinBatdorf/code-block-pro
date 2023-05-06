@@ -35,6 +35,7 @@
         "startingLineNumber": { "type": "number", "default": 1 },
         "lineNumbersWidth": { "type": "number" },
         "enableHighlighting": { "type": "boolean" },
+        "highlightingHover": { "type": "boolean" },
         "lineHighlights": { "type": "string" },
         "lineHighlightColor": { "type": "string" },
         "enableBlurring": { "type": "boolean" },

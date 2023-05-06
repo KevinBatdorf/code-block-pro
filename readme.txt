@@ -296,6 +296,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Add line highlighting on hover
+- Fix: Removed pointer events from line highlights so you can select text under it
+
 = 1.16.1 - 2023-05-01 =
 - Tweak: Removes the filtering of bash and zsh filtering
 - Fix: Better language sorting (by label instead of key)
