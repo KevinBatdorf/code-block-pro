@@ -31,7 +31,7 @@ export const BlurControl = ({
         <BaseControl id="code-block-pro-show-blurring">
             <CheckboxControl
                 data-cy="enable-blur"
-                label={__('Enable blur emphesis', 'code-block-pro')}
+                label={__('Line blurring', 'code-block-pro')}
                 help={__(
                     'Blur surrounding code to focus on specific lines.',
                     'code-block-pro',

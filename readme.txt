@@ -297,6 +297,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Add line highlighting on hover
+- Tweak: Updated the line highlighting sidebar language to be more clear (hopefully)
 - Fix: Removed pointer events from line highlights so you can select text under it
 
 = 1.16.1 - 2023-05-01 =
