@@ -171,8 +171,8 @@ export const Edit = ({
     if (!loading && !highlighter) {
         return (
             <div
-                className="p-8 px-4 text-left"
-                style={{ backgroundColor, color }}>
+                className="px-4 text-left flex items-center"
+                style={{ backgroundColor, color, minHeight: 36 }}>
                 {sprintf(
                     __(
                         'Theme %s not found. Please select a different theme.',
@@ -187,8 +187,8 @@ export const Edit = ({
     if ((loading && code) || error) {
         return (
             <div
-                className="p-6 px-4 text-left"
-                style={{ backgroundColor, color }}>
+                className="px-4 text-left flex items-center"
+                style={{ backgroundColor, color, minHeight: 36 }}>
                 {error?.message ?? ''}
             </div>
         );

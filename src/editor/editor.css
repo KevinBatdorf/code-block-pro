@@ -33,6 +33,7 @@
 .code-block-pro-editor textarea,
 .code-block-pro-editor pre {
     @apply m-0 text-left focus:outline-none;
+    min-height: 36px;
     direction: ltr !important;
 }
 .code-block-pro-editor.cbp-has-line-numbers pre {
