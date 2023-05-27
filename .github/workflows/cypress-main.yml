@@ -2,27 +2,27 @@ name: Run Cypress on main
 on:
     push:
         branches:
-          - main
+            - main
     workflow_dispatch:
     schedule:
-    # At 08:00 daily
-    - cron: "0 8 * * *"
+        # At 08:00 daily
+        - cron: '0 8 * * *'
 jobs:
-  generate_file_list:
-    name: Generate file list
-    runs-on: ubuntu-latest
-    outputs:
-        spec: ${{ steps.list_files.outputs.spec }}
-    steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-        - name: List Files
-          id: list_files
-          run: |
-              # List all the .cy.js files in the cypress/e2e directory
-              # and output their file names without the extension
-              ls cypress/e2e/*.cy.js | xargs -I{} basename {} .cy.js | jq -Rrs "split(\"\n\") | map(select(length > 0)) | tojson" | tee /tmp/spec.json
-              echo "spec=$(cat /tmp/spec.json)" >> "$GITHUB_OUTPUT"
+    generate_file_list:
+        name: Generate file list
+        runs-on: ubuntu-latest
+        outputs:
+            spec: ${{ steps.list_files.outputs.spec }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: List Files
+              id: list_files
+              run: |
+                  # List all the .cy.js files in the cypress/e2e directory
+                  # and output their file names without the extension
+                  ls cypress/e2e/*.cy.js | xargs -I{} basename {} .cy.js | jq -Rrs "split(\"\n\") | map(select(length > 0)) | tojson" | tee /tmp/spec.json
+                  echo "spec=$(cat /tmp/spec.json)" >> "$GITHUB_OUTPUT"
 
     npm_install:
         name: Install Node modules
@@ -49,7 +49,9 @@ jobs:
         needs: [npm_install, generate_file_list]
         strategy:
             fail-fast: false
-            matrix: ${{ fromJson(needs.generate_file_list.outputs.spec) }}
+            matrix:
+                spec: ${{ fromJson(needs.generate_file_list.outputs.spec) }}
+                wp-version: [null, 'Next']
         steps:
             - name: Clone repo
               uses: actions/checkout@v3
@@ -89,7 +91,7 @@ jobs:
             - name: Cypress run
               uses: cypress-io/github-action@v5
               with:
-                spec: cypress/e2e/${{ matrix.spec }}.cy.js
+                  spec: cypress/e2e/${{ matrix.spec }}.cy.js
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v3
