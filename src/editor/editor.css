@@ -50,7 +50,9 @@
 .code-block-pro-editor.padding-disabled.cbp-has-line-numbers pre .line:empty {
     @apply block;
 }
-.code-block-pro-editor.cbp-has-line-numbers pre .line:not(.cbp-line-number-disabled)::before {
+.code-block-pro-editor.cbp-has-line-numbers
+    pre
+    .line:not(.cbp-line-number-disabled)::before {
     @apply inline-block text-right opacity-50 absolute;
     margin-right: 12px;
     content: counter(step);
@@ -68,11 +70,15 @@
     @apply py-0;
 }
 /* Will make sure the line numbers are full width before calculating */
-.code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-width-forced,
+.code-block-pro-editor.cbp-has-line-numbers
+    pre
+    .line.cbp-line-number-width-forced,
 .code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-disabled {
     @apply inline;
 }
-.code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-width-forced::before {
+.code-block-pro-editor.cbp-has-line-numbers
+    pre
+    .line.cbp-line-number-width-forced::before {
     width: auto !important;
     position: initial;
 }
@@ -83,10 +89,10 @@
 /* Just to make it look similar to the front end */
 .code-block-pro-editor pre .line.cbp-line-highlight::after {
     content: '';
-    background: var(--cbp-line-highlight-color, rgb(14 165 233/.2));
+    background: var(--cbp-line-highlight-color, rgb(14 165 233/0.2));
     @apply absolute top-0 h-full;
     left: -100% !important;
-    width: 1000%!important;
+    width: 1000% !important;
     min-height: var(--cbp-line-height) !important;
 }
 
@@ -97,10 +103,13 @@
 
 .cbp-input-error {
     --tw-ring-color: rgb(239 68 68);
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+        var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+        calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
     border-color: rgb(239 68 68) !important;
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)!important;
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+        var(--tw-shadow, 0 0 #0000) !important;
 }
 
 .code-block-pro-editor .code-block-pro-copy-button {
@@ -108,7 +117,8 @@
     @apply pointer-events-none;
 }
 .cbp-theme-preview {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; /* no !important */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        monospace; /* no !important */
     direction: ltr;
 }
 

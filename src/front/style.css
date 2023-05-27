@@ -1,6 +1,7 @@
 /*! purgecss start ignore */
 .wp-block-kevinbatdorf-code-block-pro {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; /* no !important */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        monospace; /* no !important */
     direction: ltr;
     @apply relative box-border;
 }
@@ -14,13 +15,16 @@
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre {
     border: 0;
-    overflow-wrap:normal;
+    overflow-wrap: normal;
     padding: 16px;
     padding-right: 0;
     font-family: inherit;
     @apply overflow-auto text-inherit text-left m-0 whitespace-pre bg-none border-none border-0 rounded-none shadow-none;
 }
-.wp-block-kevinbatdorf-code-block-pro.padding-disabled:not(.code-block-pro-editor) pre {
+.wp-block-kevinbatdorf-code-block-pro.padding-disabled:not(
+        .code-block-pro-editor
+    )
+    pre {
     @apply p-0;
 }
 .wp-block-kevinbatdorf-code-block-pro.padding-bottom-disabled pre {
@@ -29,14 +33,21 @@
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code {
     border: 0;
     background: none;
-    overflow-wrap:normal;
+    overflow-wrap: normal;
     font-family: inherit;
     @apply block w-full m-0 p-0 bg-transparent text-inherit text-left whitespace-pre border-none border-0 rounded-none shadow-none;
 }
-.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code .line {
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor)
+    pre
+    code
+    .line {
     @apply inline-block w-full;
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code {
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(
+        .code-block-pro-editor
+    )
+    pre
+    code {
     counter-reset: step;
     counter-increment: step calc(var(--cbp-line-number-start, 1) - 1);
 }
@@ -44,11 +55,19 @@
 .wp-block-kevinbatdorf-code-block-pro pre code .line {
     @apply relative;
 }
-.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre code .line::before {
+.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor)
+    pre
+    code
+    .line::before {
     content: '';
     @apply inline-block;
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:not(.cbp-line-number-disabled)::before {
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(
+        .code-block-pro-editor
+    )
+    pre
+    code
+    .line:not(.cbp-line-number-disabled)::before {
     @apply inline-block text-right opacity-50 transition-opacity duration-500;
     margin-right: 12px;
     content: counter(step);
@@ -61,22 +80,41 @@
 /* .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:hover::before {
     @apply opacity-100;
 } */
-.wp-block-kevinbatdorf-code-block-pro:not(.cbp-blur-enabled:not(.cbp-unblur-on-hover)) pre .line:hover .cbp-line-highlighter,
-.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover pre .line.cbp-no-blur:hover .cbp-line-highlighter,
-.wp-block-kevinbatdorf-code-block-pro pre .line.cbp-line-highlight .cbp-line-highlighter {
+.wp-block-kevinbatdorf-code-block-pro:not(
+        .cbp-blur-enabled:not(.cbp-unblur-on-hover)
+    )
+    pre
+    .line:hover
+    .cbp-line-highlighter,
+.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover
+    pre
+    .line.cbp-no-blur:hover
+    .cbp-line-highlighter,
+.wp-block-kevinbatdorf-code-block-pro
+    pre
+    .line.cbp-line-highlight
+    .cbp-line-highlighter {
     @apply w-full pointer-events-none absolute top-0 h-full;
-    background: var(--cbp-line-highlight-color, rgb(14 165 233/.2));
+    background: var(--cbp-line-highlight-color, rgb(14 165 233/0.2));
     min-width: calc(var(--cbp-block-width, 100%));
     left: -16px;
 }
-.wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor).padding-disabled pre .line.cbp-line-highlight::after {
+.wp-block-kevinbatdorf-code-block-pro:not(
+        .code-block-pro-editor
+    ).padding-disabled
+    pre
+    .line.cbp-line-highlight::after {
     @apply left-0 w-full;
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled pre .line:not(.cbp-no-blur) {
+.wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled
+    pre
+    .line:not(.cbp-no-blur) {
     filter: blur(1px);
     @apply opacity-40 transition-all duration-200;
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled.cbp-unblur-on-hover:hover pre .line:not(.cbp-no-blur) {
+.wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled.cbp-unblur-on-hover:hover
+    pre
+    .line:not(.cbp-no-blur) {
     @apply blur-none opacity-100;
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre * {
@@ -94,7 +132,8 @@
     padding: 6px;
     @apply absolute top-0 right-0 left-auto bg-transparent border-none border-0 cursor-pointer opacity-10 focus:opacity-40 transition-opacity duration-200 ease-in-out leading-none z-10;
 }
-.wp-block-kevinbatdorf-code-block-pro.padding-disabled .code-block-pro-copy-button {
+.wp-block-kevinbatdorf-code-block-pro.padding-disabled
+    .code-block-pro-copy-button {
     padding: 0;
 }
 .wp-block-kevinbatdorf-code-block-pro:hover .code-block-pro-copy-button {
@@ -110,10 +149,10 @@
 .code-block-pro-copy-button .with-check {
     @apply hidden;
 }
-.code-block-pro-copy-button.copying .without-check {
+.code-block-pro-copy-button.cbp-copying .without-check {
     @apply hidden;
 }
-.code-block-pro-copy-button.copying .with-check {
+.code-block-pro-copy-button.cbp-copying .with-check {
     @apply block;
 }
 .cbp-footer-link {

@@ -2,43 +2,75 @@ name: Run Cypress on main
 on:
     push:
         branches:
-          - main
+            - main
     workflow_dispatch:
     schedule:
-    # At 08:00 daily
-    - cron: "0 8 * * *"
+        # At 08:00 daily
+        - cron: '0 8 * * *'
 jobs:
+    generate_file_list:
+        name: Generate file list
+        runs-on: ubuntu-latest
+        outputs:
+            spec: ${{ steps.list_files.outputs.spec }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: List Files
+              id: list_files
+              run: |
+                  # List all the .cy.js files in the cypress/e2e directory
+                  # and output their file names without the extension
+                  ls cypress/e2e/*.cy.js | xargs -I{} basename {} .cy.js | jq -Rrs "split(\"\n\") | map(select(length > 0)) | tojson" | tee /tmp/spec.json
+                  echo "spec=$(cat /tmp/spec.json)" >> "$GITHUB_OUTPUT"
+
+    npm_install:
+        name: Install Node modules
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Cache node modules
+              uses: actions/cache@v3
+              id: cache-node-modules
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+            - name: Install npm dependencies
+              if: steps.cache-node-modules.outputs.cache-hit != 'true'
+              run: npm ci
+
     test:
         name: WordPress ${{ matrix.wp-version }} (${{ matrix.spec }})
         concurrency:
             group: cypress - ${{ github.event.pull_request.number || github.ref }} - ${{ matrix.wp-version }} - ${{ matrix.spec }}
             cancel-in-progress: true
         runs-on: ubuntu-latest
+        needs: [npm_install, generate_file_list]
         strategy:
             fail-fast: false
             matrix:
+                spec: ${{ fromJson(needs.generate_file_list.outputs.spec) }}
                 wp-version: [null, 'Next']
-                spec: [
-                  "compatability",
-                  "copy-button",
-                  "footers",
-                  "headers",
-                  "height",
-                  "language",
-                  "lines",
-                  "padding",
-                  "permissions",
-                  "styling",
-                  "themes",
-                ]
         steps:
             - name: Clone repo
               uses: actions/checkout@v3
-            - name: Install server
+            - name: Set up node
+              uses: actions/setup-node@v3
+            - name: Node modules cache
+              uses: actions/cache@v3
+              id: cache-node-modules
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+            - name: Install npm dependencies
+              if: steps.cache-node-modules.outputs.cache-hit != 'true'
+              run: npm ci
+            - name: Build
               run: |
-                  npm ci
                   npx eslint --max-warnings 0 .
                   npm run build
+
             - name: Get Latest WP Branch
               if: ${{ matrix.wp-version }}
               run: |
@@ -51,22 +83,15 @@ jobs:
               if: ${{ matrix.wp-version }}
               with:
                   name: '.wp-env.json'
-                  json: '{
-                    "core": "WordPress/WordPress#${{ env.branch }}",
-                    "plugins":["."],
-                    "mappings": {
-                      "wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"
-                    }
-                  }'
+                  json: '{"core": "WordPress/WordPress#${{ env.branch }}","plugins":["."],"mappings":{"wp-content/plugins/prismatic": "https://downloads.wordpress.org/plugin/prismatic.zip"}}'
             - name: Start server
               run: |
-                  npm install -g @wordpress/env
-                  wp-env start --update
-                  echo "WordPress version: `wp-env run cli core version`"
+                  npx wp-env start
+                  echo "WordPress version: `npx wp-env run cli core version`"
             - name: Cypress run
-              uses: cypress-io/github-action@v4
+              uses: cypress-io/github-action@v5
               with:
-                spec: cypress/e2e/${{ matrix.spec }}.cy.js
+                  spec: cypress/e2e/${{ matrix.spec }}.cy.js
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - uses: actions/upload-artifact@v3

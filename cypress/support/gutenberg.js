@@ -9,9 +9,11 @@ export const closeWelcomeGuide = () => {
             ) {
                 return true;
             }
-            win.wp.data
-                .dispatch('core/edit-post')
-                .toggleFeature('welcomeGuide');
+            cy.wrap(
+                win.wp.data
+                    .dispatch('core/edit-post')
+                    .toggleFeature('welcomeGuide'),
+            );
             return false;
         });
         const className = '[aria-label="Welcome to the block editor"]';
@@ -26,9 +28,11 @@ export const closeWelcomeGuide = () => {
             ) {
                 return true;
             }
-            win.wp.data
-                .dispatch('core/edit-post')
-                .toggleFeature('welcomeGuide');
+            cy.wrap(
+                win.wp.data
+                    .dispatch('core/edit-post')
+                    .toggleFeature('welcomeGuide'),
+            );
         });
         // And wait again for the animation to finish
         cy.get(className).should('not.exist');

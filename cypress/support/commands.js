@@ -26,7 +26,7 @@ import {
     visitToLoginPage,
 } from './navigate-pages';
 import { installPlugin, uninstallPlugin } from './plugins';
-import { resetDatabase, updateUserRole } from './wp-cli';
+import { resetDatabase } from './wp-cli';
 
 // Port more commands from WP here:
 // https://github.com/WordPress/gutenberg/tree/trunk/packages/e2e-test-utils/src
@@ -79,7 +79,6 @@ Cypress.Commands.add('mockIntersectionObserver', () =>
 
 // Server
 Cypress.Commands.add('resetDatabase', () => resetDatabase());
-Cypress.Commands.add('updateUserRole', (cap) => updateUserRole(cap));
 
 // Manage plugins
 Cypress.Commands.add('installPlugin', (slug) => installPlugin(slug));

@@ -45,6 +45,25 @@ context('Copy button', () => {
         });
     });
 
+    it('Copies uri decoded code on click', () => {
+        const text = '<script>&lt;</script>';
+        cy.openSideBarPanel('Extra Settings');
+        cy.get('[data-cy="use-decode-uri"]').check();
+
+        cy.addCode(text);
+
+        cy.previewCurrentPage();
+
+        cy.get('.wp-block-kevinbatdorf-code-block-pro [aria-label="Copy"]')
+            .should('exist')
+            .realClick();
+        cy.window().then((win) => {
+            win.navigator.clipboard.readText().then((clipText) => {
+                expect(clipText).to.equal(text);
+            });
+        });
+    });
+
     // Doesn't seem to work 🤷
     // it.only('Copies code on keypress', () => {
     //     const text = 'const foo = "bar";';

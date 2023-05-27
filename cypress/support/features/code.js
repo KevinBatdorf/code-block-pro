@@ -7,6 +7,6 @@ export const addCode = (code, opts) => {
     cy.get('.wp-block[class$="code-block-pro"] textarea').type(code, opts);
     cy.get('.wp-block[class$="code-block-pro"] textarea').should(
         'have.value',
-        code,
+        opts?.codeOutput ?? code,
     );
 };
