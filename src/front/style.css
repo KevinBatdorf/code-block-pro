@@ -110,10 +110,10 @@
 .code-block-pro-copy-button .with-check {
     @apply hidden;
 }
-.code-block-pro-copy-button.copying .without-check {
+.code-block-pro-copy-button.cbp-copying .without-check {
     @apply hidden;
 }
-.code-block-pro-copy-button.copying .with-check {
+.code-block-pro-copy-button.cbp-copying .with-check {
     @apply block;
 }
 .cbp-footer-link {

@@ -362,6 +362,24 @@ export const SidebarControls = ({
                         }}
                     />
                 </BaseControl>
+                <BaseControl id="code-block-pro-decode-uri">
+                    <CheckboxControl
+                        data-cy="use-decode-uri"
+                        label={__('Allow HTML Entites', 'code-block-pro')}
+                        help={__(
+                            'Select this to allow html entities such as &lt; and &gt; to be displayed.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.useDecodeURI}
+                        onChange={(useDecodeURI) => {
+                            setAttributes({ useDecodeURI });
+                            updateThemeHistory({
+                                ...attributes,
+                                useDecodeURI,
+                            });
+                        }}
+                    />
+                </BaseControl>
             </PanelBody>
         </InspectorControls>
     );

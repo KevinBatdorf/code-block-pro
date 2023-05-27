@@ -64,6 +64,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
         copyButton: { type: 'boolean' },
+        useDecodeURI: { type: 'boolean', default: false },
     },
     // Need to add these here to avoid TS type errors
     supports: {

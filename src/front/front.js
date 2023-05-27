@@ -18,12 +18,15 @@ const handleCopyButton = () => {
             if (type === 'keydown' && !['Enter', ' '].includes(key)) return;
             event.preventDefault();
             const b = target?.closest('span');
-            copy(b?.dataset?.code ?? '', {
+            const code = b?.dataset?.encoded
+                ? decodeURIComponent(decodeURIComponent(b?.dataset?.code))
+                : b?.dataset?.code;
+            copy(code ?? '', {
                 format: 'text/plain',
             });
-            b.classList.add('copying');
+            b.classList.add('cbp-copying');
             setTimeout(() => {
-                b.classList.remove('copying');
+                b.classList.remove('cbp-copying');
             }, 2000);
         };
         ['click', 'keydown'].forEach((evt) =>
