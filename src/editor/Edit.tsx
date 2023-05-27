@@ -49,7 +49,7 @@ export const Edit = ({
 
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) =>
-        setAttributes({ code: escapeHTML(code) });
+        setAttributes({ code: encodeURI(code) });
     const { previousLanguage } = useLanguageStore();
     const { highlighter, error, loading } = useTheme({
         theme,
@@ -89,7 +89,7 @@ export const Edit = ({
         if (!highlighter) return;
         const l = (language ?? previousLanguage) as Lang | 'ansi';
         const lang = getEditorLanguage(l);
-        const c = decodeEntities(code);
+        const c = decodeURI(code);
         const lineOptions = [
             ...getHighlights(),
             ...getBlurs(),
@@ -209,7 +209,7 @@ export const Edit = ({
                 </div>
             )}
             <Editor
-                value={decodeEntities(code)}
+                value={decodeURI(code)}
                 onValueChange={handleChange}
                 padding={{
                     top: disablePadding ? 0 : 16,
@@ -235,7 +235,7 @@ export const Edit = ({
                 }
                 highlight={(code: string) =>
                     highlighter
-                        ?.codeToHtml(decodeEntities(code), {
+                        ?.codeToHtml(decodeURI(code), {
                             lang: getEditorLanguage(
                                 language ?? previousLanguage,
                             ),

@@ -7,7 +7,7 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => (
         // Using a span to prevent aggressive button styling from themes
         role="button"
         tabIndex={0}
-        data-code={stripAnsi(attributes.code ?? '')}
+        data-code={stripAnsi(decodeURI(attributes.code ?? ''))}
         style={{ color: attributes?.textColor ?? 'inherit', display: 'none' }}
         aria-label={__('Copy', 'code-block-pro')}
         className="code-block-pro-copy-button">
