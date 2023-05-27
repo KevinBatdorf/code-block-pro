@@ -1,9 +1,11 @@
 beforeEach(() => {
     cy.resetDatabase();
     cy.clearBrowserStorage();
-    cy.updateUserRole('author');
     cy.loginUser();
     cy.visitNewPostEditor();
+    cy.window().then((win) => {
+        win.codeBlockPro.canSaveHtml = false;
+    });
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
