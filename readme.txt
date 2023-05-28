@@ -297,7 +297,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Adds option to output html entities
-- Feature: Create button settings area with theme selection
+- Tweak: Creates a new button settings area to support more buttons (coming soon)
 - Tweak: Changes copying class to cbp-copying
 - Fix: Fixed a bug where default settings weren't saving
 

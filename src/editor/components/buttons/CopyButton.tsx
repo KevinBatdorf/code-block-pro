@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import stripAnsi from 'strip-ansi';
-import { Attributes } from '../types';
+import { Attributes } from '../../../types';
 
 export const CopyButton = ({ attributes }: { attributes: Attributes }) => (
     <span

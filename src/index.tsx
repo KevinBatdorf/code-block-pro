@@ -10,11 +10,11 @@ import { BlockFilter } from './editor/components/BlockFilter';
 import { FooterType } from './editor/components/FooterSelect';
 import { HeaderType } from './editor/components/HeaderSelect';
 import { SeeMoreType } from './editor/components/SeeMoreSelect';
+import { ButtonList } from './editor/components/buttons/ButtonList';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
 import { BlockOutput } from './front/BlockOutput';
-import { CopyButton } from './front/CopyButton';
 import { blockIcon } from './icons';
 import { Attributes, Lang, ThemeOption } from './types';
 import { findLineNumberColor } from './util/colors';
@@ -152,9 +152,7 @@ registerBlockType<Attributes>(blockConfig.name, {
                         },
                     })}>
                     <HeaderType {...attributes} />
-                    {attributes.copyButton && (
-                        <CopyButton attributes={attributes} />
-                    )}
+                    <ButtonList {...attributes} />
                     <Edit
                         attributes={attributes}
                         setAttributes={setAttributes}

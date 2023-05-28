@@ -15,7 +15,7 @@ afterEach(() => {
 });
 context('Copy button', () => {
     it('Renders in the code block', () => {
-        cy.openSideBarPanel('Extra Settings');
+        cy.openSideBarPanel('Buttons');
 
         cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
         cy.getPostContent('.wp-block[class$="code-block-pro"]')

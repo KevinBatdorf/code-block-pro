@@ -19,6 +19,7 @@ import { useLanguageStore } from '../../state/language';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter, Lang } from '../../types';
 import { languages } from '../../util/languages';
+import { ButtonsPanel } from '../components/ButtonsPanel';
 import {
     FontSizeSelect,
     FontLineHeightSelect,
@@ -253,6 +254,10 @@ export const SidebarControls = ({
             </PanelBody>
             <ThemesPanel
                 bringAttentionToThemes={bringAttention === 'theme-select'}
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
+            <ButtonsPanel
                 attributes={attributes}
                 setAttributes={setAttributes}
             />

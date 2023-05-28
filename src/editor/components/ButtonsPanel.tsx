@@ -1,5 +1,4 @@
 import { PanelBody, BaseControl, CheckboxControl } from '@wordpress/components';
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
@@ -10,10 +9,18 @@ export const ButtonsPanel = ({
 }: AttributesPropsAndSetter & { bringAttentionToThemes?: boolean }) => {
     const { updateThemeHistory } = useThemeStore();
     const addOrRemoveButton = (button: string, value: boolean) => {
-        const buttons = value
-            ? attributes.buttons.filter((b) => b !== button)
-            : [...new Set([...attributes.buttons, button])];
-        updateThemeHistory({ ...attributes, buttons });
+        // [] attributes cause dirty posts (i guess) so this uses something like
+        // copy:download:etc instead of an array
+        const currentButtons = attributes.buttons.split(':');
+        const newButtons = value
+            ? [...new Set([...currentButtons, button])]
+            : currentButtons.filter((b) => b !== button);
+        const buttons = newButtons?.filter(Boolean).join(':');
+
+        updateThemeHistory({
+            ...attributes,
+            buttons,
+        });
         setAttributes({ buttons });
     };
     return (
@@ -22,7 +29,11 @@ export const ButtonsPanel = ({
                 <CheckboxControl
                     data-cy="copy-button"
                     label={__('Copy Button', 'code-block-pro')}
-                    checked={attributes.buttons.includes('copy')}
+                    help={__(
+                        'Adds a button to copy the code',
+                        'code-block-pro',
+                    )}
+                    checked={attributes.buttons?.split(':')?.includes('copy')}
                     onChange={(value) => addOrRemoveButton('copy', value)}
                 />
             </BaseControl>
