@@ -15,6 +15,8 @@ type ThemeType = {
     previousDisablePadding?: boolean;
     previousLineNumbers?: boolean;
     previousHighlightingHover?: boolean;
+    previousButtons: string[];
+    previousButtonTheme: string;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/code-block-pro/v1/settings';
@@ -24,20 +26,25 @@ const getSettings = async (name: string) => {
     // @ts-ignore-next-line
     return allSettings?.[name];
 };
+const defaultSettings = {
+    previousTheme: 'nord',
+    previousLineHeight: '1.25rem',
+    previousFontFamily: undefined,
+    previousFontSize: '.875rem',
+    previousHeaderType: 'headlights',
+    previousFooterType: undefined,
+    previousClampFonts: undefined,
+    previousDisablePadding: undefined,
+    previousLineNumbers: undefined,
+    previousHighlightingHover: undefined,
+    previousButtons: ['copy'],
+    previousButtonTheme: 'heroicons',
+};
 export const useThemeStore = create<ThemeType>()(
     persist(
         devtools(
             (set) => ({
-                previousTheme: 'nord',
-                previousLineHeight: '1.25rem',
-                previousFontFamily: undefined,
-                previousFontSize: '.875rem',
-                previousHeaderType: 'headlights',
-                previousFooterType: undefined,
-                previousClampFonts: undefined,
-                previousDisablePadding: undefined,
-                previousLineNumbers: undefined,
-                previousHighlightingHover: undefined,
+                ...defaultSettings,
                 updateThemeHistory(attributes) {
                     set((state) => ({
                         ...state,
@@ -51,6 +58,8 @@ export const useThemeStore = create<ThemeType>()(
                         previousDisablePadding: attributes.disablePadding,
                         previousLineNumbers: attributes.lineNumbers,
                         previousHighlightingHover: attributes.highlightingHover,
+                        previousButtons: attributes.buttons,
+                        previousButtonTheme: attributes.buttonTheme,
                     }));
                 },
             }),
@@ -63,14 +72,14 @@ export const useThemeStore = create<ThemeType>()(
                     const settings = await getSettings(name);
                     return JSON.stringify({
                         version: settings?.version ?? 0,
-                        state: settings,
+                        state: settings || defaultSettings,
                     });
                 },
                 setItem: async (name: string, value: string) => {
                     const { state, version } = JSON.parse(value);
                     const data = {
                         [name]: Object.assign(
-                            (await getSettings(name)) ?? {},
+                            (await getSettings(name)) || defaultSettings,
                             state,
                             version,
                         ),

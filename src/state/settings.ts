@@ -16,12 +16,15 @@ const getSettings = async (name: string) => {
     // @ts-ignore-next-line
     return allSettings?.[name];
 };
+const defaultSettings = {
+    seenNotices: [],
+    hiddenThemes: [],
+};
 export const useSettingsStore = create<Settings>()(
     persist(
         devtools(
             (set) => ({
-                seenNotices: [],
-                hiddenThemes: [],
+                ...defaultSettings,
                 setSeenNotice(notice: string) {
                     set((state) => {
                         if (state.seenNotices.includes(notice)) return state;
@@ -45,14 +48,14 @@ export const useSettingsStore = create<Settings>()(
                     const settings = await getSettings(name);
                     return JSON.stringify({
                         version: settings?.version ?? 0,
-                        state: settings,
+                        state: settings || defaultSettings,
                     });
                 },
                 setItem: async (name: string, value: string) => {
                     const { state, version } = JSON.parse(value);
                     const data = {
                         [name]: Object.assign(
-                            (await getSettings(name)) ?? {},
+                            (await getSettings(name)) || defaultSettings,
                             state,
                             version,
                         ),

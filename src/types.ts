@@ -41,6 +41,8 @@ export type Attributes = {
     renderType: string;
     label: string;
     copyButton: boolean;
+    buttons: string[];
+    buttonTheme: string;
     useDecodeURI: boolean;
 };
 export interface AttributesPropsAndSetter {

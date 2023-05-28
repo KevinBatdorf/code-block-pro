@@ -18,6 +18,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
         defaultThemes,
     ) as ThemeOption;
     const styles = themes[attributes.theme]?.styles;
+
     return (
         <div
             {...blockProps.save({
