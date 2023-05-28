@@ -2,7 +2,7 @@
 Contributors:      kbat82
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.17.0
+Stable tag:        1.18.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -296,12 +296,13 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.18.0 - 2023-05-29 =
 - Feature: Adds option to output html entities
 - Tweak: Creates a new button settings area to support more buttons (coming soon)
 - Tweak: Changes copying class to cbp-copying
 - Fix: Fixed a bug where default settings weren't saving
 
-= 1.16.1 - 2023-05-06 =
+= 1.17.0 - 2023-05-06 =
 - Feature: Add line highlighting on hover
 - Tweak: Updated the line highlighting sidebar language to be more clear (hopefully)
 - Fix: Removed pointer events from line highlights so you can select text under it
