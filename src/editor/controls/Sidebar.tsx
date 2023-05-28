@@ -17,8 +17,9 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useLanguageStore } from '../../state/language';
 import { useThemeStore } from '../../state/theme';
-import { AttributesPropsAndSetter } from '../../types';
+import { AttributesPropsAndSetter, Lang } from '../../types';
 import { languages } from '../../util/languages';
+import { ButtonsPanel } from '../components/ButtonsPanel';
 import {
     FontSizeSelect,
     FontLineHeightSelect,
@@ -40,7 +41,7 @@ export const SidebarControls = ({
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
-    const { setPreviousSettings, bringAttentionToPanel } = useGlobalStore();
+    const { bringAttentionToPanel } = useGlobalStore();
     const { headerType, footerType } = attributes;
     const languagesSorted = new Map(
         Object.entries(languages).sort((a, b) => a[1].localeCompare(b[1])),
@@ -77,7 +78,7 @@ export const SidebarControls = ({
                             label={__('Code Language', 'code-block-pro')}
                             data-cy-cbp="language-select"
                             value={language}
-                            onChange={setLanguage}
+                            onChange={(v) => setLanguage(v as Lang)}
                             help={
                                 language === 'ansi'
                                     ? __(
@@ -256,6 +257,10 @@ export const SidebarControls = ({
                 attributes={attributes}
                 setAttributes={setAttributes}
             />
+            <ButtonsPanel
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <PanelBody
                 title={__('Styling', 'code-block-pro')}
                 initialOpen={false}>
@@ -329,21 +334,6 @@ export const SidebarControls = ({
             <PanelBody
                 title={__('Extra Settings', 'code-block-pro')}
                 initialOpen={false}>
-                <BaseControl id="code-block-pro-show-copy-button">
-                    <CheckboxControl
-                        data-cy="copy-button"
-                        label={__('Copy Button', 'code-block-pro')}
-                        help={__(
-                            'If checked, users will be able to copy your code snippet to their clipboard.',
-                            'code-block-pro',
-                        )}
-                        checked={attributes.copyButton}
-                        onChange={(value) => {
-                            setPreviousSettings({ copyButton: value });
-                            setAttributes({ copyButton: value });
-                        }}
-                    />
-                </BaseControl>
                 <BaseControl id="code-block-pro-disable-padding">
                     <CheckboxControl
                         data-cy="disable-padding"
@@ -367,7 +357,7 @@ export const SidebarControls = ({
                         data-cy="use-decode-uri"
                         label={__('Allow HTML Entites', 'code-block-pro')}
                         help={__(
-                            'Select this to allow html entities such as &lt; and &gt; to be displayed.',
+                            'Select this to allow HTML entities such as &lt; and &gt; to be displayed.',
                             'code-block-pro',
                         )}
                         checked={attributes.useDecodeURI}

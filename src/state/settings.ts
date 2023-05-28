@@ -1,7 +1,7 @@
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 
 type Settings = {
     seenNotices: string[];
@@ -16,12 +16,41 @@ const getSettings = async (name: string) => {
     // @ts-ignore-next-line
     return allSettings?.[name];
 };
+const defaultSettings = {
+    seenNotices: [],
+    hiddenThemes: [],
+};
+const storage = {
+    getItem: async (name: string) => {
+        const settings = await getSettings(name);
+        return JSON.stringify({
+            version: settings?.version ?? 0,
+            state: settings || defaultSettings,
+        });
+    },
+    setItem: async (name: string, value: string) => {
+        const { state, version } = JSON.parse(value);
+        const data = {
+            [name]: Object.assign(
+                (await getSettings(name)) || defaultSettings,
+                state,
+                { version },
+            ),
+        };
+        await apiFetch({ path, method: 'POST', data });
+    },
+    removeItem: async (name: string) => {
+        const data = { [name]: null };
+        await apiFetch({ path, method: 'POST', data });
+        return undefined;
+    },
+};
+
 export const useSettingsStore = create<Settings>()(
     persist(
         devtools(
             (set) => ({
-                seenNotices: [],
-                hiddenThemes: [],
+                ...defaultSettings,
                 setSeenNotice(notice: string) {
                     set((state) => {
                         if (state.seenNotices.includes(notice)) return state;
@@ -40,30 +69,7 @@ export const useSettingsStore = create<Settings>()(
         ),
         {
             name: 'code_block_pro_settings_2',
-            getStorage: () => ({
-                getItem: async (name: string) => {
-                    const settings = await getSettings(name);
-                    return JSON.stringify({
-                        version: settings?.version ?? 0,
-                        state: settings,
-                    });
-                },
-                setItem: async (name: string, value: string) => {
-                    const { state, version } = JSON.parse(value);
-                    const data = {
-                        [name]: Object.assign(
-                            (await getSettings(name)) ?? {},
-                            state,
-                            version,
-                        ),
-                    };
-                    await apiFetch({ path, method: 'POST', data });
-                },
-                removeItem: async (name: string) => {
-                    const data = { [name]: null };
-                    return await apiFetch({ path, method: 'POST', data });
-                },
-            }),
+            storage: createJSONStorage(() => storage),
         },
     ),
 );

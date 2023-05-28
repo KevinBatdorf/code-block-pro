@@ -5,10 +5,10 @@ import defaultThemes from '../defaultThemes.json';
 import { FooterType } from '../editor/components/FooterSelect';
 import { HeaderType } from '../editor/components/HeaderSelect';
 import { SeeMoreType } from '../editor/components/SeeMoreSelect';
+import { ButtonList } from '../editor/components/buttons/ButtonList';
 import { Attributes, ThemeOption } from '../types';
 import { findLineNumberColor } from '../util/colors';
 import { fontFamilyLong, maybeClamp } from '../util/fonts';
-import { CopyButton } from './CopyButton';
 import './style.css';
 
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
@@ -18,6 +18,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
         defaultThemes,
     ) as ThemeOption;
     const styles = themes[attributes.theme]?.styles;
+
     return (
         <div
             {...blockProps.save({
@@ -77,9 +78,7 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
             {attributes.code?.length > 0 ? (
                 <>
                     <HeaderType {...attributes} />
-                    {attributes.copyButton && (
-                        <CopyButton attributes={attributes} />
-                    )}
+                    <ButtonList {...attributes} />
                     <RichText.Content value={attributes.codeHTML} />
                     <FooterType {...attributes} />
                     <SeeMoreType {...attributes} />
