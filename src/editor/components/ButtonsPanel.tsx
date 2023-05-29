@@ -8,21 +8,6 @@ export const ButtonsPanel = ({
     setAttributes,
 }: AttributesPropsAndSetter & { bringAttentionToThemes?: boolean }) => {
     const { updateThemeHistory } = useThemeStore();
-    const addOrRemoveButton = (button: string, value: boolean) => {
-        // [] attributes cause dirty posts (i guess) so this uses something like
-        // copy:download:etc instead of an array
-        const currentButtons = attributes.buttons.split(':');
-        const newButtons = value
-            ? [...new Set([...currentButtons, button])]
-            : currentButtons.filter((b) => b !== button);
-        const buttons = newButtons?.filter(Boolean).join(':');
-
-        updateThemeHistory({
-            ...attributes,
-            buttons,
-        });
-        setAttributes({ buttons });
-    };
     return (
         <PanelBody title={__('Buttons', 'code-block-pro')} initialOpen={false}>
             <BaseControl id="code-block-pro-show-copy-button">
@@ -33,8 +18,14 @@ export const ButtonsPanel = ({
                         'Adds a button to copy the code',
                         'code-block-pro',
                     )}
-                    checked={attributes.buttons?.split(':')?.includes('copy')}
-                    onChange={(value) => addOrRemoveButton('copy', value)}
+                    checked={attributes.copyButton}
+                    onChange={(value) => {
+                        setAttributes({ copyButton: value });
+                        updateThemeHistory({
+                            ...attributes,
+                            copyButton: value,
+                        });
+                    }}
                 />
             </BaseControl>
         </PanelBody>

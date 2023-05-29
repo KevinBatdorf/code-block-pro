@@ -15,7 +15,7 @@ type ThemeType = {
     previousDisablePadding?: boolean;
     previousLineNumbers?: boolean;
     previousHighlightingHover?: boolean;
-    previousButtons: string;
+    previousCopyButton: boolean;
     previousButtonTheme: string;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
@@ -37,7 +37,7 @@ const defaultSettings = {
     previousDisablePadding: undefined,
     previousLineNumbers: undefined,
     previousHighlightingHover: undefined,
-    previousButtons: 'copy',
+    previousCopyButton: true,
     previousButtonTheme: 'heroicons',
 };
 const storage = {
@@ -83,7 +83,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousDisablePadding: attributes.disablePadding,
                         previousLineNumbers: attributes.lineNumbers,
                         previousHighlightingHover: attributes.highlightingHover,
-                        previousButtons: attributes.buttons,
+                        previousCopyButton: attributes.copyButton,
                         previousButtonTheme: attributes.buttonTheme,
                     }));
                 },
