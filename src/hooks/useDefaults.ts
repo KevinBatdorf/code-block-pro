@@ -12,7 +12,7 @@ export const useDefaults = ({
         fontSize,
         fontFamily,
         lineHeight,
-        buttons,
+        copyButton,
         buttonTheme,
         headerType,
         footerType,
@@ -32,7 +32,7 @@ export const useDefaults = ({
         previousDisablePadding,
         previousLineNumbers,
         previousHighlightingHover,
-        previousButtons,
+        previousCopyButton,
         previousButtonTheme,
     } = useThemeStore();
     const ready = useThemeStoreReady();
@@ -40,9 +40,9 @@ export const useDefaults = ({
 
     useEffect(() => {
         if (once.current) return;
-        if (buttons !== undefined || previousButtons === undefined) return;
-        setAttributes({ buttons: previousButtons });
-    }, [previousButtons, setAttributes, buttons]);
+        if (copyButton !== undefined || !previousCopyButton) return;
+        setAttributes({ copyButton: previousCopyButton });
+    }, [previousCopyButton, copyButton, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
