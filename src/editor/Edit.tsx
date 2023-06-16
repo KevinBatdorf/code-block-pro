@@ -224,6 +224,7 @@ export const Edit = ({
             <Editor
                 value={decode(code)}
                 onValueChange={handleChange}
+                autoFocus={!code ? true : false}
                 padding={{
                     top: disablePadding ? 0 : 16,
                     bottom: disablePadding || hasFooter ? 0 : 16,
