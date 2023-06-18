@@ -1,7 +1,7 @@
 export const fontFamilyLong = (family: string) => {
     if (!family) return;
     return [
-        family,
+        family.split('.')[0],
         'ui-monospace',
         'SFMono-Regular',
         'Menlo',

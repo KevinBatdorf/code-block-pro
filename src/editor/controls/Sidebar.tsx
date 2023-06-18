@@ -310,7 +310,7 @@ export const SidebarControls = ({
                 <div className="code-block-pro-editor" data-cy="clamp-fonts">
                     <div className="mt-6">
                         <CheckboxControl
-                            label={__('Clamp Values', 'code-block-pro')}
+                            label={__('Clamp Font Sizes', 'code-block-pro')}
                             help={__(
                                 'Check this if your font sizes are unusually large or tiny.',
                                 'code-block-pro',
