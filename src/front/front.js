@@ -88,13 +88,11 @@ const handleFontLoading = () => {
     );
     [...fontsToLoad].forEach(async (fontName) => {
         const [name, ext] = fontName.split('.');
-        console.log(name, ext);
         const url = `url(${window.codeBlockPro.pluginUrl}/build/fonts/${name}.${
             ext || 'woff2'
         })`;
         const font = new FontFace(name, url);
         await font.load().catch((e) => console.error(e));
-        console.log('loaded', font);
         document.fonts.add(font);
     });
 };
