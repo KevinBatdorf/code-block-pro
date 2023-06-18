@@ -1,7 +1,6 @@
 import copy from 'copy-to-clipboard';
 
 const containerClass = '.wp-block-kevinbatdorf-code-block-pro';
-const PADDING = 16;
 
 const handleCopyButton = () => {
     const buttons = Array.from(
