@@ -112,9 +112,11 @@ export const FontFamilySelect = ({
     onChange: (v: string) => void;
 }) => {
     const fonts = {
-        '': __('System Default', 'code-block-pro'),
-        'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
+        'Code-Pro-Comic-Mono.ttf': 'Comic Mono',
+        'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
         'Code-Pro-Fira-Code': 'Fira Code',
+        'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
+        '': __('System Default', 'code-block-pro'),
     };
     return (
         <SelectControl

@@ -4,14 +4,15 @@
         monospace; /* no !important */
     direction: ltr;
     @apply relative box-border;
+    * {
+        @apply box-border;
+    }
 }
-.wp-block-kevinbatdorf-code-block-pro * {
-    @apply box-border;
-}
-.wp-block-kevinbatdorf-code-block-pro pre,
-.wp-block-kevinbatdorf-code-block-pro pre * {
-    font-size: inherit;
-    line-height: inherit;
+.wp-block-kevinbatdorf-code-block-pro {
+    pre, pre * {
+        font-size: inherit;
+        line-height: inherit;
+    }
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre {
     border: 0;
@@ -41,7 +42,8 @@
     pre
     code
     .line {
-    @apply inline-block w-full;
+    @apply inline-block;
+    min-width: calc(var(--cbp-block-width, 100%));
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(
         .code-block-pro-editor
@@ -76,28 +78,45 @@
     user-select: none;
     counter-increment: step;
 }
-/* Temporary removed until I can make this an option */
-/* .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(.code-block-pro-editor) pre code .line:hover::before {
-    @apply opacity-100;
-} */
-.wp-block-kevinbatdorf-code-block-pro:not(
-        .cbp-blur-enabled:not(.cbp-unblur-on-hover)
+.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover {
+    .line:hover,
+    .line.cbp-no-blur:hover,
+    .line.cbp-line-highlight {
+        .cbp-line-highlighter {
+            @apply w-full pointer-events-none absolute top-0 h-full;
+            background: var(--cbp-line-highlight-color, rgb(14 165 233/0.2));
+            min-width: calc(var(--cbp-block-width, 100%) + 16px);
+            left: -16px;
+        }
+    }
+}
+.wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled.cbp-highlight-hover:not(
+        .cbp-unblur-on-hover
     )
-    pre
-    .line:hover
-    .cbp-line-highlighter,
-.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover
-    pre
-    .line.cbp-no-blur:hover
-    .cbp-line-highlighter,
-.wp-block-kevinbatdorf-code-block-pro
-    pre
-    .line.cbp-line-highlight
+    .line:not(.cbp-no-blur):hover
     .cbp-line-highlighter {
-    @apply w-full pointer-events-none absolute top-0 h-full;
-    background: var(--cbp-line-highlight-color, rgb(14 165 233/0.2));
-    min-width: calc(var(--cbp-block-width, 100%));
-    left: -16px;
+    @apply bg-transparent;
+}
+/* Some fonts will change the line height placement */
+[data-code-block-pro-font-family='Code-Pro-Comic-Mono.ttf'].cbp-highlight-hover {
+    .line,
+    .line:hover,
+    .line.cbp-no-blur:hover,
+    .line.cbp-line-highlight {
+        .cbp-line-highlighter {
+            top: -2.5px !important;
+        }
+    }
+}
+[data-code-block-pro-font-family='Code-Pro-Fira-Code'].cbp-highlight-hover {
+    .line,
+    .line:hover,
+    .line.cbp-no-blur:hover,
+    .line.cbp-line-highlight {
+        .cbp-line-highlighter {
+            top: -1.5px !important;
+        }
+    }
 }
 .wp-block-kevinbatdorf-code-block-pro:not(
         .code-block-pro-editor
@@ -143,17 +162,21 @@
 .wp-block-kevinbatdorf-code-block-pro .code-block-pro-copy-button:hover {
     @apply opacity-90;
 }
-.code-block-pro-copy-button .without-check {
-    @apply block;
+.code-block-pro-copy-button {
+    .without-check {
+        @apply block;
+    }
+    .with-check {
+        @apply hidden;
+    }
 }
-.code-block-pro-copy-button .with-check {
-    @apply hidden;
-}
-.code-block-pro-copy-button.cbp-copying .without-check {
-    @apply hidden;
-}
-.code-block-pro-copy-button.cbp-copying .with-check {
-    @apply block;
+.code-block-pro-copy-button.cbp-copying {
+    .without-check {
+        @apply hidden;
+    }
+    .with-check {
+        @apply block;
+    }
 }
 .cbp-footer-link {
     @apply hover:underline;

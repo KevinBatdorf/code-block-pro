@@ -1,6 +1,7 @@
 import copy from 'copy-to-clipboard';
 
 const containerClass = '.wp-block-kevinbatdorf-code-block-pro';
+const PADDING = 16;
 
 const handleCopyButton = () => {
     const buttons = Array.from(
@@ -50,32 +51,19 @@ const handleHighlighter = () => {
         if (codeBlock.classList.contains('cbp-highlight-hover')) {
             codeBlock
                 .querySelectorAll('span.line')
-                .forEach((line) => console.log(line) || highlighters.add(line));
+                .forEach((line) => highlighters.add(line));
         }
 
         if (!highlighters.size) return;
 
-        // We need to track the block width so we can adjust the
-        // highlighter width in case of overflow
-        const resizeObserver = new ResizeObserver((entries) => {
-            entries.forEach((entry) => {
-                // get width of inner code block
-                codeBlock.style.setProperty('--cbp-block-width', '0');
-                const codeWidth =
-                    entry.target.querySelector('code').offsetWidth;
-                const computed =
-                    codeWidth + 16 === entry.target.scrollWidth
-                        ? codeWidth + 16
-                        : entry.target.scrollWidth + 16;
-                codeBlock.style.setProperty(
-                    '--cbp-block-width',
-                    `${computed}px`,
-                );
-            });
-        });
-        resizeObserver.observe(codeBlock);
-
-        console.log(highlighters);
+        // find the longest line
+        const longestLine = Array.from(highlighters).reduce((a, b) =>
+            a.offsetWidth > b.offsetWidth ? a : b,
+        );
+        codeBlock.style.setProperty(
+            '--cbp-block-width',
+            longestLine.offsetWidth + 'px',
+        );
 
         // add the highlighter
         highlighters.forEach((highlighter) => {
@@ -99,11 +87,14 @@ const handleFontLoading = () => {
         elements.map((f) => f.dataset.codeBlockProFontFamily).filter(Boolean),
     );
     [...fontsToLoad].forEach(async (fontName) => {
-        const font = new FontFace(
-            fontName,
-            `url(${window.codeBlockPro.pluginUrl}/build/fonts/${fontName}.woff2)`,
-        );
-        await font.load();
+        const [name, ext] = fontName.split('.');
+        console.log(name, ext);
+        const url = `url(${window.codeBlockPro.pluginUrl}/build/fonts/${name}.${
+            ext || 'woff2'
+        })`;
+        const font = new FontFace(name, url);
+        await font.load().catch((e) => console.error(e));
+        console.log('loaded', font);
         document.fonts.add(font);
     });
 };
@@ -175,10 +166,9 @@ const handleSeeMore = () => {
 };
 
 const init = () => {
+    handleFontLoading();
     handleSeeMore();
     handleCopyButton();
-    handleHighlighter();
-    handleFontLoading();
 };
 
 // Functions are idempotent, so we can run them on load and DOMContentLoaded
@@ -186,4 +176,8 @@ init();
 // Useful for when the DOM is modified or loaded in late
 window.codeBlockProInit = init;
 window.addEventListener('DOMContentLoaded', init);
-window.addEventListener('load', init);
+window.addEventListener('load', () => {
+    init();
+    // Always do this last
+    handleHighlighter();
+});

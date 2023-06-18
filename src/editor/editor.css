@@ -121,12 +121,3 @@
         monospace; /* no !important */
     direction: ltr;
 }
-
-@font-face {
-    font-family: 'Code-Pro-Fira-Code';
-    src: url('../fonts/Code-Pro-Fira-Code.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'Code-Pro-JetBrains-Mono';
-    src: url('../fonts/Code-Pro-JetBrains-Mono.woff2') format('woff2');
-}

@@ -29,7 +29,7 @@ const getSettings = async (name: string) => {
 const defaultSettings = {
     previousTheme: 'nord',
     previousLineHeight: '1.25rem',
-    previousFontFamily: undefined,
+    previousFontFamily: 'Code-Pro-JetBrains-Mono',
     previousFontSize: '.875rem',
     previousHeaderType: 'headlights',
     previousFooterType: undefined,
