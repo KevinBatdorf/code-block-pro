@@ -301,9 +301,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 - Tweak: Default to Jetbrains Mono font
 - Tweak: Remove line highlights on hover when blurred
 - Tweak: Add minor adjustments for fonts to normalize line heights
-- Fix: Block will be auto-focused on insert
+- Fix: Block will be auto-focused on insert - WP6.2 regression
 - Fix: Line highlight hover width was not rendering correctly
-- Performance: Line highlighter will fine the longest line once rather than always checking the container width on window resize.
+- Fix: Line highlighter will find the longest line to use as the highlighter width
 
 = 1.18.0 - 2023-05-29 =
 - Feature: Adds option to output html entities

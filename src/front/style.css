@@ -78,8 +78,8 @@
     user-select: none;
     counter-increment: step;
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover {
-    .line:hover,
+.wp-block-kevinbatdorf-code-block-pro {
+    &.cbp-highlight-hover:not(.cbp-blur-enabled:not(.cbp-unblur-on-hover)) .line:hover,
     .line.cbp-no-blur:hover,
     .line.cbp-line-highlight {
         .cbp-line-highlighter {
@@ -87,18 +87,16 @@
             background: var(--cbp-line-highlight-color, rgb(14 165 233/0.2));
             min-width: calc(var(--cbp-block-width, 100%) + 16px);
             left: -16px;
+            [data-code-block-pro-font-family='Code-Pro-Comic-Mono.ttf']& {
+                top: -2.5px !important;
+            }
+            [data-code-block-pro-font-family='Code-Pro-Fira-Code']& {
+                top: -1.5px !important;
+            }
         }
     }
 }
-.wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled.cbp-highlight-hover:not(
-        .cbp-unblur-on-hover
-    )
-    .line:not(.cbp-no-blur):hover
-    .cbp-line-highlighter {
-    @apply bg-transparent;
-}
-/* Some fonts will change the line height placement */
-[data-code-block-pro-font-family='Code-Pro-Comic-Mono.ttf'].cbp-highlight-hover {
+/* [data-code-block-pro-font-family='Code-Pro-Comic-Mono.ttf'].cbp-highlight-hover {
     .line,
     .line:hover,
     .line.cbp-no-blur:hover,
@@ -107,8 +105,8 @@
             top: -2.5px !important;
         }
     }
-}
-[data-code-block-pro-font-family='Code-Pro-Fira-Code'].cbp-highlight-hover {
+} */
+/* [data-code-block-pro-font-family='Code-Pro-Fira-Code'].cbp-highlight-hover {
     .line,
     .line:hover,
     .line.cbp-no-blur:hover,
@@ -117,7 +115,7 @@
             top: -1.5px !important;
         }
     }
-}
+} */
 .wp-block-kevinbatdorf-code-block-pro:not(
         .code-block-pro-editor
     ).padding-disabled

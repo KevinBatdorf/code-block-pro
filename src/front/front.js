@@ -27,7 +27,7 @@ const handleCopyButton = () => {
             b.classList.add('cbp-copying');
             setTimeout(() => {
                 b.classList.remove('cbp-copying');
-            }, 2000);
+            }, 2_000);
         };
         ['click', 'keydown'].forEach((evt) =>
             button.addEventListener(evt, handler),
@@ -55,17 +55,22 @@ const handleHighlighter = () => {
 
         if (!highlighters.size) return;
 
-        // find the longest line
-        const longestLine = Array.from(highlighters).reduce((a, b) =>
-            a.offsetWidth > b.offsetWidth ? a : b,
-        );
-        codeBlock.style.setProperty(
-            '--cbp-block-width',
-            longestLine.offsetWidth + 'px',
-        );
+        // If the code block expands, we need to recalculate the width
+        new ResizeObserver(() => {
+            // find the longest line
+            codeBlock.style.setProperty('--cbp-block-width', 'unset');
+            const longestLine = Array.from(highlighters).reduce((a, b) =>
+                a.offsetWidth > b.offsetWidth ? a : b,
+            );
+            codeBlock.style.setProperty(
+                '--cbp-block-width',
+                longestLine.offsetWidth + 'px',
+            );
+        }).observe(codeBlock);
 
-        // add the highlighter
+        // Add the highlighter if not already there
         highlighters.forEach((highlighter) => {
+            if (highlighter.querySelector('.cbp-line-highlighter')) return;
             highlighter.insertAdjacentHTML(
                 'beforeend',
                 '<span aria-hidden="true" class="cbp-line-highlighter"></span>',
@@ -166,15 +171,12 @@ const init = () => {
     handleFontLoading();
     handleSeeMore();
     handleCopyButton();
+    handleHighlighter();
 };
 
-// Functions are idempotent, so we can run them on load and DOMContentLoaded
+// Functions are idempotent, so we can run them on load, DOMContentLoaded, et al.
 init();
 // Useful for when the DOM is modified or loaded in late
 window.codeBlockProInit = init;
 window.addEventListener('DOMContentLoaded', init);
-window.addEventListener('load', () => {
-    init();
-    // Always do this last
-    handleHighlighter();
-});
+window.addEventListener('load', init);
