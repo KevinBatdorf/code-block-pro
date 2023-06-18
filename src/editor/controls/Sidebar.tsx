@@ -262,7 +262,7 @@ export const SidebarControls = ({
                 setAttributes={setAttributes}
             />
             <PanelBody
-                title={__('Styling', 'code-block-pro')}
+                title={__('Font Styling', 'code-block-pro')}
                 initialOpen={false}>
                 <div
                     className="code-block-pro-editor"

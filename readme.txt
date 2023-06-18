@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.18.0
+Stable tag:        1.19.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -296,9 +296,11 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.19.0 - 2023-06-18 =
 - Feature: Add Fantasque Sans Mono (https://github.com/belluzj/fantasque-sans)
 - Feature: Add Comic Mono font (https://github.com/dtinth/comic-mono-font)
 - Tweak: Default to Jetbrains Mono font
+- Tweak: Rename the "Styling" panel to "Font Styling"
 - Tweak: Remove line highlights on hover when blurred
 - Tweak: Add minor adjustments for fonts to normalize line heights
 - Fix: Block will be auto-focused on insert - WP6.2 regression
