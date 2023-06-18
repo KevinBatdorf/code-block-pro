@@ -224,6 +224,7 @@ export const Edit = ({
             <Editor
                 value={decode(code)}
                 onValueChange={handleChange}
+                // eslint-disable-next-line jsx-a11y/no-autofocus -- Only autofocus in the unintended case that there is no code (e.g. on initial insert)
                 autoFocus={!code}
                 padding={{
                     top: disablePadding ? 0 : 16,
