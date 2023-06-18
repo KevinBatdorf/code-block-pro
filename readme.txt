@@ -300,6 +300,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 - Feature: Add Fantasque Sans Mono (https://github.com/belluzj/fantasque-sans)
 - Feature: Add Comic Mono font (https://github.com/dtinth/comic-mono-font)
 - Tweak: Default to Jetbrains Mono font
+- Tweak: Rename the "Styling" panel to "Font Styling"
 - Tweak: Remove line highlights on hover when blurred
 - Tweak: Add minor adjustments for fonts to normalize line heights
 - Fix: Block will be auto-focused on insert - WP6.2 regression
