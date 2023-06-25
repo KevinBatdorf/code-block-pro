@@ -296,6 +296,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Fix: Fixes an issue in the editor where some languages output an empty span tag that breaks the line number flow.
+
 = 1.19.0 - 2023-06-18 =
 - Feature: Add Fantasque Sans Mono (https://github.com/belluzj/fantasque-sans)
 - Feature: Add Comic Mono font (https://github.com/dtinth/comic-mono-font)

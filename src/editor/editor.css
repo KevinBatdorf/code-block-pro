@@ -44,11 +44,13 @@
 .code-block-pro-editor pre .line {
     @apply relative inline-block w-full;
 }
-.code-block-pro-editor:not(.padding-disabled) pre .line:empty {
-    @apply block;
-}
-.code-block-pro-editor.padding-disabled.cbp-has-line-numbers pre .line:empty {
-    @apply block;
+.code-block-pro-editor pre {
+    .line:empty {
+        @apply block;
+    }
+    .line span:empty {
+        @apply inline-block;
+    }
 }
 .code-block-pro-editor.cbp-has-line-numbers
     pre
