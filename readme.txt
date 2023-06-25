@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.19.0
+Stable tag:        1.20.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -303,7 +303,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-
+= 1.20.0 - 2023-06-25 =
 - Feature: Added the following languages: Ledger (Beancount), Cypher (cql), Glimmer js/ts, JSONL, Narrat (nar), Nextflow (nf), Vyper (vy)
 - Fix: Fixes an issue in the editor where some languages output an empty span tag that breaks the line number flow.
 
