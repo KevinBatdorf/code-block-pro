@@ -102,11 +102,10 @@ export const SidebarControls = ({
                                 <span className="mb-2 block">
                                     {__('Recently Used', 'code-block-pro')}
                                 </span>
-                                <div className="flex gap-1">
+                                <div className="flex flex-col gap-1">
                                     {recentLanguages?.map((lang) => (
                                         <Button
                                             key={lang}
-                                            className="bg-gray-100 text-black no-underline p-1 px-2 "
                                             variant="link"
                                             onClick={() => setLanguage(lang)}>
                                             {languages[lang] ?? lang}

@@ -142,6 +142,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - C#
 - CSS
 - CUE
+- Cypher (cql)
 - D
 - Dart
 - DAX
@@ -161,6 +162,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Git Commit
 - Git Rebase
 - GLSL
+- Glimmer js/ts
 - Gnuplot
 - Go
 - GraphQL
@@ -181,6 +183,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - JSON
 - JSON5
 - JSONC
+- JSONL
 - JSONnet
 - JSSM
 - JSX
@@ -189,6 +192,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Kusto
 - LaTeX
 - LESS
+- Ledger (Beancount)
 - Liquid
 - Lisp
 - Logo
@@ -199,6 +203,8 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - MATLAB
 - MDX
 - Mermaid
+- Narrat (nar)
+- Nextflow (nf)
 - Nginx
 - Nim
 - Nix
@@ -263,6 +269,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - VimL
 - Vue HTML
 - Vue
+- Vyper (vy)
 - WASM
 - Wenyan
 - WGSL
@@ -295,6 +302,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+
+- Feature: Added the following languages: Ledger (Beancount), Cypher (cql), Glimmer js/ts, JSONL, Narrat (nar), Nextflow (nf), Vyper (vy)
 
 = 1.19.0 - 2023-06-18 =
 - Feature: Add Fantasque Sans Mono (https://github.com/belluzj/fantasque-sans)
