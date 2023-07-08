@@ -17,6 +17,7 @@ type ThemeType = {
     previousHighlightingHover?: boolean;
     previousCopyButton: boolean;
     previousButtonTheme: string;
+    previousTabSize: number;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/code-block-pro/v1/settings';
@@ -39,6 +40,7 @@ const defaultSettings = {
     previousHighlightingHover: undefined,
     previousCopyButton: true,
     previousButtonTheme: 'heroicons',
+    previousTabSize: 2,
 };
 const storage = {
     getItem: async (name: string) => {
@@ -85,6 +87,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousHighlightingHover: attributes.highlightingHover,
                         previousCopyButton: attributes.copyButton,
                         previousButtonTheme: attributes.buttonTheme,
+                        previousTabSize: attributes.tabSize,
                     }));
                 },
             }),

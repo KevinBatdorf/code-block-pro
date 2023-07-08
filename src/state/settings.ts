@@ -6,10 +6,8 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 type Settings = {
     seenNotices: string[];
     hiddenThemes: string[];
-    editorTabSize: number | '';
     setSeenNotice: (notice: string) => void;
     toggleHiddenTheme: (theme: string) => void;
-    setEditorTabSize: (editorTabSize: number | string) => void;
 };
 const path = '/code-block-pro/v1/settings';
 const getSettings = async (name: string) => {
@@ -21,7 +19,6 @@ const getSettings = async (name: string) => {
 const defaultSettings = {
     seenNotices: [],
     hiddenThemes: [],
-    editorTabSize: 2,
 };
 const storage = {
     getItem: async (name: string) => {
@@ -66,13 +63,6 @@ export const useSettingsStore = create<Settings>()(
                             ? state.hiddenThemes.filter((t) => t !== theme)
                             : [...state.hiddenThemes, theme],
                     }));
-                },
-                setEditorTabSize(editorTabSize) {
-                    set({
-                        editorTabSize: editorTabSize
-                            ? Number(editorTabSize)
-                            : '',
-                    });
                 },
             }),
             { name: 'Code Block Pro Settings' },
