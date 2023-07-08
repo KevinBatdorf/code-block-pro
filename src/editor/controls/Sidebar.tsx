@@ -16,6 +16,7 @@ import { __ } from '@wordpress/i18n';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useLanguageStore } from '../../state/language';
+import { useSettingsStore } from '../../state/settings';
 import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter, Lang } from '../../types';
 import { languages } from '../../util/languages';
@@ -42,6 +43,7 @@ export const SidebarControls = ({
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
     const { bringAttentionToPanel } = useGlobalStore();
+    const { editorTabSize, setEditorTabSize } = useSettingsStore();
     const { headerType, footerType } = attributes;
     const languagesSorted = new Map(
         Object.entries(languages).sort((a, b) => a[1].localeCompare(b[1])),
@@ -367,6 +369,24 @@ export const SidebarControls = ({
                                 useDecodeURI,
                             });
                         }}
+                    />
+                </BaseControl>
+                <BaseControl id="code-block-pro-editor-tab-size">
+                    <TextControl
+                        spellCheck={false}
+                        autoComplete="off"
+                        type="number"
+                        data-cy="editor-tab-size"
+                        label={__(
+                            'Editor tab size (universal)',
+                            'code-block-pro',
+                        )}
+                        help={__(
+                            'The number of characters to insert when pressing tab key. This setting will apply everywhere.',
+                            'code-block-pro',
+                        )}
+                        value={editorTabSize}
+                        onChange={setEditorTabSize}
                     />
                 </BaseControl>
             </PanelBody>

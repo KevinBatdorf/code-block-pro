@@ -12,6 +12,7 @@ import Editor from 'react-simple-code-editor';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
+import { useSettingsStore } from '../state/settings';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { computeLineHighlightColor } from '../util/colors';
@@ -47,6 +48,8 @@ export const Edit = ({
         editorHeight,
         useDecodeURI,
     } = attributes;
+
+    const { editorTabSize } = useSettingsStore();
 
     const textAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) =>
@@ -226,6 +229,7 @@ export const Edit = ({
                 onValueChange={handleChange}
                 // eslint-disable-next-line jsx-a11y/no-autofocus -- Only autofocus in the unintended case that there is no code (e.g. on initial insert)
                 autoFocus={!code}
+                tabSize={editorTabSize || 2}
                 padding={{
                     top: disablePadding ? 0 : 16,
                     bottom: disablePadding || hasFooter ? 0 : 16,
