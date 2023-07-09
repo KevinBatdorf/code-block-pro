@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.2
-Stable tag:        1.20.0
+Stable tag:        1.21.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -303,6 +303,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.21.0 - 2023-07-09 =
 - Feature: Added a second copy button to choose from
 - Feature: Added a tab size setting for when using the editor to add code. Defaults to 2 spaces.
 - Tweak: Adjusts the highlight offset for comic mono
