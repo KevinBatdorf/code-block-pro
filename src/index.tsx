@@ -66,6 +66,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         copyButton: { type: 'boolean' },
         buttonTheme: { type: 'string' },
         useDecodeURI: { type: 'boolean', default: false },
+        tabSize: { type: 'number', default: 2 },
     },
     // Need to add these here to avoid TS type errors
     supports: {

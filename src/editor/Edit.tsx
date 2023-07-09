@@ -46,6 +46,7 @@ export const Edit = ({
         enableMaxHeight,
         editorHeight,
         useDecodeURI,
+        tabSize,
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
@@ -226,6 +227,7 @@ export const Edit = ({
                 onValueChange={handleChange}
                 // eslint-disable-next-line jsx-a11y/no-autofocus -- Only autofocus in the unintended case that there is no code (e.g. on initial insert)
                 autoFocus={!code}
+                tabSize={tabSize || 2}
                 padding={{
                     top: disablePadding ? 0 : 16,
                     bottom: disablePadding || hasFooter ? 0 : 16,

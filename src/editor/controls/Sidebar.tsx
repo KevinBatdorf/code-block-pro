@@ -369,6 +369,25 @@ export const SidebarControls = ({
                         }}
                     />
                 </BaseControl>
+                <BaseControl id="code-block-pro-editor-tab-size">
+                    <TextControl
+                        spellCheck={false}
+                        autoComplete="off"
+                        type="number"
+                        data-cy="editor-tab-size"
+                        label={__('Editor tab size', 'code-block-pro')}
+                        help={__(
+                            'The number of characters to insert when pressing tab key.',
+                            'code-block-pro',
+                        )}
+                        value={attributes.tabSize}
+                        onChange={(size) => {
+                            const tabSize = size ? Number(size) : undefined;
+                            setAttributes({ tabSize });
+                            updateThemeHistory({ ...attributes, tabSize });
+                        }}
+                    />
+                </BaseControl>
             </PanelBody>
         </InspectorControls>
     );
