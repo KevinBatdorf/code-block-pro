@@ -44,7 +44,7 @@
         "glob": "10.3.3",
         "postcss-import": "15.1.0",
         "postcss-safe-important": "1.2.1",
-        "prettier": "3.0.0",
+        "prettier": "2.8.8",
         "replace-in-file": "7.0.1",
         "tailwindcss": "3.3.2",
         "typescript": "5.1.6",
