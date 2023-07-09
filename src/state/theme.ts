@@ -16,7 +16,7 @@ type ThemeType = {
     previousLineNumbers?: boolean;
     previousHighlightingHover?: boolean;
     previousCopyButton: boolean;
-    previousButtonTheme: string;
+    previousCopyButtonType: string;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/code-block-pro/v1/settings';
@@ -38,7 +38,7 @@ const defaultSettings = {
     previousLineNumbers: undefined,
     previousHighlightingHover: undefined,
     previousCopyButton: true,
-    previousButtonTheme: 'heroicons',
+    previousCopyButtonType: 'heroicons',
 };
 const storage = {
     getItem: async (name: string) => {
@@ -84,7 +84,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousLineNumbers: attributes.lineNumbers,
                         previousHighlightingHover: attributes.highlightingHover,
                         previousCopyButton: attributes.copyButton,
-                        previousButtonTheme: attributes.buttonTheme,
+                        previousCopyButtonType: attributes.copyButtonType,
                     }));
                 },
             }),

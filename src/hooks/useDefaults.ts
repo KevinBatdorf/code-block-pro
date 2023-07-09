@@ -13,7 +13,7 @@ export const useDefaults = ({
         fontFamily,
         lineHeight,
         copyButton,
-        buttonTheme,
+        copyButtonType,
         headerType,
         footerType,
         clampFonts,
@@ -33,7 +33,7 @@ export const useDefaults = ({
         previousLineNumbers,
         previousHighlightingHover,
         previousCopyButton,
-        previousButtonTheme,
+        previousCopyButtonType,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
@@ -46,9 +46,9 @@ export const useDefaults = ({
 
     useEffect(() => {
         if (once.current) return;
-        if (buttonTheme || !previousButtonTheme) return;
-        setAttributes({ buttonTheme: previousButtonTheme });
-    }, [previousButtonTheme, buttonTheme, setAttributes]);
+        if (copyButtonType || !previousCopyButtonType) return;
+        setAttributes({ copyButtonType: previousCopyButtonType });
+    }, [previousCopyButtonType, copyButtonType, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;

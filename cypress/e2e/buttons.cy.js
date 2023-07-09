@@ -30,6 +30,39 @@ context('Copy button', () => {
             .should('not.contain', 'Copy');
     });
 
+    it('Can switch buttons', () => {
+        cy.openSideBarPanel('Buttons');
+
+        cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', 'M9 5H7a2 2 0 00-2 2v12a2') // Clipboard.js
+            .should('not.contain', 'M16.5 8.25V6a2.25 2.25'); // TwoSquares.js
+
+        cy.get('#code-block-pro-copy-button-heroicons')
+            .should('exist')
+            .should('have.attr', 'aria-current', 'true');
+
+        cy.get('#code-block-pro-copy-button-twoSquares').should('exist');
+        cy.get('#code-block-pro-copy-button-twoSquares').click();
+
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', 'M16.5 8.25V6a2.25 2.25') // TwoSquares.js
+            .should('not.contain', 'M9 5H7a2 2 0 00-2 2v12a2'); // Clipboard.js
+    });
+
+    it('Hides buttons when unchecked', () => {
+        cy.openSideBarPanel('Buttons');
+
+        cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
+        cy.get('#code-block-pro-copy-button-heroicons').should('exist');
+
+        cy.get('[data-cy="copy-button"]').uncheck();
+        cy.get('[data-cy="copy-button"]').should('not.be.checked');
+        cy.get('#code-block-pro-copy-button-heroicons').should('not.exist');
+    });
+
     it('Copies code on click', () => {
         const text = 'const foo = "bar";';
         cy.addCode(text);
