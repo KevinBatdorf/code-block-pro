@@ -20,6 +20,7 @@ export const useDefaults = ({
         disablePadding,
         lineNumbers,
         highlightingHover,
+        tabSize,
     } = attributes;
     const {
         previousTheme,
@@ -34,6 +35,7 @@ export const useDefaults = ({
         previousHighlightingHover,
         previousCopyButton,
         previousCopyButtonType,
+        previousTabSize,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
@@ -111,6 +113,12 @@ export const useDefaults = ({
             return;
         setAttributes({ lineNumbers: previousLineNumbers });
     }, [previousLineNumbers, lineNumbers, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (tabSize !== undefined || previousTabSize === undefined) return;
+        setAttributes({ tabSize: previousTabSize });
+    }, [previousTabSize, tabSize, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
