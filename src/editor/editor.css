@@ -118,6 +118,12 @@
     display: block !important;
     @apply pointer-events-none;
 }
+.code-block-pro-editor .sidebar-copy-button svg {
+    @apply block;
+}
+.code-block-pro-editor .sidebar-copy-button .with-check {
+    @apply hidden;
+}
 .cbp-theme-preview {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         monospace; /* no !important */

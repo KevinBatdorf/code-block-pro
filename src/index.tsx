@@ -64,7 +64,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         renderType: { type: 'string', default: 'code' },
         label: { type: 'string', default: '' },
         copyButton: { type: 'boolean' },
-        buttonTheme: { type: 'string' },
+        copyButtonType: { type: 'string' },
         useDecodeURI: { type: 'boolean', default: false },
         tabSize: { type: 'number', default: 2 },
     },

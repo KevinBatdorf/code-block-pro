@@ -1,5 +1,5 @@
 import { Attributes } from '../../../types';
-import { CopyButton } from './CopyButton';
+import { CopyButton } from './copy/CopyButton';
 
 export const ButtonList = (props: Attributes) => {
     const { copyButton } = props;

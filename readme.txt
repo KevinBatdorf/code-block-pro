@@ -303,11 +303,13 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Added a second copy button to choose from
 - Feature: Added a tab size setting for when using the editor to add code. Defaults to 2 spaces.
+- Tweak: Adjusts the highlight offset for comic mono
 
 = 1.20.0 - 2023-06-25 =
 - Feature: Added the following languages: Ledger (Beancount), Cypher (cql), Glimmer js/ts, JSONL, Narrat (nar), Nextflow (nf), Vyper (vy)
-- Fix: Fixes an issue in the editor where some languages output an empty span tag that breaks the line number flow.
+- Fix: Fixes an issue in the editor where some languages output an empty span tag that breaks the line number flow
 
 = 1.19.0 - 2023-06-18 =
 - Feature: Add Fantasque Sans Mono (https://github.com/belluzj/fantasque-sans)

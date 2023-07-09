@@ -88,7 +88,7 @@
             min-width: calc(var(--cbp-block-width, 100%) + 16px);
             left: -16px;
             [data-code-block-pro-font-family='Code-Pro-Comic-Mono.ttf']& {
-                top: -2.5px !important;
+                @apply -top-0.5;
             }
             [data-code-block-pro-font-family='Code-Pro-Fira-Code']& {
                 top: -1.5px !important;
@@ -102,7 +102,7 @@
     .line.cbp-no-blur:hover,
     .line.cbp-line-highlight {
         .cbp-line-highlighter {
-            top: -2.5px !important;
+            @apply -top-0.5;
         }
     }
 } */
