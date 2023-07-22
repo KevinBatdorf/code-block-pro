@@ -377,7 +377,7 @@ export const SidebarControls = ({
                         data-cy="editor-tab-size"
                         label={__('Editor tab size', 'code-block-pro')}
                         help={__(
-                            'The number of characters to insert when pressing tab key.',
+                            'The number of spaces to insert when pressing tab key.',
                             'code-block-pro',
                         )}
                         value={attributes.tabSize}
@@ -385,6 +385,22 @@ export const SidebarControls = ({
                             const tabSize = size ? Number(size) : undefined;
                             setAttributes({ tabSize });
                             updateThemeHistory({ ...attributes, tabSize });
+                        }}
+                    />
+                    <CheckboxControl
+                        data-cy="use-tabs"
+                        label={__('Use Real Tabs', 'code-block-pro')}
+                        help={__(
+                            'Inserts an actual tab character instead of a space. The width defined above.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.useTabs}
+                        onChange={(useTabs) => {
+                            setAttributes({ useTabs });
+                            updateThemeHistory({
+                                ...attributes,
+                                useTabs,
+                            });
                         }}
                     />
                 </BaseControl>

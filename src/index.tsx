@@ -67,6 +67,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         copyButtonType: { type: 'string' },
         useDecodeURI: { type: 'boolean', default: false },
         tabSize: { type: 'number', default: 2 },
+        useTabs: { type: 'boolean' },
     },
     // Need to add these here to avoid TS type errors
     supports: {
@@ -130,6 +131,10 @@ registerBlockType<Attributes>(blockConfig.name, {
                                     ? attributes.lineHighlightColor
                                     : undefined,
                             '--cbp-line-height': attributes.lineHeight,
+                            tabSize:
+                                attributes.useTabs === undefined
+                                    ? undefined // bw compatability
+                                    : attributes.tabSize,
                             // Disabled as ligatures will break the editor line widths
                             // fontFamily: fontFamilyLong(attributes.fontFamily),
                             fontFamily: fontFamilyLong(''),

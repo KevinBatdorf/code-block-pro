@@ -21,6 +21,7 @@ export const useDefaults = ({
         lineNumbers,
         highlightingHover,
         tabSize,
+        useTabs,
     } = attributes;
     const {
         previousTheme,
@@ -36,6 +37,7 @@ export const useDefaults = ({
         previousCopyButton,
         previousCopyButtonType,
         previousTabSize,
+        previousUseTabs,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
@@ -119,6 +121,12 @@ export const useDefaults = ({
         if (tabSize !== undefined || previousTabSize === undefined) return;
         setAttributes({ tabSize: previousTabSize });
     }, [previousTabSize, tabSize, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (useTabs !== undefined || previousUseTabs === undefined) return;
+        setAttributes({ useTabs: previousUseTabs });
+    }, [previousUseTabs, useTabs, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;

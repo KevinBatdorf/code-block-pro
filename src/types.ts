@@ -44,6 +44,7 @@ export type Attributes = {
     copyButtonType: string;
     useDecodeURI: boolean;
     tabSize: number;
+    useTabs: boolean;
 };
 export interface AttributesPropsAndSetter {
     attributes: Attributes;

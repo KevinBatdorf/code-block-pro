@@ -18,6 +18,7 @@ type ThemeType = {
     previousCopyButton: boolean;
     previousCopyButtonType: string;
     previousTabSize: number;
+    previousUseTabs?: boolean;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/code-block-pro/v1/settings';
@@ -41,6 +42,7 @@ const defaultSettings = {
     previousCopyButton: true,
     previousCopyButtonType: 'heroicons',
     previousTabSize: 2,
+    previousUseTabs: undefined,
 };
 const storage = {
     getItem: async (name: string) => {
@@ -88,6 +90,7 @@ export const useThemeStore = create<ThemeType>()(
                         previousCopyButton: attributes.copyButton,
                         previousCopyButtonType: attributes.copyButtonType,
                         previousTabSize: attributes.tabSize,
+                        previousUseTabs: attributes.useTabs,
                     }));
                 },
             }),
