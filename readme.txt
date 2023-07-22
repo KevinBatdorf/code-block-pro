@@ -303,6 +303,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Added the Non-Ligature version of Jetbrains Mono
+
 = 1.21.0 - 2023-07-09 =
 - Feature: Added a second copy button to choose from
 - Feature: Added a tab size setting for when using the editor to add code. Defaults to 2 spaces.
