@@ -1,5 +1,5 @@
 import { useBlockProps as blockProps } from '@wordpress/block-editor';
-import { createBlock, registerBlockType } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 import { addFilter, applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
@@ -14,12 +14,12 @@ import { ButtonList } from './editor/components/buttons/ButtonList';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
 import './editor/editor.css';
+import { transformToCBP, transformFromCBP } from './editor/transforms';
 import { BlockOutput } from './front/BlockOutput';
 import { blockIcon } from './icons';
-import { Attributes, Lang, ThemeOption } from './types';
+import { Attributes, ThemeOption } from './types';
 import { findLineNumberColor } from './util/colors';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
-import { getMainAlias } from './util/languages';
 
 registerBlockType<Attributes>(blockConfig.name, {
     ...blockConfig,
@@ -170,20 +170,14 @@ registerBlockType<Attributes>(blockConfig.name, {
             {
                 type: 'block',
                 blocks: ['core/code', 'syntaxhighlighter/code'],
-                transform: (attrs) => {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore-next-line - Why is this reading the block generic?
-                    const { content, language } = attrs;
-                    const decode = (value: string) => {
-                        const txt = document.createElement('textarea');
-                        txt.innerHTML = value;
-                        return txt.value;
-                    };
-                    return createBlock(blockConfig.name, {
-                        code: content ? decode(content) : undefined,
-                        language: getMainAlias(language) as Lang,
-                    });
-                },
+                transform: transformToCBP,
+            },
+        ],
+        to: [
+            {
+                type: 'block',
+                blocks: ['core/code'],
+                transform: transformFromCBP,
             },
         ],
     },
