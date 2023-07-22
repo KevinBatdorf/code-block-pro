@@ -9,7 +9,8 @@
     }
 }
 .wp-block-kevinbatdorf-code-block-pro {
-    pre, pre * {
+    pre,
+    pre * {
         font-size: inherit;
         line-height: inherit;
     }
@@ -42,8 +43,16 @@
     pre
     code
     .line {
-    @apply inline-block;
-    min-width: calc(var(--cbp-block-width, 100%));
+    @apply inline-block align-top;
+    min-width: var(--cbp-block-width, 100%);
+}
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(
+        .code-block-pro-editor
+    )
+    pre
+    code
+    .line {
+    padding-left: calc(12px + var(--cbp-line-number-width, auto));
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers:not(
         .code-block-pro-editor
@@ -70,21 +79,25 @@
     pre
     code
     .line:not(.cbp-line-number-disabled)::before {
-    @apply inline-block text-right opacity-50 transition-opacity duration-500;
-    margin-right: 12px;
+    @apply absolute left-0 text-right opacity-50 transition-opacity duration-500;
     content: counter(step);
     color: var(--cbp-line-number-color, #999);
     width: var(--cbp-line-number-width, auto);
     user-select: none;
     counter-increment: step;
 }
+.wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover .line {
+    min-height: var(--cbp-block-height, 100%);
+}
 .wp-block-kevinbatdorf-code-block-pro {
-    &.cbp-highlight-hover:not(.cbp-blur-enabled:not(.cbp-unblur-on-hover)) .line:hover,
+    &.cbp-highlight-hover:not(.cbp-blur-enabled:not(.cbp-unblur-on-hover))
+        .line:hover,
     .line.cbp-no-blur:hover,
     .line.cbp-line-highlight {
         .cbp-line-highlighter {
-            @apply w-full pointer-events-none absolute top-0 h-full;
+            @apply w-full pointer-events-none absolute top-0;
             background: var(--cbp-line-highlight-color, rgb(14 165 233/0.2));
+            min-height: var(--cbp-block-height, 100%);
             min-width: calc(var(--cbp-block-width, 100%) + 16px);
             left: -16px;
             [data-code-block-pro-font-family='Code-Pro-Comic-Mono.ttf']& {
@@ -127,12 +140,12 @@
     pre
     .line:not(.cbp-no-blur) {
     filter: blur(1px);
-    @apply opacity-40 transition-all duration-200;
+    @apply opacity-40 transition-all duration-200 pointer-events-none;
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled.cbp-unblur-on-hover:hover
     pre
     .line:not(.cbp-no-blur) {
-    @apply blur-none opacity-100;
+    @apply blur-none opacity-100 pointer-events-auto;
 }
 .wp-block-kevinbatdorf-code-block-pro:not(.code-block-pro-editor) pre * {
     font-family: inherit;

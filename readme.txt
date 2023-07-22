@@ -304,6 +304,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Added the Non-Ligature version of Jetbrains Mono
+- Fix: Fixed a spacing issue with tabs + line numbers
+- Fix: Fixed a bug where the line highlighter would calc the longest highlighted line rather than longest line
+- Tweak: Added pointer-events none to line blurs that are not removed on hover
 
 = 1.21.0 - 2023-07-09 =
 - Feature: Added a second copy button to choose from
