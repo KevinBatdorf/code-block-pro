@@ -45,7 +45,8 @@
         "renderType": { "type": "string", "default": "code" },
         "label": { "type": "string", "default": "" },
         "copyButton": { "type": "boolean" },
-        "tabSize": { "type": "number" }
+        "tabSize": { "type": "number" },
+        "useTabs": { "type": "boolean" }
     },
     "supports": {
         "html": false,

@@ -18,7 +18,6 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
         defaultThemes,
     ) as ThemeOption;
     const styles = themes[attributes.theme]?.styles;
-
     return (
         <div
             {...blockProps.save({
@@ -61,6 +60,14 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                         attributes.lineHeight,
                         attributes.clampFonts,
                     ),
+                    '--cbp-tab-width':
+                        attributes.useTabs === undefined
+                            ? undefined // bw compatibility
+                            : String(attributes.tabSize),
+                    tabSize:
+                        attributes.useTabs === undefined
+                            ? undefined // bw compatibility
+                            : 'var(--cbp-tab-width, 2)',
                     ...Object.entries(styles ?? {}).reduce(
                         (acc, [key, value]) => ({
                             ...acc,
