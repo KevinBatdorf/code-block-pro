@@ -116,6 +116,7 @@ export const FontFamilySelect = ({
         'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
         'Code-Pro-Fira-Code': 'Fira Code',
         'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
+        'Code-Pro-JetBrains-Mono-NL.ttf': 'JetBrains Mono (No Ligatures)',
         '': __('System Default', 'code-block-pro'),
     };
     return (
