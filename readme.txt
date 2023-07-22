@@ -303,6 +303,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Added tab support in the editor, with spacing options
 - Feature: Added a way to convert back into a core code block
 - Feature: Added the Non-Ligature version of Jetbrains Mono
 - Fix: Fixed a spacing issue with tabs + line numbers
