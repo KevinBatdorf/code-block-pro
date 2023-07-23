@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
 Tested up to:      6.3
-Stable tag:        1.21.0
+Stable tag:        1.22.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -303,6 +303,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.22.0 - 2023-07-22 =
 - Feature: Added tab support in the editor, with spacing options
 - Feature: Added a way to convert back into a core code block
 - Feature: Added the Non-Ligature version of Jetbrains Mono
