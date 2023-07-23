@@ -1,6 +1,6 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82, dcooney
-Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, vs code
+Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
 Tested up to:      6.3
 Stable tag:        1.22.0
 License:           GPL-2.0-or-later
@@ -10,7 +10,7 @@ Code highlighting powered by the VS Code engine. Performance focused. No bloat.
 
 == Description ==
 
-Show off your beautiful code, don't just display it! This block plugin provides you with a code block editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in any language and theme supported by VS Code.
+Show off your beautiful code, don't just display it! This block plugin provides you with a code editor that runs your code directly through the same rendering engine that is used by the popular VS Code editor. This block provides fast, native, code highlighting that renders perfectly in your favorite programming language using popular VS Code themes.
 
 Beautiful syntax highlighting that makes sense.
 
@@ -35,18 +35,20 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 - Footer styles
 - Copy button
 - Native Gutenberg block
+- Tab or space indentation
 - Core functionality works in headless mode (see FAQ)
 - Converting from the default code block (and others)
 - Max height with scrollable section (optional expand button)
 
 = More info =
+- Star it on [GitHub](https://github.com/KevinBatdorf/code-block-pro)
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
-- View on [GitHub](https://github.com/KevinBatdorf/code-block-pro)
 
 = Tips =
 - Try combining line highlighting with the blur effect to add some extra depth and focus on the important parts of the code without losing context
-- All settings are per block, but some settings are remembered when you add the next block.
-- Add a link in the code footer (some footers support this, not all) that points to a https://codepen.io demo
+- All settings are per block, but some settings are remembered when you add the next block
+- Add a link in the code footer (some footers support this, not all) that points to a demo
+- To achieve a flush look, remove padding under Extra Settings and select a theme with a background color matching your site theme
 
 = Included VS Code Themes =
 - Dark Plus
