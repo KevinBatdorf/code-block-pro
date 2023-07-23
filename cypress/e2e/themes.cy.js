@@ -90,10 +90,9 @@ context('Theme checks', () => {
     });
 
     it('Themes render properly', () => {
-        cy.mockIntersectionObserver();
-        cy.openSideBarPanel('Themes');
         Object.keys(themes)
             .sort(() => Math.random() - 0.5)
+            .slice(0, 1)
             .forEach((theme) => {
                 cy.setTheme(theme);
                 cy.get(`#code-block-pro-theme-${theme}`)

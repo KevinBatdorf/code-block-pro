@@ -17,7 +17,6 @@ import {
     wpDataSelect,
     previewCurrentPage,
 } from './gutenberg';
-import { mockIntersectionObserver } from './helpers';
 import { login, logout } from './login-logout';
 import {
     visitPageEditor,
@@ -71,11 +70,6 @@ Cypress.Commands.add('wpDataSelect', (store, selector, ...parameters) =>
     wpDataSelect(store, selector, ...parameters),
 );
 Cypress.Commands.add('previewCurrentPage', () => previewCurrentPage());
-
-// Mocks
-Cypress.Commands.add('mockIntersectionObserver', () =>
-    mockIntersectionObserver(),
-);
 
 // Server
 Cypress.Commands.add('resetDatabase', () => resetDatabase());
