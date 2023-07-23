@@ -17,6 +17,7 @@ type ThemeSelectProps = {
     fontFamily: string;
     search: string;
     clampFonts: boolean;
+    tabSize: number;
     onClick: (slug: Theme) => void;
 };
 export const ThemeSelect = (props: ThemeSelectProps) => {
@@ -37,7 +38,9 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
     const priorityThemes = getPriorityThemes();
 
     return (
-        <div className="code-block-pro-editor">
+        <div
+            className="code-block-pro-editor"
+            style={{ tabSize: props.tabSize }}>
             {props.search?.length > 0 ? (
                 <BaseControl id="add-on-themes">
                     {priorityThemes?.length > 0 ? null : (
