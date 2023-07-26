@@ -18,7 +18,7 @@ export type Attributes = {
     editorHeight: string;
     headerType: string;
     headerString?: string;
-    footerType: string;
+    footerType?: string;
     footerString?: string;
     footerLink?: string;
     enableMaxHeight?: boolean;
