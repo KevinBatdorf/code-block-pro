@@ -356,7 +356,7 @@ export const SidebarControls = ({
                         data-cy="use-decode-uri"
                         label={__('Allow HTML Entites', 'code-block-pro')}
                         help={__(
-                            'Select this to allow HTML entities such as &lt; and &gt; to be displayed.',
+                            'Select this to allow HTML entities such as &lt; and &gt; to be displayed. You may need to re-add the code after changing this',
                             'code-block-pro',
                         )}
                         checked={attributes.useDecodeURI}
