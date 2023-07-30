@@ -305,6 +305,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Fix: Added escapeHTML wrapper on code -> code pro transform function
+
 = 1.22.0 - 2023-07-22 =
 - Feature: Added tab support in the editor, with spacing options
 - Feature: Added a way to convert back into a core code block
