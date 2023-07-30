@@ -19,7 +19,7 @@ const handleCopyButton = () => {
             event.preventDefault();
             const b = target?.closest('span');
             const code = b?.dataset?.encoded
-                ? decodeURIComponent(decodeURIComponent(b?.dataset?.code))
+                ? decodeURIComponent(b?.dataset?.code)
                 : b?.dataset?.code;
             copy(code ?? '', {
                 format: 'text/plain',

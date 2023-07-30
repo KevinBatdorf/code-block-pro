@@ -305,7 +305,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-- Fix: Added escapeHTML wrapper on code -> code pro transform function
+- Fix: Theme previews now respect the tabSize setting
+- Fix: Added escapeHTML wrapper on code to code pro transform function
+- Fix: Fixed an issue with the decoding with some sequences that would cause a block invalidation error.
 
 = 1.22.0 - 2023-07-22 =
 - Feature: Added tab support in the editor, with spacing options

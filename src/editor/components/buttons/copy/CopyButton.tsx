@@ -29,8 +29,7 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
             data-encoded={attributes.useDecodeURI ? true : undefined}
             data-code={stripAnsi(
                 attributes.useDecodeURI
-                    ? // Encode again otherwise WP will decode it
-                      encodeURIComponent(attributes.code ?? '')
+                    ? encodeURIComponent(attributes.code ?? '')
                     : attributes.code ?? '',
             )}
             style={{
