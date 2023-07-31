@@ -65,9 +65,9 @@ export const Edit = ({
         (code: string) => {
             if (useDecodeURI) {
                 try {
+                    // Here for bw compatability
                     return decodeURIComponent(code);
                 } catch (e) {
-                    // Covers sequences that fail the above
                     return code;
                 }
             }
@@ -79,9 +79,9 @@ export const Edit = ({
         (code: string) => {
             if (useDecodeURI) {
                 try {
+                    // Here for bw compatability
                     return encodeURIComponent(code);
                 } catch (e) {
-                    // Covers sequences that fail the above
                     return code;
                 }
             }
