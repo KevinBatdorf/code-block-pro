@@ -62,11 +62,31 @@ export const Edit = ({
     useDefaults({ attributes, setAttributes });
 
     const decode = useCallback(
-        (code: string) => (useDecodeURI ? code : decodeEntities(code)),
+        (code: string) => {
+            if (useDecodeURI) {
+                try {
+                    return decodeURIComponent(code);
+                } catch (e) {
+                    // Covers sequences that fail the above
+                    return code;
+                }
+            }
+            return decodeEntities(code);
+        },
         [useDecodeURI],
     );
     const encode = useCallback(
-        (code: string) => (useDecodeURI ? code : escapeHTML(code)),
+        (code: string) => {
+            if (useDecodeURI) {
+                try {
+                    return encodeURIComponent(code);
+                } catch (e) {
+                    // Covers sequences that fail the above
+                    return code;
+                }
+            }
+            return escapeHTML(code);
+        },
         [useDecodeURI],
     );
 
