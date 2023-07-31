@@ -354,9 +354,12 @@ export const SidebarControls = ({
                 <BaseControl id="code-block-pro-decode-uri">
                     <CheckboxControl
                         data-cy="use-decode-uri"
-                        label={__('Allow HTML Entites', 'code-block-pro')}
+                        label={__(
+                            'Encode special characters',
+                            'code-block-pro',
+                        )}
                         help={__(
-                            'Select this to allow HTML entities such as &lt; and &gt; to be displayed. You may need to re-add the code after changing this',
+                            'Select this to allow HTML entities such as &lt; and &gt; and others to be displayed. You may need to re-add the code after changing this',
                             'code-block-pro',
                         )}
                         checked={attributes.useDecodeURI}
