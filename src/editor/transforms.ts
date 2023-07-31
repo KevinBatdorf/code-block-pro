@@ -1,4 +1,5 @@
 import { createBlock } from '@wordpress/blocks';
+import { escapeHTML } from '@wordpress/escape-html';
 import blockConfig from '../block.json';
 import { Attributes, Lang } from '../types';
 import { getMainAlias } from '../util/languages';
@@ -12,7 +13,7 @@ export const transformToCBP = (attrs: any) => {
         return txt.value;
     };
     return createBlock(blockConfig.name, {
-        code: content ? decode(content) : undefined,
+        code: content ? escapeHTML(decode(content)) : undefined,
         language: getMainAlias(language) as Lang,
     });
 };
