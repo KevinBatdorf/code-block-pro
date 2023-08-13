@@ -8,7 +8,7 @@ extend([namesPlugin]);
 
 export const computeLineHighlightColor = (
     color: string,
-    attributes: Attributes,
+    attributes: Pick<Attributes, 'theme'>,
 ) => {
     const themes = applyFilters(
         'blocks.codeBlockPro.themes',

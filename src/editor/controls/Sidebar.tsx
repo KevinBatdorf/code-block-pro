@@ -49,10 +49,16 @@ export const SidebarControls = ({
 
     const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
 
-    const showHeaderTextEdit = ['simpleString'].includes(headerType);
-    const showFooterTextEdit = footersNeedingLinks.includes(footerType);
-    const showFooterLinkEdit = footersNeedingLinks.includes(footerType);
-    const showFooterLinkTargetEdit = footersNeedingLinks.includes(footerType);
+    const showHeaderTextEdit = [
+        'simpleString',
+        'pillString',
+        'stringSmall',
+    ].includes(headerType);
+    const showFooterTextEdit = footersNeedingLinks.includes(footerType ?? '');
+    const showFooterLinkEdit = footersNeedingLinks.includes(footerType ?? '');
+    const showFooterLinkTargetEdit = footersNeedingLinks.includes(
+        footerType ?? '',
+    );
     const [bringAttention, setBringAttention] = useState<string | false>(false);
     const { openGeneralSidebar, closeGeneralSidebar } =
         useDispatch(editPostStore);

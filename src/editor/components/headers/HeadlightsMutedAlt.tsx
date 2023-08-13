@@ -1,7 +1,7 @@
 import { colord, AnyColor } from 'colord';
 import { Attributes } from '../../../types';
 
-export const HeadlightsMutedAlt = ({ bgColor }: Partial<Attributes>) => {
+export const HeadlightsMutedAlt = ({ bgColor }: Attributes) => {
     const bgC = colord(bgColor as AnyColor);
     const bg = bgC.isDark() ? bgC.lighten(0.05) : bgC.darken(0.05);
     return (

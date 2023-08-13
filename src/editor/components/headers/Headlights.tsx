@@ -1,7 +1,7 @@
 import { Attributes } from '../../../types';
 import { findBackgroundColor } from '../../../util/colors';
 
-export const Headlights = (attributes: Partial<Attributes>) => (
+export const Headlights = (attributes: Attributes) => (
     <span
         style={{
             display: 'block',

@@ -3,7 +3,7 @@ import { Attributes, Lang } from '../../../types';
 import { findBackgroundColor, findTextColor } from '../../../util/colors';
 import { languages } from '../../../util/languages';
 
-export const SimpleStringStart = (attributes: Partial<Attributes>) => {
+export const SimpleStringStart = (attributes: Attributes) => {
     const {
         language,
         bgColor,
