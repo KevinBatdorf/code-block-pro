@@ -3,12 +3,10 @@ import { Attributes, Lang } from '../../../types';
 import { findBackgroundColor, findTextColor } from '../../../util/colors';
 import { languages } from '../../../util/languages';
 
-export const SimpleString = (attributes: Attributes) => {
+export const PillString = (attributes: Attributes) => {
     const { language, bgColor, textColor, headerString } = attributes;
     const bgC = colord(bgColor as AnyColor);
-    let bg = bgC.isDark()
-        ? bgC.lighten(0.05).toHex()
-        : bgC.darken(0.05).toHex();
+    let bg = bgC.toHex();
     const textC = colord(textColor as AnyColor);
     let text = textC.isDark()
         ? textC.lighten(0.05).toHex()
@@ -20,19 +18,33 @@ export const SimpleString = (attributes: Attributes) => {
     if (textColor?.startsWith('var(')) {
         text = findTextColor(attributes) ?? textColor;
     }
+
     return (
         <span
             style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: '10px 0px 10px 16px',
-                marginBottom: '-2px',
+                padding: '16px 0 0 16px',
                 width: '100%',
                 textAlign: 'left',
                 backgroundColor: bg,
-                color: text,
             }}>
-            {headerString || languages[language as Lang]}
+            <span
+                style={{
+                    background: text,
+                    padding: '0.3rem 0.5rem 0.2rem',
+                    borderRadius: '1rem',
+                    fontSize: '0.8em',
+                    lineHeight: 1,
+                    height: '1.25rem',
+                    textAlign: 'center',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: bg,
+                }}>
+                {headerString || languages[language as Lang]}
+            </span>
         </span>
     );
 };

@@ -9,8 +9,7 @@ type FooterSelectProps = {
     onClick: (slug: string) => void;
 };
 export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
-    const { footerType, ...attributesWithoutFooterType }: Partial<Attributes> =
-        attributes;
+    const { footerType, ...attributesWithoutFooterType } = attributes;
     const { bgColor } = attributes;
     const types = {
         none: __('None', 'code-block-pro'),
@@ -63,7 +62,7 @@ export const FooterSelect = ({ attributes, onClick }: FooterSelectProps) => {
     );
 };
 
-export const FooterType = (props: Partial<Attributes>) => {
+export const FooterType = (props: Attributes) => {
     const { footerType } = props;
     if (footerType === 'simpleStringEnd') {
         return <SimpleStringEnd {...props} />;

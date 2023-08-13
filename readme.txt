@@ -139,6 +139,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - COBOL
 - CodeQL
 - CoffeeScript
+- Console
 - C++
 - Crystal
 - C#
@@ -178,6 +179,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - HTML
 - HTTP
 - INI
+- Imba
 - Java
 - JavaScript
 - Jinja HTML
@@ -304,6 +306,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+- Feature: Added Imba and Console syntaxes
+- Feature: Added two new header designs based on user requests, both using text inputs
 
 = 1.22.1 - 2023-07-30 =
 - Fix: Theme previews now respect the tabSize setting

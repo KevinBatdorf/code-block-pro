@@ -2,7 +2,7 @@ import { colord, AnyColor } from 'colord';
 import { Attributes } from '../../../types';
 import { findBackgroundColor } from '../../../util/colors';
 
-export const HeadlightsMuted = (attributes: Partial<Attributes>) => {
+export const HeadlightsMuted = (attributes: Attributes) => {
     const { textColor } = attributes;
     return (
         <span

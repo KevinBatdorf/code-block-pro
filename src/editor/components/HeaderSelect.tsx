@@ -4,7 +4,9 @@ import { Attributes } from '../../types';
 import { Headlights } from './headers/Headlights';
 import { HeadlightsMuted } from './headers/HeadlightsMuted';
 import { HeadlightsMutedAlt } from './headers/HeadlightsMutedAlt';
+import { PillString } from './headers/PillString';
 import { SimpleString } from './headers/SimpleString';
+import { StringSmall } from './headers/StringSmall';
 import { UnsupportedTheme } from './misc/Unsupported';
 
 type HeaderSelectProps = {
@@ -15,7 +17,7 @@ type HeaderSelectProps = {
 const unsupportedWithCssVars = ['headlightsMutedAlt'];
 
 export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
-    const { headerType, ...attributesWithoutHeaderType }: Partial<Attributes> =
+    const { headerType, ...attributesWithoutHeaderType }: Attributes =
         attributes;
     const { bgColor } = attributes;
     const types = {
@@ -24,6 +26,8 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
         headlightsMuted: __('Headlights muted', 'code-block-pro'),
         headlightsMutedAlt: __('Headlights muted alt', 'code-block-pro'),
         simpleString: __('Simple string', 'code-block-pro'),
+        stringSmall: __('String muted', 'code-block-pro'),
+        pillString: __('Pill string', 'code-block-pro'),
     };
     const isUnsupported = bgColor?.startsWith('var(');
 
@@ -41,7 +45,9 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                             : type
                     }
                     help={
-                        ['simpleString'].includes(slug)
+                        ['simpleString', 'pillString', 'stringSmall'].includes(
+                            slug,
+                        )
                             ? // Settings refers to the panel that can be expanded
                               __(
                                   'Update extra settings above',
@@ -75,7 +81,7 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
     );
 };
 
-export const HeaderType = (attributes: Partial<Attributes>) => {
+export const HeaderType = (attributes: Attributes) => {
     const { headerType, bgColor } = attributes;
     const isACustomTheme = bgColor?.startsWith('var(');
     if (isACustomTheme && unsupportedWithCssVars.includes(headerType ?? '')) {
@@ -93,6 +99,12 @@ export const HeaderType = (attributes: Partial<Attributes>) => {
     }
     if (headerType === 'simpleString') {
         return <SimpleString {...attributes} />;
+    }
+    if (headerType === 'stringSmall') {
+        return <StringSmall {...attributes} />;
+    }
+    if (headerType === 'pillString') {
+        return <PillString {...attributes} />;
     }
     return null;
 };
