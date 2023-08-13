@@ -305,6 +305,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Tweak: The "see more" button options persist (theme, text, transition only)
+
 = 1.22.1 - 2023-07-30 =
 - Fix: Theme previews now respect the tabSize setting
 - Fix: Added escapeHTML wrapper on code to code pro transform function

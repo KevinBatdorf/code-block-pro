@@ -132,10 +132,7 @@ export const SidebarControls = ({
                             checked={attributes.lineNumbers}
                             onChange={(lineNumbers) => {
                                 setAttributes({ lineNumbers });
-                                updateThemeHistory({
-                                    ...attributes,
-                                    lineNumbers,
-                                });
+                                updateThemeHistory({ lineNumbers });
                             }}
                         />
                         {attributes.lineNumbers && (
@@ -185,7 +182,7 @@ export const SidebarControls = ({
                     attributes={attributes}
                     onClick={(headerType) => {
                         setAttributes({ headerType });
-                        updateThemeHistory({ ...attributes, headerType });
+                        updateThemeHistory({ headerType });
                     }}
                 />
             </PanelBody>
@@ -235,10 +232,7 @@ export const SidebarControls = ({
                             checked={attributes.footerLinkTarget}
                             onChange={(footerLinkTarget) => {
                                 setAttributes({ footerLinkTarget });
-                                updateThemeHistory({
-                                    ...attributes,
-                                    footerLinkTarget,
-                                });
+                                updateThemeHistory({ footerLinkTarget });
                             }}
                         />
                     </BaseControl>
@@ -247,7 +241,7 @@ export const SidebarControls = ({
                     attributes={attributes}
                     onClick={(footerType) => {
                         setAttributes({ footerType });
-                        updateThemeHistory({ ...attributes, footerType });
+                        updateThemeHistory({ footerType });
                     }}
                 />
             </PanelBody>
@@ -271,7 +265,7 @@ export const SidebarControls = ({
                         value={attributes.fontSize}
                         onChange={(fontSize) => {
                             setAttributes({ fontSize });
-                            updateThemeHistory({ ...attributes, fontSize });
+                            updateThemeHistory({ fontSize });
                         }}
                     />
                 </div>
@@ -285,10 +279,7 @@ export const SidebarControls = ({
                         value={attributes.lineHeight}
                         onChange={(lineHeight) => {
                             setAttributes({ lineHeight });
-                            updateThemeHistory({
-                                ...attributes,
-                                lineHeight,
-                            });
+                            updateThemeHistory({ lineHeight });
                         }}
                     />
                 </div>
@@ -299,10 +290,7 @@ export const SidebarControls = ({
                         value={attributes.fontFamily}
                         onChange={(fontFamily) => {
                             setAttributes({ fontFamily });
-                            updateThemeHistory({
-                                ...attributes,
-                                fontFamily,
-                            });
+                            updateThemeHistory({ fontFamily });
                         }}
                     />
                 </div>
@@ -317,10 +305,7 @@ export const SidebarControls = ({
                             checked={attributes.clampFonts}
                             onChange={(clampFonts) => {
                                 setAttributes({ clampFonts });
-                                updateThemeHistory({
-                                    ...attributes,
-                                    clampFonts,
-                                });
+                                updateThemeHistory({ clampFonts });
                             }}
                         />
                     </div>
@@ -344,10 +329,7 @@ export const SidebarControls = ({
                         checked={attributes.disablePadding}
                         onChange={(disablePadding) => {
                             setAttributes({ disablePadding });
-                            updateThemeHistory({
-                                ...attributes,
-                                disablePadding,
-                            });
+                            updateThemeHistory({ disablePadding });
                         }}
                     />
                 </BaseControl>
@@ -365,10 +347,7 @@ export const SidebarControls = ({
                         checked={attributes.useDecodeURI}
                         onChange={(useDecodeURI) => {
                             setAttributes({ useDecodeURI });
-                            updateThemeHistory({
-                                ...attributes,
-                                useDecodeURI,
-                            });
+                            updateThemeHistory({ useDecodeURI });
                         }}
                     />
                 </BaseControl>
@@ -387,7 +366,7 @@ export const SidebarControls = ({
                         onChange={(size) => {
                             const tabSize = size ? Number(size) : undefined;
                             setAttributes({ tabSize });
-                            updateThemeHistory({ ...attributes, tabSize });
+                            updateThemeHistory({ tabSize });
                         }}
                     />
                     <CheckboxControl
@@ -400,10 +379,7 @@ export const SidebarControls = ({
                         checked={attributes.useTabs}
                         onChange={(useTabs) => {
                             setAttributes({ useTabs });
-                            updateThemeHistory({
-                                ...attributes,
-                                useTabs,
-                            });
+                            updateThemeHistory({ useTabs });
                         }}
                     />
                 </BaseControl>

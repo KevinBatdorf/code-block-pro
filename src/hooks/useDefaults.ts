@@ -22,6 +22,9 @@ export const useDefaults = ({
         highlightingHover,
         tabSize,
         useTabs,
+        seeMoreType,
+        seeMoreString,
+        seeMoreTransition,
     } = attributes;
     const {
         previousTheme,
@@ -38,6 +41,9 @@ export const useDefaults = ({
         previousCopyButtonType,
         previousTabSize,
         previousUseTabs,
+        previousSeeMoreType,
+        previousSeeMoreString,
+        previousSeeMoreTransition,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
@@ -127,6 +133,27 @@ export const useDefaults = ({
         if (useTabs !== undefined || previousUseTabs === undefined) return;
         setAttributes({ useTabs: previousUseTabs });
     }, [previousUseTabs, useTabs, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (seeMoreType !== undefined) return;
+        if (previousSeeMoreType === undefined) return;
+        setAttributes({ seeMoreType: previousSeeMoreType });
+    }, [previousSeeMoreType, seeMoreType, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (seeMoreString !== undefined) return;
+        if (previousSeeMoreString === undefined) return;
+        setAttributes({ seeMoreString: previousSeeMoreString });
+    }, [previousSeeMoreString, seeMoreString, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (seeMoreTransition !== undefined) return;
+        if (previousSeeMoreTransition === undefined) return;
+        setAttributes({ seeMoreTransition: previousSeeMoreTransition });
+    }, [previousSeeMoreTransition, seeMoreTransition, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
