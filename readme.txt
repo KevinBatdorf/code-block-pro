@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
 Tested up to:      6.3
-Stable tag:        1.22.1
+Stable tag:        1.23.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -307,6 +307,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.23.0 - 2023-08-13 =
 - Feature: Added Imba and Console syntaxes
 - Feature: Added two new header designs based on user requests, both using text inputs
 - Tweak: The "see more" button options persist (theme, text, transition only)
