@@ -17,12 +17,9 @@ export const CopyBtnSettings = ({
                 label={__('Copy Button', 'code-block-pro')}
                 help={__('Adds a button to copy the code', 'code-block-pro')}
                 checked={attributes.copyButton}
-                onChange={(value) => {
-                    setAttributes({ copyButton: value });
-                    updateThemeHistory({
-                        ...attributes,
-                        copyButton: value,
-                    });
+                onChange={(copyButton) => {
+                    setAttributes({ copyButton });
+                    updateThemeHistory({ copyButton });
                 }}
             />
             {attributes.copyButton && (
@@ -45,7 +42,6 @@ export const CopyBtnSettings = ({
                                             copyButtonType: slug,
                                         });
                                         updateThemeHistory({
-                                            ...attributes,
                                             copyButtonType: slug,
                                         });
                                     }}
