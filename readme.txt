@@ -309,6 +309,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 - Feature: Added Imba and Console syntaxes
 - Feature: Added two new header designs based on user requests, both using text inputs
+- Tweak: The "see more" button options persist (theme, text, transition only)
 
 = 1.22.1 - 2023-07-30 =
 - Fix: Theme previews now respect the tabSize setting

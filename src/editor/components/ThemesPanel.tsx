@@ -25,9 +25,9 @@ export const ThemesPanel = ({
                 <ThemeSelect
                     {...attributes}
                     search={search}
-                    onClick={(slug: Theme) => {
-                        setAttributes({ theme: slug });
-                        updateThemeHistory({ ...attributes, theme: slug });
+                    onClick={(theme: Theme) => {
+                        setAttributes({ theme });
+                        updateThemeHistory({ theme });
                     }}
                 />
             )}

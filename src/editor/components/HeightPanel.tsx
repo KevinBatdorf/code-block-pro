@@ -6,6 +6,7 @@ import {
 } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useThemeStore } from '../../state/theme';
 import { AttributesPropsAndSetter } from '../../types';
 import { SeeMoreSelect } from './SeeMoreSelect';
 
@@ -15,7 +16,7 @@ export const HeightPanel = ({
 }: AttributesPropsAndSetter) => {
     const [editorHeight, setEditorHeight] = useState(attributes?.editorHeight);
     const [enableMaxHeight, setEnableMaxHeight] = useState(
-        attributes?.enableMaxHeight,
+        attributes?.enableMaxHeight ?? false,
     );
     const [seeMoreString, setSeeMoreString] = useState(
         attributes?.seeMoreString ?? '',
@@ -27,6 +28,7 @@ export const HeightPanel = ({
         attributes?.seeMoreTransition ?? false,
     );
     const open = useRef(Number(attributes?.editorHeight) > 0);
+    const { updateThemeHistory } = useThemeStore();
 
     useEffect(() => {
         setAttributes({
@@ -61,7 +63,9 @@ export const HeightPanel = ({
                     )}
                     help={__('Set to 0 to disable.', 'code-block-pro')}
                     placeholder={'0'}
-                    onChange={setEditorHeight}
+                    onChange={(editorHeight) => {
+                        setEditorHeight(editorHeight);
+                    }}
                     value={editorHeight}
                 />
             </BaseControl>
@@ -74,22 +78,13 @@ export const HeightPanel = ({
                     )}
                     data-cy="enable-max-height"
                     checked={enableMaxHeight}
-                    onChange={setEnableMaxHeight}
+                    onChange={(enableMaxHeight) => {
+                        setEnableMaxHeight(enableMaxHeight);
+                    }}
                 />
             </BaseControl>
             {enableMaxHeight && (
                 <>
-                    <BaseControl id="code-block-pro-see-more-text">
-                        <TextControl
-                            data-cy="see-more-text"
-                            spellCheck={false}
-                            autoComplete="off"
-                            label={__('See more text', 'code-block-pro')}
-                            placeholder={__('Expand', 'code-block-pro')}
-                            onChange={setSeeMoreString}
-                            value={seeMoreString ?? ''}
-                        />
-                    </BaseControl>
                     <BaseControl id="code-block-pro-see-more-line">
                         <TextControl
                             data-cy="see-more-line"
@@ -100,8 +95,24 @@ export const HeightPanel = ({
                                 'Enter the last visible line number.',
                                 'code-block-pro',
                             )}
-                            onChange={setSeeMoreAfterLine}
+                            onChange={(seeMoreAfterLine) => {
+                                setSeeMoreAfterLine(seeMoreAfterLine);
+                            }}
                             value={seeMoreAfterLine}
+                        />
+                    </BaseControl>
+                    <BaseControl id="code-block-pro-see-more-text">
+                        <TextControl
+                            data-cy="see-more-text"
+                            spellCheck={false}
+                            autoComplete="off"
+                            label={__('See more text', 'code-block-pro')}
+                            placeholder={__('Expand', 'code-block-pro')}
+                            onChange={(seeMoreString) => {
+                                setSeeMoreString(seeMoreString);
+                                updateThemeHistory({ seeMoreString });
+                            }}
+                            value={seeMoreString ?? ''}
                         />
                     </BaseControl>
                     <BaseControl id="code-block-pro-see-more-transition">
@@ -111,13 +122,17 @@ export const HeightPanel = ({
                                 'code-block-pro',
                             )}
                             checked={seeMoreTransition}
-                            onChange={setSeeMoreTransition}
+                            onChange={(seeMoreTransition) => {
+                                setSeeMoreTransition(seeMoreTransition);
+                                updateThemeHistory({ seeMoreTransition });
+                            }}
                         />
                     </BaseControl>
                     <SeeMoreSelect
                         attributes={attributes}
                         onClick={(seeMoreType) => {
                             setAttributes({ seeMoreType });
+                            updateThemeHistory({ seeMoreType });
                         }}
                     />
                 </>
