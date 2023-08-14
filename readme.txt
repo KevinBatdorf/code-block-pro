@@ -84,9 +84,11 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 
 = Theme Pack (Paid) Includes =
 - Custom Dynamic Theme [read more](https://github.com/KevinBatdorf/code-block-pro/discussions/168)
+- Andromeda
 - Ayu Dark
 - Ayu Mirage
 - Ayu Light
+- Cobalt2
 - Night Owl
 - Night Owl Light
 - Noctis
