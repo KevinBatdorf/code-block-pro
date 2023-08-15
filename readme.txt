@@ -51,239 +51,236 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 - To achieve a flush look, remove padding under Extra Settings and select a theme with a background color matching your site theme
 
 = Included VS Code Themes =
-- Dark Plus
-- Dracula Soft
-- Dracula
-- GitHub Dark Dimmed
-- Github Dark
-- Github Light
-- HC Light - temporarily disabled
-- Light Plus
-- Material Darker
-- Material Default
-- Material Lighter
-- Material Ocean
-- Material Palenight
-- Min Dark
-- Min Light
-- Monokai
-- Nord
-- One Dark Pro
-- Poimandres
-- Rose Pine Dawn
-- Rose Pine Moon
-- Rose Pine
-- Slack Dark
-- Slack Ochin
-- Solarized Dark
-- Solarized Light
-- Vitesse Dark
-- Vitesse Light
+- Dark Plus ([demo](https://code-block-pro.com/themes?lang=bash&theme=dark-plus&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=dark-plus))
+- Dracula Soft ([demo](https://code-block-pro.com/themes?lang=bash&theme=dracula-soft&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=dracula-soft))
+- Dracula ([demo](https://code-block-pro.com/themes?lang=bash&theme=dracula&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=dracula))
+- GitHub Dark Dimmed ([demo](https://code-block-pro.com/themes?lang=bash&theme=github-dark-dimmed&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=github-dark-dimmed))
+- Github Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=github-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=github-dark))
+- Github Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=github-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=github-light))
+- Light Plus ([demo](https://code-block-pro.com/themes?lang=bash&theme=light-plus&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=light-plus))
+- Material Darker ([demo](https://code-block-pro.com/themes?lang=bash&theme=material-darker&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=material-darker))
+- Material Default ([demo](https://code-block-pro.com/themes?lang=bash&theme=material-default&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=material-default))
+- Material Lighter ([demo](https://code-block-pro.com/themes?lang=bash&theme=material-lighter&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=material-lighter))
+- Material Ocean ([demo](https://code-block-pro.com/themes?lang=bash&theme=material-ocean&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=material-ocean))
+- Material Palenight ([demo](https://code-block-pro.com/themes?lang=bash&theme=material-palenight&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=material-palenight))
+- Min Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=min-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=min-dark))
+- Min Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=min-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=min-light))
+- Monokai ([demo](https://code-block-pro.com/themes?lang=bash&theme=monokai&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=monokai))
+- Nord ([demo](https://code-block-pro.com/themes?lang=bash&theme=nord&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=nord))
+- One Dark Pro ([demo](https://code-block-pro.com/themes?lang=bash&theme=one-dark-pro&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=one-dark-pro))
+- Poimandres ([demo](https://code-block-pro.com/themes?lang=bash&theme=poimandres&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=poimandres))
+- Rose Pine Dawn ([demo](https://code-block-pro.com/themes?lang=bash&theme=rose-pine-dawn&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=rose-pine-dawn))
+- Rose Pine Moon ([demo](https://code-block-pro.com/themes?lang=bash&theme=rose-pine-moon&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=rose-pine-moon))
+- Rose Pine ([demo](https://code-block-pro.com/themes?lang=bash&theme=rose-pine&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=rose-pine))
+- Slack Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=slack-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=slack-dark))
+- Slack Ochin ([demo](https://code-block-pro.com/themes?lang=bash&theme=slack-ochin&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=slack-ochin))
+- Solarized Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=solarized-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=solarized-dark))
+- Solarized Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=solarized-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=solarized-light))
+- Vitesse Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=vitesse-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=vitesse-dark))
+- Vitesse Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=vitesse-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=vitesse-light))
+
 
 Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes?utm_campaign=themes&utm_source=readme-body&utm_medium=textlink)
 
 = Theme Pack (Paid) Includes =
-- Custom Dynamic Theme [read more](https://github.com/KevinBatdorf/code-block-pro/discussions/168)
-- Andromeda
-- Ayu Dark
-- Ayu Mirage
-- Ayu Light
-- Cobalt2
-- Night Owl
-- Night Owl Light
-- Noctis
-- Noctis Azureus
-- Noctis Bordo
-- Noctis Hibernus
-- Noctis Lilac
-- Noctis Lux
-- Noctis Minimus
-- Noctis Obscuro
-- Noctis Sereno
-- Noctis Uva
-- Noctis Viola
-- Palenight
-- Pico 8
-- Shades of Purple
-- Shades of Purple Super Dark
-- Synthwave '84
-- Tokyo Night
-- Tokyo Night Storm
-- Tokyo Night Light
-- Winter is Coming
-- Winter is Coming Light
-- Winter is Coming Dark
+- Custom Dynamic Theme (advanced) [read more](https://github.com/KevinBatdorf/code-block-pro/discussions/168)
+- Andromeda ([demo](https://code-block-pro.com/themes?lang=bash&theme=andromeda&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=andromeda))
+- Ayu Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=ayu-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=ayu-dark))
+- Ayu Mirage ([demo](https://code-block-pro.com/themes?lang=bash&theme=ayu-mirage&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=ayu-mirage))
+- Ayu Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=ayu-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=ayu-light))
+- Cobalt2 ([demo](https://code-block-pro.com/themes?lang=bash&theme=cobalt2&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=cobalt2))
+- Night Owl ([demo](https://code-block-pro.com/themes?lang=bash&theme=night-owl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=night-owl))
+- Night Owl Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=night-owl-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=night-owl-light))
+- Noctis ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis))
+- Noctis Azureus ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-azureus&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-azureus))
+- Noctis Bordo ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-bordo&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-bordo))
+- Noctis Hibernus ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-hibernus&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-hibernus))
+- Noctis Lilac ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-lilac&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-lilac))
+- Noctis Lux ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-lux&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-lux))
+- Noctis Minimus ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-minimus&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-minimus))
+- Noctis Obscuro ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-obscuro&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-obscuro))
+- Noctis Sereno ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-sereno&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-sereno))
+- Noctis Uva ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-uva&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-uva))
+- Noctis Viola ([demo](https://code-block-pro.com/themes?lang=bash&theme=noctis-viola&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=noctis-viola))
+- Palenight ([demo](https://code-block-pro.com/themes?lang=bash&theme=palenight&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=palenight))
+- Pico 8 ([demo](https://code-block-pro.com/themes?lang=lua&theme=pico8&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=pico8))
+- Shades of Purple ([demo](https://code-block-pro.com/themes?lang=bash&theme=shades-of-purple&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=shades-of-purple))
+- Shades of Purple Super Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=shades-of-purple-super-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=shades-of-purple-super-dark))
+- Synthwave '84 ([demo](https://code-block-pro.com/themes?lang=bash&theme=synthwave-84&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=synthwave-84))
+- Tokyo Night ([demo](https://code-block-pro.com/themes?lang=bash&theme=tokyo-night&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=tokyo-night))
+- Tokyo Night Storm ([demo](https://code-block-pro.com/themes?lang=bash&theme=tokyo-night-storm&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=tokyo-night-storm))
+- Tokyo Night Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=tokyo-night-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=tokyo-night-light))
+- Winter is Coming ([demo](https://code-block-pro.com/themes?lang=bash&theme=winter-is-coming&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=winter-is-coming))
+- Winter is Coming Light ([demo](https://code-block-pro.com/themes?lang=bash&theme=winter-is-coming-light&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=winter-is-coming-light))
+- Winter is Coming Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=winter-is-coming-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=winter-is-coming-dark))
+
 
 = Included Coding Languages =
-- ABAP
-- ActionScript 3
-- Ada
+
+- ABAP ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=abap&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=abap))
+- ActionScript 3 ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=actionscript-3&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=actionscript-3))
+- Ada ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ada&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ada))
 - ANSI (control codes rendered)
-- Apache
-- Apex
-- APL
-- AppleScript
-- Ara
-- ASM
-- Astro
-- Awk
-- Ballerina
-- BAT (Batchfile)
-- Berry
-- BibTeX
-- BICEP
-- Blade
-- C
-- Cadence
-- Clarity
-- Clojure
-- CMake
-- COBOL
-- CodeQL
-- CoffeeScript
-- Console
-- C++
-- Crystal
-- C#
-- CSS
-- CUE
-- Cypher (cql)
-- D
-- Dart
-- DAX
-- Diff
-- Dockerfile
-- DreamMaker
-- Elixir
-- Elm
-- ERB
-- Erlang
-- Fish
-- F#
-- GDResource (Godot)
-- GDScript (Godot)
-- GDShader (Godot)
-- Gherkin
-- Git Commit
-- Git Rebase
-- GLSL
-- Glimmer js/ts
-- Gnuplot
-- Go
-- GraphQL
-- Groovy
-- Hack
-- HAML
-- Handlebars
-- Haskell
-- HCL
-- HLSL
-- HTML
-- HTTP
-- INI
-- Imba
-- Java
-- JavaScript
-- Jinja HTML
-- Jison
-- JSON
-- JSON5
-- JSONC
-- JSONL
-- JSONnet
-- JSSM
-- JSX
-- Julia
-- Kotlin
-- Kusto
-- LaTeX
-- LESS
-- Ledger (Beancount)
-- Liquid
-- Lisp
-- Logo
-- Lua
-- Makefile
-- Markdown
-- Marko
-- MATLAB
-- MDX
-- Mermaid
-- Narrat (nar)
-- Nextflow (nf)
-- Nginx
-- Nim
-- Nix
-- Objective-C
-- Objective-C++
-- OCaml
-- Pascal
-- Perl
-- PHP
-- Plaintext
-- PLSQL
-- PostCSS
-- Power Query
-- PowerShell
-- Prisma
-- Prolog
-- Protocol Buffers
-- Pug
-- Puppet
-- PureScript
-- Python
-- R
-- Raku
-- Razor
-- Windows Registry
-- Rel
-- RISC-V
-- RST
-- Ruby
-- Rust
-- SAS
-- Sass
-- Scala
-- Scheme
-- SCSS
-- ShaderLab
-- Bash
-- ShellScript
-- Zsh
-- Smalltalk
-- Solidity
-- SPARQL
-- SQL
-- SSH Config
-- Stata
-- Stylus
-- Svelte
-- Swift
-- SystemVerilog
-- TASL
-- TCL
-- TeX
-- TOML
-- TSX
-- Turtle
-- Twig
-- TypeScript
-- V
-- VB
-- Verilog
-- VHDL
-- VimL
-- Vue HTML
-- Vue
-- Vyper (vy)
-- WASM
-- Wenyan
-- WGSL
-- Wolfram
-- XML
-- XSL
-- YAML
-- ZenScript
+- Apache ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=apache&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=apache))
+- Apex ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=apex&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=apex))
+- APL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=apl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=apl))
+- Ara ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ara&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ara))
+- ASM ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=asm&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=asm))
+- Astro ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=astro&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=astro))
+- Awk ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=awk&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=awk))
+- Ballerina ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ballerina&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ballerina))
+- BAT (Batchfile) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=bat&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=bat))
+- Berry ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=berry&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=berry))
+- BibTeX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=bibtex&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=bibtex))
+- BICEP ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=bicep&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=bicep))
+- Blade ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=blade&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=blade))
+- C ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=c&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=c))
+- Cadence ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=cadence&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=cadence))
+- Clarity ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=clarity&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=clarity))
+- Clojure ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=clojure&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=clojure))
+- CMake ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=cmake&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=cmake))
+- COBOL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=cobol&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=cobol))
+- CodeQL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=codeql&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=codeql))
+- CoffeeScript ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=coffee&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=coffee))
+- C++ ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=cpp&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=cpp))
+- Crystal ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=crystal&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=crystal))
+- C# ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=csharp&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=csharp))
+- CSS ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=css&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=css))
+- CUE ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=cue&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=cue))
+- Cypher (cql) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=cypher&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=cypher))
+- D ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=d&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=d))
+- Dart ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=dart&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=dart))
+- DAX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=dax&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=dax))
+- Diff ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=diff&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=diff))
+- Dockerfile ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=docker&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=docker))
+- DreamMaker ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=dream-maker&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=dream-maker))
+- Elixir ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=elixir&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=elixir))
+- Elm ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=elm&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=elm))
+- Erlang ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=erlang&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=erlang))
+- Fish ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=fish&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=fish))
+- F# ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=fsharp&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=fsharp))
+- GDResource (Godot) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=gdresource&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=gdresource))
+- GDScript (Godot) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=gdscript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=gdscript))
+- GDShader (Godot) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=gdshader&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=gdshader))
+- Gherkin ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=gherkin&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=gherkin))
+- GLSL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=glsl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=glsl))
+- Glimmer js/ts ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=gjs&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=gjs))
+- Gnuplot ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=gnuplot&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=gnuplot))
+- Go ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=go&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=go))
+- GraphQL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=graphql&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=graphql))
+- Groovy ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=groovy&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=groovy))
+- Hack ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=hack&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=hack))
+- HAML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=haml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=haml))
+- Handlebars ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=handlebars&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=handlebars))
+- Haskell ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=haskell&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=haskell))
+- HCL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=hcl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=hcl))
+- HLSL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=hlsl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=hlsl))
+- HTML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=html&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=html))
+- HTTP ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=http&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=http))
+- INI ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ini&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ini))
+- Imba ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=imba&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=imba))
+- Java ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=java&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=java))
+- JavaScript ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=javascript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=javascript))
+- Jinja HTML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jinja-html&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jinja-html))
+- Jison ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jison&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jison))
+- JSON ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=json&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=json))
+- JSON5 ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=json5&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=json5))
+- JSONC ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jsonc&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jsonc))
+- JSONL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jsonl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jsonl))
+- JSONnet ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jsonnet&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jsonnet))
+- JSSM ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jssm&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jssm))
+- JSX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=jsx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=jsx))
+- Julia ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=julia&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=julia))
+- Kotlin ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=kotlin&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=kotlin))
+- Kusto ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=kusto&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=kusto))
+- LaTeX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=latex&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=latex))
+- LESS ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=less&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=less))
+- Ledger (Beancount) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=beancount&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=beancount))
+- Liquid ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=liquid&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=liquid))
+- Lisp ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=lisp&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=lisp))
+- Logo ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=logo&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=logo))
+- Lua ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=lua&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=lua))
+- Makefile ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=make&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=make))
+- Markdown ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=markdown&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=markdown))
+- Marko ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=marko&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=marko))
+- MATLAB ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=matlab&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=matlab))
+- MDX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mdx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mdx))
+- Mermaid ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mermaid&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mermaid))
+- Narrat (nar) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=narrat&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=narrat))
+- Nextflow (nf) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=nextflow&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=nextflow))
+- Nginx ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=nginx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=nginx))
+- Nim ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=nim&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=nim))
+- Nix ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=nix&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=nix))
+- Objective-C ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=objective-c&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=objective-c))
+- Objective-C++ ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=objective-cpp&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=objective-cpp%2B%2B))
+- OCaml ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ocaml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ocaml))
+- Pascal ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=pascal&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=pascal))
+- Perl ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=perl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=perl))
+- PHP ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=php&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=php))
+- PLSQL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=plsql&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=plsql))
+- PostCSS ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=postcss&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=postcss))
+- Power Query ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=powerquery&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=powerquery))
+- PowerShell ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=powershell&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=powershell))
+- Prisma ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=prisma&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=prisma))
+- Prolog ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=prolog&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=prolog))
+- Protocol Buffers ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=proto&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=proto))
+- Pug ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=pug&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=pug))
+- Puppet ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=puppet&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=puppet))
+- PureScript ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=purescript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=purescript))
+- Python ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=python&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=python))
+- R ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=r&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=r))
+- Raku ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=raku&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=raku))
+- Razor ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=razor&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=razor))
+- Windows Registry ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=reg&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=reg))
+- Rel ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=rel&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=rel))
+- RISC-V ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=riscv&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=riscv))
+- RST ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=rst&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=rst))
+- Ruby ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ruby&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ruby))
+- Rust ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=rust&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=rust))
+- SAS ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=sas&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=sas))
+- Sass ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=sass&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=sass))
+- Scala ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=scala&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=scala))
+- Scheme ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=scheme&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=scheme))
+- SCSS ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=scss&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=scss))
+- ShaderLab ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=shaderlab&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=shaderlab))
+- Bash ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=bash&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=bash))
+- ShellScript ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=shellscript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=shellscript))
+- Zsh ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=zsh&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=zsh))
+- Smalltalk ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=smalltalk&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=smalltalk))
+- Solidity ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=solidity&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=solidity))
+- SPARQL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=sparql&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=sparql))
+- SQL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=sql&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=sql))
+- SSH Config ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=ssh-config&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=ssh-config))
+- Stata ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=stata&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=stata))
+- Stylus ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=stylus&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=stylus))
+- Svelte ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=svelte&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=svelte))
+- Swift ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=swift&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=swift))
+- SystemVerilog ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=system-verilog&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=system-verilog))
+- TASL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=tasl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=tasl))
+- TCL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=tcl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=tcl))
+- TeX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=tex&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=tex))
+- TOML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=toml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=toml))
+- TSX ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=tsx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=tsx))
+- Turtle ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=turtle&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=turtle))
+- Twig ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=twig&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=twig))
+- TypeScript ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=typescript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=typescript))
+- V ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=v&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=v))
+- VB ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=vb&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=vb))
+- Verilog ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=verilog&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=verilog))
+- VHDL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=vhdl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=vhdl))
+- VimL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=viml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=viml))
+- Vue HTML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=vue-html&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=vue-html))
+- Vue ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=vue&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=vue))
+- Vyper (vy) ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=vyper&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=vyper))
+- WASM ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=wasm&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=wasm))
+- Wenyan ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=wenyan&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=wenyan))
+- WGSL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=wgsl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=wgsl))
+- Wolfram ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=wolfram&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=wolfram))
+- XML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=xml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=xml))
+- XSL ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=xsl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=xsl))
+- YAML ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=yaml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=yaml))
+- ZenScript ([Try it!](https://code-block-pro.com/themes?theme=one-dark-pro&lang=zenscript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=zenscript))
+
 
 == Installation ==
 
@@ -310,7 +307,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 = 1.23.0 - 2023-08-13 =
-- Feature: Added Imba and Console syntaxes
+- Feature: Added Imba syntax
 - Feature: Added two new header designs based on user requests, both using text inputs
 - Tweak: The "see more" button options persist (theme, text, transition only)
 
