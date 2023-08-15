@@ -141,7 +141,6 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - COBOL
 - CodeQL
 - CoffeeScript
-- Console
 - C++
 - Crystal
 - C#
@@ -164,8 +163,6 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - GDScript (Godot)
 - GDShader (Godot)
 - Gherkin
-- Git Commit
-- Git Rebase
 - GLSL
 - Glimmer js/ts
 - Gnuplot
@@ -308,6 +305,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+- Tweak: Combine code aliases
 
 = 1.23.0 - 2023-08-13 =
 - Feature: Added Imba and Console syntaxes
