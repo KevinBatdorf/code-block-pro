@@ -83,7 +83,7 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes?utm_campaign=themes&utm_source=readme-body&utm_medium=textlink)
 
 = Theme Pack (Paid) Includes =
-- Custom Dynamic Theme [read more](https://github.com/KevinBatdorf/code-block-pro/discussions/168)
+- Custom Dynamic Theme (advanced) [read more](https://github.com/KevinBatdorf/code-block-pro/discussions/168)
 - Andromeda ([demo](https://code-block-pro.com/themes?lang=bash&theme=andromeda&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=andromeda))
 - Ayu Dark ([demo](https://code-block-pro.com/themes?lang=bash&theme=ayu-dark&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=ayu-dark))
 - Ayu Mirage ([demo](https://code-block-pro.com/themes?lang=bash&theme=ayu-mirage&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=theme&utm_term=ayu-mirage))
