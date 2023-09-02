@@ -311,6 +311,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Added Zig, mdc, Mojo, shellsession (console output), and splunk grammars
+- Tweak: Combine code aliases
 
 = 1.23.0 - 2023-08-13 =
 - Feature: Added Imba syntax
