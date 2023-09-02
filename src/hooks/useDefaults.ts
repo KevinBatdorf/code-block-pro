@@ -56,112 +56,97 @@ export const useDefaults = ({
 
     useEffect(() => {
         if (once.current) return;
-        if (copyButtonType || !previousCopyButtonType) return;
+        if (copyButtonType) return;
         setAttributes({ copyButtonType: previousCopyButtonType });
     }, [previousCopyButtonType, copyButtonType, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (theme || !previousTheme) return;
+        if (theme) return;
         setAttributes({ theme: previousTheme as Theme });
     }, [previousTheme, theme, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (fontSize || !previousFontSize) return;
+        if (fontSize) return;
         setAttributes({ fontSize: previousFontSize });
     }, [previousFontSize, fontSize, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (fontFamily || fontFamily === '' || previousFontFamily === undefined)
-            return;
+        if (fontFamily || fontFamily === '') return;
         setAttributes({ fontFamily: previousFontFamily });
     }, [previousFontFamily, fontFamily, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (lineHeight || !previousLineHeight) return;
+        if (lineHeight) return;
         setAttributes({ lineHeight: previousLineHeight });
     }, [previousLineHeight, lineHeight, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (headerType || !previousHeaderType) return;
+        if (headerType) return;
         setAttributes({ headerType: previousHeaderType });
     }, [previousHeaderType, headerType, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (footerType !== undefined || previousFooterType === undefined)
-            return;
+        if (footerType !== undefined) return;
         setAttributes({ footerType: previousFooterType });
     }, [previousFooterType, footerType, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (clampFonts !== undefined || previousClampFonts === undefined)
-            return;
+        if (clampFonts !== undefined) return;
         setAttributes({ clampFonts: previousClampFonts });
     }, [previousClampFonts, clampFonts, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (
-            disablePadding !== undefined ||
-            previousDisablePadding === undefined
-        )
-            return;
+        if (disablePadding !== undefined) return;
         setAttributes({ disablePadding: previousDisablePadding });
     }, [previousDisablePadding, disablePadding, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (lineNumbers !== undefined || previousLineNumbers === undefined)
-            return;
+        if (lineNumbers !== undefined) return;
         setAttributes({ lineNumbers: previousLineNumbers });
     }, [previousLineNumbers, lineNumbers, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (tabSize !== undefined || previousTabSize === undefined) return;
+        if (tabSize !== undefined) return;
         setAttributes({ tabSize: previousTabSize });
     }, [previousTabSize, tabSize, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (useTabs !== undefined || previousUseTabs === undefined) return;
+        if (useTabs !== undefined) return;
         setAttributes({ useTabs: previousUseTabs });
     }, [previousUseTabs, useTabs, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
         if (seeMoreType !== undefined) return;
-        if (previousSeeMoreType === undefined) return;
         setAttributes({ seeMoreType: previousSeeMoreType });
     }, [previousSeeMoreType, seeMoreType, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
         if (seeMoreString !== undefined) return;
-        if (previousSeeMoreString === undefined) return;
         setAttributes({ seeMoreString: previousSeeMoreString });
     }, [previousSeeMoreString, seeMoreString, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
         if (seeMoreTransition !== undefined) return;
-        if (previousSeeMoreTransition === undefined) return;
         setAttributes({ seeMoreTransition: previousSeeMoreTransition });
     }, [previousSeeMoreTransition, seeMoreTransition, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;
-        if (
-            highlightingHover !== undefined ||
-            previousHighlightingHover === undefined
-        )
-            return;
+        if (highlightingHover !== undefined) return;
         setAttributes({ highlightingHover: previousHighlightingHover });
     }, [previousHighlightingHover, highlightingHover, setAttributes]);
 
