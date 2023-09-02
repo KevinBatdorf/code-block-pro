@@ -306,6 +306,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Tweak: Combine code aliases
+
 = 1.23.0 - 2023-08-13 =
 - Feature: Added Imba syntax
 - Feature: Added two new header designs based on user requests, both using text inputs
