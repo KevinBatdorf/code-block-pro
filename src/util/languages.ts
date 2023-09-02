@@ -40,6 +40,7 @@ export const codeAliases = {
     rust: ['rs'],
     shaderlab: ['shader'],
     shellscript: ['shell', 'sh', 'git-commit', 'git-rebase'],
+    sellsession: ['console'],
     stylus: ['styl'],
     typescript: ['ts'],
     vb: ['cmd'],
