@@ -312,7 +312,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 = 1.24.0 - 2023-09-02 =
 - Feature: Added Zig, mdc, Mojo, shellsession (console output), and splunk grammars
-- Tweak: Combine code aliases
+- Tweak: Combined confusing code aliases
+- Fix: Fixed a bug where a setting would affect every block on the same page
 
 = 1.23.0 - 2023-08-13 =
 - Feature: Added Imba syntax
