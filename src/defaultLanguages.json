@@ -30,6 +30,7 @@
     "cobol": "COBOL",
     "codeql": "CodeQL",
     "console": "Console",
+    "shellsession": "ShellSession",
     "cypher": "Cypher",
     "cql": "Cypher",
     "ql": "CodeQL",
@@ -117,6 +118,7 @@
     "matlab": "MATLAB",
     "mdx": "MDX",
     "mermaid": "Mermaid",
+    "mojo": "Mojo",
     "narrat": "Narrat",
     "nar": "Narrat",
     "nextflow": "Nextflow",
@@ -167,6 +169,7 @@
     "shaderlab": "ShaderLab",
     "shader": "Shader",
     "shellscript": "ShellScript",
+    "splunk": "Splunk SPL",
     "bash": "Bash",
     "shell": "ShellScript",
     "sh": "ShellScript",
@@ -212,5 +215,6 @@
     "xsl": "XSL",
     "yaml": "YAML",
     "yml": "YAML",
+    "zig": "Zig",
     "zenscript": "ZenScript"
 }

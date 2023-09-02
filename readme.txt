@@ -204,6 +204,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Markdown ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=markdown&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=markdown))
 - Marko ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=marko&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=marko))
 - MATLAB ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=matlab&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=matlab))
+- MDC ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mdc&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mdc))
 - MDX ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mdx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mdx))
 - Mermaid ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mermaid&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mermaid))
 - Narrat (nar) ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=narrat&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=narrat))
@@ -242,10 +243,11 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - Scala ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=scala&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=scala))
 - Scheme ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=scheme&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=scheme))
 - SCSS ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=scss&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=scss))
-- ShaderLab ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=shaderlab&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=shaderlab))
+- Splunk SPL ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=splunk&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=splunk))
 - Bash ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=bash&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=bash))
 - ShellScript ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=shellscript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=shellscript))
 - Zsh ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=zsh&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=zsh))
+- ShellSession ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=shellsession&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=shellsession))
 - Smalltalk ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=smalltalk&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=smalltalk))
 - Solidity ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=solidity&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=solidity))
 - SPARQL ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=sparql&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=sparql))
@@ -280,6 +282,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - XSL ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=xsl&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=xsl))
 - YAML ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=yaml&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=yaml))
 - ZenScript ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=zenscript&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=zenscript))
+- Zig ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=zig&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=zig))
 
 
 == Installation ==
@@ -305,6 +308,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+- Feature: Added Zig, mdc, shellsession (console output), and splunk grammars
 
 = 1.23.0 - 2023-08-13 =
 - Feature: Added Imba syntax
