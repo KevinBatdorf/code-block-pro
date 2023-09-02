@@ -207,6 +207,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - MDC ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mdc&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mdc))
 - MDX ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mdx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mdx))
 - Mermaid ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mermaid&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mermaid))
+- Mojo ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=mojo&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=mojo))
 - Narrat (nar) ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=narrat&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=narrat))
 - Nextflow (nf) ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=nextflow&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=nextflow))
 - Nginx ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=nginx&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=nginx))
@@ -309,7 +310,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-- Feature: Added Zig, mdc, shellsession (console output), and splunk grammars
+- Feature: Added Zig, mdc, Mojo, shellsession (console output), and splunk grammars
 
 = 1.23.0 - 2023-08-13 =
 - Feature: Added Imba syntax
