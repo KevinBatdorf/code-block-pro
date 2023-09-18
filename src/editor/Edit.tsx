@@ -37,6 +37,7 @@ export const Edit = ({
         footerType,
         fontSize,
         fontFamily,
+        lineHeight,
         lineBlurs,
         lineHighlights,
         enableBlurring,
@@ -179,15 +180,16 @@ export const Edit = ({
         const lineNumbersWidth = getTextWidth(String(lnv), font);
         setAttributes({ lineNumbersWidth });
     }, [
+        lineNumbers,
+        startingLineNumber,
         code,
         loading,
         error,
         textAreaRef,
-        lineNumbers,
-        startingLineNumber,
+        setAttributes,
         fontSize,
         fontFamily,
-        setAttributes,
+        lineHeight,
     ]);
 
     if (!loading && !highlighter) {
