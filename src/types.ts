@@ -1,6 +1,9 @@
 import { Lang as LangShiki, Theme } from 'shiki';
 
-export type Lang = LangShiki | 'ansi' | 'plaintext';
+// Langs added to shiki but waiting for a release
+type tempLangs = 'luau';
+
+export type Lang = LangShiki | 'ansi' | 'plaintext' | tempLangs;
 
 export type Attributes = {
     code: string;

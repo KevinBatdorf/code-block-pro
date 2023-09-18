@@ -1,6 +1,18 @@
 import { Lang as LangShiki } from 'shiki';
 import defaultLanguages from '../defaultLanguages.json';
 import { Lang } from '../types';
+import luau from '../temp/langs/luau.json';
+
+// Add types to ../types too
+export const tempLangs = {
+    luau: {
+        name: 'Luau',
+        id: 'luau',
+        scopeName: 'source.luau',
+        grammar: luau,
+        path: null,
+    },
+};
 
 export const codeAliases = {
     'actionscript-3': ['as3'],
@@ -64,14 +76,25 @@ export const removeAliases = (
     langs: typeof defaultLanguages,
 ): Partial<typeof defaultLanguages> => {
     const aliasesToRemove = Object.values(codeAliases).flat();
-    return Object.keys(langs).reduce((acc, key) => {
-        if (!aliasesToRemove.includes(key)) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            acc[key as Lang] = langs[key as Lang];
-        }
-        return acc;
-    }, {} as Partial<typeof defaultLanguages>);
+    // ex { js: 'JavaScript', 'luau': 'Luau' }
+    langs = {
+        ...langs,
+        ...Object.values(tempLangs).reduce(
+            (acc, lang) => ({ ...acc, [lang.id]: lang.name }),
+            {},
+        ),
+    };
+    return Object.keys(langs).reduce(
+        (acc, key) => {
+            if (!aliasesToRemove.includes(key)) {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                acc[key as Lang] = langs[key as Lang];
+            }
+            return acc;
+        },
+        {} as Partial<typeof defaultLanguages>,
+    );
 };
 
 export const languages = removeAliases(defaultLanguages);

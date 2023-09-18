@@ -4,7 +4,7 @@ import { getHighlighter, setCDN, Theme, setWasm } from 'shiki';
 import useSWRImmutable from 'swr/immutable';
 import defaultThemes from '../defaultThemes.json';
 import { Lang, ThemeOption } from '../types';
-import { getEditorLanguage } from '../util/languages';
+import { getEditorLanguage, tempLangs } from '../util/languages';
 
 type Params = {
     theme: Theme;
@@ -27,8 +27,14 @@ const fetcher = ({ theme, lang, ready }: Params) => {
         >
     )?.[themeFiltered]?.['alias'] as Theme;
 
+    console.log(tempLangs);
+    const langs =
+        lang === 'plaintext'
+            ? undefined
+            : [getEditorLanguage(lang), ...Object.values(tempLangs)];
+    console.log(langs);
     return getHighlighter({
-        langs: lang === 'plaintext' ? undefined : [getEditorLanguage(lang)],
+        langs,
         theme: themeAlias ?? themeFiltered,
     });
 };
