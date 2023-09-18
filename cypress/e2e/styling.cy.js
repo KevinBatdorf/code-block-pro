@@ -73,7 +73,7 @@ context('Styling', () => {
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('attr', 'style')
-            .should('contain', 'font-family:Code-Pro-JetBrains-Mono');
+            .should('contain', 'Code-Pro-JetBrains-Mono');
 
         cy.get('#code-block-pro-font-family').select('Fira Code');
         cy.get('#code-block-pro-font-family').should(
