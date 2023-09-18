@@ -45,7 +45,7 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 - Follow [@kevinbatdorf](https://twitter.com/kevinbatdorf) on Twitter
 
 = Tips =
-- Try combining line highlighting with the blur effect to add some extra depth and focus on the important parts of the code without losing context
+- Try combining line highlighting with the blur effect to add some extra depth, and focus on the important parts of the code without losing context
 - All settings are per block, but some settings are remembered when you add the next block
 - Add a link in the code footer (some footers support this, not all) that points to a demo
 - To achieve a flush look, remove padding under Extra Settings and select a theme with a background color matching your site theme
@@ -298,7 +298,7 @@ Look under the "Styling" tab and turn on "Clamp Values", which will compute the 
 
 = How to use in headless =
 
-Themes are rendered inside the editor as you type or make changes, so the code block itself will work without CSS or JavaScript. However, the font loading, copy button, and line highlighting require a tiny bit of JavaScript to funciton. Additionally, line blur uses a tiny bit of CSS which you will need to load in yourself or impliment your own. The code tokens and theme styles are inline though, so no need to manipulate the DOM.
+Themes are rendered inside the editor as you type or make changes, so the code block itself will work without CSS or JavaScript. However, the font loading, copy button, and line highlighting require a tiny bit of JavaScript to function. Additionally, line blur uses a tiny bit of CSS which you will need to load in yourself or implement your own. The code tokens and theme styles are inline though, so no need to manipulate the DOM.
 
 == Screenshots ==
 
@@ -323,7 +323,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 = 1.22.1 - 2023-07-30 =
 - Fix: Theme previews now respect the tabSize setting
 - Fix: Added escapeHTML wrapper on code to code pro transform function
-- Fix: Added some clarify on encoding, and added better edge cases handling
+- Fix: Added some clarity on encoding, and added better edge cases handling
 - Fix: Fixed an issue with the decoding with some sequences that would cause a block invalidation error.
 
 = 1.22.0 - 2023-07-22 =
@@ -393,7 +393,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 = 1.13.0 - 2023-02-05 =
 - Feature: Add scrollable max height area with no button (Max Height panel)
-- Feature: Add expanding code area with max height based online number
+- Feature: Add expanding code area with max height based on line number
 - Feature: Added ANSI rendering support - some themes do not look perfect yet
 - Fix: Disabled font ligatures in the editor as it broke cursor positioning on wraps
 
