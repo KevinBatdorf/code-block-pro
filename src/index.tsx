@@ -136,8 +136,8 @@ registerBlockType<Attributes>(blockConfig.name, {
                                     ? undefined // bw compatability
                                     : attributes.tabSize,
                             // Disabled as ligatures will break the editor line widths
-                            // fontFamily: fontFamilyLong(attributes.fontFamily),
-                            fontFamily: fontFamilyLong(''),
+                            fontFamily: fontFamilyLong(attributes.fontFamily),
+                            // fontFamily: fontFamilyLong(''),
                             lineHeight: maybeClamp(
                                 attributes.lineHeight,
                                 attributes.clampFonts,

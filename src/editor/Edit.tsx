@@ -17,6 +17,7 @@ import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { computeLineHighlightColor } from '../util/colors';
 import { getEditorLanguage } from '../util/languages';
 import { MissingPermissionsTip } from './components/misc/MissingPermissions';
+import { getTextWidth } from '../util/fonts';
 
 export const Edit = ({
     attributes,
@@ -36,7 +37,6 @@ export const Edit = ({
         footerType,
         fontSize,
         fontFamily,
-        lineHeight,
         lineBlurs,
         lineHighlights,
         enableBlurring,
@@ -170,35 +170,24 @@ export const Edit = ({
             setAttributes({ lineNumbersWidth: undefined });
             return;
         }
-        // Get the last line (assumingly the widest)
-        const lastLine = Array.from(
-            textAreaRef?.current?.querySelectorAll('.line') ?? [],
-        )?.at(-1) as HTMLElement;
-        // Make sure there are no width constraints
-        lastLine?.classList?.add('cbp-line-number-width-forced');
-        const lastLineWidth = lastLine?.getBoundingClientRect()?.width ?? 0;
-        // Add .cbp-line-number-disabled to disable the line number
-        lastLine?.classList.add('cbp-line-number-disabled');
-        // Re calculate the width of the last line
-        const newWidth = lastLine?.getBoundingClientRect()?.width ?? 0;
-        // Remove the classes
-        lastLine?.classList.remove('cbp-line-number-disabled');
-        lastLine?.classList?.remove('cbp-line-number-width-forced');
-        // Calculate the difference
-        if (lastLineWidth - newWidth > 0) {
-            setAttributes({ lineNumbersWidth: lastLineWidth - newWidth - 12 });
-        }
+
+        // Calulate the line numbers width
+        const codeLines = textAreaRef?.current?.querySelectorAll('.line');
+        const lnv = Number(startingLineNumber ?? 0) + (codeLines?.length ?? 0);
+        if (!codeLines?.[0]) return;
+        const { font } = getComputedStyle(codeLines?.[0]);
+        const lineNumbersWidth = getTextWidth(String(lnv), font);
+        setAttributes({ lineNumbersWidth });
     }, [
-        lineNumbers,
-        startingLineNumber,
         code,
         loading,
         error,
         textAreaRef,
-        setAttributes,
+        lineNumbers,
+        startingLineNumber,
         fontSize,
         fontFamily,
-        lineHeight,
+        setAttributes,
     ]);
 
     if (!loading && !highlighter) {
