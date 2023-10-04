@@ -45,6 +45,7 @@ export type Attributes = {
     useDecodeURI: boolean;
     tabSize: number;
     useTabs: boolean;
+    url: string;
 };
 export interface AttributesPropsAndSetter {
     attributes: Attributes;

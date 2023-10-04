@@ -46,7 +46,8 @@
         "label": { "type": "string", "default": "" },
         "copyButton": { "type": "boolean" },
         "tabSize": { "type": "number" },
-        "useTabs": { "type": "boolean" }
+        "useTabs": { "type": "boolean" },
+        "url": { "type": "string" }
     },
     "supports": {
         "html": false,

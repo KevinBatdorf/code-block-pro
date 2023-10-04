@@ -390,6 +390,30 @@ export const SidebarControls = ({
                     />
                 </BaseControl>
             </PanelBody>
+            <PanelBody
+                title={__('GitHub', 'code-block-pro')}
+                initialOpen={bringAttention === 'language-select'}>
+                <div className="code-block-pro-editor">
+                    <BaseControl id="code-block-pro-language">
+                        <TextControl
+                            spellCheck={false}
+                            autoComplete="off"
+                            type="text"
+                            data-cy="editor-tab-size"
+                            label={__('Github Repository Link', 'code-block-pro')}
+                            help={__(
+                                'The GitHub link to your file. Supports both github.com and githubusercontent.com links.',
+                                'code-block-pro',
+                            )}
+                            value={attributes.url}
+                            onChange={(url) => {
+                                setAttributes({ url });
+                                updateThemeHistory({ url });
+                            }}
+                        />
+                    </BaseControl>
+                </div>
+            </PanelBody>
         </InspectorControls>
     );
 };
