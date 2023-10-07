@@ -32,6 +32,7 @@ import { ThemesPanel } from '../components/ThemesPanel';
 import { MissingPermissionsTip } from '../components/misc/MissingPermissions';
 import { BlurControl } from './BlurControl';
 import { HighlightingControl } from './HighlightingControl';
+import {GitHubRepositoryControl} from "./GitHubRepositoryControl";
 
 export const SidebarControls = ({
     attributes,
@@ -395,16 +396,7 @@ export const SidebarControls = ({
                 initialOpen={bringAttention === 'language-select'}>
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-language">
-                        <TextControl
-                            spellCheck={false}
-                            autoComplete="off"
-                            type="text"
-                            data-cy="editor-tab-size"
-                            label={__('Github Repository Link', 'code-block-pro')}
-                            help={__(
-                                'The GitHub link to your file. Supports both github.com and githubusercontent.com links.',
-                                'code-block-pro',
-                            )}
+                        <GitHubRepositoryControl
                             value={attributes.url}
                             onChange={(url) => {
                                 setAttributes({ url });
