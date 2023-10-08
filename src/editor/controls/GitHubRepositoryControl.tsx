@@ -58,14 +58,12 @@ function isValidUrl(str: string) {
     try {
         const url = new URL(str);
 
-        if (url.host !== 'raw.githubusercontent.com' && url.host !== 'github.com') {
-            return false;
-        }
+        return url.host === 'raw.githubusercontent.com' ||
+            url.host === 'gist.githubusercontent.com' ||
+            url.host === 'github.com';
     } catch (e) {
         return false;
     }
-
-    return true;
 }
 
 async function fetchFile(url: string) {

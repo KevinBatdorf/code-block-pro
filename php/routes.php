@@ -30,9 +30,9 @@ add_action('rest_api_init', function () {
     CBPRouter::code('/code', function ($payload) {
         $parsedUrl = wp_parse_url($payload['url']);
 
-        $isValidHost = $parsedUrl['host'] !== 'gist.githubusercontent.com' &&
-            $parsedUrl['host'] !== 'raw.githubusercontent.com' &&
-            $parsedUrl['host'] !== 'github.com';
+        $isValidHost = $parsedUrl['host'] === 'gist.githubusercontent.com' ||
+            $parsedUrl['host'] === 'raw.githubusercontent.com' ||
+            $parsedUrl['host'] === 'github.com';
 
         if (!$isValidHost) {
             return new WP_REST_Response(
