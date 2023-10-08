@@ -17,12 +17,12 @@ import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { computeLineHighlightColor } from '../util/colors';
 import { getEditorLanguage } from '../util/languages';
 import { MissingPermissionsTip } from './components/misc/MissingPermissions';
+import { useCanEditHTML } from '../hooks/useCanEditHTML';
 
 export const Edit = ({
     attributes,
     setAttributes,
-    canEdit,
-}: AttributesPropsAndSetter & { canEdit: boolean }) => {
+}: AttributesPropsAndSetter) => {
     const {
         language,
         theme,
@@ -51,6 +51,7 @@ export const Edit = ({
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
+    const canEdit = useCanEditHTML();
     const handleChange = (code: string) =>
         setAttributes({ code: encode(code) });
     const { previousLanguage } = useLanguageStore();
@@ -115,7 +116,7 @@ export const Edit = ({
             bgColor: highlighter.getBackgroundColor(),
             textColor: highlighter.getForegroundColor(),
         });
-    }, [theme, highlighter, setAttributes]);
+    }, [theme, highlighter, setAttributes, canEdit]);
 
     useEffect(() => {
         if (!highlighter) return;
@@ -150,6 +151,7 @@ export const Edit = ({
         highlighter,
         seeMoreAfterLine,
         seeMoreTransition,
+        canEdit,
         color,
         code,
         enableMaxHeight,
@@ -193,6 +195,7 @@ export const Edit = ({
         startingLineNumber,
         code,
         loading,
+        canEdit,
         error,
         textAreaRef,
         setAttributes,
@@ -226,6 +229,8 @@ export const Edit = ({
             </div>
         );
     }
+
+    if (canEdit === undefined) return null;
 
     return (
         <div

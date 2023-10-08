@@ -32,12 +32,12 @@ import { ThemesPanel } from '../components/ThemesPanel';
 import { MissingPermissionsTip } from '../components/misc/MissingPermissions';
 import { BlurControl } from './BlurControl';
 import { HighlightingControl } from './HighlightingControl';
+import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 
 export const SidebarControls = ({
     attributes,
     setAttributes,
-    canEdit,
-}: AttributesPropsAndSetter & { canEdit: boolean }) => {
+}: AttributesPropsAndSetter) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
@@ -46,9 +46,8 @@ export const SidebarControls = ({
     const languagesSorted = new Map(
         Object.entries(languages).sort((a, b) => a[1].localeCompare(b[1])),
     );
-
+    const canEdit = useCanEditHTML();
     const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
-
     const showHeaderTextEdit = [
         'simpleString',
         'pillString',
@@ -71,9 +70,15 @@ export const SidebarControls = ({
         });
     }, [bringAttentionToPanel, closeGeneralSidebar, openGeneralSidebar]);
 
+    if (!canEdit)
+        return (
+            <InspectorControls>
+                {canEdit ? null : <MissingPermissionsTip />}
+            </InspectorControls>
+        );
+
     return (
         <InspectorControls>
-            {canEdit ? null : <MissingPermissionsTip />}
             <PanelBody
                 title={__('Language', 'code-block-pro')}
                 initialOpen={bringAttention === 'language-select'}>

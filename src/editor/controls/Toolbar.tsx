@@ -7,6 +7,7 @@ import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { AttributesPropsAndSetter, ThemeOption } from '../../types';
 import { languages } from '../../util/languages';
+import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 
 export const ToolbarControls = ({
     attributes,
@@ -19,6 +20,9 @@ export const ToolbarControls = ({
         defaultThemes,
     ) as ThemeOption;
     const { setBringAttentionToPanel } = useGlobalStore();
+    const canEdit = useCanEditHTML();
+
+    if (canEdit === undefined) return null;
 
     return (
         <BlockControls>

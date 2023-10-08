@@ -13,7 +13,6 @@ import { fontFamilyLong, maybeClamp } from './util/fonts';
 import { AttributesPropsAndSetter } from './types';
 import defaultThemes from './defaultThemes.json';
 import { ThemeOption } from './types';
-import { useCanEditHTML } from './hooks/useCanEditHTML';
 
 export const Editor = ({
     attributes,
@@ -25,14 +24,11 @@ export const Editor = ({
         defaultThemes,
     ) as ThemeOption;
     const styles = themes[attributes.theme]?.styles;
-    const hasPermission = useCanEditHTML();
-    setAttributes = hasPermission ? setAttributes : () => undefined;
 
     return (
         <>
             <SidebarControls
                 attributes={attributes}
-                canEdit={!!hasPermission}
                 setAttributes={setAttributes}
             />
             <ToolbarControls
@@ -99,11 +95,7 @@ export const Editor = ({
                 })}>
                 <HeaderType {...attributes} />
                 <ButtonList {...attributes} />
-                <Edit
-                    attributes={attributes}
-                    setAttributes={setAttributes}
-                    canEdit={!!hasPermission}
-                />
+                <Edit attributes={attributes} setAttributes={setAttributes} />
                 <FooterType {...attributes} />
                 <SeeMoreType {...attributes} />
             </div>
