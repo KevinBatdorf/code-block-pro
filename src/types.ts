@@ -55,7 +55,6 @@ declare global {
     interface Window {
         codeBlockPro: {
             pluginUrl: string;
-            canSaveHtml: boolean;
         };
     }
 }

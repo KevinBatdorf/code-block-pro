@@ -26,4 +26,8 @@ add_action('rest_api_init', function () {
             ]
         );
     });
+
+    CBPRouter::get('/can-save-html', function () {
+        return new WP_REST_Response(current_user_can('unfiltered_html'));
+    });
 });

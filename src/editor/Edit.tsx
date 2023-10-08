@@ -237,7 +237,7 @@ export const Edit = ({
                 overflow: Number(editorHeight) ? 'auto' : undefined,
             }}>
             {canEdit ? null : (
-                <div className="absolute inset-0 z-10 bg-white bg-opacity-70">
+                <div className="absolute inset-0 z-10">
                     <MissingPermissionsTip />
                 </div>
             )}
