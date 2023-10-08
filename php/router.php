@@ -36,6 +36,21 @@ if (!class_exists('CBPRouter')) {
             );
         }
 
+        public function codeHandler($namespace, $endpoint, $callback)
+        {
+            \register_rest_route(
+                $namespace,
+                $endpoint,
+                [
+                    'methods' => 'POST',
+                    'callback' => $callback,
+                    'permission_callback' => function () {
+                        return \current_user_can($this->capability);
+                    },
+                ]
+            );
+        }
+
         public static function __callStatic($name, array $arguments)
         {
             $name = "{$name}Handler";

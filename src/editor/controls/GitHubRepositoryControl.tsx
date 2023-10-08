@@ -1,17 +1,22 @@
 import {BaseControl, TextControl,} from '@wordpress/components';
 import {useEffect, useRef} from '@wordpress/element';
 import {__} from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 interface GitHubRepositoryControlProps {
     value: string;
     onChange: (value: string) => void;
 }
 
-export const GitHubRepositoryControl = ({value, onChange}: GitHubRepositoryControlProps) => {
+export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHubRepositoryControlProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (isValidUrl(value)) {
+            fetchFile(value).then((code) => {
+                onCodeFetched(code);
+            });
+
             inputRef.current
                 ?.querySelector('input')
                 ?.classList.remove('cbp-input-error');
@@ -54,4 +59,14 @@ function isValidUrl(str: string) {
     }
 
     return true;
+}
+
+async function fetchFile(url: string) {
+    const response = await apiFetch({
+        path: 'code-block-pro/v1/code',
+        method: 'POST',
+        data: {url},
+    });
+
+    return response.code;
 }

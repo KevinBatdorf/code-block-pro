@@ -26,4 +26,32 @@ add_action('rest_api_init', function () {
             ]
         );
     });
+
+    CBPRouter::code('/code', function ($payload) {
+        $parsedUrl = wp_parse_url($payload['url']);
+
+        if ($parsedUrl['host'] !== 'gist.githubusercontent.com' && $parsedUrl['host'] !== 'raw.githubusercontent.com') {
+            return new WP_REST_Response(
+                [
+                    'code' => 'Error: Invalid Host'
+                ]
+            );
+        }
+
+        $response = wp_remote_get($payload['url']);
+
+        if ($response['headers']['content-type'] !== 'text/plain; charset=utf-8') {
+            return new WP_REST_Response(
+                [
+                    'code' => 'Error: Invalid Content-Type'
+                ]
+            );
+        }
+
+        return new WP_REST_Response(
+            [
+                'code' => $response['body']
+            ]
+        );
+    });
 });
