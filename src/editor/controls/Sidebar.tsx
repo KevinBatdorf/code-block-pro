@@ -402,8 +402,8 @@ export const SidebarControls = ({
                                 setAttributes({ url });
                                 updateThemeHistory({ url });
                             }}
-                            onCodeFetched={(text: string) => {
-                                console.log(text);
+                            onCodeFetched={(code) => {
+                                setAttributes({ code });
                             }}
                         />
                     </BaseControl>
