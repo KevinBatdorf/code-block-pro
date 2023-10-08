@@ -34,7 +34,7 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                     data-cy="github-repository-link"
                     label={__('Github Repository Link', 'code-block-pro')}
                     help={__(
-                        'The link to your file. Supports raw.githubusercontent.com links.',
+                        'The link to your file. Supports github.com and raw.githubusercontent.com links.',
                         'code-block-pro',
                     )}
                     value={value}
@@ -60,7 +60,7 @@ function isValidUrl(str: string) {
     try {
         const url = new URL(str);
 
-        if (url.host !== 'raw.githubusercontent.com') {
+        if (url.host !== 'raw.githubusercontent.com' && url.host !== 'github.com') {
             return false;
         }
     } catch (e) {

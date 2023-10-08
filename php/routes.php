@@ -30,12 +30,22 @@ add_action('rest_api_init', function () {
     CBPRouter::code('/code', function ($payload) {
         $parsedUrl = wp_parse_url($payload['url']);
 
-        if ($parsedUrl['host'] !== 'gist.githubusercontent.com' && $parsedUrl['host'] !== 'raw.githubusercontent.com') {
+        if (
+            $parsedUrl['host'] !== 'gist.githubusercontent.com' &&
+            $parsedUrl['host'] !== 'raw.githubusercontent.com' &&
+            $parsedUrl['host'] !== 'github.com'
+        ) {
             return new WP_REST_Response(
                 [
                     'code' => 'Error: Invalid Host'
                 ]
             );
+        }
+
+        if ($parsedUrl['host'] === 'github.com') {
+            $parsedUrl['host'] = 'raw.githubusercontent.com';
+            $parsedUrl['path'] = str_replace('/blob', '', $parsedUrl['path']);
+            $payload['url'] = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $parsedUrl['path'];
         }
 
         $response = wp_remote_get($payload['url']);
