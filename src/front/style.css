@@ -86,6 +86,32 @@
     user-select: none;
     counter-increment: step;
 }
+
+.wp-block-kevinbatdorf-code-block-pro.cbp-has-line-numbers.cbp-static-line-numbers:not(
+        .code-block-pro-editor
+    )
+    pre
+    code {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: calc(var(--cbp-line-number-width, auto) + 20px);
+            background: #1E1E1E;
+        }
+        .line:not(.cbp-line-number-disabled) {
+        @apply static;
+        &::before {
+            width: calc(var(--cbp-line-number-width, auto));
+            left: 16px
+        }
+    }
+}
+.wp-block-kevinbatdorf-code-block-pro.cbp-static-line-numbers > span > svg {
+    @apply relative z-10;
+}
 .wp-block-kevinbatdorf-code-block-pro.cbp-highlight-hover .line {
     min-height: var(--cbp-block-height, 100%);
 }
