@@ -1,4 +1,4 @@
-import {BaseControl, TextControl,} from '@wordpress/components';
+import {BaseControl, Button, TextControl,} from '@wordpress/components';
 import {useEffect, useRef} from '@wordpress/element';
 import {__} from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
@@ -13,9 +13,7 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
 
     useEffect(() => {
         if (isValidUrl(value)) {
-            fetchFile(value).then((code) => {
-                onCodeFetched(code);
-            });
+            fetchFile(value).then(onCodeFetched);
 
             inputRef.current
                 ?.querySelector('input')
@@ -43,6 +41,17 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                     onChange={onChange}
                 />
             </div>
+            {
+                isValidUrl(value) ?
+                    <Button
+                        data-cy="manage-themes"
+                        variant="secondary"
+                        isSmall
+                        onClick={() => fetchFile(value).then(onCodeFetched)}>
+                        {__('Fetch Code', 'code-block-pro')}
+                    </Button> :
+                    null
+            }
         </BaseControl>
     );
 };
