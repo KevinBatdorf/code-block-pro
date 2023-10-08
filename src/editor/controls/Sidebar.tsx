@@ -402,8 +402,12 @@ export const SidebarControls = ({
                                 setAttributes({ url });
                                 updateThemeHistory({ url });
                             }}
-                            onCodeFetched={(code) => {
-                                setAttributes({ code });
+                            onCodeFetched={({ code, lineNumbers }) => {
+                                setAttributes({
+                                    code,
+                                    enableHighlighting: Boolean(lineNumbers),
+                                    lineHighlights: Boolean(lineNumbers) ? `[${lineNumbers.startLine},${lineNumbers.endLine}]` : '',
+                                });
                             }}
                         />
                     </BaseControl>

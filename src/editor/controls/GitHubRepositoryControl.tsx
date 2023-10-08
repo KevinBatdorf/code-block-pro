@@ -13,7 +13,13 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
 
     useEffect(() => {
         if (isValidUrl(value)) {
-            fetchFile(value).then(onCodeFetched);
+            fetchFile(value).then((code) => {
+                if (value.indexOf("#L")) {
+                    onCodeFetched({ code, lineNumbers: extractLineNumbers(value) });
+                } else {
+                    onCodeFetched({ code });
+                }
+            });
 
             inputRef.current
                 ?.querySelector('input')
@@ -46,7 +52,13 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                     data-cy="manage-themes"
                     variant="secondary"
                     isSmall
-                    onClick={() => fetchFile(value).then(onCodeFetched)}>
+                    onClick={() => fetchFile(value).then((code) => {
+                        if (value.indexOf("#L")) {
+                            onCodeFetched({code, lineNumbers: extractLineNumbers(value)});
+                        } else {
+                            onCodeFetched({code});
+                        }
+                    })}>
                     {__('Fetch Code', 'code-block-pro')}
                 </Button>
             )}
@@ -65,6 +77,36 @@ function isValidUrl(str: string) {
         return false;
     }
 }
+
+function extractLineNumbers(url) {
+    const hashIndex = url.indexOf("#L");
+    if (hashIndex === -1) {
+        return null;
+    }
+
+    const strAfterHash = url.substring(hashIndex + 1);
+    const strSplitByDash = strAfterHash.split('-');
+    const lineNumbers = strSplitByDash.map(getLineNumberFromToken);
+
+    const isFirstNumberValid = lineNumbers[0] > 0;
+    const isSecondNumberValid = lineNumbers[1] > 0;
+    if (!isFirstNumberValid) {
+        return null;
+    }
+
+    return {
+        startLine: lineNumbers[0],
+        endLine: isSecondNumberValid ? lineNumbers[1] : lineNumbers[0],
+    };
+}
+
+function getLineNumberFromToken(token: string) {
+    const splitByColumn = token.split('C');
+    const lineNumber = splitByColumn[0].substring(1);
+
+    return parseInt(lineNumber);
+}
+
 
 async function fetchFile(url: string) {
     const response = await apiFetch({
