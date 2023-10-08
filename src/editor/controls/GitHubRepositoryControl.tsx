@@ -41,17 +41,15 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                     onChange={onChange}
                 />
             </div>
-            {
-                isValidUrl(value) ?
-                    <Button
-                        data-cy="manage-themes"
-                        variant="secondary"
-                        isSmall
-                        onClick={() => fetchFile(value).then(onCodeFetched)}>
-                        {__('Fetch Code', 'code-block-pro')}
-                    </Button> :
-                    null
-            }
+            {isValidUrl(value) && (
+                <Button
+                    data-cy="manage-themes"
+                    variant="secondary"
+                    isSmall
+                    onClick={() => fetchFile(value).then(onCodeFetched)}>
+                    {__('Fetch Code', 'code-block-pro')}
+                </Button>
+            )}
         </BaseControl>
     );
 };
