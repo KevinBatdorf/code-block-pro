@@ -1,5 +1,6 @@
 import {
     useCallback,
+    useState,
     useEffect,
     useLayoutEffect,
     useRef,
@@ -31,13 +32,10 @@ export const Edit = ({
         bgColor: backgroundColor,
         textColor: color,
         disablePadding,
-        lineNumbersWidth,
         lineNumbers,
         startingLineNumber,
         footerType,
         fontSize,
-        fontFamily,
-        lineHeight,
         lineBlurs,
         lineHighlights,
         enableBlurring,
@@ -51,7 +49,8 @@ export const Edit = ({
         useTabs,
     } = attributes;
 
-    const textAreaRef = useRef<HTMLDivElement>(null);
+    const [editorLeftPadding, setEditorLeftPadding] = useState(0);
+    const codeAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) =>
         setAttributes({ code: encode(code) });
     const { previousLanguage } = useLanguageStore();
@@ -166,30 +165,30 @@ export const Edit = ({
     ]);
 
     useLayoutEffect(() => {
-        if (!textAreaRef.current) return;
+        if (!codeAreaRef.current) return;
         if (!lineNumbers) {
             setAttributes({ lineNumbersWidth: undefined });
             return;
         }
 
         // Calulate the line numbers width
-        const codeLines = textAreaRef?.current?.querySelectorAll('.line');
-        const lnv = Number(startingLineNumber ?? 0) + (codeLines?.length ?? 0);
+        const codeLines = codeAreaRef?.current?.querySelectorAll('.line');
+        const highestLineNumber =
+            Number(startingLineNumber ?? 0) + (codeLines?.length ?? 0);
         if (!codeLines?.[0]) return;
+        setAttributes({ highestLineNumber });
+
+        // Used for the editor, which requires px values
         const { font } = getComputedStyle(codeLines?.[0]);
-        const lineNumbersWidth = getTextWidth(String(lnv), font);
-        setAttributes({ lineNumbersWidth });
+        setEditorLeftPadding(getTextWidth(String(highestLineNumber), font));
     }, [
         lineNumbers,
         startingLineNumber,
         code,
-        loading,
-        error,
-        textAreaRef,
+        codeAreaRef,
         setAttributes,
         fontSize,
-        fontFamily,
-        lineHeight,
+        loading,
     ]);
 
     if (!loading && !highlighter) {
@@ -220,7 +219,7 @@ export const Edit = ({
 
     return (
         <div
-            ref={textAreaRef}
+            ref={codeAreaRef}
             style={{
                 maxHeight: Number(editorHeight)
                     ? Number(editorHeight)
@@ -245,8 +244,9 @@ export const Edit = ({
                     left: (() => {
                         if (!lineNumbers && disablePadding) return 0;
                         if (!lineNumbers) return 16;
-                        if (disablePadding) return (lineNumbersWidth ?? 0) + 16;
-                        return (lineNumbersWidth ?? 0) + 32;
+                        if (disablePadding)
+                            return (editorLeftPadding ?? 0) + 16;
+                        return (editorLeftPadding ?? 0) + 32;
                     })(),
                     right: 0,
                 }}
@@ -259,7 +259,7 @@ export const Edit = ({
                 onKeyDown={(e: any) =>
                     e.key === 'Tab' &&
                     // Tab lock here. Pressing Escape will unlock.
-                    textAreaRef.current?.querySelector('textarea')?.focus()
+                    codeAreaRef.current?.querySelector('textarea')?.focus()
                 }
                 highlight={(code: string) =>
                     highlighter
