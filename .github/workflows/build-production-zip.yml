@@ -21,7 +21,7 @@ jobs:
               run: |
                   mkdir code-block-pro
                   rsync -r --exclude-from='.distignore' . code-block-pro/
-                  rm -r code-block-pro-temp/code-block-pro
+                  rm -r code-block-pro/code-block-pro
             - name: Create Zip
               run: |
                   zip -r code-block-pro-${{ github.run_number }}.zip code-block-pro/
