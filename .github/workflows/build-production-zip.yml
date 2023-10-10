@@ -28,7 +28,7 @@ jobs:
             - name: Package Zip
               uses: actions/upload-artifact@v3
               with:
-                  name: code-block-pro-${{ github.run_number }}.zip
+                  name: code-block-pro-${{ github.run_number }}
                   retention-days: 5
                   path: |
                       ${{ github.workspace }}/code-block-pro-${{ github.run_number }}.zip
