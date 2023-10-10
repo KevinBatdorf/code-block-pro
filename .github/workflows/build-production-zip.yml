@@ -17,21 +17,15 @@ jobs:
                   npm run build
               env:
                   CI: true
-
-            - name: Package
+            - name: Create zip directory
+              run: |
+                  mkdir code-block-pro
+                  rsync -r --exclude-from='.distignore' ./ code-block-pro/
+              shell: bash
+            - name: Package Zip
               uses: actions/upload-artifact@v3
               with:
                   name: code-block-pro
                   retention-days: 5
                   path: |
-                      ${{ github.workspace }}/
-                      !${{ github.workspace }}/node_modules/
-                      !${{ github.workspace }}/cypress/
-                      !${{ github.workspace }}/target/
-                      !${{ github.workspace }}/scripts/
-                      !${{ github.workspace }}/.git/
-                      !${{ github.workspace }}/.github/
-                      !${{ github.workspace }}/.wordpress-org/
-                      !${{ github.workspace }}/assets/
-                      !${{ github.workspace }}/scripts/
-                      !${{ github.workspace }}/package-lock.json
+                      ${{ github.workspace }}/code-block-pro/
