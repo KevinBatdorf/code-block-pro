@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Check out code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v2
             - name: npm install and build
               run: |
                   npm ci
@@ -24,10 +24,9 @@ jobs:
                   rm -r code-block-pro/code-block-pro
             - name: Create Zip
               run: |
-                  cd code-block-pro/
-                  zip -r -y ../code-block-pro-${{ github.run_number }}.zip .
+                  zip -r code-block-pro-${{ github.run_number }}.zip code-block-pro/
             - name: Package Zip
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v2
               with:
                   name: code-block-pro-${{ github.run_number }}
                   retention-days: 5
