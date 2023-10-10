@@ -1,31 +1,37 @@
-name: Build production zip file
+name: Build production zip
 on: push
 jobs:
-    build:
-        name: Build zip file
-        concurrency:
-            group: production - ${{ github.event.pull_request.number || github.ref }}
-            cancel-in-progress: true
-        runs-on: ubuntu-latest
-        steps:
-            - name: Check out code
-              uses: actions/checkout@v3
-            - name: npm install and build
-              run: |
-                  npm ci
-                  npx eslint --max-warnings 0 .
-                  npm run build
-              env:
-                  CI: true
-            - name: Copy files
-              run: |
-                  mkdir code-block-pro
-                  rsync -r --exclude-from='.distignore' . code-block-pro/
-                  rm -r code-block-pro/code-block-pro
-            - name: Package and Upload
-              uses: actions/upload-artifact@v3
-              with:
-                  name: code-block-pro-${{ github.run_number }}
-                  retention-days: 5
-                  path: |
-                      ${{ github.workspace }}/code-block-pro
+  build:
+    name: Build zip file
+    concurrency:
+      group: production - ${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: npm install and build
+        run: |
+          npm ci
+          npx eslint --max-warnings 0 .
+          npm run build
+        env:
+          CI: true
+
+      - name: Copy files
+        run: |
+          mkdir code-block-pro
+          rsync -r --exclude-from='.distignore' . code-block-pro/
+          rm -r code-block-pro/code-block-pro
+
+      - name: Create Zip
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r ./code-block-pro-${{ github.run_number }}.zip ./code-block-pro
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-block-pro-${{ github.run_number }}
+          path: ${{ github.workspace }}/code-block-pro-${{ github.run_number }}.zip
