@@ -19,7 +19,7 @@ jobs:
                   CI: true
             - name: Copy files
               run: |
-                  mkdir code-block-pro
+                  mkdir code-block-pro-temp
                   rsync -r --exclude-from='.distignore' . code-block-pro-temp/
                   rm -r code-block-pro-temp/code-block-pro
             - name: Create Zip
