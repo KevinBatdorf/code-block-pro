@@ -1,3 +1,4 @@
+
 name: Build production zip file
 on: push
 jobs:
@@ -24,7 +25,8 @@ jobs:
                   rm -r code-block-pro/code-block-pro
             - name: Create Zip
               run: |
-                  zip -X -r code-block-pro-${{ github.run_number }}.zip code-block-pro/
+                  sudo apt-get install -y zip unzip
+                  ditto -c -k --sequesterRsrc --keepParent code-block-pro code-block-pro.zip
             - name: Package Zip
               uses: actions/upload-artifact@v3
               with:
