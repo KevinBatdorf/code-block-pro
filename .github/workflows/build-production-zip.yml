@@ -21,6 +21,11 @@ jobs:
               run: |
                   mkdir code-block-pro-temp
                   rsync -r --exclude-from='.distignore' . code-block-pro-temp/
+            - name: List contents of code-block-pro-temp
+              run: |
+                  ls -la code-block-pro-temp
+            - name: Delete nested directory
+              run: |
                   rm -r code-block-pro-temp/code-block-pro
             - name: Create Zip
               run: |
