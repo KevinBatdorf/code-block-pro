@@ -19,11 +19,11 @@ jobs:
                   CI: true
             - name: Copy files
               run: |
-                  mkdir code-block-pro-temp
-                  rsync -r --exclude-from='.distignore' ./ code-block-pro-temp/
+                  mkdir code-block-pro
+                  rsync -r --exclude-from='.distignore' . code-block-pro/
             - name: Create Zip
               run: |
-                  zip -r code-block-pro-${{ github.run_number }}.zip code-block-pro-temp/
+                  zip -r code-block-pro-${{ github.run_number }}.zip code-block-pro/
             - name: Package Zip
               uses: actions/upload-artifact@v3
               with:
