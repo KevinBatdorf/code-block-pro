@@ -24,7 +24,7 @@ jobs:
                   rm -r code-block-pro/code-block-pro
             - name: Create Zip
               run: |
-                  zip -r code-block-pro-${{ github.run_number }}.zip code-block-pro/
+                  zip -X -r code-block-pro-${{ github.run_number }}.zip code-block-pro/
             - name: Package Zip
               uses: actions/upload-artifact@v3
               with:
