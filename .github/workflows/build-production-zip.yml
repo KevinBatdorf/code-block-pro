@@ -17,10 +17,13 @@ jobs:
                   npm run build
               env:
                   CI: true
+            - name: Copy files
+              run: |
+                  mkdir code-block-pro-temp
+                  rsync -r --exclude-from='.distignore' ./ code-block-pro-temp/
             - name: Create Zip
               run: |
-                  zip -r code-block-pro-${{ github.run_number }}.zip . -x $(grep -v '^#' .distignore | tr "\n" " ")
-              shell: bash
+                  zip -r code-block-pro-${{ github.run_number }}.zip code-block-pro-temp/
             - name: Package Zip
               uses: actions/upload-artifact@v3
               with:
