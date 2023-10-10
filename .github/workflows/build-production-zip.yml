@@ -22,15 +22,9 @@ jobs:
                   mkdir code-block-pro
                   rsync -r --exclude-from='.distignore' . code-block-pro/
                   rm -r code-block-pro/code-block-pro
-            - name: Create Zip
-              run: |
-                  cd code-block-pro
-                  zip -r ../code-block-pro-${{ github.run_number }}.zip . *
-                  cd ..
-            - name: Package Zip
+            - name: Upload Artifact
               uses: actions/upload-artifact@v3
               with:
                   name: code-block-pro-${{ github.run_number }}
+                  path: code-block-pro
                   retention-days: 5
-                  path: |
-                      ${{ github.workspace }}/code-block-pro-${{ github.run_number }}.zip
