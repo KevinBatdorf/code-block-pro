@@ -12,60 +12,82 @@ import { fontFamilyLong, maybeClamp } from '../util/fonts';
 import './style.css';
 
 export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
+    const {
+        clampFonts,
+        code,
+        codeHTML,
+        disablePadding,
+        enableBlurring,
+        enableHighlighting,
+        footerType,
+        fontSize,
+        fontFamily,
+        highestLineNumber,
+        highlightingHover,
+        lineHeight,
+        lineHighlightColor,
+        lineNumbers,
+        lineNumbersWidth,
+        removeBlurOnHover,
+        startingLineNumber,
+        tabSize,
+        theme,
+        useTabs,
+    } = attributes;
+
+    const fontFamilyRatio = (fontFamily: string) =>
+        fontFamily === 'Code-Pro-Fantasque-Sans-Mono' ? 0.5 : 0.6;
+
     // To add custom styles
     const themes = applyFilters(
         'blocks.codeBlockPro.themes',
         defaultThemes,
     ) as ThemeOption;
-    const styles = themes[attributes.theme]?.styles;
+    const styles = themes[theme]?.styles;
     return (
         <div
             {...blockProps.save({
                 className: classNames({
-                    'padding-disabled': attributes.disablePadding,
+                    'padding-disabled': disablePadding,
                     'padding-bottom-disabled':
-                        attributes?.footerType &&
-                        attributes?.footerType !== 'none',
-                    'cbp-has-line-numbers': attributes.lineNumbers,
-                    'cbp-blur-enabled': attributes.enableBlurring,
-                    'cbp-unblur-on-hover': attributes.removeBlurOnHover,
-                    'cbp-highlight-hover': attributes.highlightingHover,
+                        footerType && footerType !== 'none',
+                    'cbp-has-line-numbers': lineNumbers,
+                    'cbp-blur-enabled': enableBlurring,
+                    'cbp-unblur-on-hover': removeBlurOnHover,
+                    'cbp-highlight-hover': highlightingHover,
                 }),
             })}
-            data-code-block-pro-font-family={attributes.fontFamily}
+            data-code-block-pro-font-family={fontFamily}
             style={
                 {
-                    fontSize: maybeClamp(
-                        attributes.fontSize,
-                        attributes.clampFonts,
-                    ),
+                    fontSize: maybeClamp(fontSize, clampFonts),
                     // Tiny check to avoid block invalidation error
-                    fontFamily: fontFamilyLong(attributes.fontFamily),
-                    '--cbp-line-number-color': attributes?.lineNumbers
+                    fontFamily: fontFamilyLong(fontFamily),
+                    '--cbp-line-number-color': lineNumbers
                         ? findLineNumberColor(attributes)
                         : undefined,
                     '--cbp-line-number-start':
-                        Number(attributes?.startingLineNumber) > 1
-                            ? attributes.startingLineNumber
+                        Number(startingLineNumber) > 1
+                            ? startingLineNumber
                             : undefined,
-                    '--cbp-line-number-width': attributes.lineNumbersWidth
-                        ? `${attributes.lineNumbersWidth}px`
+                    '--cbp-line-number-width': highestLineNumber
+                        ? `calc(${
+                              String(highestLineNumber).length
+                          } * ${fontFamilyRatio(fontFamily)} * ${fontSize})`
+                        : lineNumbersWidth
+                        ? `${lineNumbersWidth}px`
                         : undefined,
                     '--cbp-line-highlight-color':
-                        attributes?.enableHighlighting ||
-                        attributes?.highlightingHover
-                            ? attributes.lineHighlightColor
+                        enableHighlighting || highlightingHover
+                            ? lineHighlightColor
                             : undefined,
-                    lineHeight: maybeClamp(
-                        attributes.lineHeight,
-                        attributes.clampFonts,
-                    ),
+                    lineHeight: maybeClamp(lineHeight, clampFonts),
                     '--cbp-tab-width':
-                        attributes.useTabs === undefined
+                        useTabs === undefined
                             ? undefined // bw compatibility
-                            : String(attributes.tabSize),
+                            : String(tabSize),
                     tabSize:
-                        attributes.useTabs === undefined
+                        useTabs === undefined
                             ? undefined // bw compatibility
                             : 'var(--cbp-tab-width, 2)',
                     ...Object.entries(styles ?? {}).reduce(
@@ -82,11 +104,11 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                     ) as object),
                 } as React.CSSProperties
             }>
-            {attributes.code?.length > 0 ? (
+            {code?.length > 0 ? (
                 <>
                     <HeaderType {...attributes} />
                     <ButtonList {...attributes} />
-                    <RichText.Content value={attributes.codeHTML} />
+                    <RichText.Content value={codeHTML} />
                     <FooterType {...attributes} />
                     <SeeMoreType {...attributes} />
                 </>

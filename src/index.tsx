@@ -42,6 +42,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         seeMoreTransition: { type: 'boolean' },
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
+        highestLineNumber: { type: 'number' },
         enableHighlighting: { type: 'boolean' },
         highlightingHover: { type: 'boolean' },
         lineHighlights: { type: 'string' },

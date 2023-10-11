@@ -71,19 +71,6 @@
 .code-block-pro-editor.padding-disabled.cbp-has-line-numbers pre {
     @apply py-0;
 }
-/* Will make sure the line numbers are full width before calculating */
-.code-block-pro-editor.cbp-has-line-numbers
-    pre
-    .line.cbp-line-number-width-forced,
-.code-block-pro-editor.cbp-has-line-numbers pre .line.cbp-line-number-disabled {
-    @apply inline;
-}
-.code-block-pro-editor.cbp-has-line-numbers
-    pre
-    .line.cbp-line-number-width-forced::before {
-    width: auto !important;
-    position: initial;
-}
 .code-block-pro-editor .cbp-footer-link {
     @apply pointer-events-none no-underline;
 }
@@ -128,4 +115,24 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         monospace; /* no !important */
     direction: ltr;
+}
+@font-face {
+    font-family: 'Code-Pro-Fira-Code';
+    src: url('../fonts/Code-Pro-Fira-Code.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Code-Pro-JetBrains-Mono';
+    src: url('../fonts/Code-Pro-JetBrains-Mono.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Code-Pro-JetBrains-Mono-NL';
+    src: url('../fonts/Code-Pro-JetBrains-Mono-NL.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Code-Pro-Comic-Mono';
+    src: url('../fonts/Code-Pro-Comic-Mono.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Code-Pro-Fantasque-Sans-Mono';
+    src: url('../fonts/Code-Pro-Fantasque-Sans-Mono.woff2') format('woff2');
 }
