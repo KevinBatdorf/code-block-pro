@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
 Tested up to:      6.3
-Stable tag:        1.24.0
+Stable tag:        1.24.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -309,6 +309,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.24.1 - 2023-10-11 =
+- Tweak: Line numbers width is now calculated based on the longest line number * font width
+- Compatibility: Checks whether the user has permission via the browser instead of passing it in from the server (other plugins were intecepting this check)
 
 = 1.24.0 - 2023-09-02 =
 - Feature: Added Zig, mdc, Mojo, shellsession (console output), and splunk grammars
