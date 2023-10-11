@@ -13,6 +13,7 @@ import { useDispatch } from '@wordpress/data';
 import { store as editPostStore } from '@wordpress/edit-post';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useLanguageStore } from '../../state/language';
@@ -36,8 +37,7 @@ import { HighlightingControl } from './HighlightingControl';
 export const SidebarControls = ({
     attributes,
     setAttributes,
-    canEdit,
-}: AttributesPropsAndSetter & { canEdit: boolean }) => {
+}: AttributesPropsAndSetter) => {
     const [language, setLanguage] = useLanguage({ attributes, setAttributes });
     const { recentLanguages } = useLanguageStore();
     const { updateThemeHistory } = useThemeStore();
@@ -46,9 +46,8 @@ export const SidebarControls = ({
     const languagesSorted = new Map(
         Object.entries(languages).sort((a, b) => a[1].localeCompare(b[1])),
     );
-
+    const canEdit = useCanEditHTML();
     const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
-
     const showHeaderTextEdit = [
         'simpleString',
         'pillString',
@@ -71,9 +70,15 @@ export const SidebarControls = ({
         });
     }, [bringAttentionToPanel, closeGeneralSidebar, openGeneralSidebar]);
 
+    if (!canEdit)
+        return (
+            <InspectorControls>
+                {canEdit ? null : <MissingPermissionsTip />}
+            </InspectorControls>
+        );
+
     return (
         <InspectorControls>
-            {canEdit ? null : <MissingPermissionsTip />}
             <PanelBody
                 title={__('Language', 'code-block-pro')}
                 initialOpen={bringAttention === 'language-select'}>

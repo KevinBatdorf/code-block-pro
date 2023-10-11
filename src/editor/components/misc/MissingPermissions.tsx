@@ -10,7 +10,7 @@ export const MissingPermissionsTip = () => (
                     dangerouslySetInnerHTML={{
                         __html: sprintf(
                             __(
-                                'The %s capability is required to edit this block. Contact an admin to enable this feature. This is not an error.',
+                                'Read-only mode: The %s capability is required.',
                                 'code-block-pro',
                             ),
                             '<code>unfiltered_html</code>',

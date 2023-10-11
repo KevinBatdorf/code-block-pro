@@ -10,21 +10,21 @@ import { applyFilters } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
 import Editor from 'react-simple-code-editor';
+import { useCanEditHTML } from '../hooks/useCanEditHTML';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { computeLineHighlightColor } from '../util/colors';
+import { getTextWidth } from '../util/fonts';
 import { getEditorLanguage } from '../util/languages';
 import { MissingPermissionsTip } from './components/misc/MissingPermissions';
-import { getTextWidth } from '../util/fonts';
 
 export const Edit = ({
     attributes,
     setAttributes,
-    canEdit,
-}: AttributesPropsAndSetter & { canEdit: boolean }) => {
+}: AttributesPropsAndSetter) => {
     const {
         language,
         theme,
@@ -49,6 +49,8 @@ export const Edit = ({
         useTabs,
     } = attributes;
 
+    const textAreaRef = useRef<HTMLDivElement>(null);
+    const canEdit = useCanEditHTML();
     const [editorLeftPadding, setEditorLeftPadding] = useState(0);
     const codeAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) =>
@@ -115,7 +117,7 @@ export const Edit = ({
             bgColor: highlighter.getBackgroundColor(),
             textColor: highlighter.getForegroundColor(),
         });
-    }, [theme, highlighter, setAttributes]);
+    }, [theme, highlighter, setAttributes, canEdit]);
 
     useEffect(() => {
         if (!highlighter) return;
@@ -150,6 +152,7 @@ export const Edit = ({
         highlighter,
         seeMoreAfterLine,
         seeMoreTransition,
+        canEdit,
         color,
         code,
         enableMaxHeight,
@@ -185,6 +188,10 @@ export const Edit = ({
         lineNumbers,
         startingLineNumber,
         code,
+        loading,
+        canEdit,
+        error,
+        textAreaRef,
         codeAreaRef,
         setAttributes,
         fontSize,
@@ -217,6 +224,8 @@ export const Edit = ({
         );
     }
 
+    if (canEdit === undefined) return null;
+
     return (
         <div
             ref={codeAreaRef}
@@ -227,7 +236,7 @@ export const Edit = ({
                 overflow: Number(editorHeight) ? 'auto' : undefined,
             }}>
             {canEdit ? null : (
-                <div className="absolute inset-0 z-10 bg-white bg-opacity-70">
+                <div className="absolute inset-0 z-10">
                     <MissingPermissionsTip />
                 </div>
             )}
