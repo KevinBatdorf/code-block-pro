@@ -53,6 +53,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         seeMoreTransition: { type: 'boolean' },
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
+        highestLineNumber: { type: 'number' },
         enableHighlighting: { type: 'boolean' },
         highlightingHover: { type: 'boolean' },
         lineHighlights: { type: 'string' },
@@ -76,6 +77,27 @@ registerBlockType<Attributes>(blockConfig.name, {
     },
     title: __('Code Pro', 'code-block-pro'),
     edit: ({ attributes, setAttributes }) => {
+        const {
+            clampFonts,
+            disablePadding,
+            enableBlurring,
+            enableHighlighting,
+            footerType,
+            fontSize,
+            fontFamily,
+            highestLineNumber,
+            highlightingHover,
+            lineHeight,
+            lineHighlightColor,
+            lineNumbers,
+            lineNumbersWidth,
+            removeBlurOnHover,
+            startingLineNumber,
+            tabSize,
+            theme,
+            useTabs,
+        } = attributes;
+
         // Restricts users without unfiltered HTML access
         const hasPermission = window.codeBlockPro.canSaveHtml;
         setAttributes = hasPermission ? setAttributes : () => undefined;
@@ -85,7 +107,7 @@ registerBlockType<Attributes>(blockConfig.name, {
             'blocks.codeBlockPro.themes',
             defaultThemes,
         ) as ThemeOption;
-        const styles = themes[attributes.theme]?.styles;
+        const styles = themes[theme]?.styles;
         return (
             <>
                 <SidebarControls
@@ -100,48 +122,41 @@ registerBlockType<Attributes>(blockConfig.name, {
                 <div
                     {...blockProps({
                         className: classnames('code-block-pro-editor', {
-                            'padding-disabled': attributes.disablePadding,
+                            'padding-disabled': disablePadding,
                             'padding-bottom-disabled':
-                                attributes?.footerType &&
-                                attributes?.footerType !== 'none',
-                            'cbp-has-line-numbers': attributes.lineNumbers,
-                            'cbp-blur-enabled': attributes.enableBlurring,
-                            'cbp-unblur-on-hover': attributes.removeBlurOnHover,
-                            'cbp-highlight-hover': attributes.highlightingHover,
+                                footerType && footerType !== 'none',
+                            'cbp-has-line-numbers': lineNumbers,
+                            'cbp-blur-enabled': enableBlurring,
+                            'cbp-unblur-on-hover': removeBlurOnHover,
+                            'cbp-highlight-hover': highlightingHover,
                         }),
                         style: {
-                            fontSize: maybeClamp(
-                                attributes.fontSize,
-                                attributes.clampFonts,
-                            ),
-                            '--cbp-line-number-color': attributes?.lineNumbers
+                            fontSize: maybeClamp(fontSize, clampFonts),
+                            '--cbp-line-number-color': lineNumbers
                                 ? findLineNumberColor(attributes)
                                 : undefined,
                             '--cbp-line-number-start':
-                                Number(attributes?.startingLineNumber) > 1
-                                    ? attributes.startingLineNumber
+                                Number(startingLineNumber) > 1
+                                    ? startingLineNumber
                                     : undefined,
-                            '--cbp-line-number-width':
-                                attributes.lineNumbersWidth
-                                    ? `${attributes.lineNumbersWidth}px`
-                                    : undefined,
+                            '--cbp-line-number-width': highestLineNumber
+                                ? `calc(${
+                                      String(highestLineNumber).length
+                                  } * ${fontSize})`
+                                : lineNumbersWidth
+                                ? `${lineNumbersWidth}px`
+                                : undefined,
                             '--cbp-line-highlight-color':
-                                attributes?.enableHighlighting ||
-                                attributes?.highlightingHover
-                                    ? attributes.lineHighlightColor
+                                enableHighlighting || highlightingHover
+                                    ? lineHighlightColor
                                     : undefined,
-                            '--cbp-line-height': attributes.lineHeight,
+                            '--cbp-line-height': lineHeight,
                             tabSize:
-                                attributes.useTabs === undefined
+                                useTabs === undefined
                                     ? undefined // bw compatability
-                                    : attributes.tabSize,
-                            // Disabled as ligatures will break the editor line widths
-                            // fontFamily: fontFamilyLong(attributes.fontFamily),
-                            fontFamily: fontFamilyLong(''),
-                            lineHeight: maybeClamp(
-                                attributes.lineHeight,
-                                attributes.clampFonts,
-                            ),
+                                    : tabSize,
+                            fontFamily: fontFamilyLong(fontFamily),
+                            lineHeight: maybeClamp(lineHeight, clampFonts),
                             ...Object.entries(styles ?? {}).reduce(
                                 (acc, [key, value]) => ({
                                     ...acc,
