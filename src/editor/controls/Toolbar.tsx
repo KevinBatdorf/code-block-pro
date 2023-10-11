@@ -3,11 +3,11 @@ import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import defaultThemes from '../../defaultThemes.json';
+import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { AttributesPropsAndSetter, ThemeOption } from '../../types';
 import { languages } from '../../util/languages';
-import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 
 export const ToolbarControls = ({
     attributes,

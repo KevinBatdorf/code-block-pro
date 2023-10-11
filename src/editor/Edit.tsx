@@ -10,16 +10,16 @@ import { applyFilters } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
 import Editor from 'react-simple-code-editor';
+import { useCanEditHTML } from '../hooks/useCanEditHTML';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { computeLineHighlightColor } from '../util/colors';
+import { getTextWidth } from '../util/fonts';
 import { getEditorLanguage } from '../util/languages';
 import { MissingPermissionsTip } from './components/misc/MissingPermissions';
-import { useCanEditHTML } from '../hooks/useCanEditHTML';
-import { getTextWidth } from '../util/fonts';
 
 export const Edit = ({
     attributes,

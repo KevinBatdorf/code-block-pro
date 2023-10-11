@@ -13,6 +13,7 @@ import { useDispatch } from '@wordpress/data';
 import { store as editPostStore } from '@wordpress/edit-post';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { useLanguageStore } from '../../state/language';
@@ -32,7 +33,6 @@ import { ThemesPanel } from '../components/ThemesPanel';
 import { MissingPermissionsTip } from '../components/misc/MissingPermissions';
 import { BlurControl } from './BlurControl';
 import { HighlightingControl } from './HighlightingControl';
-import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 
 export const SidebarControls = ({
     attributes,

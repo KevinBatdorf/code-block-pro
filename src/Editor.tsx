@@ -1,6 +1,7 @@
 import { useBlockProps as blockProps } from '@wordpress/block-editor';
 import { applyFilters } from '@wordpress/hooks';
 import classnames from 'classnames';
+import defaultThemes from './defaultThemes.json';
 import { Edit } from './editor/Edit';
 import { FooterType } from './editor/components/FooterSelect';
 import { HeaderType } from './editor/components/HeaderSelect';
@@ -8,11 +9,10 @@ import { SeeMoreType } from './editor/components/SeeMoreSelect';
 import { ButtonList } from './editor/components/buttons/ButtonList';
 import { SidebarControls } from './editor/controls/Sidebar';
 import { ToolbarControls } from './editor/controls/Toolbar';
+import { AttributesPropsAndSetter } from './types';
+import { ThemeOption } from './types';
 import { findLineNumberColor } from './util/colors';
 import { fontFamilyLong, maybeClamp } from './util/fonts';
-import { AttributesPropsAndSetter } from './types';
-import defaultThemes from './defaultThemes.json';
-import { ThemeOption } from './types';
 
 export const Editor = ({
     attributes,
@@ -91,7 +91,7 @@ export const Editor = ({
                             useTabs === undefined
                                 ? undefined // bw compatability
                                 : tabSize,
-                        fontFamily: fontFamilyLong(''),
+                        fontFamily: fontFamilyLong(fontFamily),
                         lineHeight: maybeClamp(lineHeight, clampFonts),
                         ...Object.entries(styles ?? {}).reduce(
                             (acc, [key, value]) => ({

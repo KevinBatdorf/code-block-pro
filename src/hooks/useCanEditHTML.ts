@@ -1,5 +1,5 @@
-import useSWRImmutable from 'swr/immutable';
 import apiFetch from '@wordpress/api-fetch';
+import useSWRImmutable from 'swr/immutable';
 
 const fetcher = (url: string) => apiFetch<boolean>({ path: url });
 

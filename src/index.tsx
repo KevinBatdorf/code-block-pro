@@ -1,6 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
+import { Editor } from './Editor';
 import blockConfig from './block.json';
 import { BlockFilter } from './editor/components/BlockFilter';
 import './editor/editor.css';
@@ -8,7 +9,6 @@ import { transformToCBP, transformFromCBP } from './editor/transforms';
 import { BlockOutput } from './front/BlockOutput';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
-import { Editor } from './Editor';
 
 registerBlockType<Attributes>(blockConfig.name, {
     ...blockConfig,
