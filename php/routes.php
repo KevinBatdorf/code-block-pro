@@ -38,7 +38,7 @@ add_action('rest_api_init', function () {
 
         if (!in_array($parsedUrl['host'], $validHosts)) {
             return new WP_REST_Response([
-                'message' => 'Invalid URL'
+                'message' => __('Invalid URL')
             ]);
         }
 
@@ -52,7 +52,7 @@ add_action('rest_api_init', function () {
 
         if ($response['headers']['content-type'] !== 'text/plain; charset=utf-8') {
             return new WP_REST_Response([
-                'message' => 'Invalid Content-Type'
+                'message' => __('Invalid Content-Type')
             ]);
         }
 
