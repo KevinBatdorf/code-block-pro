@@ -37,11 +37,9 @@ add_action('rest_api_init', function () {
         $validHosts = ['gist.githubusercontent.com', 'raw.githubusercontent.com', 'github.com'];
 
         if (!in_array($parsedUrl['host'], $validHosts)) {
-            return new WP_REST_Response(
-                [
-                    'code' => 'Error: Invalid Host'
-                ]
-            );
+            return new WP_REST_Response([
+                'message' => 'Invalid URL'
+            ]);
         }
 
         if ($parsedUrl['host'] === 'github.com') {
@@ -53,17 +51,13 @@ add_action('rest_api_init', function () {
         $response = wp_remote_get($payload['url']);
 
         if ($response['headers']['content-type'] !== 'text/plain; charset=utf-8') {
-            return new WP_REST_Response(
-                [
-                    'code' => 'Error: Invalid Content-Type'
-                ]
-            );
+            return new WP_REST_Response([
+                'message' => 'Invalid Content-Type'
+            ]);
         }
 
-        return new WP_REST_Response(
-            [
-                'code' => $response['body']
-            ]
-        );
+        return new WP_REST_Response([
+            'code' => $response['body']
+        ]);
     });
 });
