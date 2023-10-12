@@ -1,52 +1,58 @@
 import {BaseControl, Button, TextControl,} from '@wordpress/components';
-import {useEffect, useRef} from '@wordpress/element';
+import {useRef} from '@wordpress/element';
 import {__} from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import useSWR from "swr";
 
 interface GitHubRepositoryControlProps {
     value: string;
     onChange: (value: string) => void;
+    onCodeFetched: (data: any) => void;
 }
+
+const fetcher = async (url: string) => {
+    const response = await apiFetch({
+        path: `code-block-pro/v1/code?url=${encodeURIComponent(url)}`,
+        method: 'GET',
+    });
+
+    return response.code;
+};
 
 export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHubRepositoryControlProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const { data, error } = useSWR(isValidUrl(value) ? value : null, fetcher);
 
-    useEffect(() => {
-        if (isValidUrl(value)) {
-            fetchFile(value).then((code) => {
-                if (value.indexOf("#L")) {
-                    onCodeFetched({ code, lineNumbers: extractLineNumbers(value) });
-                } else {
-                    onCodeFetched({ code });
-                }
-            });
-
-            inputRef.current
-                ?.querySelector('input')
-                ?.classList.remove('cbp-input-error');
+    if (data && !error) {
+        if (value.indexOf("#L")) {
+            onCodeFetched({ code: data, lineNumbers: extractLineNumbers(value) });
         } else {
-            inputRef.current
-                ?.querySelector('input')
-                ?.classList.add('cbp-input-error');
+            onCodeFetched({ code: data });
         }
-    }, [value]);
+    }
+
+    if (isValidUrl(value)) {
+        inputRef.current?.classList.remove('cbp-input-error');
+    } else {
+        inputRef.current?.classList.add('cbp-input-error');
+    }
+
     return (
         <BaseControl id="code-block-pro-show-highlighting">
-            <div ref={inputRef}>
-                <TextControl
-                    spellCheck={false}
-                    autoComplete="off"
-                    type="text"
-                    data-cy="github-repository-link"
-                    label={__('Github Repository Link', 'code-block-pro')}
-                    help={__(
-                        'The link to your file. Supports github.com links, gists, and raw content links.',
-                        'code-block-pro',
-                    )}
-                    value={value}
-                    onChange={onChange}
-                />
-            </div>
+            <TextControl
+                ref={inputRef}
+                spellCheck={false}
+                autoComplete="off"
+                type="text"
+                data-cy="github-repository-link"
+                label={__('Github Repository Link', 'code-block-pro')}
+                help={__(
+                    'The link to your file. Supports github.com links, gists, and raw content links.',
+                    'code-block-pro',
+                )}
+                value={value}
+                onChange={onChange}
+            />
             {isValidUrl(value) && (
                 <Button
                     data-cy="manage-themes"
