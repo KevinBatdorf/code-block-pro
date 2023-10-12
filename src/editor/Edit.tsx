@@ -47,7 +47,7 @@ export const Edit = ({
         useDecodeURI,
         tabSize,
         useTabs,
-        url,
+        remoteCodeRepositoryUrl,
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
@@ -166,7 +166,7 @@ export const Edit = ({
         getBlurs,
         getHighlights,
         decode,
-        url
+        remoteCodeRepositoryUrl
     ]);
 
     useLayoutEffect(() => {

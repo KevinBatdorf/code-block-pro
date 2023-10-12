@@ -58,7 +58,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         useDecodeURI: { type: 'boolean', default: false },
         tabSize: { type: 'number', default: 2 },
         useTabs: { type: 'boolean' },
-        url: { type: 'string' },
+        remoteCodeRepositoryUrl: { type: 'string' },
     },
     // Need to add these here to avoid TS type errors
     supports: {

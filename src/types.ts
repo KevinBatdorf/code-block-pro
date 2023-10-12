@@ -48,7 +48,7 @@ export type Attributes = {
     useDecodeURI: boolean;
     tabSize: number;
     useTabs: boolean;
-    url: string;
+    remoteCodeRepositoryUrl: string;
 };
 export interface AttributesPropsAndSetter {
     attributes: Attributes;

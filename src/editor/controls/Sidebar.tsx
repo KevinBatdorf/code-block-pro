@@ -402,10 +402,10 @@ export const SidebarControls = ({
                 <div className="code-block-pro-editor">
                     <BaseControl id="code-block-pro-language">
                         <GitHubRepositoryControl
-                            value={attributes.url}
+                            value={attributes.remoteCodeRepositoryUrl}
                             onChange={(url) => {
-                                setAttributes({ url });
-                                updateThemeHistory({ url });
+                                setAttributes({ remoteCodeRepositoryUrl: url });
+                                updateThemeHistory({ remoteCodeRepositoryUrl: url });
                             }}
                             onCodeFetched={({ code, lineNumbers }) => {
                                 setAttributes({
