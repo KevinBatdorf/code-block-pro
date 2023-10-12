@@ -57,7 +57,7 @@ add_action('rest_api_init', function () {
         }
 
         return new WP_REST_Response([
-            'code' => $response['body']
+            'code' => wp_remote_retrieve_body($response)
         ]);
     });
 });
