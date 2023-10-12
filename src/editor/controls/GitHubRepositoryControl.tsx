@@ -107,11 +107,10 @@ function getLineNumberFromToken(token: string) {
     return parseInt(lineNumber);
 }
 
-
 async function fetchFile(url: string) {
     const response = await apiFetch({
         path: 'code-block-pro/v1/code',
-        method: 'POST',
+        method: 'GET',
         data: {url},
     });
 
