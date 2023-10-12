@@ -31,8 +31,8 @@ add_action('rest_api_init', function () {
         return new WP_REST_Response(current_user_can('unfiltered_html'));
     });
 
-    CBPRouter::code('/code', function ($payload) {
-        $parsedUrl = wp_parse_url($payload['url']);
+    CBPRouter::get('/code', function (WP_REST_Request $request) {
+        $parsedUrl = wp_parse_url($request->get_param('url'));
 
         $validHosts = ['gist.githubusercontent.com', 'raw.githubusercontent.com', 'github.com'];
 

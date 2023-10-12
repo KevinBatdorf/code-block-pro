@@ -109,9 +109,8 @@ function getLineNumberFromToken(token: string) {
 
 async function fetchFile(url: string) {
     const response = await apiFetch({
-        path: 'code-block-pro/v1/code',
+        path: `code-block-pro/v1/code?url=${encodeURIComponent(url)}`,
         method: 'GET',
-        data: {url},
     });
 
     return response.code;
