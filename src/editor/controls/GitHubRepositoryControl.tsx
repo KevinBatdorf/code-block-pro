@@ -38,7 +38,7 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
     }
 
     return (
-        <BaseControl id="code-block-pro-show-highlighting">
+        <BaseControl id="code-block-pro-remote-repository">
             <TextControl
                 ref={inputRef}
                 spellCheck={false}
