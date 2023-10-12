@@ -398,7 +398,7 @@ export const SidebarControls = ({
             </PanelBody>
             <PanelBody
                 title={__('GitHub', 'code-block-pro')}
-                initialOpen={bringAttention === 'language-select'}>
+                initialOpen={false}>
                 <div className="code-block-pro-editor">
                     <GitHubRepositoryControl
                         value={attributes.remoteCodeRepositoryUrl}
