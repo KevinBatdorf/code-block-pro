@@ -2,7 +2,7 @@ import {BaseControl, Button, TextControl,} from '@wordpress/components';
 import {useRef} from '@wordpress/element';
 import {__} from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 interface GitHubRepositoryControlProps {
     value: string;
@@ -58,13 +58,7 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                     data-cy="manage-themes"
                     variant="secondary"
                     isSmall
-                    onClick={() => fetchFile(value).then((code) => {
-                        if (value.indexOf("#L")) {
-                            onCodeFetched({code, lineNumbers: extractLineNumbers(value)});
-                        } else {
-                            onCodeFetched({code});
-                        }
-                    })}>
+                    onClick={() => mutate(value)}>
                     {__('Fetch Code', 'code-block-pro')}
                 </Button>
             )}
