@@ -400,22 +400,20 @@ export const SidebarControls = ({
                 title={__('GitHub', 'code-block-pro')}
                 initialOpen={bringAttention === 'language-select'}>
                 <div className="code-block-pro-editor">
-                    <BaseControl id="code-block-pro-language">
-                        <GitHubRepositoryControl
-                            value={attributes.remoteCodeRepositoryUrl}
-                            onChange={(url) => {
-                                setAttributes({ remoteCodeRepositoryUrl: url });
-                                updateThemeHistory({ remoteCodeRepositoryUrl: url });
-                            }}
-                            onCodeFetched={({ code, lineNumbers }) => {
-                                setAttributes({
-                                    code,
-                                    enableHighlighting: Boolean(lineNumbers),
-                                    lineHighlights: Boolean(lineNumbers) ? `[${lineNumbers.startLine},${lineNumbers.endLine}]` : '',
-                                });
-                            }}
-                        />
-                    </BaseControl>
+                    <GitHubRepositoryControl
+                        value={attributes.remoteCodeRepositoryUrl}
+                        onChange={(url) => {
+                            setAttributes({ remoteCodeRepositoryUrl: url });
+                            updateThemeHistory({ remoteCodeRepositoryUrl: url });
+                        }}
+                        onCodeFetched={({ code, lineNumbers }) => {
+                            setAttributes({
+                                code,
+                                enableHighlighting: Boolean(lineNumbers),
+                                lineHighlights: Boolean(lineNumbers) ? `[${lineNumbers.startLine},${lineNumbers.endLine}]` : '',
+                            });
+                        }}
+                    />
                 </div>
             </PanelBody>
         </InspectorControls>
