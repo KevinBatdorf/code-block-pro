@@ -47,7 +47,7 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                 data-cy="github-repository-link"
                 label={__('Github Repository Link', 'code-block-pro')}
                 help={__(
-                    'The link to your file. Supports github.com links, gists, and raw content links.',
+                    'The link to your file. Supports GitHub links and gists.',
                     'code-block-pro',
                 )}
                 value={value}
