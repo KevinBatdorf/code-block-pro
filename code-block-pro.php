@@ -7,7 +7,7 @@
  * Author URI:        https://code-block-pro.com/?utm_campaign=plugin&utm_source=author-uri
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.24.0
+ * Version:           1.24.1
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       code-block-pro
@@ -26,7 +26,6 @@ add_action('init', function () {
 add_action('admin_init', function () {
     wp_add_inline_script('kevinbatdorf-code-block-pro-editor-script', 'window.codeBlockPro = ' . wp_json_encode([
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
-        'canSaveHtml' => current_user_can('unfiltered_html'),
     ]) . ';');
 });
 

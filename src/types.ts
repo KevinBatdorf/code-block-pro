@@ -29,7 +29,10 @@ export type Attributes = {
     footerLinkTarget?: boolean;
     disablePadding: boolean;
     startingLineNumber: string;
+    // Defunct - Removing it would require n attribute migration
+    // so it's easier to just leave it unused for new blocks.
     lineNumbersWidth: number;
+    highestLineNumber: number;
     enableHighlighting: boolean;
     highlightingHover: boolean;
     lineHighlights: string;
@@ -56,7 +59,6 @@ declare global {
     interface Window {
         codeBlockPro: {
             pluginUrl: string;
-            canSaveHtml: boolean;
         };
     }
 }

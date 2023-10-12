@@ -27,6 +27,10 @@ add_action('rest_api_init', function () {
         );
     });
 
+    CBPRouter::get('/can-save-html', function () {
+        return new WP_REST_Response(current_user_can('unfiltered_html'));
+    });
+
     CBPRouter::code('/code', function ($payload) {
         $parsedUrl = wp_parse_url($payload['url']);
 

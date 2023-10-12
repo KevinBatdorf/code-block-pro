@@ -3,6 +3,7 @@ import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import defaultThemes from '../../defaultThemes.json';
+import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
 import { AttributesPropsAndSetter, ThemeOption } from '../../types';
@@ -19,6 +20,9 @@ export const ToolbarControls = ({
         defaultThemes,
     ) as ThemeOption;
     const { setBringAttentionToPanel } = useGlobalStore();
+    const canEdit = useCanEditHTML();
+
+    if (canEdit === undefined) return null;
 
     return (
         <BlockControls>

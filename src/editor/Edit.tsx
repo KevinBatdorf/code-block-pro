@@ -1,5 +1,6 @@
 import {
     useCallback,
+    useState,
     useEffect,
     useLayoutEffect,
     useRef,
@@ -9,20 +10,21 @@ import { applyFilters } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
 import Editor from 'react-simple-code-editor';
+import { useCanEditHTML } from '../hooks/useCanEditHTML';
 import { useDefaults } from '../hooks/useDefaults';
 import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
 import { computeLineHighlightColor } from '../util/colors';
+import { getTextWidth } from '../util/fonts';
 import { getEditorLanguage } from '../util/languages';
 import { MissingPermissionsTip } from './components/misc/MissingPermissions';
 
 export const Edit = ({
     attributes,
     setAttributes,
-    canEdit,
-}: AttributesPropsAndSetter & { canEdit: boolean }) => {
+}: AttributesPropsAndSetter) => {
     const {
         language,
         theme,
@@ -30,13 +32,10 @@ export const Edit = ({
         bgColor: backgroundColor,
         textColor: color,
         disablePadding,
-        lineNumbersWidth,
         lineNumbers,
         startingLineNumber,
         footerType,
         fontSize,
-        fontFamily,
-        lineHeight,
         lineBlurs,
         lineHighlights,
         enableBlurring,
@@ -52,6 +51,9 @@ export const Edit = ({
     } = attributes;
 
     const textAreaRef = useRef<HTMLDivElement>(null);
+    const canEdit = useCanEditHTML();
+    const [editorLeftPadding, setEditorLeftPadding] = useState(0);
+    const codeAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) =>
         setAttributes({ code: encode(code) });
     const { previousLanguage } = useLanguageStore();
@@ -116,7 +118,7 @@ export const Edit = ({
             bgColor: highlighter.getBackgroundColor(),
             textColor: highlighter.getForegroundColor(),
         });
-    }, [theme, highlighter, setAttributes]);
+    }, [theme, highlighter, setAttributes, canEdit]);
 
     useEffect(() => {
         if (!highlighter) return;
@@ -151,6 +153,7 @@ export const Edit = ({
         highlighter,
         seeMoreAfterLine,
         seeMoreTransition,
+        canEdit,
         color,
         code,
         enableMaxHeight,
@@ -167,40 +170,34 @@ export const Edit = ({
     ]);
 
     useLayoutEffect(() => {
-        if (!textAreaRef.current) return;
+        if (!codeAreaRef.current) return;
         if (!lineNumbers) {
             setAttributes({ lineNumbersWidth: undefined });
             return;
         }
-        // Get the last line (assumingly the widest)
-        const lastLine = Array.from(
-            textAreaRef?.current?.querySelectorAll('.line') ?? [],
-        )?.at(-1) as HTMLElement;
-        // Make sure there are no width constraints
-        lastLine?.classList?.add('cbp-line-number-width-forced');
-        const lastLineWidth = lastLine?.getBoundingClientRect()?.width ?? 0;
-        // Add .cbp-line-number-disabled to disable the line number
-        lastLine?.classList.add('cbp-line-number-disabled');
-        // Re calculate the width of the last line
-        const newWidth = lastLine?.getBoundingClientRect()?.width ?? 0;
-        // Remove the classes
-        lastLine?.classList.remove('cbp-line-number-disabled');
-        lastLine?.classList?.remove('cbp-line-number-width-forced');
-        // Calculate the difference
-        if (lastLineWidth - newWidth > 0) {
-            setAttributes({ lineNumbersWidth: lastLineWidth - newWidth - 12 });
-        }
+
+        // Calulate the line numbers width
+        const codeLines = codeAreaRef?.current?.querySelectorAll('.line');
+        const highestLineNumber =
+            Number(startingLineNumber ?? 0) + (codeLines?.length ?? 0);
+        if (!codeLines?.[0]) return;
+        setAttributes({ highestLineNumber });
+
+        // Used for the editor, which requires px values
+        const { font } = getComputedStyle(codeLines?.[0]);
+        setEditorLeftPadding(getTextWidth(String(highestLineNumber), font));
     }, [
         lineNumbers,
         startingLineNumber,
         code,
         loading,
+        canEdit,
         error,
         textAreaRef,
+        codeAreaRef,
         setAttributes,
         fontSize,
-        fontFamily,
-        lineHeight,
+        loading,
     ]);
 
     if (!loading && !highlighter) {
@@ -229,9 +226,11 @@ export const Edit = ({
         );
     }
 
+    if (canEdit === undefined) return null;
+
     return (
         <div
-            ref={textAreaRef}
+            ref={codeAreaRef}
             style={{
                 maxHeight: Number(editorHeight)
                     ? Number(editorHeight)
@@ -239,7 +238,7 @@ export const Edit = ({
                 overflow: Number(editorHeight) ? 'auto' : undefined,
             }}>
             {canEdit ? null : (
-                <div className="absolute inset-0 z-10 bg-white bg-opacity-70">
+                <div className="absolute inset-0 z-10">
                     <MissingPermissionsTip />
                 </div>
             )}
@@ -256,8 +255,9 @@ export const Edit = ({
                     left: (() => {
                         if (!lineNumbers && disablePadding) return 0;
                         if (!lineNumbers) return 16;
-                        if (disablePadding) return (lineNumbersWidth ?? 0) + 16;
-                        return (lineNumbersWidth ?? 0) + 32;
+                        if (disablePadding)
+                            return (editorLeftPadding ?? 0) + 16;
+                        return (editorLeftPadding ?? 0) + 32;
                     })(),
                     right: 0,
                 }}
@@ -270,7 +270,7 @@ export const Edit = ({
                 onKeyDown={(e: any) =>
                     e.key === 'Tab' &&
                     // Tab lock here. Pressing Escape will unlock.
-                    textAreaRef.current?.querySelector('textarea')?.focus()
+                    codeAreaRef.current?.querySelector('textarea')?.focus()
                 }
                 highlight={(code: string) =>
                     highlighter
