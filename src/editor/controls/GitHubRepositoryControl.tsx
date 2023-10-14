@@ -38,9 +38,9 @@ export const GitHubRepositoryControl = ({
 
     // Sets the code to the remotely fetched code
     useEffect(() => {
-        if (loading || error) return;
+        if (loading || error || !code) return;
 
-        setAttributes({ code: code });
+        setAttributes({ code });
     }, [code, loading, error]);
 
     return (
