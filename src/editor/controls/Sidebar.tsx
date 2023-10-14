@@ -404,7 +404,6 @@ export const SidebarControls = ({
                         value={attributes.remoteCodeRepositoryUrl}
                         onChange={(url) => {
                             setAttributes({ remoteCodeRepositoryUrl: url });
-                            updateThemeHistory({ remoteCodeRepositoryUrl: url });
                         }}
                         onCodeFetched={({ code, lineNumbers }) => {
                             setAttributes({
