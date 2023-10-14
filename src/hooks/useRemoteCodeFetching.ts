@@ -14,5 +14,5 @@ const fetcher = async (url: string) => {
 export function useRemoteCodeFetching(url: string) {
     const { data, isLoading, error } = useSWR(isValidUrl(url) ? url : null, fetcher);
 
-    return { code: data, isLoading, error, mutate };
+    return { code: data, loading: isLoading, error, mutate };
 }

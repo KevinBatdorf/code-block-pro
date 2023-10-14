@@ -14,7 +14,7 @@ export const GitHubRepositoryControl = ({
     setAttributes,
 }: GitHubRepositoryControlProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const { code, isLoading, error, mutate } = useRemoteCodeFetching(remoteCodeRepositoryUrl);
+    const { code, loading, error, mutate } = useRemoteCodeFetching(remoteCodeRepositoryUrl);
 
     // Determines line highlighting from the URL
     useEffect(() => {
@@ -38,10 +38,10 @@ export const GitHubRepositoryControl = ({
 
     // Sets the code to the remotely fetched code
     useEffect(() => {
-        if (isLoading || error) return;
+        if (loading || error) return;
 
         setAttributes({ code: code });
-    }, [code, isLoading, error]);
+    }, [code, loading, error]);
 
     return (
         <BaseControl id="code-block-pro-remote-repository">
