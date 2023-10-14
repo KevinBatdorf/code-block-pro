@@ -1,32 +1,47 @@
-import {BaseControl, Button, TextControl,} from '@wordpress/components';
-import {useRef} from '@wordpress/element';
-import {__} from '@wordpress/i18n';
-import {useRemoteCodeFetching} from "../../hooks/useRemoteCodeFetching";
-import {extractLineNumbers, isValidUrl} from "../../util/urls";
+import { BaseControl, Button, TextControl, } from '@wordpress/components';
+import { useEffect, useRef } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { useRemoteCodeFetching } from "../../hooks/useRemoteCodeFetching";
+import { extractLineNumbers, isValidUrl } from "../../util/urls";
 
 interface GitHubRepositoryControlProps {
-    value: string;
-    onChange: (value: string) => void;
-    onCodeFetched: (data: any) => void;
+    remoteCodeRepositoryUrl: string;
+    setAttributes: (attributes: { [key: string]: any }) => void;
 }
 
-export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHubRepositoryControlProps) => {
+export const GitHubRepositoryControl = ({
+    remoteCodeRepositoryUrl,
+    setAttributes,
+}: GitHubRepositoryControlProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const { data, error, mutate } = useRemoteCodeFetching(value);
+    const { code, isLoading, error, mutate } = useRemoteCodeFetching(remoteCodeRepositoryUrl);
 
-    if (data && !error) {
-        if (value.indexOf("#L")) {
-            onCodeFetched({ code: data, lineNumbers: extractLineNumbers(value) });
-        } else {
-            onCodeFetched({ code: data });
+    // Determines line highlighting from the URL
+    useEffect(() => {
+        isValidUrl(remoteCodeRepositoryUrl) ?
+            inputRef.current?.classList.remove('cbp-input-error') :
+            inputRef.current?.classList.add('cbp-input-error');
+
+        if (remoteCodeRepositoryUrl.indexOf('#L')) {
+            const lineNumbers = extractLineNumbers(remoteCodeRepositoryUrl);
+
+            if (lineNumbers) {
+                setAttributes({
+                    enableHighlighting: true,
+                    lineHighlights: `[${lineNumbers.startLine},${lineNumbers.endLine}]`
+                });
+            } else {
+                setAttributes({ enableHighlighting: false, lineHighlights: '' });
+            }
         }
-    }
+    }, [remoteCodeRepositoryUrl, code]);
 
-    if (isValidUrl(value)) {
-        inputRef.current?.classList.remove('cbp-input-error');
-    } else {
-        inputRef.current?.classList.add('cbp-input-error');
-    }
+    // Sets the code to the remotely fetched code
+    useEffect(() => {
+        if (isLoading || error) return;
+
+        setAttributes({ code: code });
+    }, [code, isLoading, error]);
 
     return (
         <BaseControl id="code-block-pro-remote-repository">
@@ -41,15 +56,15 @@ export const GitHubRepositoryControl = ({value, onChange, onCodeFetched}: GitHub
                     'The link to your file. Supports GitHub links and gists.',
                     'code-block-pro',
                 )}
-                value={value}
-                onChange={onChange}
+                value={remoteCodeRepositoryUrl}
+                onChange={(value) => setAttributes({ remoteCodeRepositoryUrl: value })}
             />
-            {isValidUrl(value) && (
+            {isValidUrl(remoteCodeRepositoryUrl) && (
                 <Button
                     data-cy="manage-themes"
                     variant="secondary"
                     isSmall
-                    onClick={() => mutate(value)}>
+                    onClick={() => mutate(remoteCodeRepositoryUrl)}>
                     {__('Fetch Code', 'code-block-pro')}
                 </Button>
             )}

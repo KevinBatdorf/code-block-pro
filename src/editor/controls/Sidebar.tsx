@@ -401,17 +401,8 @@ export const SidebarControls = ({
                 initialOpen={false}>
                 <div className="code-block-pro-editor">
                     <GitHubRepositoryControl
-                        value={attributes.remoteCodeRepositoryUrl}
-                        onChange={(url) => {
-                            setAttributes({ remoteCodeRepositoryUrl: url });
-                        }}
-                        onCodeFetched={({ code, lineNumbers }) => {
-                            setAttributes({
-                                code,
-                                enableHighlighting: Boolean(lineNumbers),
-                                lineHighlights: Boolean(lineNumbers) ? `[${lineNumbers.startLine},${lineNumbers.endLine}]` : '',
-                            });
-                        }}
+                        remoteCodeRepositoryUrl={attributes.remoteCodeRepositoryUrl}
+                        setAttributes={setAttributes}
                     />
                 </div>
             </PanelBody>

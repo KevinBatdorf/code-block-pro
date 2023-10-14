@@ -12,7 +12,7 @@ const fetcher = async (url: string) => {
 };
 
 export function useRemoteCodeFetching(url: string) {
-    const { data, loading, error } = useSWR(isValidUrl(url) ? url : null, fetcher);
+    const { data, isLoading, error } = useSWR(isValidUrl(url) ? url : null, fetcher);
 
-    return { data, loading, error, mutate };
+    return { code: data, isLoading, error, mutate };
 }
