@@ -34,7 +34,7 @@ export const GitHubRepositoryControl = ({
                 setAttributes({ enableHighlighting: false, lineHighlights: '' });
             }
         }
-    }, [remoteCodeRepositoryUrl, code]);
+    }, [remoteCodeRepositoryUrl]);
 
     // Sets the code to the remotely fetched code
     useEffect(() => {
