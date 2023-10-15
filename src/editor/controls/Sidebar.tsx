@@ -396,7 +396,7 @@ export const SidebarControls = ({
                 </BaseControl>
             </PanelBody>
             <PanelBody
-                title={__('Remote Code Sync', 'code-block-pro')}
+                title={__('Sync', 'code-block-pro')}
                 initialOpen={false}>
                 <div className="code-block-pro-editor">
                     <GitHubRepositoryControl
