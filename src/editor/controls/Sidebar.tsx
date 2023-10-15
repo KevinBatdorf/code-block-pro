@@ -378,7 +378,6 @@ export const SidebarControls = ({
                         onChange={(size) => {
                             const tabSize = size ? Number(size) : undefined;
                             setAttributes({ tabSize });
-                            updateThemeHistory({ tabSize });
                         }}
                     />
                     <CheckboxControl
