@@ -39,7 +39,7 @@ add_action('rest_api_init', function () {
         if (!in_array($parsedUrl['host'], $validHosts)) {
             return new WP_REST_Response([
                 'message' => __('Invalid URL')
-            ]);
+            ], 400);
         }
 
         if ($parsedUrl['host'] === 'github.com') {
@@ -53,7 +53,7 @@ add_action('rest_api_init', function () {
         if ($response['headers']['content-type'] !== 'text/plain; charset=utf-8') {
             return new WP_REST_Response([
                 'message' => __('Invalid Content-Type')
-            ]);
+            ], 415);
         }
 
         return new WP_REST_Response([

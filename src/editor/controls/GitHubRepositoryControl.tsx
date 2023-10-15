@@ -18,10 +18,6 @@ export const GitHubRepositoryControl = ({
 
     // Determines line highlighting from the URL
     useEffect(() => {
-        isValidUrl(remoteCodeRepositoryUrl) ?
-            inputRef.current?.classList.remove('cbp-input-error') :
-            inputRef.current?.classList.add('cbp-input-error');
-
         if (remoteCodeRepositoryUrl.indexOf('#L')) {
             const lineNumbers = extractLineNumbers(remoteCodeRepositoryUrl);
 
@@ -52,10 +48,11 @@ export const GitHubRepositoryControl = ({
                 type="text"
                 data-cy="github-repository-link"
                 label={__('Github Repository Link', 'code-block-pro')}
-                help={__(
-                    'The link to your file. Supports GitHub links and gists.',
-                    'code-block-pro',
-                )}
+                help={
+                    error ?
+                        <p style={{ color: 'red'}}>{__(error, 'code-block-pro')}</p> :
+                        <p>{__('The link to your file. Supports GitHub links and gists.', 'code-block-pro')}</p>
+                }
                 value={remoteCodeRepositoryUrl}
                 onChange={(value) => setAttributes({ remoteCodeRepositoryUrl: value })}
             />

@@ -4,7 +4,7 @@ import { isValidUrl } from "../util/urls";
 
 const fetcher = async (url: string) => {
     const response = await apiFetch({
-        path: `code-block-pro/v1/code?url=${ encodeURIComponent(url) }`,
+        path: `code-block-pro/v1/code?url=${encodeURIComponent(url)}`,
         method: 'GET',
     });
 
@@ -14,5 +14,13 @@ const fetcher = async (url: string) => {
 export function useRemoteCodeFetching(url: string) {
     const { data, isLoading, error } = useSWR(isValidUrl(url) ? url : null, fetcher);
 
-    return { code: data, loading: isLoading, error, mutate };
+    let errorMessage = null;
+    if (!isValidUrl(url)) {
+        errorMessage = 'Please enter a valid URL';
+    } else if (error) {
+        errorMessage = error.message;
+    }
+
+
+    return { code: data, loading: isLoading, error: errorMessage, mutate };
 }
