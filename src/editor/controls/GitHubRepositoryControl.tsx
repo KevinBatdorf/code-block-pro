@@ -51,7 +51,7 @@ export const GitHubRepositoryControl = ({
                 help={
                     error ?
                         <p style={{ color: 'red'}}>{__(error, 'code-block-pro')}</p> :
-                        <p>{__('The link to your file. Supports GitHub links and gists.', 'code-block-pro')}</p>
+                        <p>{__('Supports GitHub file links and Gists.', 'code-block-pro')}</p>
                 }
                 value={remoteCodeRepositoryUrl}
                 onChange={(value) => setAttributes({ remoteCodeRepositoryUrl: value })}
@@ -62,7 +62,7 @@ export const GitHubRepositoryControl = ({
                     variant="secondary"
                     isSmall
                     onClick={() => mutate(remoteCodeRepositoryUrl)}>
-                    {__('Fetch Code', 'code-block-pro')}
+                    {__('Save', 'code-block-pro')}
                 </Button>
             )}
         </BaseControl>
