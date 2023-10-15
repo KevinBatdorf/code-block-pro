@@ -47,7 +47,7 @@ export const GitHubRepositoryControl = ({
                 autoComplete="off"
                 type="text"
                 data-cy="github-repository-link"
-                label={__('Github Repository Link', 'code-block-pro')}
+                label={__('Github', 'code-block-pro')}
                 help={
                     error ?
                         <p style={{ color: 'red'}}>{__(error, 'code-block-pro')}</p> :
