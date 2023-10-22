@@ -15,6 +15,8 @@
  * @package           kevinbatdorf
  */
 
+defined('ABSPATH') or die;
+
 add_action('init', function () {
     register_block_type(__DIR__ . '/build');
     wp_set_script_translations('kevinbatdorf/code-block-pro', 'code-block-pro');
