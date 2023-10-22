@@ -5,9 +5,7 @@ import {
     useLayoutEffect,
     useRef,
 } from '@wordpress/element';
-import { escapeHTML } from '@wordpress/escape-html';
 import { applyFilters } from '@wordpress/hooks';
-import { decodeEntities } from '@wordpress/html-entities';
 import { sprintf, __ } from '@wordpress/i18n';
 import Editor from 'react-simple-code-editor';
 import { useCanEditHTML } from '../hooks/useCanEditHTML';
@@ -16,6 +14,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
+import { decode, encode } from '../util/code';
 import { computeLineHighlightColor } from '../util/colors';
 import { getTextWidth } from '../util/fonts';
 import { getEditorLanguage } from '../util/languages';
@@ -54,7 +53,7 @@ export const Edit = ({
     const [editorLeftPadding, setEditorLeftPadding] = useState(0);
     const codeAreaRef = useRef<HTMLDivElement>(null);
     const handleChange = (code: string) =>
-        setAttributes({ code: encode(code) });
+        setAttributes({ code: encode(code, attributes) });
     const { previousLanguage } = useLanguageStore();
     const { highlighter, error, loading } = useTheme({
         theme,
@@ -62,35 +61,6 @@ export const Edit = ({
     });
     const hasFooter = footerType && footerType !== 'none';
     useDefaults({ attributes, setAttributes });
-
-    const decode = useCallback(
-        (code: string) => {
-            if (useDecodeURI) {
-                try {
-                    // Here for bw compatability
-                    return decodeURIComponent(code);
-                } catch (e) {
-                    return code;
-                }
-            }
-            return decodeEntities(code);
-        },
-        [useDecodeURI],
-    );
-    const encode = useCallback(
-        (code: string) => {
-            if (useDecodeURI) {
-                try {
-                    // Here for bw compatability
-                    return encodeURIComponent(code);
-                } catch (e) {
-                    return code;
-                }
-            }
-            return escapeHTML(code);
-        },
-        [useDecodeURI],
-    );
 
     const getHighlights = useCallback(() => {
         if (!enableHighlighting) return [];
@@ -123,7 +93,7 @@ export const Edit = ({
         if (!highlighter) return;
         const l = (language ?? previousLanguage) as Lang | 'ansi';
         const lang = getEditorLanguage(l);
-        const c = decode(code);
+        const c = decode(code, { useDecodeURI });
         const lineOptions = [
             ...getHighlights(),
             ...getBlurs(),
@@ -164,7 +134,7 @@ export const Edit = ({
         lineBlurs,
         getBlurs,
         getHighlights,
-        decode,
+        useDecodeURI,
     ]);
 
     useLayoutEffect(() => {
@@ -241,7 +211,7 @@ export const Edit = ({
                 </div>
             )}
             <Editor
-                value={decode(code)}
+                value={decode(code, { useDecodeURI })}
                 onValueChange={handleChange}
                 // eslint-disable-next-line jsx-a11y/no-autofocus -- Only autofocus in the unintended case that there is no code (e.g. on initial insert)
                 autoFocus={!code}
@@ -272,7 +242,7 @@ export const Edit = ({
                 }
                 highlight={(code: string) =>
                     highlighter
-                        ?.codeToHtml(decode(code), {
+                        ?.codeToHtml(decode(code, { useDecodeURI }), {
                             lang: getEditorLanguage(
                                 language ?? previousLanguage,
                             ),
