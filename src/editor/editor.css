@@ -136,3 +136,11 @@
     font-family: 'Code-Pro-Fantasque-Sans-Mono';
     src: url('../fonts/Code-Pro-Fantasque-Sans-Mono.woff2') format('woff2');
 }
+@font-face {
+    font-family: 'Code-Pro-Cozette';
+    src: url('../fonts/Code-Pro-Cozette.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Code-Pro-Deja-Vu-Mono';
+    src: url('../fonts/Code-Pro-Deja-Vu-Mono.ttf') format('truetype');
+}

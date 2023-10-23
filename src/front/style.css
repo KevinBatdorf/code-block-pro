@@ -106,6 +106,10 @@
             [data-code-block-pro-font-family='Code-Pro-Fira-Code']& {
                 top: -1.5px !important;
             }
+            [data-code-block-pro-font-family='Code-Pro-Cozette']&,
+            [data-code-block-pro-font-family='Code-Pro-Deja-Vu-Mono.ttf']& {
+                top: -1px !important;
+            }
         }
     }
 }
