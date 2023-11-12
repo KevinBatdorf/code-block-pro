@@ -42,9 +42,9 @@ context('Theme checks', () => {
     });
 
     it('Themes can be disabled and hidden from view', () => {
-        cy.openSideBarPanel('Themes');
+        cy.openSideBarPanel('Theme');
         cy.get('div[aria-label="Editor settings"] button')
-            .contains('Themes')
+            .contains('Theme')
             .parents('.interface-interface-skeleton__sidebar')
             .scrollTo('bottom');
         cy.get('#code-block-pro-theme-nord').should('exist');
@@ -59,7 +59,7 @@ context('Theme checks', () => {
     });
 
     it('Themes can be filtered via search', () => {
-        cy.openSideBarPanel('Themes');
+        cy.openSideBarPanel('Theme');
         cy.get('#code-block-pro-theme-monokai').should('exist');
         cy.get('#code-block-pro-search-themes').type('monokai');
         cy.get('#code-block-pro-theme-monokai').should('exist');
@@ -67,7 +67,7 @@ context('Theme checks', () => {
     });
 
     it('Themes CTA shows twice in panel and once in modal', () => {
-        cy.openSideBarPanel('Themes');
+        cy.openSideBarPanel('Theme');
         cy.get(`[href^="${MORE_THEMES_URL}"]`).should('have.length', 2);
         cy.get('[data-cy="manage-themes"]').should('exist').click();
         cy.get(`[href^="${MORE_THEMES_URL}"]`).should('exist');
@@ -81,7 +81,7 @@ context('Theme checks', () => {
                 'testing-testing',
                 () => ({ nord: { name: 'Nord', priority: true } }),
             );
-            cy.openSideBarPanel('Themes');
+            cy.openSideBarPanel('Theme');
             cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
             cy.get('[data-cy="manage-themes"]').should('exist').click();
             cy.get(`[href^="${MORE_THEMES_URL}"]`).should('not.exist');
