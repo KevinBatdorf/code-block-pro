@@ -310,7 +310,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Added two new programming fonts, Cozette and Deja Vu
 - Feature: Add pluggable sidebar slots to allow others to add functionality
+- Tweak: Renamed Themes to Theme and moved it to the top
+- Legal: Added (open source) license files for all fonts
 
 = 1.24.1 - 2023-10-11 =
 - Tweak: Line numbers width is now calculated based on the longest line number * font width

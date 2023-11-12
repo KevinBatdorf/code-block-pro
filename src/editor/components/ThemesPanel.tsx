@@ -18,7 +18,7 @@ export const ThemesPanel = ({
     const ready = useSettingsStoreReady();
     return (
         <PanelBody
-            title={__('Themes', 'code-block-pro')}
+            title={__('Theme', 'code-block-pro')}
             initialOpen={bringAttentionToThemes ?? false}>
             {ready && <ThemeFilter search={search} setSearch={setSearch} />}
             {ready && (

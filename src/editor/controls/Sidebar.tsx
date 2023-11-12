@@ -85,6 +85,11 @@ export const SidebarControls = ({
                 attributes={attributes}
                 setAttributes={setAttributes}
             />
+            <ThemesPanel
+                bringAttentionToThemes={bringAttention === 'theme-select'}
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <PanelBody
                 title={__('Language', 'code-block-pro')}
                 initialOpen={bringAttention === 'language-select'}>
@@ -134,11 +139,6 @@ export const SidebarControls = ({
                     </BaseControl>
                 </div>
             </PanelBody>
-            <ThemesPanel
-                bringAttentionToThemes={bringAttention === 'theme-select'}
-                attributes={attributes}
-                setAttributes={setAttributes}
-            />
             <PanelBody
                 title={__('Header Type', 'code-block-pro')}
                 initialOpen={false}>
