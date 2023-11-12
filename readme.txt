@@ -310,6 +310,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Feature: Add pluggable sidebar slots to allow others to add functionality
+
 = 1.24.1 - 2023-10-11 =
 - Tweak: Line numbers width is now calculated based on the longest line number * font width
 - Compatibility: Checks whether the user has permission via the browser instead of passing it in from the server (other plugins were intercepting this check)

@@ -29,6 +29,7 @@ import {
 import { FooterSelect } from '../components/FooterSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
 import { HeightPanel } from '../components/HeightPanel';
+import { SlotFactory } from '../components/SlotFactory';
 import { ThemesPanel } from '../components/ThemesPanel';
 import { MissingPermissionsTip } from '../components/misc/MissingPermissions';
 import { BlurControl } from './BlurControl';
@@ -79,6 +80,11 @@ export const SidebarControls = ({
 
     return (
         <InspectorControls>
+            <SlotFactory
+                name="CodeBlockPro.Sidebar.Start"
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <PanelBody
                 title={__('Language', 'code-block-pro')}
                 initialOpen={bringAttention === 'language-select'}>
@@ -128,49 +134,11 @@ export const SidebarControls = ({
                     </BaseControl>
                 </div>
             </PanelBody>
-            <PanelBody
-                title={__('Line Settings', 'code-block-pro')}
-                initialOpen={false}>
-                <div className="code-block-pro-editor">
-                    <BaseControl id="code-block-pro-show-line-numbers">
-                        <CheckboxControl
-                            data-cy="show-line-numbers"
-                            label={__('Line numbers', 'code-block-pro')}
-                            help={__(
-                                'Enable line numbers and set a starting number.',
-                                'code-block-pro',
-                            )}
-                            checked={attributes.lineNumbers}
-                            onChange={(lineNumbers) => {
-                                setAttributes({ lineNumbers });
-                                updateThemeHistory({ lineNumbers });
-                            }}
-                        />
-                        {attributes.lineNumbers && (
-                            <BaseControl id="code-block-pro-line-number-start">
-                                <TextControl
-                                    id="code-block-pro-line-number-start"
-                                    spellCheck={false}
-                                    autoComplete="off"
-                                    label={__('Start from', 'code-block-pro')}
-                                    onChange={(startingLineNumber) => {
-                                        setAttributes({ startingLineNumber });
-                                    }}
-                                    value={attributes.startingLineNumber}
-                                />
-                            </BaseControl>
-                        )}
-                    </BaseControl>
-                    <HighlightingControl
-                        attributes={attributes}
-                        setAttributes={setAttributes}
-                    />
-                    <BlurControl
-                        attributes={attributes}
-                        setAttributes={setAttributes}
-                    />
-                </div>
-            </PanelBody>
+            <ThemesPanel
+                bringAttentionToThemes={bringAttention === 'theme-select'}
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
             <PanelBody
                 title={__('Header Type', 'code-block-pro')}
                 initialOpen={false}>
@@ -256,8 +224,51 @@ export const SidebarControls = ({
                     }}
                 />
             </PanelBody>
-            <ThemesPanel
-                bringAttentionToThemes={bringAttention === 'theme-select'}
+            <PanelBody
+                title={__('Line Settings', 'code-block-pro')}
+                initialOpen={false}>
+                <div className="code-block-pro-editor">
+                    <BaseControl id="code-block-pro-show-line-numbers">
+                        <CheckboxControl
+                            data-cy="show-line-numbers"
+                            label={__('Line numbers', 'code-block-pro')}
+                            help={__(
+                                'Enable line numbers and set a starting number.',
+                                'code-block-pro',
+                            )}
+                            checked={attributes.lineNumbers}
+                            onChange={(lineNumbers) => {
+                                setAttributes({ lineNumbers });
+                                updateThemeHistory({ lineNumbers });
+                            }}
+                        />
+                        {attributes.lineNumbers && (
+                            <BaseControl id="code-block-pro-line-number-start">
+                                <TextControl
+                                    id="code-block-pro-line-number-start"
+                                    spellCheck={false}
+                                    autoComplete="off"
+                                    label={__('Start from', 'code-block-pro')}
+                                    onChange={(startingLineNumber) => {
+                                        setAttributes({ startingLineNumber });
+                                    }}
+                                    value={attributes.startingLineNumber}
+                                />
+                            </BaseControl>
+                        )}
+                    </BaseControl>
+                    <HighlightingControl
+                        attributes={attributes}
+                        setAttributes={setAttributes}
+                    />
+                    <BlurControl
+                        attributes={attributes}
+                        setAttributes={setAttributes}
+                    />
+                </div>
+            </PanelBody>
+            <SlotFactory
+                name="CodeBlockPro.Sidebar.Middle"
                 attributes={attributes}
                 setAttributes={setAttributes}
             />
@@ -395,6 +406,11 @@ export const SidebarControls = ({
                     />
                 </BaseControl>
             </PanelBody>
+            <SlotFactory
+                name="CodeBlockPro.Sidebar.End"
+                attributes={attributes}
+                setAttributes={setAttributes}
+            />
         </InspectorControls>
     );
 };
