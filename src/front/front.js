@@ -21,13 +21,17 @@ const handleCopyButton = () => {
             const code = b?.dataset?.encoded
                 ? decodeURIComponent(decodeURIComponent(b?.dataset?.code))
                 : b?.dataset?.code;
-            copy(code ?? '', {
+            const content = window.cbpCopyOverride?.(code, button) ?? code;
+            copy(content ?? '', {
                 format: 'text/plain',
+                onCopy: (code) => {
+                    window.cbpCopyCallback?.(code, button);
+                    b.classList.add('cbp-copying');
+                    setTimeout(() => {
+                        b.classList.remove('cbp-copying');
+                    }, 2_000);
+                },
             });
-            b.classList.add('cbp-copying');
-            setTimeout(() => {
-                b.classList.remove('cbp-copying');
-            }, 2_000);
         };
         ['click', 'keydown'].forEach((evt) =>
             button.addEventListener(evt, handler),
