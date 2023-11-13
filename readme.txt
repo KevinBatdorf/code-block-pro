@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
 Tested up to:      6.4
-Stable tag:        1.24.1
+Stable tag:        1.25.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -310,10 +310,11 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.25.0 - 2023-11-13 =
 - Feature: Allow for overriding copy button text and invoke a callback
 - Feature: Added new programming fonts, Monaspace (5), Geist, Cozette and Deja Vu
 - Feature: Add pluggable sidebar slots to allow others to add functionality
-- Tweak: Renamed Themes to Theme and moved it to the top
+- Tweak: Reorganized sidebar based on common daily usage
 - Legal: Added (open source) license files for all fonts
 
 = 1.24.1 - 2023-10-11 =
