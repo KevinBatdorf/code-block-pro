@@ -311,7 +311,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Allow for overriding copy button text and invoke a callback
-- Feature: Added new programming fonts, Monaspace (5), Cozette and Deja Vu
+- Feature: Added new programming fonts, Monaspace (5), Geist, Cozette and Deja Vu
 - Feature: Add pluggable sidebar slots to allow others to add functionality
 - Tweak: Renamed Themes to Theme and moved it to the top
 - Legal: Added (open source) license files for all fonts
