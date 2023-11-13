@@ -144,3 +144,23 @@
     font-family: 'Code-Pro-Deja-Vu-Mono';
     src: url('../fonts/Code-Pro-Deja-Vu-Mono.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Code-Pro-Monaspace-Argon';
+    src: url('../fonts/Code-Pro-Monaspace-Argon.woff') format('woff');
+}
+@font-face {
+    font-family: 'Code-Pro-Monaspace-Krypton';
+    src: url('../fonts/Code-Pro-Monaspace-Krypton.woff') format('woff');
+}
+@font-face {
+    font-family: 'Code-Pro-Monaspace-Neon';
+    src: url('../fonts/Code-Pro-Monaspace-Neon.woff') format('woff');
+}
+@font-face {
+    font-family: 'Code-Pro-Monaspace-Radon';
+    src: url('../fonts/Code-Pro-Monaspace-Radon.woff') format('woff');
+}
+@font-face {
+    font-family: 'Code-Pro-Monaspace-Xenon';
+    src: url('../fonts/Code-Pro-Monaspace-Xenon.woff') format('woff');
+}
