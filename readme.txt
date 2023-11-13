@@ -27,7 +27,7 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 = Features =
 - Includes 25+ built-in themes to choose from.
 - Supports over 140 programming languages
-- Modern programming web fonts - locally hosted
+- 10+ Modern programming web fonts - locally hosted
 - Line numbers
 - Line highlighting (static and on hover)
 - Blur highlighting (with reveal on hover)
