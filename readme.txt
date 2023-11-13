@@ -27,7 +27,7 @@ Star [Code Block Pro](https://github.com/KevinBatdorf/code-block-pro) on GitHub!
 = Features =
 - Includes 25+ built-in themes to choose from.
 - Supports over 140 programming languages
-- Modern programming web fonts - locally hosted
+- 10+ Modern programming web fonts - locally hosted
 - Line numbers
 - Line highlighting (static and on hover)
 - Blur highlighting (with reveal on hover)
@@ -311,7 +311,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Allow for overriding copy button text and invoke a callback
-- Feature: Added two new programming fonts, Cozette and Deja Vu
+- Feature: Added new programming fonts, Monaspace (5), Geist, Cozette and Deja Vu
 - Feature: Add pluggable sidebar slots to allow others to add functionality
 - Tweak: Renamed Themes to Theme and moved it to the top
 - Legal: Added (open source) license files for all fonts

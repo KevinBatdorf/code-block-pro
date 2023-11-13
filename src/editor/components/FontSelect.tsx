@@ -112,14 +112,20 @@ export const FontFamilySelect = ({
     onChange: (v: string) => void;
 }) => {
     const fonts = {
+        '': __('System Default', 'code-block-pro'),
         'Code-Pro-Comic-Mono.ttf': 'Comic Mono',
-        'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
-        'Code-Pro-Fira-Code': 'Fira Code',
-        'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
-        'Code-Pro-JetBrains-Mono-NL.ttf': 'JetBrains Mono (No Ligatures)',
         'Code-Pro-Cozette': 'Cozette',
         'Code-Pro-Deja-Vu-Mono.ttf': 'DejaVu Mono',
-        '': __('System Default', 'code-block-pro'),
+        'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
+        'Code-Pro-Fira-Code': 'Fira Code',
+        'Code-Pro-Geist-Mono': 'Geist Mono',
+        'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
+        'Code-Pro-JetBrains-Mono-NL.ttf': 'JetBrains Mono (No Ligatures)',
+        'Code-Pro-Monaspace-Argon.woff': 'Monaspace Argon',
+        'Code-Pro-Monaspace-Krypton.woff': 'Monaspace Krypton',
+        'Code-Pro-Monaspace-Neon.woff': 'Monaspace Neon',
+        'Code-Pro-Monaspace-Radon.woff': 'Monaspace Radon',
+        'Code-Pro-Monaspace-Xenon.woff': 'Monaspace Xenon',
     };
     return (
         <SelectControl
