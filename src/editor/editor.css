@@ -164,3 +164,7 @@
     font-family: 'Code-Pro-Monaspace-Xenon';
     src: url('../fonts/Code-Pro-Monaspace-Xenon.woff') format('woff');
 }
+@font-face {
+    font-family: 'Code-Pro-Geist-Mono';
+    src: url('../fonts/Code-Pro-Geist-Mono.woff2') format('woff2');
+}

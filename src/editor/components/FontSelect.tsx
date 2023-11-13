@@ -118,6 +118,7 @@ export const FontFamilySelect = ({
         'Code-Pro-Deja-Vu-Mono.ttf': 'DejaVu Mono',
         'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
         'Code-Pro-Fira-Code': 'Fira Code',
+        'Code-Pro-Geist-Mono': 'Geist Mono',
         'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
         'Code-Pro-JetBrains-Mono-NL.ttf': 'JetBrains Mono (No Ligatures)',
         'Code-Pro-Monaspace-Argon.woff': 'Monaspace Argon',
