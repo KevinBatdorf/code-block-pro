@@ -3,6 +3,7 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         monospace; /* no !important */
     direction: ltr;
+    -webkit-text-size-adjust: 100%;
     @apply relative box-border;
     * {
         @apply box-border;
