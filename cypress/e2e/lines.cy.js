@@ -58,7 +58,7 @@ context('Line numbers', () => {
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .parent()
             .invoke('html')
-            .should('contain', '--cbp-line-number-start:5');
+            .should('contain', '--cbp-line-number-start: 5');
     });
 });
 
