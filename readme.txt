@@ -310,6 +310,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Fix: Added a css dec to stop long text font upsizing on some mobile devices
+
 = 1.25.0 - 2023-11-13 =
 - Feature: Allow for overriding copy button text and invoke a callback
 - Feature: Added new programming fonts, Monaspace (5), Geist, Cozette and Deja Vu
