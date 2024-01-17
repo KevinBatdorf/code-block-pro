@@ -312,6 +312,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 - Feature: Added a copy button that allows for text inputs
 - Feature: Added Commit Mono font (https://github.com/eigilnikolajsen/commit-mono)
+- Feature: Added Roboto Mono font (https://fonts.google.com/specimen/Roboto+Mono)
+- Feature: Added Meslo LG font (https://github.com/andreberg/Meslo-Font)
+- Feature: Added Hack font (https://github.com/source-foundry/Hack)
 - Fix: Added a css dec to stop long text font upsizing on some mobile devices
 
 = 1.25.0 - 2023-11-13 =
