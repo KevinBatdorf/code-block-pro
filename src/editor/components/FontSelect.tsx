@@ -114,6 +114,7 @@ export const FontFamilySelect = ({
     const fonts = {
         '': __('System Default', 'code-block-pro'),
         'Code-Pro-Comic-Mono.ttf': 'Comic Mono',
+        'Code-Pro-Commit-Mono.ttf': 'Commit Mono',
         'Code-Pro-Cozette': 'Cozette',
         'Code-Pro-Deja-Vu-Mono.ttf': 'DejaVu Mono',
         'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
