@@ -36,8 +36,8 @@ context('Copy button', () => {
         cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')
-            .should('contain', 'M9 5H7a2 2 0 00-2 2v12a2') // Clipboard.js
-            .should('not.contain', 'M16.5 8.25V6a2.25 2.25'); // TwoSquares.js
+            .should('contain', 'M9 5H7a2 2 0 00-2 2v12a2') // Clipboard.tsx
+            .should('not.contain', 'M16.5 8.25V6a2.25 2.25'); // TwoSquares.tsx
 
         cy.get('#code-block-pro-copy-button-heroicons')
             .should('exist')
@@ -48,8 +48,8 @@ context('Copy button', () => {
 
         cy.getPostContent('.wp-block[class$="code-block-pro"]')
             .invoke('html')
-            .should('contain', 'M16.5 8.25V6a2.25 2.25') // TwoSquares.js
-            .should('not.contain', 'M9 5H7a2 2 0 00-2 2v12a2'); // Clipboard.js
+            .should('contain', 'M16.5 8.25V6a2.25 2.25') // TwoSquares.tsx
+            .should('not.contain', 'M9 5H7a2 2 0 00-2 2v12a2'); // Clipboard.tsx
     });
 
     it('Hides buttons when unchecked', () => {
@@ -95,6 +95,63 @@ context('Copy button', () => {
                 expect(clipText).to.equal(text);
             });
         });
+    });
+
+    it.only('Lets the text button change text', () => {
+        cy.openSideBarPanel('Buttons');
+
+        cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', 'M9 5H7a2 2 0 00-2 2v12a2') // Clipboard.tsx
+            .should('not.contain', '<span class="cbp-btn-text">Copy'); // TextSimple.tsx
+        cy.get('#code-block-pro-copy-button-heroicons')
+            .should('exist')
+            .should('have.attr', 'aria-current', 'true');
+
+        // Can change to the text button
+        cy.get('#code-block-pro-copy-button-textSimple').should('exist');
+        cy.get('#code-block-pro-copy-button-textSimple').click();
+
+        // Button changed - expected default text is shown
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', '<span class="cbp-btn-text">Copy') // TextSimple.tsx
+            .should('not.contain', 'M9 5H7a2 2 0 00-2 2v12a2'); // Clipboard.tsx
+
+        // Clear the text then test that it can be changed
+        cy.get('#code-block-pro-copy-button-text')
+            .should('exist')
+            .should('have.value', 'Copy')
+            .clear();
+        cy.get('#code-block-pro-copy-button-text').type('foo-bar-baz-lets-go');
+        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+            .invoke('html')
+            .should('contain', '<span class="cbp-btn-text">foo-bar-baz-lets-go')
+            .should('not.contain', '<span class="cbp-btn-text">Copy');
+
+        // Do the same for the Copied! text
+        cy.get('#code-block-pro-copy-button-text-copied')
+            .should('exist')
+            .should('have.value', 'Copied!')
+            .clear();
+        cy.get('#code-block-pro-copy-button-text-copied').type('it worked!');
+
+        cy.addCode('hi friends');
+        cy.previewCurrentPage();
+
+        // Check the text shows on the front end
+        cy.get('.wp-block-kevinbatdorf-code-block-pro')
+            .invoke('html')
+            .should(
+                'contain',
+                '<span class="cbp-btn-text">foo-bar-baz-lets-go',
+            );
+        // Click the copy button and the text should change
+        cy.get('.code-block-pro-copy-button').should('exist').realClick();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro')
+            .invoke('html')
+            .should('contain', '<span class="cbp-btn-text">it worked!');
     });
 
     // Doesn't seem to work 🤷

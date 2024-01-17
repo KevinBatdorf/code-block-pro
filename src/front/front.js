@@ -17,7 +17,7 @@ const handleCopyButton = () => {
             // if keydown event, make sure it's enter or space
             if (type === 'keydown' && !['Enter', ' '].includes(key)) return;
             event.preventDefault();
-            const b = target?.closest('span');
+            const b = target?.closest('span[data-code]');
             const code = b?.dataset?.encoded
                 ? decodeURIComponent(decodeURIComponent(b?.dataset?.code))
                 : b?.dataset?.code;
@@ -27,8 +27,15 @@ const handleCopyButton = () => {
                 onCopy: (code) => {
                     window.cbpCopyCallback?.(code, button);
                     b.classList.add('cbp-copying');
+                    // Check if there is a data-text-copied attribute
+                    const hasTextCopied = b.dataset.copiedText;
+                    const innerSpan = b.querySelector('span');
+                    if (hasTextCopied) innerSpan.innerText = hasTextCopied;
                     setTimeout(() => {
                         b.classList.remove('cbp-copying');
+                        if (hasTextCopied) {
+                            innerSpan.innerText = b.getAttribute('aria-label');
+                        }
                     }, 2_000);
                 },
             });

@@ -1,4 +1,8 @@
-import { BaseControl, CheckboxControl } from '@wordpress/components';
+import {
+    BaseControl,
+    CheckboxControl,
+    TextControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import classNames from 'classnames';
 import { useThemeStore } from '../../../../state/theme';
@@ -38,9 +42,7 @@ export const CopyBtnSettings = ({
                                     id={`code-block-pro-copy-button-${slug}`}
                                     type="button"
                                     onClick={() => {
-                                        setAttributes({
-                                            copyButtonType: slug,
-                                        });
+                                        setAttributes({ copyButtonType: slug });
                                         updateThemeHistory({
                                             copyButtonType: slug,
                                         });
@@ -57,12 +59,41 @@ export const CopyBtnSettings = ({
                                         {data.label}
                                     </span>
                                     <span className="pointer-events-none w-full">
-                                        <Component />
+                                        <Component color={color} />
                                     </span>
                                 </button>
                             </div>
                         );
                     })}
+                </div>
+            )}
+            {attributes.copyButton && (
+                <div style={{ marginTop: '1rem' }}>
+                    <TextControl
+                        id="code-block-pro-copy-button-text"
+                        autoComplete="off"
+                        label={__('Button label', 'code-block-pro')}
+                        placeholder={__('Copy', 'code-block-pro')}
+                        onChange={(copyButtonString) => {
+                            setAttributes({ copyButtonString });
+                        }}
+                        value={attributes.copyButtonString ?? ''}
+                    />
+                    {attributes.copyButtonType === 'textSimple' && (
+                        <TextControl
+                            id="code-block-pro-copy-button-text-copied"
+                            autoComplete="off"
+                            label={__('Copied Text', 'code-block-pro')}
+                            placeholder={__('Copied!', 'code-block-pro')}
+                            onChange={(copyButtonStringCopied) => {
+                                setAttributes({ copyButtonStringCopied });
+                            }}
+                            value={attributes.copyButtonStringCopied ?? ''}
+                            help={__(
+                                'Text briefly shown after the code is copied',
+                            )}
+                        />
+                    )}
                 </div>
             )}
         </BaseControl>

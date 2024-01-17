@@ -14,6 +14,8 @@ export const useDefaults = ({
         lineHeight,
         copyButton,
         copyButtonType,
+        copyButtonString,
+        copyButtonStringCopied,
         headerType,
         footerType,
         clampFonts,
@@ -39,6 +41,8 @@ export const useDefaults = ({
         previousHighlightingHover,
         previousCopyButton,
         previousCopyButtonType,
+        previousCopyButtonString,
+        previousCopyButtonStringCopied,
         previousTabSize,
         previousUseTabs,
         previousSeeMoreType,
@@ -59,6 +63,23 @@ export const useDefaults = ({
         if (copyButtonType) return;
         setAttributes({ copyButtonType: previousCopyButtonType });
     }, [previousCopyButtonType, copyButtonType, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        // Checks undefined to avoid invalidating old blocks
+        if (copyButtonString || copyButtonString === undefined) return;
+        setAttributes({ copyButtonString: previousCopyButtonString });
+    }, [previousCopyButtonString, copyButtonString, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        // Checks undefined to avoid invalidating old blocks
+        if (copyButtonStringCopied || copyButtonStringCopied === undefined) {
+            return;
+        }
+        const cpyP = previousCopyButtonStringCopied;
+        setAttributes({ copyButtonStringCopied: cpyP });
+    }, [previousCopyButtonStringCopied, copyButtonStringCopied, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;

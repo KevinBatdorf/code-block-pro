@@ -50,7 +50,7 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                         )
                             ? // Settings refers to the panel that can be expanded
                               __(
-                                  'Update extra settings above',
+                                  'Set the text at the top of this panel.',
                                   'code-block-pro',
                               )
                             : undefined

@@ -55,6 +55,14 @@ registerBlockType<Attributes>(blockConfig.name, {
         label: { type: 'string', default: '' },
         copyButton: { type: 'boolean' },
         copyButtonType: { type: 'string' },
+        copyButtonString: {
+            type: 'string',
+            default: __('Copy', 'code-block-pro'),
+        },
+        copyButtonStringCopied: {
+            type: 'string',
+            default: __('Copied!', 'code-block-pro'),
+        },
         useDecodeURI: { type: 'boolean', default: false },
         tabSize: { type: 'number', default: 2 },
         useTabs: { type: 'boolean' },

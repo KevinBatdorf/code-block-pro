@@ -1,5 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 import { Attributes } from '../types';
@@ -17,6 +18,8 @@ type ThemeType = {
     previousHighlightingHover?: boolean;
     previousCopyButton: boolean;
     previousCopyButtonType: string;
+    previousCopyButtonString?: string;
+    previousCopyButtonStringCopied?: string;
     previousTabSize: number;
     previousUseTabs?: boolean;
     // previousEnableMaxHeight?: boolean;
@@ -46,6 +49,8 @@ const defaultSettings = {
     previousHighlightingHover: false,
     previousCopyButton: true,
     previousCopyButtonType: 'heroicons',
+    previousCopyButtonString: __('Copy', 'code-block-pro'),
+    previusCopyButtonStringCopied: __('Copied', 'code-block-pro'),
     previousTabSize: 2,
     previousUseTabs: false,
     // TODO: maybe impliment these with an extra UI to make them optional
