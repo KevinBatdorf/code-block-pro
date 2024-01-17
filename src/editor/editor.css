@@ -133,14 +133,6 @@
     src: url('../fonts/Code-Pro-Comic-Mono.ttf') format('truetype');
 }
 @font-face {
-    font-family: 'Code-Pro-Meslo-LG-S-DZ';
-    src: url('../fonts/Code-Pro-Meslo-LG-S-DZ.ttf') format('truetype');
-}
-@font-face {
-    font-family: 'Code-Pro-Commit-Mono';
-    src: url('../fonts/Code-Pro-Commit-Mono.ttf') format('truetype');
-}
-@font-face {
     font-family: 'Code-Pro-Roboto-Mono';
     src: url('../fonts/Code-Pro-Roboto-Mono.ttf') format('truetype');
 }

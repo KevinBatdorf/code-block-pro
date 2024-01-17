@@ -114,7 +114,6 @@ export const FontFamilySelect = ({
     const fonts = {
         '': __('System Default', 'code-block-pro'),
         'Code-Pro-Comic-Mono.ttf': 'Comic Mono',
-        'Code-Pro-Commit-Mono.ttf': 'Commit Mono',
         'Code-Pro-Cozette': 'Cozette',
         'Code-Pro-Deja-Vu-Mono.ttf': 'DejaVu Mono',
         'Code-Pro-Fantasque-Sans-Mono': 'Fantasque Sans Mono',
@@ -123,7 +122,6 @@ export const FontFamilySelect = ({
         'Code-Pro-Hack': 'Hack',
         'Code-Pro-JetBrains-Mono': 'JetBrains Mono',
         'Code-Pro-JetBrains-Mono-NL.ttf': 'JetBrains Mono (No Ligatures)',
-        'Code-Pro-Meslo-LG-S-DZ.ttf': 'Meslo LG',
         'Code-Pro-Monaspace-Argon.woff': 'Monaspace Argon',
         'Code-Pro-Monaspace-Krypton.woff': 'Monaspace Krypton',
         'Code-Pro-Monaspace-Neon.woff': 'Monaspace Neon',
@@ -135,7 +133,6 @@ export const FontFamilySelect = ({
         <SelectControl
             id="code-block-pro-font-family"
             label={__('Font Family', 'code-block-pro')}
-            help={__('Fonts only render on the frontend.', 'code-block-pro')}
             value={value}
             onChange={onChange}
             options={Object.entries(fonts).map(([value, label]) => ({
