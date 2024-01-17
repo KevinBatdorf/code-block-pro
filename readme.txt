@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
 Tested up to:      6.4
-Stable tag:        1.25.0
+Stable tag:        1.26.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -310,6 +310,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.26.0 - 2024-01-17 =
 - Feature: Added a copy button that allows for text inputs
 - Feature: Added Roboto Mono font (https://fonts.google.com/specimen/Roboto+Mono)
 - Feature: Added Hack font (https://github.com/source-foundry/Hack)
