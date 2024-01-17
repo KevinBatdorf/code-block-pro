@@ -97,7 +97,7 @@ context('Copy button', () => {
         });
     });
 
-    it.only('Lets the text button change text', () => {
+    it('Lets the text button change text', () => {
         cy.openSideBarPanel('Buttons');
 
         cy.get('[data-cy="copy-button"]').should('exist').should('be.checked');
