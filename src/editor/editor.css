@@ -133,6 +133,10 @@
     src: url('../fonts/Code-Pro-Comic-Mono.ttf') format('truetype');
 }
 @font-face {
+    font-family: 'Code-Pro-Commit-Mono';
+    src: url('../fonts/Code-Pro-Commit-Mono.ttf') format('truetype');
+}
+@font-face {
     font-family: 'Code-Pro-Fantasque-Sans-Mono';
     src: url('../fonts/Code-Pro-Fantasque-Sans-Mono.woff2') format('woff2');
 }

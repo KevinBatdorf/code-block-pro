@@ -311,6 +311,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Feature: Added a copy button that allows for text inputs
+- Feature: Added Commit Mono font (https://github.com/eigilnikolajsen/commit-mono)
 - Fix: Added a css dec to stop long text font upsizing on some mobile devices
 
 = 1.25.0 - 2023-11-13 =
