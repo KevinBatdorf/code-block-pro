@@ -310,6 +310,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.26.1 - 2024-01-31 =
+- Fix: Fixes a bug where the plaintext language would crash the theme render
+
 = 1.26.0 - 2024-01-17 =
 - Feature: Added a copy button that allows for text inputs
 - Feature: Added Roboto Mono font (https://fonts.google.com/specimen/Roboto+Mono)

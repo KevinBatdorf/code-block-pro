@@ -28,7 +28,7 @@ const fetcher = ({ theme, lang, ready }: Params) => {
     )?.[themeFiltered]?.['alias'] as Theme;
 
     return getHighlighter({
-        langs: lang === 'plaintext' ? undefined : [getEditorLanguage(lang)],
+        langs: lang === 'plaintext' ? [] : [getEditorLanguage(lang)],
         theme: themeAlias ?? themeFiltered,
     });
 };
