@@ -20,13 +20,15 @@ context('Language checks', () => {
             .invoke('html')
             .should('contain', '<span style="color: #81A1C1">const</span>');
 
-        // Switch to ruby
-        cy.setLanguage('ruby');
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        // TODO - pro only
+        // const lorem = 'Ut laboris anim culpa fugiat sit anim dolor cillum';
+        // cy.addCode(lorem);
+        cy.setLanguage('plaintext');
+        cy.get('.wp-block[class$="code-block-pro"]')
             .invoke('html')
             .should(
                 'contain',
-                '<span style="color: #D8DEE9FF">const foo </span>',
+                'padding: 16px 0px 16px 16px;">const foo = "bar";</textarea>',
             );
     });
 });
