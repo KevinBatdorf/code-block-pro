@@ -28,7 +28,7 @@
         "@wordpress/block-editor": "12.16.0",
         "@wordpress/env": "8.7.0",
         "@wordpress/scripts": "26.19.0",
-        "@wordpress/url": "3.49.0",
+        "@wordpress/url": "3.51.0",
         "autoprefixer": "10.4.16",
         "copy-webpack-plugin": "11.0.0",
         "cypress": "13.6.2",
