@@ -60,7 +60,7 @@
         "@wordpress/escape-html": "^2.48.0",
         "@wordpress/hooks": "3.48.0",
         "@wordpress/html-entities": "^3.48.0",
-        "@wordpress/i18n": "4.48.0",
+        "@wordpress/i18n": "4.54.0",
         "copy-to-clipboard": "3.3.3",
         "react-simple-code-editor": "0.13.1",
         "shiki": "0.14.7",
