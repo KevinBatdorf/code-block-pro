@@ -232,3 +232,16 @@
 .cbp-footer-link {
     @apply hover:underline;
 }
+@media print {
+    .wp-block-kevinbatdorf-code-block-pro pre {
+        max-height: none !important;
+    }
+    .wp-block-kevinbatdorf-code-block-pro:not(#x) .line::before {
+        background-color: transparent !important;
+        color: inherit !important;
+    }
+    .wp-block-kevinbatdorf-code-block-pro:not(#x) > span,
+    .wp-block-kevinbatdorf-code-block-pro:not(#x) .cbp-line-highlighter {
+        display: none !important;
+    }
+}
