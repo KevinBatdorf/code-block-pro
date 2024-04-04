@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Check out code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
             - name: npm install and build
               run: |
                   npm ci
@@ -21,7 +21,7 @@ jobs:
                   CI: true
 
             - name: Package
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: code-block-pro
                   retention-days: 5
