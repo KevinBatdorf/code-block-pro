@@ -1,6 +1,6 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82, dcooney
-Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
+Tags:              code, syntax, snippet, highlighter, php
 Tested up to:      6.5
 Stable tag:        1.26.2
 License:           GPL-2.0-or-later
