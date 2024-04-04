@@ -19,14 +19,14 @@ export const useLanguageStore = create<LanguageType>()(
                 },
                 recentLanguages: [] as Lang[],
                 addRecentLanguage(language: Lang) {
-                    // Limit to the last 3
+                    // Limit to the last 5
                     set((state) => {
                         if (state.recentLanguages.includes(language)) {
                             return state;
                         }
                         return {
                             recentLanguages: [
-                                ...(state.recentLanguages?.slice(-2) ?? []),
+                                ...(state.recentLanguages?.slice(-4) || []),
                                 language,
                             ],
                         };

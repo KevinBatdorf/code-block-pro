@@ -59,9 +59,16 @@ Cypress.Commands.add('getPostContent', (addon = '') => {
     return cy.get(`${BLOCK_CONTAINER} ${addon}`);
 });
 Cypress.Commands.add('focusBlock', (blockName, addon = '') => {
-    cy.get(
-        `${BLOCK_CONTAINER} .wp-block[class$="${blockName}"] ${addon}`,
-    ).click();
+    cy.window().then((win) => {
+        cy.get(`${BLOCK_CONTAINER} .wp-block[class$="${blockName}"] ${addon}`)
+            .should('be.visible')
+            .then((el) => {
+                el[0].focus();
+                win.scrollTo(0, 0);
+                // make sure the window is scrolled to the top
+                return win.scrollY === 0;
+            });
+    });
 });
 Cypress.Commands.add('getCurrentPostObject', () => {
     cy.wpDataSelect('core/editor', 'getCurrentPost');
