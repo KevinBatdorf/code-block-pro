@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, snippet, highlighter, JavaScript, php, js, vs code
 Tested up to:      6.5
-Stable tag:        1.26.1
+Stable tag:        1.26.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -309,6 +309,11 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.26.2 - 2024-04-04 =
+- Tweak: Changed the saved languages history from 3 to 5
+- Fix: Addressed some contrast issues with print styles
+- Testing: Updated tests to work better with latest WP
 
 = 1.26.1 - 2024-01-31 =
 - Fix: Fixes a bug where the plaintext language would crash the theme render
