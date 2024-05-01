@@ -25,7 +25,7 @@
         "@types/wordpress__edit-post": "^7.5.6",
         "@typescript-eslint/eslint-plugin": "^7.5.0",
         "@typescript-eslint/parser": "7.5.0",
-        "@wordpress/block-editor": "12.23.0",
+        "@wordpress/block-editor": "12.24.0",
         "@wordpress/env": "9.7.0",
         "@wordpress/scripts": "27.6.0",
         "@wordpress/url": "3.56.0",
@@ -53,7 +53,7 @@
     },
     "dependencies": {
         "@headlessui/react": "1.7.18",
-        "@wordpress/block-editor": "12.23.0",
+        "@wordpress/block-editor": "12.24.0",
         "@wordpress/blocks": "12.32.0",
         "@wordpress/edit-post": "^7.32.0",
         "@wordpress/element": "5.32.0",
