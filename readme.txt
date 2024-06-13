@@ -156,6 +156,7 @@ Get more themes at [code-block-pro.com/themes](https://code-block-pro.com/themes
 - DreamMaker ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=dream-maker&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=dream-maker))
 - Elixir ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=elixir&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=elixir))
 - Elm ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=elm&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=elm))
+- ERB ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=erb&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=erb))
 - Erlang ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=erlang&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=erlang))
 - Fish ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=fish&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=fish))
 - F# ([demo](https://code-block-pro.com/themes?theme=one-dark-pro&lang=fsharp&utm_campaign=Demo&utm_source=Readme&utm_medium=textlink&utm_content=language&utm_term=fsharp))
@@ -309,6 +310,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+- Fix: Fixes support for ERB template syntax
 
 = 1.26.2 - 2024-04-04 =
 - Tweak: Changed the saved languages history from 3 to 5
