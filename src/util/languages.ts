@@ -19,7 +19,6 @@ export const codeAliases = {
     gts: ['glimmer-ts'],
     haskell: ['hs'],
     handlebars: ['hbs'],
-    'html-ruby-erb': ['erb'],
     ini: ['properties'],
     java: ['javafx'],
     javascript: ['jscript', 'js'],
