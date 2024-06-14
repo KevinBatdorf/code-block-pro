@@ -311,6 +311,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.26.3 - 2024-06-14 =
 - Fix: Fixes support for ERB template syntax
 
 = 1.26.2 - 2024-04-04 =
