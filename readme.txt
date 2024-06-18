@@ -14,7 +14,9 @@ Show off your beautiful code, don't just display it! This block plugin provides 
 
 Beautiful syntax highlighting that makes sense.
 
-Visit [code-block-pro.com](https://code-block-pro.com/?utm_campaign=plugin&utm_source=readme-body&utm_medium=textlink) to learn more.
+To use, navigate to the default WordPress editor, and search for "Code Pro" or start typing "/code".
+
+Visit [code-block-pro.com](https://code-block-pro.com/?utm_campaign=plugin&utm_source=readme-body&utm_medium=textlink) for a lifetime deal on the theme pack (this is a cosmetic-only upgrade).
 
 = Values =
 - Performance first - Web vitals. Pre-rendering. Minimal asset loading.
