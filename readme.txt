@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              code, syntax, snippet, highlighter, php
 Tested up to:      6.5
-Stable tag:        1.26.2
+Stable tag:        1.26.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.26.4 - 2024-06-14 =
+- Re-release with updated tag
 
 = 1.26.3 - 2024-06-14 =
 - Fix: Fixes support for ERB template syntax
