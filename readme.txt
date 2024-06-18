@@ -313,8 +313,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-= 1.26.4 - 2024-06-14 =
-- Re-release with updated tag
+= 1.26.4 - 2024-06-18 =
+- Re-release with updated version number in readme. Making this a patch release as I worry some security plugins would otherwise complain.
 
 = 1.26.3 - 2024-06-14 =
 - Fix: Fixes support for ERB template syntax
