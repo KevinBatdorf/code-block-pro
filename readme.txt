@@ -1,7 +1,7 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82, dcooney
 Tags:              code, syntax, snippet, highlighter, php
-Tested up to:      6.5
+Tested up to:      6.6
 Stable tag:        1.26.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
