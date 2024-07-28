@@ -50,6 +50,7 @@ export const SidebarControls = ({
     const canEdit = useCanEditHTML();
     const footersNeedingLinks = ['simpleStringEnd', 'simpleStringStart'];
     const showHeaderTextEdit = [
+        'headlightsTabString',
         'simpleString',
         'pillString',
         'stringSmall',

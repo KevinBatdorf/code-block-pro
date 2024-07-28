@@ -4,6 +4,7 @@ import { Attributes } from '../../types';
 import { Headlights } from './headers/Headlights';
 import { HeadlightsMuted } from './headers/HeadlightsMuted';
 import { HeadlightsMutedAlt } from './headers/HeadlightsMutedAlt';
+import { HeadlightsTabString } from './headers/HeadlightsTabString';
 import { PillString } from './headers/PillString';
 import { SimpleString } from './headers/SimpleString';
 import { StringSmall } from './headers/StringSmall';
@@ -25,6 +26,7 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
         headlights: __('Headlights', 'code-block-pro'),
         headlightsMuted: __('Headlights muted', 'code-block-pro'),
         headlightsMutedAlt: __('Headlights muted alt', 'code-block-pro'),
+        headlightsTabString: __('Headlights with tab string', 'code-block-pro'),
         simpleString: __('Simple string', 'code-block-pro'),
         stringSmall: __('String muted', 'code-block-pro'),
         pillString: __('Pill string', 'code-block-pro'),
@@ -45,7 +47,7 @@ export const HeaderSelect = ({ attributes, onClick }: HeaderSelectProps) => {
                             : type
                     }
                     help={
-                        ['simpleString', 'pillString', 'stringSmall'].includes(
+                        ['headlightsTabString', 'simpleString', 'pillString', 'stringSmall'].includes(
                             slug,
                         )
                             ? // Settings refers to the panel that can be expanded
@@ -96,6 +98,9 @@ export const HeaderType = (attributes: Attributes) => {
     }
     if (headerType === 'headlightsMutedAlt') {
         return <HeadlightsMutedAlt {...attributes} />;
+    }
+    if ( headerType === 'headlightsTabString') {
+        return <HeadlightsTabString {...attributes} />;
     }
     if (headerType === 'simpleString') {
         return <SimpleString {...attributes} />;
