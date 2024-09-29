@@ -8,6 +8,7 @@ export const encode = (code: string, { useDecodeURI }: Partial<Attributes>) => {
             // Here for bw compatability
             return encodeURIComponent(code);
         } catch (e) {
+            console.error(e);
             return code;
         }
     }
@@ -20,6 +21,7 @@ export const decode = (code: string, { useDecodeURI }: Partial<Attributes>) => {
             // Here for bw compatability
             return decodeURIComponent(code);
         } catch (e) {
+            console.error(e);
             return code;
         }
     }

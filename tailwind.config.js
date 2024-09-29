@@ -1,4 +1,5 @@
-const colors = require('tailwindcss/colors');
+import { colors } from 'tailwindcss/colors';
+
 delete colors['lightBlue'];
 delete colors['warmGray'];
 delete colors['trueGray'];
@@ -6,7 +7,7 @@ delete colors['coolGray'];
 delete colors['blueGray'];
 
 // See postcss.config.js for more parsing options.
-module.exports = {
+export default {
     // Tnis should match the namespace you use in your css styles.
     important: '.code-block-pro',
     theme: {
@@ -46,20 +47,20 @@ module.exports = {
             gray: {
                 50: '#fbfbfb',
                 100: '#f0f0f0',
-                150: '#eaeaea', // This wasn't a variable but I saw it on buttons
-                200: '#e0e0e0', // Used sparingly for light borders.
-                300: '#dddddd', // Used for most borders.
+                150: '#eaeaea',
+                200: '#e0e0e0',
+                300: '#dddddd',
                 400: '#cccccc',
                 500: '#cccccc',
-                600: '#949494', // Meets 3:1 UI or large text contrast against white.
-                700: '#757575', // Meets 4.6:1 text contrast against white.
+                600: '#949494',
+                700: '#757575',
                 900: '#1e1e1e',
             },
         },
         extend: {
             zIndex: {
                 high: '99999',
-                max: '2147483647', // max int values - don't block WP re-auth modal
+                max: '2147483647',
             },
             ringWidth: {
                 wp: 'var(--wp-admin-border-width-focus)',

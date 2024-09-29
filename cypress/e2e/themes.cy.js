@@ -1,6 +1,5 @@
 import themes from '../../src/defaultThemes.json';
-
-const { MORE_THEMES_URL } = require('../constants');
+import { MORE_THEMES_URL } from '../constants';
 
 beforeEach(() => {
     cy.resetDatabase();

@@ -1,12 +1,8 @@
-const defaultConfig = require('@wordpress/scripts/config/webpack.config');
-const CopyPlugin = require('copy-webpack-plugin');
+import defaultConfig from '@wordpress/scripts/config/webpack.config';
+import CopyPlugin from 'copy-webpack-plugin';
 
-module.exports = {
+export default {
     ...defaultConfig,
-    devServer: {
-        ...defaultConfig.devServer,
-        host: 'wordpress.test',
-    },
     plugins: [
         ...defaultConfig.plugins,
         new CopyPlugin({

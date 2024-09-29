@@ -141,6 +141,7 @@ export const Edit = ({
         getBlurs,
         getHighlights,
         useDecodeURI,
+        useEscapeShortCodes,
     ]);
 
     useLayoutEffect(() => {
