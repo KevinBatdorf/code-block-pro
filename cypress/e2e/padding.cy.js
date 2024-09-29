@@ -4,10 +4,10 @@ beforeEach(() => {
     cy.loginUser();
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
-    cy.getPostContent('.wp-block[class$="code-block-pro"]').should('exist');
+    cy.getPostContent('.wp-block[class*="code-block-pro"]').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class$="code-block-pro"] textarea').should('have.focus');
+    cy.get('.wp-block[class*="code-block-pro"] textarea').should('have.focus');
 
     cy.openSideBarPanel('Extra Settings');
     cy.get('[data-cy="disable-padding"')
@@ -20,13 +20,13 @@ afterEach(() => {
 });
 context('Line numbers', () => {
     it('Line numbers disabled, padding enabled', () => {
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre').should(
             'have.css',
             'padding',
             '16px 0px 16px 16px',
         );
         cy.getPostContent(
-            '.wp-block[class$="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
+            '.wp-block[class*="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
         ).should('have.css', 'padding', '16px 0px 16px 16px');
 
         cy.addCode('line 1\nline 2\nline 3');
@@ -38,13 +38,13 @@ context('Line numbers', () => {
     });
 
     it('Line numbers disabled, padding disabled', () => {
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre').should(
             'have.css',
             'padding',
             '16px 0px 16px 16px',
         );
         cy.getPostContent(
-            '.wp-block[class$="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
+            '.wp-block[class*="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
         ).should('have.css', 'padding', '16px 0px 16px 16px');
 
         cy.addCode('line 1\nline 2\nline 3');
@@ -52,13 +52,13 @@ context('Line numbers', () => {
         cy.get('[data-cy="disable-padding"').check();
         cy.get('[data-cy="disable-padding"').should('be.checked');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre').should(
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre').should(
             'have.css',
             'padding',
             '0px',
         );
         cy.getPostContent(
-            '.wp-block[class$="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
+            '.wp-block[class*="code-block-pro"] textarea.npm__react-simple-code-editor__textarea',
         ).should('have.css', 'padding', '0px');
 
         cy.previewCurrentPage();
@@ -77,7 +77,7 @@ context('Line numbers', () => {
         cy.get('[data-cy="show-line-numbers"]').check();
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.getPostContent('.wp-block[class*="code-block-pro"]')
             .invoke('html')
             .should(
                 'not.include',
@@ -102,7 +102,7 @@ context('Line numbers', () => {
         cy.get('[data-cy="show-line-numbers"]').check();
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.getPostContent('.wp-block[class*="code-block-pro"]')
             .invoke('html')
             .should(
                 'include',
@@ -112,7 +112,7 @@ context('Line numbers', () => {
         // Tests that the padding expands as the line number width grows
         cy.addCode('1\n2\n3\n4\n5\n6\n7\n8\n9\n10');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.getPostContent('.wp-block[class*="code-block-pro"]')
             .invoke('html')
             .should(
                 'not.include',

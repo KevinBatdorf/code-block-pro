@@ -75,8 +75,8 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
                               String(highestLineNumber).length
                           } * ${fontFamilyRatio(fontFamily)} * ${fontSize})`
                         : lineNumbersWidth
-                        ? `${lineNumbersWidth}px`
-                        : undefined,
+                          ? `${lineNumbersWidth}px`
+                          : undefined,
                     '--cbp-line-highlight-color':
                         enableHighlighting || highlightingHover
                             ? lineHighlightColor

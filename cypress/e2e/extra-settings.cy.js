@@ -4,10 +4,10 @@ beforeEach(() => {
     cy.loginUser();
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
-    cy.getPostContent('.wp-block[class$="code-block-pro"]').should('exist');
+    cy.getPostContent('.wp-block[class*="code-block-pro"]').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class$="code-block-pro"] textarea').should('have.focus');
+    cy.get('.wp-block[class*="code-block-pro"] textarea').should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -25,7 +25,7 @@ context('Extra Settings', () => {
             codeOutput: '<script><</script>',
         });
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre')
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
             .invoke('html')
             .should('not.contain', encodeURI('<'));
 
@@ -43,7 +43,7 @@ context('Extra Settings', () => {
 
         cy.addCode('<script>&lt;</script>');
 
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre')
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
             .invoke('html')
             .should('contain', '>lt</span>'); // formatted with highlighter
 
@@ -52,5 +52,38 @@ context('Extra Settings', () => {
         cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
             .should('exist')
             .should('contain', '<script>&lt;</script>');
+    });
+
+    it.only('Escapes WordPress shortcodes', () => {
+        cy.openSideBarPanel('Extra Settings');
+        cy.get('[data-cy="use-escape-shortcodes"]')
+            .should('exist')
+            .should('not.be.checked');
+
+        cy.setLanguage('plaintext');
+        cy.addCode('[embed]foo[/embed]');
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
+            .invoke('html')
+            .should('contain', '[embed]foo[/embed]'); // Doesn't render
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+            .should('exist')
+            .invoke('html')
+            .should('contain', '<a href="http://foo">foo</a>'); // Renders
+
+        cy.go('back');
+        cy.focusBlock('code-block-pro');
+        cy.openSideBarPanel('Extra Settings');
+        cy.get('[data-cy="use-escape-shortcodes"]').check();
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
+            .invoke('html')
+            .should('contain', '[embed]foo[/embed]'); // Doesn't render
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+            .should('exist')
+            .invoke('html')
+            .should('contain', '[embed]foo[/embed]'); // Doesn't render
     });
 });

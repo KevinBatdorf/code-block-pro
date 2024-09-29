@@ -373,6 +373,24 @@ export const SidebarControls = ({
                         }}
                     />
                 </BaseControl>
+                <BaseControl id="code-block-pro-escape-shortcodes">
+                    <CheckboxControl
+                        data-cy="use-escape-shortcodes"
+                        label={__(
+                            'Escape WordPress shortcodes',
+                            'code-block-pro',
+                        )}
+                        help={__(
+                            'Select this to prevent php shortcodes from executing.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.useEscapeShortCodes}
+                        onChange={(useEscapeShortCodes) => {
+                            setAttributes({ useEscapeShortCodes });
+                            updateThemeHistory({ useEscapeShortCodes });
+                        }}
+                    />
+                </BaseControl>
                 <BaseControl id="code-block-pro-editor-tab-size">
                     <TextControl
                         spellCheck={false}
