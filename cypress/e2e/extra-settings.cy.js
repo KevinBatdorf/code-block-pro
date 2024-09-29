@@ -54,7 +54,7 @@ context('Extra Settings', () => {
             .should('contain', '<script>&lt;</script>');
     });
 
-    it.only('Escapes WordPress shortcodes', () => {
+    it('Escapes WordPress shortcodes', () => {
         cy.openSideBarPanel('Extra Settings');
         cy.get('[data-cy="use-escape-shortcodes"]')
             .should('exist')

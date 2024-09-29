@@ -3,7 +3,7 @@ export const setHeightDesign = (height) => {
     cy.openSideBarPanel('Max Height');
     cy.get('div[aria-label="Editor settings"] button')
         .contains('Max Height')
-        .parents('.interface-interface-skeleton__sidebar')
+        .parents('.editor-sidebar')
         .scrollTo('bottom');
     cy.get(`#code-block-pro-see-more-${height}`).should('exist');
     cy.get(`#code-block-pro-see-more-${height}`).click();

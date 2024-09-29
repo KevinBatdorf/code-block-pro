@@ -411,7 +411,7 @@ export const SidebarControls = ({
                     />
                     <CheckboxControl
                         data-cy="use-tabs"
-                        label={__('Use Real Tabs', 'code-block-pro')}
+                        label={__('Use real tabs', 'code-block-pro')}
                         help={__(
                             'Inserts an actual tab character instead of a space. The width defined above.',
                             'code-block-pro',

@@ -45,7 +45,7 @@ context('Theme checks', () => {
         cy.openSideBarPanel('Theme');
         cy.get('div[aria-label="Editor settings"] button')
             .contains('Theme')
-            .parents('.interface-interface-skeleton__sidebar')
+            .parents('.editor-sidebar')
             .scrollTo('bottom');
         cy.get('#code-block-pro-theme-nord').should('exist');
         cy.get('[data-cy="manage-themes"]').should('exist').click();
