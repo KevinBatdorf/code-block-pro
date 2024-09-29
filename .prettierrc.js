@@ -1,4 +1,5 @@
-export default {
+// eslint-disable-next-line no-undef
+module.exports = {
     trailingComma: 'all',
     tabWidth: 4,
     semi: true,

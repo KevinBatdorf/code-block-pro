@@ -1,8 +1,16 @@
-import defaultConfig from '@wordpress/scripts/config/webpack.config';
-import CopyPlugin from 'copy-webpack-plugin';
+/* eslint @typescript-eslint/no-require-imports: 0 */
+// eslint-disable-next-line no-undef
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+// eslint-disable-next-line no-undef
+const CopyPlugin = require('copy-webpack-plugin');
 
-export default {
+// eslint-disable-next-line no-undef
+module.exports = {
     ...defaultConfig,
+    devServer: {
+        ...defaultConfig.devServer,
+        host: 'wordpress.test',
+    },
     plugins: [
         ...defaultConfig.plugins,
         new CopyPlugin({
