@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+// eslint-disable-next-line no-undef
 const colors = require('tailwindcss/colors');
 delete colors['lightBlue'];
 delete colors['warmGray'];
@@ -6,6 +8,7 @@ delete colors['coolGray'];
 delete colors['blueGray'];
 
 // See postcss.config.js for more parsing options.
+// eslint-disable-next-line no-undef
 module.exports = {
     // Tnis should match the namespace you use in your css styles.
     important: '.code-block-pro',

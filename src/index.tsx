@@ -64,6 +64,7 @@ registerBlockType<Attributes>(blockConfig.name, {
             default: __('Copied!', 'code-block-pro'),
         },
         useDecodeURI: { type: 'boolean', default: false },
+        useEscapeShortCodes: { type: 'boolean', default: false },
         tabSize: { type: 'number', default: 2 },
         useTabs: { type: 'boolean' },
     },

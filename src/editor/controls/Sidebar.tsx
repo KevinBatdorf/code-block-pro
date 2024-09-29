@@ -373,6 +373,24 @@ export const SidebarControls = ({
                         }}
                     />
                 </BaseControl>
+                <BaseControl id="code-block-pro-escape-shortcodes">
+                    <CheckboxControl
+                        data-cy="use-escape-shortcodes"
+                        label={__(
+                            'Escape WordPress shortcodes',
+                            'code-block-pro',
+                        )}
+                        help={__(
+                            'Select this to prevent php shortcodes from executing.',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.useEscapeShortCodes}
+                        onChange={(useEscapeShortCodes) => {
+                            setAttributes({ useEscapeShortCodes });
+                            updateThemeHistory({ useEscapeShortCodes });
+                        }}
+                    />
+                </BaseControl>
                 <BaseControl id="code-block-pro-editor-tab-size">
                     <TextControl
                         spellCheck={false}
@@ -393,7 +411,7 @@ export const SidebarControls = ({
                     />
                     <CheckboxControl
                         data-cy="use-tabs"
-                        label={__('Use Real Tabs', 'code-block-pro')}
+                        label={__('Use real tabs', 'code-block-pro')}
                         help={__(
                             'Inserts an actual tab character instead of a space. The width defined above.',
                             'code-block-pro',

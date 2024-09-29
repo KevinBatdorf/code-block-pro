@@ -26,6 +26,7 @@ export const parseJSONArrayWithRanges = (
                 .filter((inner: number) => inner >= 0)
         );
     } catch (e) {
+        console.error(e);
         return [];
     }
 };

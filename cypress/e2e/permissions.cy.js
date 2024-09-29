@@ -19,7 +19,7 @@ context('Permissions', () => {
     it('Warning shows when cap is missing', () => {
         cy.addBlock('kevinbatdorf/code-block-pro');
         cy.wait('@canSaveHtml');
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.getPostContent('.wp-block[class*="code-block-pro"]')
             .invoke('html')
             .should('contain', 'capability is required');
     });

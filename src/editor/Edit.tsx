@@ -14,7 +14,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useLanguageStore } from '../state/language';
 import { AttributesPropsAndSetter, Lang } from '../types';
 import { parseJSONArrayWithRanges } from '../util/arrayHelpers';
-import { decode, encode } from '../util/code';
+import { decode, encode, escapeShortcodes } from '../util/code';
 import { computeLineHighlightColor } from '../util/colors';
 import { getTextWidth } from '../util/fonts';
 import { getEditorLanguage } from '../util/languages';
@@ -44,6 +44,7 @@ export const Edit = ({
         enableMaxHeight,
         editorHeight,
         useDecodeURI,
+        useEscapeShortCodes,
         tabSize,
         useTabs,
     } = attributes;
@@ -117,7 +118,12 @@ export const Edit = ({
             attributes,
         ) as string;
         const lineHighlightColor = computeLineHighlightColor(color, attributes);
-        setAttributes({ codeHTML, lineHighlightColor });
+        setAttributes({
+            codeHTML: useEscapeShortCodes
+                ? escapeShortcodes(codeHTML)
+                : codeHTML,
+            lineHighlightColor,
+        });
     }, [
         highlighter,
         seeMoreAfterLine,
@@ -135,6 +141,7 @@ export const Edit = ({
         getBlurs,
         getHighlights,
         useDecodeURI,
+        useEscapeShortCodes,
     ]);
 
     useLayoutEffect(() => {

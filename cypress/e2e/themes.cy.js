@@ -1,16 +1,15 @@
 import themes from '../../src/defaultThemes.json';
-
-const { MORE_THEMES_URL } = require('../constants');
+import { MORE_THEMES_URL } from '../constants';
 
 beforeEach(() => {
     cy.resetDatabase();
     cy.loginUser();
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
-    cy.getPostContent('.wp-block[class$="code-block-pro"]').should('exist');
+    cy.getPostContent('.wp-block[class*="code-block-pro"]').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class$="code-block-pro"] textarea').should('have.focus');
+    cy.get('.wp-block[class*="code-block-pro"] textarea').should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -21,22 +20,22 @@ context('Theme checks', () => {
         // Nord is the default
         cy.addCode('const foo = "bar";');
         cy.setTheme('nord');
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre')
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
             .invoke('html')
             .should('contain', '<span style="color: #81A1C1">const</span>');
 
         cy.setTheme('dracula');
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre')
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
             .invoke('html')
             .should('contain', '<span style="color: #FF79C6">const</span>');
 
         cy.setTheme('rose-pine-dawn');
-        cy.getPostContent('.wp-block[class$="code-block-pro"] pre')
+        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
             .invoke('html')
             .should('contain', '<span style="color: #286983">const</span>');
 
         cy.setTheme('poimandres');
-        cy.getPostContent('.wp-block[class$="code-block-pro"]')
+        cy.getPostContent('.wp-block[class*="code-block-pro"]')
             .invoke('html')
             .should('contain', '<span style="color: #91B4D5">const</span>');
     });
@@ -45,7 +44,7 @@ context('Theme checks', () => {
         cy.openSideBarPanel('Theme');
         cy.get('div[aria-label="Editor settings"] button')
             .contains('Theme')
-            .parents('.interface-interface-skeleton__sidebar')
+            .parents('.editor-sidebar')
             .scrollTo('bottom');
         cy.get('#code-block-pro-theme-nord').should('exist');
         cy.get('[data-cy="manage-themes"]').should('exist').click();
