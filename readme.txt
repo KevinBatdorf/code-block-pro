@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.6
-Stable tag:        1.26.5
+Stable tag:        1.26.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.26.6 - 2024-09-30 =
+- Fixes a bug related to rtl being applied by the webpack wp config
 
 = 1.26.5 - 2024-09-30 =
 - Adds option to disable php shortcode rendering
