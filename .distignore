@@ -7,3 +7,15 @@
 /package-lock.json
 /target
 /cypress
+.distignore
+.editorconfig
+.gitignore
+.prettierrc.js
+.wp-env.json
+cypress.config.ts
+eslint.config.mjs
+package.json
+postcss.config.js
+tailwind.config.js
+tsconfig.json
+webpack.config.js
