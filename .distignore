@@ -1,6 +1,7 @@
 /.wordpress-org
 /.git
 /.github
+/.gitignore
 /node_modules
 /assets
 /scripts
