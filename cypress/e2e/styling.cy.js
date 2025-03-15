@@ -3,10 +3,10 @@ beforeEach(() => {
     cy.loginUser();
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
-    cy.getPostContent('.wp-block[class*="code-block-pro"]').should('exist');
+    cy.findBlock('code-block-pro').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class*="code-block-pro"] textarea').should('have.focus');
+    cy.findBlock('code-block-pro', 'textarea').should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -16,7 +16,7 @@ context('Styling', () => {
     it('Font size can be changed', () => {
         cy.openSideBarPanel('Styling');
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"]')
+        cy.findBlock('code-block-pro')
             .invoke('attr', 'style')
             .should('contain', 'font-size: 0.875rem');
 
@@ -37,7 +37,7 @@ context('Styling', () => {
             'true',
         );
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"]')
+        cy.findBlock('code-block-pro')
             .invoke('attr', 'style')
             .should('contain', 'font-size: 1rem');
     });
@@ -45,7 +45,7 @@ context('Styling', () => {
     it('Line height can be changed', () => {
         cy.openSideBarPanel('Styling');
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"]')
+        cy.findBlock('code-block-pro')
             .invoke('attr', 'style')
             .should('contain', 'line-height: 1.25rem');
 
@@ -62,7 +62,7 @@ context('Styling', () => {
             '[data-cy="font-line-height-select"] [aria-label="Normal"]',
         ).should('have.attr', 'aria-checked', 'true');
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"]')
+        cy.findBlock('code-block-pro')
             .invoke('attr', 'style')
             .should('contain', 'line-height: 1.5rem');
     });
@@ -71,7 +71,7 @@ context('Styling', () => {
         cy.addCode('const foo = "bar";');
         cy.openSideBarPanel('Styling');
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"]')
+        cy.findBlock('code-block-pro')
             .invoke('attr', 'style')
             .should('contain', 'Code-Pro-JetBrains-Mono');
 
@@ -90,9 +90,7 @@ context('Styling', () => {
         cy.go('back');
 
         cy.focusBlock('code-block-pro', 'textarea');
-        cy.get('.wp-block[class*="code-block-pro"] textarea').should(
-            'have.focus',
-        );
+        cy.findBlock('code-block-pro', 'textarea').should('have.focus');
 
         cy.openSideBarPanel('Styling');
 
