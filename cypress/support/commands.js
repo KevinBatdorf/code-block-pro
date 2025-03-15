@@ -16,6 +16,8 @@ import {
     setPostContent,
     wpDataSelect,
     previewCurrentPage,
+    focusBlock,
+    findBlock,
 } from './gutenberg';
 import { login, logout } from './login-logout';
 import {
@@ -55,21 +57,9 @@ Cypress.Commands.add('openBlockSettingsSideBar', () =>
 Cypress.Commands.add('openSideBarPanel', (label) => openSideBarPanel(label));
 Cypress.Commands.add('addBlock', (slug) => addBlock(slug));
 Cypress.Commands.add('setPostContent', (content) => setPostContent(content));
-Cypress.Commands.add('getPostContent', (addon = '') => {
-    return cy.get(`${BLOCK_CONTAINER} ${addon}`);
-});
-Cypress.Commands.add('focusBlock', (blockName, addon = '') => {
-    cy.window().then((win) => {
-        cy.get(`${BLOCK_CONTAINER} .wp-block[class$="${blockName}"] ${addon}`)
-            .should('be.visible')
-            .then((el) => {
-                el[0].focus();
-                win.scrollTo(0, 0);
-                // make sure the window is scrolled to the top
-                return win.scrollY === 0;
-            });
-    });
-});
+
+Cypress.Commands.add('findBlock', findBlock);
+Cypress.Commands.add('focusBlock', focusBlock);
 Cypress.Commands.add('getCurrentPostObject', () => {
     cy.wpDataSelect('core/editor', 'getCurrentPost');
 });

@@ -116,3 +116,18 @@ export const previewCurrentPage = () => {
     });
     cy.get('body').should('not.be.empty');
 };
+export const findBlock = (block, addon = '') =>
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy
+        .get('iframe[name="editor-canvas"]')
+        .should('exist')
+        .wait(500)
+        .then((body) =>
+            cy
+                .wrap(body.contents())
+                .find(`.wp-block[data-type*="${block}"] ${addon}`),
+        );
+
+export const focusBlock = (blockName, addon = '') => {
+    findBlock(blockName, addon).click();
+};

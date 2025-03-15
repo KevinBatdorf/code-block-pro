@@ -4,10 +4,10 @@ beforeEach(() => {
     cy.loginUser();
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
-    cy.getPostContent('.wp-block[class*="code-block-pro"]').should('exist');
+    cy.findBlock('code-block-pro').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class*="code-block-pro"] textarea').should('have.focus');
+    cy.findBlock('code-block-pro', 'textarea').should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -25,7 +25,7 @@ context('Extra Settings', () => {
             codeOutput: '<script><</script>',
         });
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
+        cy.findBlock('code-block-pro', 'pre')
             .invoke('html')
             .should('not.contain', encodeURI('<'));
 
@@ -43,7 +43,7 @@ context('Extra Settings', () => {
 
         cy.addCode('<script>&lt;</script>');
 
-        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
+        cy.findBlock('code-block-pro', 'pre')
             .invoke('html')
             .should('contain', '>lt</span>'); // formatted with highlighter
 
@@ -62,7 +62,7 @@ context('Extra Settings', () => {
 
         cy.setLanguage('plaintext');
         cy.addCode('[embed]foo[/embed]');
-        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
+        cy.findBlock('code-block-pro', 'pre')
             .invoke('html')
             .should('contain', '[embed]foo[/embed]'); // Doesn't render
 
@@ -76,7 +76,7 @@ context('Extra Settings', () => {
         cy.focusBlock('code-block-pro');
         cy.openSideBarPanel('Extra Settings');
         cy.get('[data-cy="use-escape-shortcodes"]').check();
-        cy.getPostContent('.wp-block[class*="code-block-pro"] pre')
+        cy.findBlock('code-block-pro', 'pre')
             .invoke('html')
             .should('contain', '[embed]foo[/embed]'); // Doesn't render
 
