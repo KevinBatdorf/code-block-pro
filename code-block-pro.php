@@ -22,6 +22,7 @@ add_action('init', function () {
     wp_set_script_translations('kevinbatdorf/code-block-pro', 'code-block-pro');
     wp_add_inline_script('kevinbatdorf-code-block-pro-view-script', 'window.codeBlockPro = ' . wp_json_encode([
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
+        'loadFonts' => apply_filters('code_block_pro_load_fonts', true),
     ]) . ';');
 });
 
