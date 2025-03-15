@@ -1,4 +1,3 @@
-import { BLOCK_CONTAINER } from '../constants';
 import { addCode } from './features/code';
 import { setFooter } from './features/footers';
 import { setHeader } from './features/headers';
