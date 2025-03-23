@@ -4,10 +4,10 @@ beforeEach(() => {
     cy.loginUser();
     cy.visitNewPageEditor();
     cy.addBlock('kevinbatdorf/code-block-pro');
-    cy.getPostContent('.wp-block[class*="code-block-pro"]').should('exist');
+    cy.findBlock('code-block-pro').should('exist');
 
     cy.focusBlock('code-block-pro', 'textarea');
-    cy.get('.wp-block[class*="code-block-pro"] textarea').should('have.focus');
+    cy.findBlock('code-block-pro', 'textarea').should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -20,21 +20,21 @@ context('Line numbers', () => {
         cy.get('[data-cy="show-line-numbers"]')
             .should('exist')
             .should('not.be.checked');
-        cy.getPostContent('.wp-block[class*="code-block-pro"]').should(
+        cy.findBlock('code-block-pro').should(
             'not.have.class',
             'cbp-has-line-numbers',
         );
 
         cy.get('[data-cy="show-line-numbers"]').check();
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
-        cy.getPostContent('.wp-block[class*="code-block-pro"]').should(
+        cy.findBlock('code-block-pro').should(
             'have.class',
             'cbp-has-line-numbers',
         );
 
         cy.get('[data-cy="show-line-numbers"]').uncheck();
         cy.get('[data-cy="show-line-numbers"]').should('not.be.checked');
-        cy.getPostContent('.wp-block[class*="code-block-pro"]').should(
+        cy.findBlock('code-block-pro').should(
             'not.have.class',
             'cbp-has-line-numbers',
         );
@@ -42,7 +42,7 @@ context('Line numbers', () => {
 
     it('Line numbers can start from another value', () => {
         cy.openSideBarPanel('Line Settings');
-        cy.getPostContent('.wp-block[class*="code-block-pro"]').should(
+        cy.findBlock('code-block-pro').should(
             'not.have.attr',
             'style',
             '--cbp-line-number-start',
@@ -55,7 +55,7 @@ context('Line numbers', () => {
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
 
         cy.get('#code-block-pro-line-number-start').type('5');
-        cy.getPostContent('.wp-block[class*="code-block-pro"]')
+        cy.findBlock('code-block-pro')
             .parent()
             .invoke('html')
             .should('contain', '--cbp-line-number-start: 5');
@@ -69,7 +69,7 @@ context('Line highlights', () => {
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
         cy.addCode('line 1\nline 2\nline 3\nline 4\nline 5');
 
-        cy.get('.wp-block[class*="code-block-pro"] .cbp-line-highlight').should(
+        cy.findBlock('code-block-pro', '.cbp-line-highlight').should(
             'not.exist',
         );
 
@@ -77,7 +77,7 @@ context('Line highlights', () => {
         cy.get('[data-cy="enable-highlighting"]').should('be.checked');
         cy.get('#code-block-pro-show-highlighted-lines').type('2');
 
-        cy.get('.wp-block[class*="code-block-pro"] .cbp-line-highlight').should(
+        cy.findBlock('code-block-pro', '.cbp-line-highlight').should(
             'have.length',
             1,
         );
@@ -88,9 +88,10 @@ context('Line highlights', () => {
             force: true,
         });
 
-        cy.getPostContent(
-            '.wp-block[class*="code-block-pro"] .cbp-line-highlight',
-        ).should('have.length', 3);
+        cy.findBlock('code-block-pro', '.cbp-line-highlight').should(
+            'have.length',
+            3,
+        );
     });
     it('Line numbers can be highlighted on hover', () => {
         cy.openSideBarPanel('Line Settings');
@@ -98,7 +99,7 @@ context('Line highlights', () => {
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
         cy.addCode('line 1\nline 2\nline 3\nline 4\nline 5');
 
-        cy.get('.wp-block[class*="code-block-pro"] .cbp-line-highlight').should(
+        cy.findBlock('code-block-pro', '.cbp-line-highlight').should(
             'not.exist',
         );
 
@@ -108,15 +109,13 @@ context('Line highlights', () => {
 
         cy.go('back');
         cy.focusBlock('code-block-pro', 'textarea');
-        cy.get('.wp-block[class*="code-block-pro"] textarea').should(
-            'have.focus',
-        );
+        cy.findBlock('code-block-pro', 'textarea').should('have.focus');
 
         cy.openSideBarPanel('Line Settings');
         cy.get('[data-cy="enable-highlighting-hover"]').check();
         cy.get('[data-cy="enable-highlighting-hover"]').should('be.checked');
 
-        cy.get('.wp-block[class*="code-block-pro"] .cbp-line-highlight').should(
+        cy.findBlock('code-block-pro', '.cbp-line-highlight').should(
             'not.exist',
         );
 
@@ -133,10 +132,8 @@ context('Line blurring', () => {
         cy.get('[data-cy="show-line-numbers"]').should('be.checked');
         cy.addCode('line 1\nline 2\nline 3\nline 4\nline 5');
 
-        cy.get('.wp-block[class*="code-block-pro"] .cbp-no-blur').should(
-            'not.exist',
-        );
-        cy.get('.wp-block[class*="code-block-pro"]').should(
+        cy.findBlock('code-block-pro', '.cbp-no-blur').should('not.exist');
+        cy.findBlock('code-block-pro').should(
             'not.have.class',
             'cbp-blur-enabled',
         );
@@ -145,21 +142,13 @@ context('Line blurring', () => {
         cy.get('[data-cy="enable-blur"]').should('be.checked');
         cy.get('#code-block-pro-show-blurred-lines').type('2');
 
-        cy.get('.wp-block[class*="code-block-pro"] .cbp-no-blur').should(
-            'have.length',
-            1,
-        );
-        cy.get('.wp-block[class*="code-block-pro"]').should(
-            'have.class',
-            'cbp-blur-enabled',
-        );
+        cy.findBlock('code-block-pro', '.cbp-no-blur').should('have.length', 1);
+        cy.findBlock('code-block-pro').should('have.class', 'cbp-blur-enabled');
 
         // check ranges too
         cy.get('#code-block-pro-show-blurred-lines').clear();
         cy.get('#code-block-pro-show-blurred-lines').type('[2,4]');
 
-        cy.getPostContent(
-            '.wp-block[class*="code-block-pro"] .cbp-no-blur',
-        ).should('have.length', 3);
+        cy.findBlock('code-block-pro', '.cbp-no-blur').should('have.length', 3);
     });
 });
