@@ -313,7 +313,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-= 1.26.7 - 2025-03-15 =
+= 1.26.7 - 2025-03-23 =
 - Removes .gitignore from the plugin distribution
 - Updates tests
 
