@@ -1,47 +1,3 @@
-export const closeWelcomeGuide = () => {
-    cy.window().then((win) => {
-        // If it's not open, open it first
-        cy.waitUntil(() => {
-            if (
-                win.wp.data
-                    .select('core/edit-post')
-                    .isFeatureActive('welcomeGuide')
-            ) {
-                // Actually see it
-                return cy
-                    .get('[aria-label="Welcome to the block editor"]')
-                    .then((el) => el.is(':visible'));
-            }
-            cy.wrap(
-                win.wp.data
-                    .dispatch('core/edit-post')
-                    .toggleFeature('welcomeGuide'),
-            );
-            return false;
-        });
-
-        // Then close it
-        cy.waitUntil(() => {
-            if (
-                !win.wp.data
-                    .select('core/edit-post')
-                    .isFeatureActive('welcomeGuide')
-            ) {
-                return true;
-            }
-            cy.wrap(
-                win.wp.data
-                    .dispatch('core/edit-post')
-                    .toggleFeature('welcomeGuide'),
-            );
-        });
-        // And wait again for the animation to finish
-        cy.get('[aria-label="Welcome to the block editor"]').should(
-            'not.exist',
-        );
-    });
-};
-
 export const saveDraft = () => {
     cy.get('body').then((body) => {
         if (body.find('.editor-post-save-draft').length > 0) {
@@ -101,8 +57,12 @@ export const openSideBarPanel = (label) => {
 };
 export const addBlock = (slug) => {
     cy.window().then((win) => {
-        const block = win.wp.blocks.createBlock(slug);
-        win.wp.data.dispatch('core/block-editor').insertBlock(block);
+        cy.get('iframe[name="editor-canvas"]')
+            .should('exist')
+            .then(() => {
+                const block = win.wp.blocks.createBlock(slug);
+                win.wp.data.dispatch('core/block-editor').insertBlock(block);
+            });
     });
 };
 export const wpDataSelect = (store, selector, ...parameters) => {

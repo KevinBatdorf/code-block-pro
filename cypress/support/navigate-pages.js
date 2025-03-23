@@ -17,7 +17,6 @@ const visitEditor = (query) => {
     }).slice(1);
 
     cy.visitAdminPage('post-new.php', query);
-    cy.closeWelcomeGuide();
 };
 export const visitPageEditor = (query) =>
     visitEditor({ ...query, post_type: 'page' });

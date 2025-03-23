@@ -6,7 +6,6 @@ import { setLanguage } from './features/language';
 import { setTheme } from './features/theme';
 import {
     addBlock,
-    closeWelcomeGuide,
     openBlockInserter,
     closeBlockInserter,
     openBlockSettingsSideBar,
@@ -46,7 +45,6 @@ Cypress.Commands.add('loginUser', (username, password) =>
 Cypress.Commands.add('logoutUser', () => logout());
 
 // Gutenberg
-Cypress.Commands.add('closeWelcomeGuide', () => closeWelcomeGuide());
 Cypress.Commands.add('saveDraft', () => saveDraft());
 Cypress.Commands.add('openBlockInserter', () => openBlockInserter());
 Cypress.Commands.add('closeBlockInserter', () => closeBlockInserter());
