@@ -25,7 +25,7 @@ import {
     visitToLoginPage,
 } from './navigate-pages';
 import { installPlugin, uninstallPlugin } from './plugins';
-import { resetDatabase } from './wp-cli';
+import { resetDatabase, switchWpLanguage } from './wp-cli';
 
 // Port more commands from WP here:
 // https://github.com/WordPress/gutenberg/tree/trunk/packages/e2e-test-utils/src
@@ -66,8 +66,8 @@ Cypress.Commands.add('wpDataSelect', (store, selector, ...parameters) =>
 Cypress.Commands.add('previewCurrentPage', () => previewCurrentPage());
 
 // Server
-Cypress.Commands.add('resetDatabase', () => resetDatabase());
-
+Cypress.Commands.add('resetDatabase', resetDatabase);
+Cypress.Commands.add('switchWpLang', switchWpLanguage);
 // Manage plugins
 Cypress.Commands.add('installPlugin', (slug) => installPlugin(slug));
 Cypress.Commands.add('uninstallPlugin', (slug) => uninstallPlugin(slug));
