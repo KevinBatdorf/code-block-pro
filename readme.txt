@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.7
-Stable tag:        1.26.7
+Stable tag:        1.26.8
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.26.8 - 2025-03-24 =
+- Fix Rtl bug
 
 = 1.26.7 - 2025-03-23 =
 - Removes .gitignore from the plugin distribution

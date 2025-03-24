@@ -9,13 +9,13 @@ const RtlCssPlugin = require('rtlcss-webpack-plugin');
 // eslint-disable-next-line no-undef
 module.exports = {
     ...defaultConfig,
-    devServer: {
-        ...defaultConfig.devServer,
-        host: 'wordpress.test',
-    },
+    devServer: { ...defaultConfig.devServer, host: 'wordpress.test' },
     plugins: [
         ...defaultConfig.plugins.filter(
-            (filter) => !(filter instanceof RtlCssPlugin),
+            (filter) =>
+                // Remove the rtl plugin
+                !(filter instanceof RtlCssPlugin) &&
+                filter.constructor.name !== 'RtlCssPlugin',
         ),
         new CopyPlugin({
             patterns: [
@@ -24,7 +24,5 @@ module.exports = {
             ],
         }),
     ],
-    experiments: {
-        asyncWebAssembly: true,
-    },
+    experiments: { asyncWebAssembly: true },
 };
