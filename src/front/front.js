@@ -99,7 +99,7 @@ const handleHighlighter = () => {
 };
 
 const handleFontLoading = () => {
-    if (!window.codeBlockPro?.pluginUrl) return;
+    if (!window.codeBlockPro?.loadFonts || !window.codeBlockPro?.pluginUrl) return;
     const elements = Array.from(
         document.querySelectorAll(
             '[data-code-block-pro-font-family]:not(.cbp-ff-loaded)',
