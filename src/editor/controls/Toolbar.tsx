@@ -36,7 +36,7 @@ export const ToolbarControls = ({
                     }
                     onClick={() => setBringAttentionToPanel('language-select')}
                     label={__('Press to open sidebar panel', 'code-block-pro')}
-                    style={{ width: 'unset' }}
+                    style={{ width: 'auto' }}
                 />
             </ToolbarGroup>
             {themes[theme]?.name && (
@@ -48,7 +48,7 @@ export const ToolbarControls = ({
                             'Press to open sidebar panel',
                             'code-block-pro',
                         )}
-                        style={{ width: 'unset' }}>
+                        style={{ width: 'auto' }}>
                         <span className="flex mx-2">
                             <span
                                 style={{
