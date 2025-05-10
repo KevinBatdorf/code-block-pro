@@ -1,5 +1,5 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
-Contributors:      kbat82, dcooney, Zhoukaiqiang
+Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.7
 Stable tag:        1.26.8
