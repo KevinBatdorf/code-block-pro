@@ -6,8 +6,15 @@ import { findBackgroundColor, findTextColor } from '../../../util/colors';
 export const RoundCenter = (
     attributes: Partial<Attributes> & { context?: string },
 ) => {
-    const { bgColor, textColor, seeMoreString, context, footerType } =
-        attributes;
+    const {
+        bgColor,
+        textColor,
+        seeMoreString,
+        context,
+        footerType,
+        seeMoreCollapse,
+        seeMoreCollapseString,
+    } = attributes;
     let bgTop, color, bg;
     if (bgColor?.startsWith('var(')) {
         bgTop = findBackgroundColor(attributes) ?? bgColor;
@@ -24,10 +31,18 @@ export const RoundCenter = (
     }
     const hasFooter = footerType !== 'none';
     const inEditor = context === 'editor';
+    const seeMore = seeMoreString || __('Expand', 'code-block-pro');
 
     return (
         <div
             className="cbp-see-more-container"
+            // If the user opted to collapse, store strings
+            data-see-more-collapse-string={
+                seeMoreCollapse
+                    ? seeMoreCollapseString || __('Collapse', 'code-block-pro')
+                    : undefined
+            }
+            data-see-more-string={seeMoreCollapse ? seeMore : undefined}
             style={{
                 display: context === 'front' ? 'none' : 'flex',
                 flexDirection: 'column',
@@ -68,7 +83,7 @@ export const RoundCenter = (
                     borderRadius: '6px',
                     transform: hasFooter ? 'translateY(-50%)' : undefined,
                 }}>
-                {seeMoreString || __('Expand', 'code-block-pro')}
+                {seeMore}
             </span>
         </div>
     );

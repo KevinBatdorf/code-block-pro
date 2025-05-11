@@ -13,7 +13,7 @@ afterEach(() => {
     cy.logoutUser();
 });
 context('Max Height', () => {
-    it('Some footers can expand height', () => {
+    it('Can expand height', () => {
         cy.setHeader('none');
         cy.setFooter('none');
         cy.findBlock('code-block-pro')
@@ -61,11 +61,83 @@ context('Max Height', () => {
 
         cy.contains('foo = "5"').should('not.be.visible');
 
-        cy.get('.cbp-see-more-simple-btn').click();
+        cy.get('.cbp-see-more-simple-btn')
+            .should('have.attr', 'aria-expanded', 'false')
+            .click();
 
         cy.contains('foo = "5"').should('be.visible');
 
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
+    });
+
+    it('Can toggle height', () => {
+        cy.setHeader('none');
+        cy.setFooter('none');
+        cy.enableMaxHeight();
+        cy.setHeightDesign('roundCenter');
+        cy.findBlock('code-block-pro')
+            .invoke('html')
+            .should('contain', 'Expand');
+
+        cy.openSideBarPanel('Max Height');
+        cy.get('[data-cy="enable-collapse"]')
+            .should('exist')
+            .should('not.be.checked')
+            .check();
+
+        cy.findBlock('code-block-pro')
+            .invoke('html')
+            .should('contain', 'Collapse');
+
+        cy.get('[data-cy="collapse-text"]')
+            .should('exist')
+            .should('have.value', '')
+            .type('foo-bar-baz-lets-go');
+
+        cy.findBlock('code-block-pro')
+            .invoke('html')
+            .should('contain', 'foo-bar-baz-lets-go')
+            .should('not.contain', 'Collapse');
+
+        cy.addCode(
+            'const foo = "1";\nconst foo = "2";\nconst foo = "3";\nconst foo = "4";\nconst foo = "5";',
+        );
+
+        cy.openSideBarPanel('Max Height');
+        cy.get('[data-cy="see-more-line"]')
+            .should('exist')
+            .should('have.value', '')
+            .type('3');
+
+        cy.previewCurrentPage();
+
+        cy.contains('foo = "5"').should('not.be.visible');
+
+        cy.get('.cbp-see-more-simple-btn')
+            .should('exist')
+            .should('have.attr', 'aria-expanded', 'false')
+            .click();
+
+        cy.get('.cbp-see-more-simple-btn').should(
+            'have.attr',
+            'aria-expanded',
+            'true',
+        );
+
+        cy.contains('foo = "5"').should('be.visible');
+
+        cy.get('.cbp-see-more-simple-btn').should(
+            'have.text',
+            'foo-bar-baz-lets-go',
+        );
+
+        cy.get('.cbp-see-more-simple-btn').click();
+        cy.get('.cbp-see-more-simple-btn').should(
+            'have.attr',
+            'aria-expanded',
+            'false',
+        );
+        cy.get('.cbp-see-more-simple-btn').should('have.text', 'Expand');
     });
 
     it('Calculates the height with headers and footers', () => {

@@ -13,6 +13,8 @@ export const BlockLeft = (
         disablePadding,
         context,
         footerType,
+        seeMoreCollapse,
+        seeMoreCollapseString,
     } = attributes;
     let backgroundColor = colord(bgColor as AnyColor).toHex();
     const textC = colord(textColor as AnyColor);
@@ -21,6 +23,7 @@ export const BlockLeft = (
         : textC.darken(0.05).toHex();
     const hasFooter = footerType !== 'none';
     const inEditor = context === 'editor';
+    const seeMore = seeMoreString || __('Expand', 'code-block-pro');
 
     if (bgColor?.startsWith('var(')) {
         backgroundColor = findBackgroundColor(attributes) ?? bgColor;
@@ -32,6 +35,13 @@ export const BlockLeft = (
     return (
         <div
             className="cbp-see-more-container"
+            // If the user opted to collapse, store strings
+            data-see-more-collapse-string={
+                seeMoreCollapse
+                    ? seeMoreCollapseString || __('Collapse', 'code-block-pro')
+                    : undefined
+            }
+            data-see-more-string={seeMoreCollapse ? seeMore : undefined}
             style={{
                 display: context === 'front' ? 'none' : 'flex',
                 flexDirection: 'column',
@@ -55,7 +65,7 @@ export const BlockLeft = (
                     padding: disablePadding ? '10px 0 0' : '10px 16px',
                     cursor: 'default',
                 }}>
-                {seeMoreString || __('Expand', 'code-block-pro')}
+                {seeMore}
             </span>
         </div>
     );

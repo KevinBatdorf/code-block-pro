@@ -40,6 +40,8 @@ registerBlockType<Attributes>(blockConfig.name, {
         seeMoreString: { type: 'string' },
         seeMoreAfterLine: { type: 'string' },
         seeMoreTransition: { type: 'boolean' },
+        seeMoreCollapse: { type: 'boolean' },
+        seeMoreCollapseString: { type: 'string' },
         startingLineNumber: { type: 'string' },
         lineNumbersWidth: { type: 'number' },
         highestLineNumber: { type: 'number' },

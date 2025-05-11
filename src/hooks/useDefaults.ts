@@ -27,6 +27,8 @@ export const useDefaults = ({
         seeMoreType,
         seeMoreString,
         seeMoreTransition,
+        seeMoreCollapse,
+        seeMoreCollapseString,
     } = attributes;
     const {
         previousTheme,
@@ -48,6 +50,8 @@ export const useDefaults = ({
         previousSeeMoreType,
         previousSeeMoreString,
         previousSeeMoreTransition,
+        previousSeeMoreCollapse,
+        previousSeeMoreCollapseString,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
@@ -164,6 +168,18 @@ export const useDefaults = ({
         if (seeMoreTransition !== undefined) return;
         setAttributes({ seeMoreTransition: previousSeeMoreTransition });
     }, [previousSeeMoreTransition, seeMoreTransition, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (seeMoreCollapse !== undefined) return;
+        setAttributes({ seeMoreCollapse: previousSeeMoreCollapse });
+    }, [previousSeeMoreCollapse, seeMoreCollapse, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        if (seeMoreCollapseString !== undefined) return;
+        setAttributes({ seeMoreCollapseString: previousSeeMoreCollapseString });
+    }, [previousSeeMoreCollapseString, seeMoreCollapseString, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;

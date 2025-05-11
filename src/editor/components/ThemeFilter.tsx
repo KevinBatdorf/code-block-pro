@@ -39,11 +39,11 @@ export const ThemeFilter = ({
                         onChange={setSearch}
                         value={search}
                     />
-                    <div className="-mt-4 mb-4 flex flex-wrap gap-2">
+                    <div className="-mt-2 mb-4 flex flex-wrap gap-2">
                         <Button
                             data-cy="manage-themes"
                             variant="secondary"
-                            isSmall
+                            size="small"
                             onClick={openModal}>
                             {__('Manage themes', 'code-block-pro')}
                         </Button>
