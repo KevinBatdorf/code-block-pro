@@ -144,8 +144,8 @@
 .wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled
     pre
     .line:not(.cbp-no-blur) {
-    filter: blur(1px);
-    @apply opacity-40 transition-all duration-200 pointer-events-none;
+    filter: blur(1.35px);
+    @apply opacity-80 transition-all duration-200 pointer-events-none;
 }
 .wp-block-kevinbatdorf-code-block-pro.cbp-blur-enabled.cbp-unblur-on-hover:hover
     pre
