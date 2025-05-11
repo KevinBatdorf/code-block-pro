@@ -345,7 +345,7 @@ export const SidebarControls = ({
                         data-cy="disable-padding"
                         label={__('Disable Padding', 'code-block-pro')}
                         help={__(
-                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content. You maybe need to add your own padding with CSS.',
+                            'This is useful if you pick a theme that matches your background color, and want the code to line up to the edge of your content. You may need to add your own padding with CSS.',
                             'code-block-pro',
                         )}
                         checked={attributes.disablePadding}
