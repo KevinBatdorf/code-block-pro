@@ -1,8 +1,8 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
-Tested up to:      6.7
-Stable tag:        1.26.8
+Tested up to:      6.8
+Stable tag:        1.27.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,11 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.27.0 - 2025-05-11 =
+- Adds support for collapsing code blocks after expanding
+- Tweaks the blur effect for better readability
+- Fixes a bug where the controls were overflowing the toolbar
 
 = 1.26.8 - 2025-03-24 =
 - Fix Rtl bug
