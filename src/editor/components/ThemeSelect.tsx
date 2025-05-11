@@ -54,13 +54,7 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                         </div>
                     )}
                 </BaseControl>
-            ) : priorityThemes?.length > 0 ? null : (
-                <div className="text-sm mb-4">
-                    <ExternalLink href="https://github.com/KevinBatdorf/code-block-pro/discussions/168">
-                        {__('Need both light and dark mode?', 'code-block-pro')}
-                    </ExternalLink>
-                </div>
-            )}
+            ) : null}
             {themesSorted.slice(0, 9).map((data) => (
                 <ThemeItem key={data.slug} {...data} {...props} />
             ))}

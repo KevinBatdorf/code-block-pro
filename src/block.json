@@ -31,6 +31,8 @@
         "seeMoreString": { "type": "string" },
         "seeMoreAfterLine": { "type": "string" },
         "seeMoreTransition": { "type": "boolean" },
+        "seeMoreCollapse": { "type": "boolean" },
+        "seeMoreCollapseString": { "type": "string" },
         "footerLinkTarget": { "type": "boolean" },
         "startingLineNumber": { "type": "number", "default": 1 },
         "lineNumbersWidth": { "type": "number" },

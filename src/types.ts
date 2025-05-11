@@ -26,6 +26,8 @@ export type Attributes = {
     seeMoreString?: string;
     seeMoreAfterLine?: string;
     seeMoreTransition?: boolean;
+    seeMoreCollapse?: boolean;
+    seeMoreCollapseString?: string;
     footerLinkTarget?: boolean;
     disablePadding: boolean;
     startingLineNumber: string;

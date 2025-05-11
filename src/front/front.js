@@ -159,25 +159,31 @@ const handleSeeMore = () => {
             '.cbp-see-more-simple-btn',
         );
         if (!button) return;
+        // Starts off collapsed
+        button.setAttribute('aria-expanded', 'false');
+        pre.id = `cbp-see-more-${Math.random().toString(36).slice(2)}`;
+        button.setAttribute('aria-controls', pre.id);
         if (currentContainer.classList.contains('padding-disabled')) {
             button.classList.remove('cbp-see-more-simple-btn-hover');
         }
-        button.style.transition = `all ${
-            Math.max(animationSpeed, 1) / 1.5
-        }s linear`;
 
         const handle = (event) => {
             event.preventDefault();
             button.classList.remove('cbp-see-more-simple-btn-hover');
             pre.style.maxHeight = initialHeight + 'px';
-            setTimeout(() => {
-                button.style.opacity = 0;
-                button.style.transform = 'translateY(-100%)';
-                setTimeout(
-                    () => button.remove(),
-                    Math.max(animationSpeed, 1) * 1000,
-                );
-            }, animationSpeed * 1000);
+            // If there is data-see-more-collapse-string then we toggle
+            if (!buttonContainer.dataset?.seeMoreCollapseString) {
+                buttonContainer.remove();
+                return;
+            }
+            if (button.getAttribute('aria-expanded') === 'true') {
+                button.setAttribute('aria-expanded', 'false');
+                button.innerText = buttonContainer.dataset.seeMoreString;
+                pre.style.maxHeight = `${line.offsetTop + lineHeight}px`;
+                return;
+            }
+            button.setAttribute('aria-expanded', 'true');
+            button.innerText = buttonContainer.dataset.seeMoreCollapseString;
         };
         button.addEventListener('click', handle);
         button.addEventListener('keydown', (event) => {

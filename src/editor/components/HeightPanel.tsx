@@ -27,6 +27,12 @@ export const HeightPanel = ({
     const [seeMoreTransition, setSeeMoreTransition] = useState(
         attributes?.seeMoreTransition ?? false,
     );
+    const [seeMoreCollapse, setSeeMoreCollapse] = useState(
+        attributes?.seeMoreCollapse ?? false,
+    );
+    const [seeMoreCollapseString, setSeeMoreCollapseString] = useState(
+        attributes?.seeMoreCollapseString ?? '',
+    );
     const open = useRef(Number(attributes?.editorHeight) > 0);
     const { updateThemeHistory } = useThemeStore();
 
@@ -36,6 +42,8 @@ export const HeightPanel = ({
             seeMoreString,
             seeMoreAfterLine,
             seeMoreTransition,
+            seeMoreCollapse,
+            seeMoreCollapseString,
             enableMaxHeight,
         });
     }, [
@@ -43,6 +51,8 @@ export const HeightPanel = ({
         seeMoreString,
         seeMoreAfterLine,
         seeMoreTransition,
+        seeMoreCollapse,
+        seeMoreCollapseString,
         setAttributes,
         enableMaxHeight,
     ]);
@@ -101,6 +111,19 @@ export const HeightPanel = ({
                             value={seeMoreAfterLine}
                         />
                     </BaseControl>
+                    <BaseControl id="code-block-pro-see-more-transition">
+                        <CheckboxControl
+                            label={__(
+                                'Animate height transition',
+                                'code-block-pro',
+                            )}
+                            checked={seeMoreTransition}
+                            onChange={(seeMoreTransition) => {
+                                setSeeMoreTransition(seeMoreTransition);
+                                updateThemeHistory({ seeMoreTransition });
+                            }}
+                        />
+                    </BaseControl>
                     <BaseControl id="code-block-pro-see-more-text">
                         <TextControl
                             data-cy="see-more-text"
@@ -115,19 +138,40 @@ export const HeightPanel = ({
                             value={seeMoreString ?? ''}
                         />
                     </BaseControl>
-                    <BaseControl id="code-block-pro-see-more-transition">
+                    <BaseControl id="code-block-pro-see-more-collapse">
                         <CheckboxControl
+                            data-cy="enable-collapse"
                             label={__(
-                                'Animate height transition',
+                                'Allow users to collapse',
                                 'code-block-pro',
                             )}
-                            checked={seeMoreTransition}
-                            onChange={(seeMoreTransition) => {
-                                setSeeMoreTransition(seeMoreTransition);
-                                updateThemeHistory({ seeMoreTransition });
+                            checked={seeMoreCollapse}
+                            onChange={(seeMoreCollapse) => {
+                                setSeeMoreCollapse(seeMoreCollapse);
+                                updateThemeHistory({ seeMoreCollapse });
                             }}
                         />
                     </BaseControl>
+                    {seeMoreCollapse ? (
+                        <BaseControl id="code-block-pro-collapse-text">
+                            <TextControl
+                                data-cy="collapse-text"
+                                spellCheck={false}
+                                autoComplete="off"
+                                label={__('Collapse text', 'code-block-pro')}
+                                placeholder={__('Collapse', 'code-block-pro')}
+                                onChange={(seeMoreCollapseString) => {
+                                    setSeeMoreCollapseString(
+                                        seeMoreCollapseString,
+                                    );
+                                    updateThemeHistory({
+                                        seeMoreCollapseString,
+                                    });
+                                }}
+                                value={seeMoreCollapseString ?? ''}
+                            />
+                        </BaseControl>
+                    ) : null}
                     <SeeMoreSelect
                         attributes={attributes}
                         onClick={(seeMoreType) => {

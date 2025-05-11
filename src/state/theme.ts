@@ -27,6 +27,8 @@ type ThemeType = {
     previousSeeMoreType?: string;
     previousSeeMoreString?: string;
     previousSeeMoreTransition?: boolean;
+    previousSeeMoreCollapse?: boolean;
+    previousSeeMoreCollapseString?: string;
     updateThemeHistory: (settings: Partial<Attributes>) => void;
 };
 const path = '/code-block-pro/v1/settings';
@@ -59,6 +61,8 @@ const defaultSettings = {
     previousSeeMoreType: '',
     previousSeeMoreString: '',
     previousSeeMoreTransition: false,
+    previousSeeMoreCollapse: false,
+    previousSeeMoreCollapseString: '',
 };
 const storage = {
     getItem: async (name: string) => {
