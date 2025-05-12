@@ -314,6 +314,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 == Changelog ==
 
 - Now scolls back into view after a max height collapse
+- Disables scroll while the container is expanding
 - Fixes a bug where collapsing doesn't account for headers
 
 = 1.27.0 - 2025-05-11 =
