@@ -132,8 +132,9 @@ const handleSeeMore = () => {
         const pre = line.closest('pre');
         const initialHeight = pre.offsetHeight;
         let animationSpeed = 0;
+        const transition = line.classList.contains('cbp-see-more-transition');
 
-        if (line.classList.contains('cbp-see-more-transition')) {
+        if (transition) {
             const lineCount = pre.querySelectorAll('code > *').length;
             const linesBeforeCurrent = Array.from(
                 line.closest('code').children,
@@ -169,17 +170,29 @@ const handleSeeMore = () => {
 
         const handle = (event) => {
             event.preventDefault();
-            button.classList.remove('cbp-see-more-simple-btn-hover');
-            pre.style.maxHeight = initialHeight + 'px';
+            // disable scrolling
+            pre.style.setProperty('overflow', 'hidden', 'important');
+            setTimeout(() => {
+                pre.style.overflow = 'auto';
+            }, animationSpeed * 1000);
+
+            pre.style.maxHeight = `${initialHeight}px`;
             // If there is data-see-more-collapse-string then we toggle
             if (!buttonContainer.dataset?.seeMoreCollapseString) {
                 buttonContainer.remove();
                 return;
             }
+            // We're letting them collapse it
             if (button.getAttribute('aria-expanded') === 'true') {
                 button.setAttribute('aria-expanded', 'false');
                 button.innerText = buttonContainer.dataset.seeMoreString;
-                pre.style.maxHeight = `${line.offsetTop + lineHeight}px`;
+                pre.style.maxHeight = `${line.offsetTop + lineHeight - headerHeight}px`;
+                // Move the scroll so the button is in center view
+
+                line.scrollIntoView({
+                    behavior: transition ? 'smooth' : 'auto',
+                    block: 'center',
+                });
                 return;
             }
             button.setAttribute('aria-expanded', 'true');
