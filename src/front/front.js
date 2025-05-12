@@ -187,8 +187,8 @@ const handleSeeMore = () => {
                 button.setAttribute('aria-expanded', 'false');
                 button.innerText = buttonContainer.dataset.seeMoreString;
                 pre.style.maxHeight = `${line.offsetTop + lineHeight - headerHeight}px`;
-                // Move the scroll so the button is in center view
 
+                // Move the scroll so the button is in center view
                 line.scrollIntoView({
                     behavior: transition ? 'smooth' : 'auto',
                     block: 'center',
