@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.8
-Stable tag:        1.27.0
+Stable tag:        1.27.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -313,7 +313,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-- Now scolls back into view after a max height collapse
+= 1.27.1 - 2025-05-15 =
+- Now scrolls back into view after a max height collapse
 - Disables scroll while the container is expanding
 - Fixes a bug where collapsing doesn't account for headers
 
