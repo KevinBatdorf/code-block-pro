@@ -170,6 +170,10 @@
     background: none;
     @apply bg-transparent;
 }
+.code-block-pro-copy-button-textarea {
+    clip: rect(0, 0, 0, 0);
+    @apply absolute top-0 left-0 w-px h-px opacity-0 pointer-events-none -m-1 overflow-hidden resize-none border-0 shadow-none bg-transparent text-transparent whitespace-nowrap;
+}
 .wp-block-kevinbatdorf-code-block-pro.padding-disabled
     .code-block-pro-copy-button {
     padding: 0;

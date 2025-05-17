@@ -20,6 +20,7 @@ type ThemeType = {
     previousCopyButtonType: string;
     previousCopyButtonString?: string;
     previousCopyButtonStringCopied?: string;
+    previousCopyButtonUseTextarea?: boolean;
     previousTabSize: number;
     previousUseTabs?: boolean;
     // previousEnableMaxHeight?: boolean;
@@ -53,6 +54,7 @@ const defaultSettings = {
     previousCopyButtonType: 'heroicons',
     previousCopyButtonString: __('Copy', 'code-block-pro'),
     previusCopyButtonStringCopied: __('Copied', 'code-block-pro'),
+    previousCopyButtonUseTextarea: true,
     previousTabSize: 2,
     previousUseTabs: false,
     // TODO: maybe impliment these with an extra UI to make them optional

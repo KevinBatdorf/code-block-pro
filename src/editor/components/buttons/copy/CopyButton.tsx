@@ -27,6 +27,7 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
         copyButtonType,
         copyButtonString,
         copyButtonStringCopied,
+        copyButtonUseTextarea,
         useDecodeURI,
         code,
         textColor,
@@ -39,15 +40,17 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
     const { Component } =
         copyButtonTypes?.[copyButtonType as keyof typeof copyButtonTypes] ??
         copyButtonTypes.heroicons;
+    const codeToCopy = stripAnsi(
+        useDecodeURI ? encodeURIComponent(code ?? '') : (code ?? ''),
+    );
+    console.log('codeToCopy', codeToCopy);
     return (
         <span
             // Using a span to prevent aggressive button styling from themes
             role="button"
             tabIndex={0}
             data-encoded={useDecodeURI ? true : undefined}
-            data-code={stripAnsi(
-                useDecodeURI ? encodeURIComponent(code ?? '') : code ?? '',
-            )}
+            data-code={copyButtonUseTextarea ? undefined : codeToCopy}
             style={{
                 color: color ?? 'inherit',
                 display: 'none',
@@ -56,13 +59,22 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
             aria-label={copyButtonString ?? __('Copy', 'code-block-pro')}
             data-copied-text={
                 hasTextButton
-                    ? copyButtonStringCopied ?? __('Copied!', 'code-block-pro')
+                    ? (copyButtonStringCopied ??
+                      __('Copied!', 'code-block-pro'))
                     : undefined
             }
             data-has-text-button={hasTextButton ? copyButtonType : undefined}
             data-inside-header-type={hasTextButton ? headerType : undefined}
             aria-live={hasTextButton ? 'polite' : undefined}
             className="code-block-pro-copy-button">
+            {copyButtonUseTextarea ? (
+                <textarea
+                    className="code-block-pro-copy-button-textarea"
+                    aria-hidden="true"
+                    readOnly>
+                    {codeToCopy}
+                </textarea>
+            ) : null}
             <Component text={copyButtonString} />
         </span>
     );

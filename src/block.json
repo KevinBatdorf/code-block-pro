@@ -50,6 +50,7 @@
         "copyButtonType": { "type": "string" },
         "copyButtonString": { "type": "string" },
         "copyButtonStringCopied": { "type": "string" },
+        "copyButtonUseTextarea": { "type": "boolean", "default": false },
         "tabSize": { "type": "number" },
         "useTabs": { "type": "boolean" }
     },
