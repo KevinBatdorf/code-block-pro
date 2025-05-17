@@ -6,7 +6,10 @@ beforeEach(() => {
     cy.addBlock('kevinbatdorf/code-block-pro');
     cy.findBlock('code-block-pro').should('exist');
 
-    cy.focusBlock('code-block-pro', 'textarea');
+    cy.focusBlock(
+        'code-block-pro',
+        'textarea.npm__react-simple-code-editor__textarea',
+    );
     cy.findBlock('code-block-pro', 'textarea').should('have.focus');
 });
 afterEach(() => {
