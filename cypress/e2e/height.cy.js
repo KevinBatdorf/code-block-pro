@@ -5,8 +5,14 @@ beforeEach(() => {
     cy.addBlock('kevinbatdorf/code-block-pro');
     cy.findBlock('code-block-pro').should('exist');
 
-    cy.focusBlock('code-block-pro', 'textarea');
-    cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+    cy.focusBlock(
+        'code-block-pro',
+        'textarea.npm__react-simple-code-editor__textarea',
+    );
+    cy.findBlock(
+        'code-block-pro',
+        'textarea.npm__react-simple-code-editor__textarea',
+    ).should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -49,8 +55,14 @@ context('Max Height', () => {
 
         cy.go('back');
 
-        cy.focusBlock('code-block-pro', 'textarea');
-        cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+        cy.focusBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        );
+        cy.findBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        ).should('have.focus');
         cy.openSideBarPanel('Max Height');
         cy.get('[data-cy="see-more-line"]')
             .should('exist')
@@ -159,8 +171,14 @@ context('Max Height', () => {
         );
 
         cy.go('back');
-        cy.focusBlock('code-block-pro', 'textarea');
-        cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+        cy.focusBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        );
+        cy.findBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        ).should('have.focus');
 
         cy.openSideBarPanel('Max Height');
         cy.get('[data-cy="see-more-line"]')
@@ -176,8 +194,14 @@ context('Max Height', () => {
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
 
         cy.go('back');
-        cy.focusBlock('code-block-pro', 'textarea');
-        cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+        cy.focusBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        );
+        cy.findBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        ).should('have.focus');
         cy.openSideBarPanel('Max Height');
         cy.setHeader('headlights');
         cy.setHeightDesign('none');

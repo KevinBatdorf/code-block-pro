@@ -8,8 +8,14 @@ beforeEach(() => {
     cy.addBlock('kevinbatdorf/code-block-pro');
     cy.findBlock('code-block-pro').should('exist');
 
-    cy.focusBlock('code-block-pro', 'textarea');
-    cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+    cy.focusBlock(
+        'code-block-pro',
+        'textarea.npm__react-simple-code-editor__textarea',
+    );
+    cy.findBlock(
+        'code-block-pro',
+        'textarea.npm__react-simple-code-editor__textarea',
+    ).should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert

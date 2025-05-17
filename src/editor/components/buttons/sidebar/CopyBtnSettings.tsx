@@ -27,7 +27,7 @@ export const CopyBtnSettings = ({
                 }}
             />
             {attributes.copyButton && (
-                <div className="flex gap-2 -mt-3">
+                <div className="flex gap-2">
                     {Object.entries(copyButtonTypes).map(([slug, data]) => {
                         const { Component } = data;
                         const {
@@ -94,6 +94,18 @@ export const CopyBtnSettings = ({
                             )}
                         />
                     )}
+                    <CheckboxControl
+                        label={__('Use Textarea', 'code-block-pro')}
+                        help={__(
+                            'Use a <textarea> to to store the code, otherwise a `data-code` attribute',
+                            'code-block-pro',
+                        )}
+                        checked={attributes.copyButtonUseTextarea}
+                        onChange={(copyButtonUseTextarea) => {
+                            setAttributes({ copyButtonUseTextarea });
+                            updateThemeHistory({ copyButtonUseTextarea });
+                        }}
+                    />
                 </div>
             )}
         </BaseControl>

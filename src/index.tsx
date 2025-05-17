@@ -65,6 +65,7 @@ registerBlockType<Attributes>(blockConfig.name, {
             type: 'string',
             default: __('Copied!', 'code-block-pro'),
         },
+        copyButtonUseTextarea: { type: 'boolean', default: false },
         useDecodeURI: { type: 'boolean', default: false },
         useEscapeShortCodes: { type: 'boolean', default: false },
         tabSize: { type: 'number', default: 2 },
