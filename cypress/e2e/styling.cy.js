@@ -9,7 +9,10 @@ beforeEach(() => {
         'code-block-pro',
         'textarea.npm__react-simple-code-editor__textarea',
     );
-    cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+    cy.findBlock(
+        'code-block-pro',
+        'textarea.npm__react-simple-code-editor__textarea',
+    ).should('have.focus');
 });
 afterEach(() => {
     cy.saveDraft(); // so we can leave without an alert
@@ -96,7 +99,10 @@ context('Styling', () => {
             'code-block-pro',
             'textarea.npm__react-simple-code-editor__textarea',
         );
-        cy.findBlock('code-block-pro', 'textarea').should('have.focus');
+        cy.findBlock(
+            'code-block-pro',
+            'textarea.npm__react-simple-code-editor__textarea',
+        ).should('have.focus');
 
         cy.openSideBarPanel('Styling');
 
