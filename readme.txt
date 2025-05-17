@@ -313,6 +313,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Now uses textarea for code copy storing (can revert this under button settings)
+- Removed the WP outline style when clicking the copy button (now only when tab focused)
+
 = 1.27.1 - 2025-05-15 =
 - Now scrolls back into view after a max height collapse
 - Disables scroll while the container is expanding
