@@ -18,8 +18,7 @@ const handleCopyButton = () => {
             if (type === 'keydown' && !['Enter', ' '].includes(key)) return;
             event.preventDefault();
             const t = b?.querySelector('textarea');
-            const source = t ? t?.value : b?.dataset;
-            console.log(source);
+            const source = t ? t?.value : b?.dataset?.code;
             const code = b?.dataset?.encoded
                 ? decodeURIComponent(decodeURIComponent(source))
                 : source;
