@@ -22,7 +22,7 @@
     padding: 16px;
     padding-right: 0;
     font-family: inherit;
-    @apply overflow-auto text-inherit text-left m-0 whitespace-pre bg-none border-none border-0 rounded-none shadow-none;
+    @apply overflow-auto text-inherit text-left m-0 whitespace-pre bg-none border-none border-0 rounded-none shadow-none outline-none focus-visible:outline-inherit;
 }
 .wp-block-kevinbatdorf-code-block-pro.padding-disabled:not(
         .code-block-pro-editor
