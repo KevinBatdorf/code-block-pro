@@ -43,7 +43,6 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
     const codeToCopy = stripAnsi(
         useDecodeURI ? encodeURIComponent(code ?? '') : (code ?? ''),
     );
-    console.log('codeToCopy', codeToCopy);
     return (
         <span
             // Using a span to prevent aggressive button styling from themes
