@@ -13,14 +13,15 @@ const handleCopyButton = () => {
         // Setting it to block here lets users deactivate the plugin safely
         button.style.display = 'block';
         const handler = (event) => {
-            const { type, key, target } = event;
+            const { type, key, currentTarget: b } = event;
             // if keydown event, make sure it's enter or space
             if (type === 'keydown' && !['Enter', ' '].includes(key)) return;
             event.preventDefault();
-            const b = target?.closest('span[data-code]');
+            const t = b?.querySelector('textarea');
+            const source = t ? t?.value : b?.dataset?.code;
             const code = b?.dataset?.encoded
-                ? decodeURIComponent(decodeURIComponent(b?.dataset?.code))
-                : b?.dataset?.code;
+                ? decodeURIComponent(decodeURIComponent(source))
+                : source;
             const content = window.cbpCopyOverride?.(code, button) ?? code;
             copy(content ?? '', {
                 format: 'text/plain',

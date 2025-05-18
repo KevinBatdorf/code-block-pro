@@ -45,6 +45,7 @@ export const useDefaults = ({
         previousCopyButtonType,
         previousCopyButtonString,
         previousCopyButtonStringCopied,
+        previousCopyButtonUseTextarea,
         previousTabSize,
         previousUseTabs,
         previousSeeMoreType,
@@ -84,6 +85,11 @@ export const useDefaults = ({
         const cpyP = previousCopyButtonStringCopied;
         setAttributes({ copyButtonStringCopied: cpyP });
     }, [previousCopyButtonStringCopied, copyButtonStringCopied, setAttributes]);
+
+    useEffect(() => {
+        if (once.current) return;
+        setAttributes({ copyButtonUseTextarea: previousCopyButtonUseTextarea });
+    }, [previousCopyButtonUseTextarea, setAttributes]);
 
     useEffect(() => {
         if (once.current) return;

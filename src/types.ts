@@ -49,6 +49,7 @@ export type Attributes = {
     copyButtonType: string;
     copyButtonString: string;
     copyButtonStringCopied: string;
+    copyButtonUseTextarea: boolean;
     useDecodeURI: boolean;
     useEscapeShortCodes: boolean;
     tabSize: number;
