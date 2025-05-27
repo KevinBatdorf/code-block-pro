@@ -2,6 +2,17 @@ import copy from 'copy-to-clipboard';
 
 const containerClass = '.wp-block-kevinbatdorf-code-block-pro';
 
+const sanitize = (str) =>
+    str
+        .replace(/[\u2018\u2019]/g, "'") // single quotes
+        .replace(/[\u201C\u201D]/g, '"') // double quotes
+        .replace(/[\u2013\u2014]/g, '-') // en/em dash
+        .replace(/\u2026/g, '...') // ellipsis
+        .replace(/[\u2039\u203A\u00AB\u00BB]/g, (c) =>
+            c === '‹' || c === '«' ? '<' : '>',
+        )
+        .replace(/\u00A0/g, ' '); // non-breaking space
+
 const handleCopyButton = () => {
     const buttons = Array.from(
         document.querySelectorAll(
@@ -22,7 +33,9 @@ const handleCopyButton = () => {
             const code = b?.dataset?.encoded
                 ? decodeURIComponent(decodeURIComponent(source))
                 : source;
-            const content = window.cbpCopyOverride?.(code, button) ?? code;
+            const content = sanitize(
+                window.cbpCopyOverride?.(code, button) ?? code,
+            );
             copy(content ?? '', {
                 format: 'text/plain',
                 onCopy: (code) => {

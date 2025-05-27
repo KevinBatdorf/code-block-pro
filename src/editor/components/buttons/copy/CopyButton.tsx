@@ -70,9 +70,9 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
                 <textarea
                     className="code-block-pro-copy-button-textarea"
                     aria-hidden="true"
-                    readOnly>
-                    {codeToCopy}
-                </textarea>
+                    readOnly
+                    value={codeToCopy}
+                />
             ) : null}
             <Component text={copyButtonString} />
         </span>

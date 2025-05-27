@@ -60,10 +60,18 @@ jobs:
               run: |
                   npx eslint --max-warnings 0 .
                   npm run build
-            - name: Start server
-              run: |
-                  npx wp-env start
+
+            - name: Start wp-env
+              uses: nick-fields/retry@v3
+              with:
+                timeout_minutes: 4
+                max_attempts: 3
+                retry_wait_seconds: 60
+                shell: bash
+                command: |
+                  npx wp-env start --update
                   echo "WordPress version: `npx wp-env run cli core version`"
+
             - name: Cypress run
               uses: cypress-io/github-action@v6
               with:

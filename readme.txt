@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.8
-Stable tag:        1.27.2
+Stable tag:        1.27.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.27.3 - 2025-05-15 =
+- Prevents smart quotes, typographic dashes, and other non-ASCII characters from affecting copied code snippets.
 
 = 1.27.2 - 2025-05-15 =
 - Refactors the copy button to use a textarea for copying
