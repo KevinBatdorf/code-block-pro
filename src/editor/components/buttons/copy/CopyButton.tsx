@@ -67,12 +67,17 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
             aria-live={hasTextButton ? 'polite' : undefined}
             className="code-block-pro-copy-button">
             {copyButtonUseTextarea ? (
-                <textarea
-                    className="code-block-pro-copy-button-textarea"
-                    aria-hidden="true"
-                    readOnly
-                    value={codeToCopy}
-                />
+                <pre
+                    className="code-block-pro-copy-button-pre"
+                    aria-hidden="true">
+                    <textarea
+                        className="code-block-pro-copy-button-textarea"
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        readOnly
+                        value={codeToCopy}
+                    />
+                </pre>
             ) : null}
             <Component text={copyButtonString} />
         </span>
