@@ -9,6 +9,9 @@ import { transformToCBP, transformFromCBP } from './editor/transforms';
 import { BlockOutput } from './front/BlockOutput';
 import { blockIcon } from './icons';
 import { Attributes } from './types';
+import { handleValidationErrors } from './util/errors';
+
+handleValidationErrors();
 
 registerBlockType<Attributes>(blockConfig.name, {
     ...blockConfig,

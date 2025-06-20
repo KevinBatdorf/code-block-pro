@@ -26,7 +26,7 @@ afterEach(() => {
 });
 context('Line numbers', () => {
     it('Line numbers disabled, padding enabled', () => {
-        cy.findBlock('code-block-pro', 'pre').should(
+        cy.findBlock('code-block-pro', '> div > div > pre').should(
             'have.css',
             'padding',
             '16px 0px 16px 16px',
@@ -39,13 +39,13 @@ context('Line numbers', () => {
         cy.addCode('line 1\nline 2\nline 3');
         cy.previewCurrentPage();
 
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .should('have.css', 'padding', '16px 0px 16px 16px');
     });
 
     it('Line numbers disabled, padding disabled', () => {
-        cy.findBlock('code-block-pro', 'pre').should(
+        cy.findBlock('code-block-pro', '> div > div > pre').should(
             'have.css',
             'padding',
             '16px 0px 16px 16px',
@@ -60,7 +60,7 @@ context('Line numbers', () => {
         cy.get('[data-cy="disable-padding"').check();
         cy.get('[data-cy="disable-padding"').should('be.checked');
 
-        cy.findBlock('code-block-pro', 'pre').should(
+        cy.findBlock('code-block-pro', '> div > div > pre').should(
             'have.css',
             'padding',
             '0px',
@@ -72,7 +72,7 @@ context('Line numbers', () => {
 
         cy.previewCurrentPage();
 
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .should('have.css', 'padding', '0px');
     });
@@ -93,7 +93,7 @@ context('Line numbers', () => {
 
         cy.previewCurrentPage();
 
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .should('have.css', 'padding', '16px 0px 16px 16px');
     });
@@ -130,7 +130,7 @@ context('Line numbers', () => {
 
         cy.previewCurrentPage();
 
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .should('have.css', 'padding', '0px');
     });

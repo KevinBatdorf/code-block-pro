@@ -313,6 +313,8 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+- Prevents wp_texturize from affecting copied code snippets. You will see a block update for this change as I had to wrap the code in a pre tag.
+
 = 1.27.3 - 2025-05-15 =
 - Prevents smart quotes, typographic dashes, and other non-ASCII characters from affecting copied code snippets.
 

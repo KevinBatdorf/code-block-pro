@@ -26,17 +26,17 @@ context('Theme checks', () => {
         // Nord is the default
         cy.addCode('const foo = "bar";');
         cy.setTheme('nord');
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '<span style="color: #81A1C1">const</span>');
 
         cy.setTheme('dracula');
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '<span style="color: #FF79C6">const</span>');
 
         cy.setTheme('rose-pine-dawn');
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '<span style="color: #286983">const</span>');
 
