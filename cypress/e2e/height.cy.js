@@ -71,13 +71,13 @@ context('Max Height', () => {
 
         cy.previewCurrentPage();
 
-        cy.contains('foo = "5"').should('not.be.visible');
+        cy.get('.line').contains('foo = "5"').should('not.be.visible');
 
         cy.get('.cbp-see-more-simple-btn')
             .should('have.attr', 'aria-expanded', 'false')
             .click();
 
-        cy.contains('foo = "5"').should('be.visible');
+        cy.get('.line').contains('foo = "5"').should('be.visible');
 
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
     });
@@ -123,7 +123,7 @@ context('Max Height', () => {
 
         cy.previewCurrentPage();
 
-        cy.contains('foo = "5"').should('not.be.visible');
+        cy.get('.line').contains('foo = "5"').should('not.be.visible');
 
         cy.get('.cbp-see-more-simple-btn')
             .should('exist')
@@ -136,7 +136,7 @@ context('Max Height', () => {
             'true',
         );
 
-        cy.contains('foo = "5"').should('be.visible');
+        cy.get('.line').contains('foo = "5"').should('be.visible');
 
         cy.get('.cbp-see-more-simple-btn').should(
             'have.text',
@@ -188,9 +188,9 @@ context('Max Height', () => {
 
         cy.previewCurrentPage();
 
-        cy.contains('foo = "5"').should('not.be.visible');
+        cy.get('.line').contains('foo = "5"').should('not.be.visible');
         cy.get('.cbp-see-more-simple-btn').click();
-        cy.contains('foo = "5"').should('be.visible');
+        cy.get('.line').contains('foo = "5"').should('be.visible');
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
 
         cy.go('back');
@@ -208,7 +208,7 @@ context('Max Height', () => {
 
         cy.previewCurrentPage();
 
-        cy.contains('foo = "5"').should('not.be.visible');
+        cy.get('.line').contains('foo = "5"').should('not.be.visible');
         cy.get('.cbp-see-more-simple-btn').should('not.exist');
     });
 

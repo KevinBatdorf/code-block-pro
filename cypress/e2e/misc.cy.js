@@ -23,7 +23,7 @@ context('Miscellaneous', () => {
     it('Persists settings', () => {
         cy.addCode('const foo = "bar";');
         cy.setTheme('dracula');
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '<span style="color: #FF79C6">const</span>');
 
@@ -35,7 +35,7 @@ context('Miscellaneous', () => {
 
         // confirm theme is persisted
         cy.addCode('const foo = "bar";');
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '<span style="color: #FF79C6">const</span>');
     });

@@ -31,13 +31,13 @@ context('Extra Settings', () => {
             codeOutput: '<script><</script>',
         });
 
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('not.contain', encodeURI('<'));
 
         cy.previewCurrentPage();
 
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .should('contain', '<script><</script>');
     });
@@ -49,13 +49,13 @@ context('Extra Settings', () => {
 
         cy.addCode('<script>&lt;</script>');
 
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '>lt</span>'); // formatted with highlighter
 
         cy.previewCurrentPage();
 
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .should('contain', '<script>&lt;</script>');
     });
@@ -68,12 +68,12 @@ context('Extra Settings', () => {
 
         cy.setLanguage('plaintext');
         cy.addCode('[embed]foo[/embed]');
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '[embed]foo[/embed]'); // Doesn't render
 
         cy.previewCurrentPage();
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .invoke('html')
             .should('contain', '<a href="http://foo">foo</a>'); // Renders
@@ -82,12 +82,12 @@ context('Extra Settings', () => {
         cy.focusBlock('code-block-pro');
         cy.openSideBarPanel('Extra Settings');
         cy.get('[data-cy="use-escape-shortcodes"]').check();
-        cy.findBlock('code-block-pro', 'pre')
+        cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '[embed]foo[/embed]'); // Doesn't render
 
         cy.previewCurrentPage();
-        cy.get('.wp-block-kevinbatdorf-code-block-pro pre')
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .invoke('html')
             .should('contain', '[embed]foo[/embed]'); // Doesn't render
