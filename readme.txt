@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.8
-Stable tag:        1.27.3
+Stable tag:        1.27.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -313,6 +313,7 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
+= 1.27.4 - 2025-06-20 =
 - Prevents wp_texturize from affecting copied code snippets. You will see a block update for this change as I had to wrap the code in a pre tag.
 
 = 1.27.3 - 2025-05-15 =
