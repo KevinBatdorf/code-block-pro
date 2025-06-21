@@ -53,6 +53,7 @@ export const useDefaults = ({
         previousSeeMoreTransition,
         previousSeeMoreCollapse,
         previousSeeMoreCollapseString,
+        previousUseEscapeShortCodes,
     } = useThemeStore();
     const ready = useThemeStoreReady();
     const once = useRef(false);
