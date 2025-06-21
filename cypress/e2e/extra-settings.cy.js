@@ -62,9 +62,6 @@ context('Extra Settings', () => {
 
     it('Escapes WordPress shortcodes', () => {
         cy.openSideBarPanel('Extra Settings');
-        cy.get('[data-cy="use-escape-shortcodes"]')
-            .should('exist')
-            .should('not.be.checked');
 
         cy.setLanguage('plaintext');
         cy.addCode('[embed]foo[/embed]');
@@ -76,12 +73,12 @@ context('Extra Settings', () => {
         cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .invoke('html')
-            .should('contain', '<a href="http://foo">foo</a>'); // Renders
+            .should('contain', '[embed]foo[/embed]'); // Doesn't render
 
         cy.go('back');
         cy.focusBlock('code-block-pro');
         cy.openSideBarPanel('Extra Settings');
-        cy.get('[data-cy="use-escape-shortcodes"]').check();
+        cy.get('[data-cy="use-escape-shortcodes"]').uncheck();
         cy.findBlock('code-block-pro', '> div > div > pre')
             .invoke('html')
             .should('contain', '[embed]foo[/embed]'); // Doesn't render
@@ -90,6 +87,6 @@ context('Extra Settings', () => {
         cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
             .should('exist')
             .invoke('html')
-            .should('contain', '[embed]foo[/embed]'); // Doesn't render
+            .should('contain', '<a href="http://foo">foo</a>'); // Renders
     });
 });

@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import stripAnsi from 'strip-ansi';
 import { Attributes } from '../../../../types';
+import { escapeShortcodes } from '../../../../util/code';
 import { Clipboard } from './Clipboard';
 import { TextSimple } from './TextSimple';
 import { TwoSquares } from './TwoSquares';
@@ -33,6 +34,7 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
         textColor,
         bgColor: b,
         headerType,
+        useEscapeShortCodes,
     } = attributes;
     const hasTextButton = copyButtonType === 'textSimple';
     const color = hasTextButton ? b : textColor;
@@ -49,7 +51,13 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
             role="button"
             tabIndex={0}
             data-encoded={useDecodeURI ? true : undefined}
-            data-code={copyButtonUseTextarea ? undefined : codeToCopy}
+            data-code={
+                copyButtonUseTextarea
+                    ? undefined
+                    : useEscapeShortCodes
+                      ? escapeShortcodes(codeToCopy)
+                      : codeToCopy
+            }
             style={{
                 color: color ?? 'inherit',
                 display: 'none',
@@ -75,7 +83,11 @@ export const CopyButton = ({ attributes }: { attributes: Attributes }) => {
                         tabIndex={-1}
                         aria-hidden="true"
                         readOnly
-                        value={codeToCopy}
+                        value={
+                            useEscapeShortCodes
+                                ? escapeShortcodes(codeToCopy)
+                                : codeToCopy
+                        }
                     />
                 </pre>
             ) : null}

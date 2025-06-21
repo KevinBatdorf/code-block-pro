@@ -70,7 +70,7 @@ registerBlockType<Attributes>(blockConfig.name, {
         },
         copyButtonUseTextarea: { type: 'boolean', default: false },
         useDecodeURI: { type: 'boolean', default: false },
-        useEscapeShortCodes: { type: 'boolean', default: false },
+        useEscapeShortCodes: { type: 'boolean', default: true },
         tabSize: { type: 'number', default: 2 },
         useTabs: { type: 'boolean' },
     },

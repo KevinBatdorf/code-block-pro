@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.8
-Stable tag:        1.27.4
+Stable tag:        1.27.5
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.27.5 - 2025-06-21 =
+- Changes the default value for escaping wp shortcodes to true. Can't see why anyone would want this any other way by default.
+- Prevents shortcodes from rendering in the copy button
 
 = 1.27.4 - 2025-06-20 =
 - Prevents wp_texturize from affecting copied code snippets. You will see a block update for this change as I had to wrap the code in a pre tag.

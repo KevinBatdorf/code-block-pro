@@ -158,6 +158,22 @@ context('Copy button', () => {
             .should('contain', '<span class="cbp-btn-text">it worked!');
     });
 
+    it('Escapes WordPress shortcodes', () => {
+        const text = '[embed]foo[/embed]';
+        cy.setLanguage('plaintext');
+        cy.addCode(text);
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro [aria-label="Copy"]')
+            .should('exist')
+            .realClick();
+        cy.window().then((win) => {
+            win.navigator.clipboard.readText().then((clipText) => {
+                expect(clipText).to.equal(text);
+            });
+        });
+    });
+
     // Doesn't seem to work 🤷
     // it.only('Copies code on keypress', () => {
     //     const text = 'const foo = "bar";';
