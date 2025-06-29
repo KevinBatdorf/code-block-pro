@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.8
-Stable tag:        1.27.5
+Stable tag:        1.27.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,9 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.27.6 - 2025-06-29 =
+- Fixes a bug where shortcodes with attributes would not be properly escaped.
 
 = 1.27.5 - 2025-06-21 =
 - Changes the default value for escaping wp shortcodes to true. Can't see why anyone would want this any other way by default.

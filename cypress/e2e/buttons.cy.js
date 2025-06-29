@@ -174,6 +174,37 @@ context('Copy button', () => {
         });
     });
 
+    it('Copy button copies audio and video shortcodes with attributes', () => {
+        const text = '[audio src="fake.mp3"]\n[video src="fake.mp4"]';
+        cy.setLanguage('plaintext');
+        cy.addCode(text);
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro [aria-label="Copy"]')
+            .should('exist')
+            .realClick();
+        cy.window().then((win) => {
+            win.navigator.clipboard.readText().then((clipText) => {
+                expect(clipText).to.equal(text);
+            });
+        });
+
+        cy.go('back');
+        cy.focusBlock('code-block-pro');
+        cy.openSideBarPanel('Extra Settings');
+        cy.get('[data-cy="use-escape-shortcodes"]').uncheck();
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro [aria-label="Copy"]')
+            .should('exist')
+            .realClick();
+        cy.window().then((win) => {
+            win.navigator.clipboard.readText().then((clipText) => {
+                expect(clipText).to.not.equal(text);
+            });
+        });
+    });
+
     // Doesn't seem to work 🤷
     // it.only('Copies code on keypress', () => {
     //     const text = 'const foo = "bar";';
