@@ -29,7 +29,6 @@ export const decode = (code: string, { useDecodeURI }: Partial<Attributes>) => {
 };
 
 export const escapeShortcodes = (content: string) =>
-    // eslint-disable-next-line no-control-regex
-    content.replaceAll(/\[([^<>&/[\]\x00-\x20=]+)\]/g, (match) =>
+    content.replaceAll(/\[([^[\]]+)\]/g, (match) =>
         match.replace('[', '&#91;').replace(']', '&#93;'),
     );

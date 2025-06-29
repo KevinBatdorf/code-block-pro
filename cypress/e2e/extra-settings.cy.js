@@ -89,4 +89,40 @@ context('Extra Settings', () => {
             .invoke('html')
             .should('contain', '<a href="http://foo">foo</a>'); // Renders
     });
+
+    it('Escapes WordPress audio and video shortcodes with attributes', () => {
+        cy.openSideBarPanel('Extra Settings');
+
+        cy.setLanguage('plaintext');
+        cy.addCode('[audio src="fake.mp3"]\n[video src="fake.mp4"]');
+        cy.findBlock('code-block-pro', '> div > div > pre')
+            .invoke('html')
+            .should('contain', '[audio src="fake.mp3"]')
+            .and('contain', '[video src="fake.mp4"]');
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
+            .should('exist')
+            .invoke('html')
+            .should('contain', '[audio src="fake.mp3"]')
+            .and('contain', '[video src="fake.mp4"]');
+
+        cy.go('back');
+        cy.focusBlock('code-block-pro');
+        cy.openSideBarPanel('Extra Settings');
+        cy.get('[data-cy="use-escape-shortcodes"]').uncheck();
+        cy.findBlock('code-block-pro', '> div > div > pre')
+            .invoke('html')
+            .should('contain', '[audio src="fake.mp3"]')
+            .and('contain', '[video src="fake.mp4"]')
+            .and('not.contain', 'wp-embedded-audio')
+            .and('not.contain', 'wp-embedded-video');
+
+        cy.previewCurrentPage();
+        cy.get('.wp-block-kevinbatdorf-code-block-pro pre.shiki')
+            .should('exist')
+            .invoke('html')
+            .should('contain', 'wp-embedded-audio')
+            .and('contain', 'wp-embedded-video');
+    });
 });
