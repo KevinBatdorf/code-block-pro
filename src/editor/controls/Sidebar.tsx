@@ -95,10 +95,10 @@ export const SidebarControls = ({
                         </p>
                         <div className="flex flex-col gap-2">
                             <ExternalLink href="https://code-block-pro.com/auth/signin?callbackUrl=https%3A%2F%2Fcode-block-pro.com%2Fpurchases">
-                                {'Code Block Pro Dashboard'}
+                                Code Block Pro Dashboard
                             </ExternalLink>
                             <ExternalLink href="https://github.com/KevinBatdorf/code-block-pro/discussions/384">
-                                {'Learn more about it'}
+                                Learn more about it
                             </ExternalLink>
                         </div>
                     </div>
