@@ -45,7 +45,7 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                 <BaseControl id="add-on-themes">
                     {priorityThemes?.length > 0 ? null : (
                         <div className="font-semibold text-base">
-                            <ExternalLink href="https://code-block-pro.com/?utm_campaign=notice&utm_source=search">
+                            <ExternalLink href="https://code-block-pro.com">
                                 {__(
                                     'Get 25+ more themes here',
                                     'code-block-pro',
@@ -62,7 +62,7 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                 <BaseControl id="add-on-themes">
                     {priorityThemes?.length > 0 ? null : (
                         <div className="font-semibold text-base">
-                            <ExternalLink href="https://code-block-pro.com/themes?utm_campaign=notice&utm_source=mid-themes">
+                            <ExternalLink href="https://code-block-pro.com/themes">
                                 {__(
                                     'Get 25+ more themes here',
                                     'code-block-pro',
@@ -79,7 +79,7 @@ export const ThemeSelect = (props: ThemeSelectProps) => {
                 <BaseControl id="add-on-themes">
                     {priorityThemes?.length > 0 ? null : (
                         <div className="font-semibold text-base">
-                            <ExternalLink href="https://code-block-pro.com/themes?utm_campaign=notice&utm_source=below-themes">
+                            <ExternalLink href="https://code-block-pro.com/themes">
                                 {__(
                                     'Get 25+ more themes here',
                                     'code-block-pro',

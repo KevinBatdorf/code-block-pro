@@ -6,6 +6,7 @@ import {
     SelectControl,
     Button,
     CheckboxControl,
+    ExternalLink,
 } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -80,6 +81,29 @@ export const SidebarControls = ({
 
     return (
         <InspectorControls>
+            {window?.codeBlockProThemes &&
+            // If they have the pro versoin, aren't using the update server
+            !window?.codeBlockProThemes?.hasUpdateServer ? (
+                <div className="code-block-pro-editor">
+                    <div className="m-4 p-2 border border-solid border-gray-900 rounded">
+                        <p className="m-0 p-0 text-sm mb-1">
+                            <span className="font-medium text-wp-alert-red">
+                                Action required:
+                            </span>{' '}
+                            The theme add-on pack has an update available that
+                            requires manual installation.
+                        </p>
+                        <div className="flex flex-col gap-2">
+                            <ExternalLink href="https://code-block-pro.com/auth/signin?callbackUrl=https%3A%2F%2Fcode-block-pro.com%2Fpurchases">
+                                Code Block Pro Dashboard
+                            </ExternalLink>
+                            <ExternalLink href="https://github.com/KevinBatdorf/code-block-pro/discussions/384">
+                                Learn more about it
+                            </ExternalLink>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
             <SlotFactory
                 name="CodeBlockPro.Sidebar.Start"
                 attributes={attributes}

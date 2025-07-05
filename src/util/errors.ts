@@ -14,28 +14,32 @@ export const debounce = <T extends (...args: unknown[]) => void>(
 
 export const handleValidationErrors = () => {
     const debouncedUnsub = debounce(() => unsub(), 5000);
+
     const unsub = subscribe(() => {
         const editor = document.querySelector(
             '#editor, iframe[name="editor-canvas"]',
         );
-        const blockError = editor?.querySelector(
+        const blockErrors = editor?.querySelectorAll(
             '.wp-block-kevinbatdorf-code-block-pro .block-editor-warning',
         );
-        if (blockError) unsub();
-        const message = blockError?.querySelector(
-            '.block-editor-warning__message',
-        );
-        if (!message) return;
-        message.textContent = __(
-            'This block has been updated. Press update to refresh.',
-            'code-block-pro',
-        );
-        const button = blockError?.querySelector(
-            '.block-editor-warning__action button',
-        );
-        if (!button) return;
-        button.textContent = __('Update', 'code-block-pro');
-
+        if (!blockErrors?.length) return;
+        blockErrors.forEach((blockError) => {
+            const message = blockError.querySelector(
+                '.block-editor-warning__message',
+            );
+            if (message) {
+                message.textContent = __(
+                    'This block has been updated. Press update to refresh.',
+                    'code-block-pro',
+                );
+            }
+            const button = blockError.querySelector(
+                '.block-editor-warning__action button',
+            );
+            if (button) {
+                button.textContent = __('Update', 'code-block-pro');
+            }
+        });
         debouncedUnsub();
     });
 };
