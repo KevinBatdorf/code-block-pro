@@ -1,8 +1,8 @@
 Code highlighting powered by the VS Code engine
 
-Read more at [code-block-pro.com](https://code-block-pro.com?utm_campaign=github&utm_source=gh-readme&utm_medium=textlink)
+Read more at [code-block-pro.com](https://code-block-pro.com)
 
-View all themes at [code-block-pro.com/themes](https://code-block-pro.com/themes?utm_campaign=themes&utm_source=gh-readme&utm_medium=textlink)
+View all themes at [code-block-pro.com/themes](https://code-block-pro.com/themes)
 
 View this block plugin [on WordPress.org](https://wordpress.org/plugins/code-block-pro)
 

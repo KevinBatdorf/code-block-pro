@@ -113,7 +113,7 @@ const ThemeVisibilitySelector = ({
                 </div>
                 {priorityThemes?.length > 0 ? null : (
                     <div className="font-semibold text-base">
-                        <ExternalLink href="https://code-block-pro.com/themes?utm_campaign=notice&utm_source=manage-themes">
+                        <ExternalLink href="https://code-block-pro.com/themes">
                             {__('Get 25+ more themes here', 'code-block-pro')}
                         </ExternalLink>
                     </div>

@@ -3,9 +3,9 @@
 /**
  * Plugin Name:       Code Block Pro
  * Description:       Code highlighting powered by the VS Code engine
- * Plugin URI:        https://code-block-pro.com/?utm_campaign=plugin&utm_source=plugin-uri
+ * Plugin URI:        https://code-block-pro.com
  * Author:            Kevin Batdorf
- * Author URI:        https://code-block-pro.com/?utm_campaign=plugin&utm_source=author-uri
+ * Author URI:        https://code-block-pro.com
  * Requires at least: 6.0
  * Requires PHP:      7.0
  * Version:           1.27.6

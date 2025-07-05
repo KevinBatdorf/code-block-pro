@@ -65,6 +65,10 @@ declare global {
         codeBlockPro: {
             pluginUrl: string;
         };
+        codeBlockProThemes?: {
+            pluginUrl?: string;
+            hasUpdateServer?: boolean;
+        };
     }
 }
 
