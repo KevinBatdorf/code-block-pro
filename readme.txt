@@ -2,7 +2,7 @@
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
 Tested up to:      6.8
-Stable tag:        1.27.6
+Stable tag:        1.27.7
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,10 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.27.7 - 2025-07-05 =
+- Fixes a bug where block error warning messages would only affect the first block.
+- Adds an update notice to users on the paid theme pack.
 
 = 1.27.6 - 2025-06-29 =
 - Fixes a bug where shortcodes with attributes would not be properly escaped.

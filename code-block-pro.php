@@ -8,7 +8,7 @@
  * Author URI:        https://code-block-pro.com
  * Requires at least: 6.0
  * Requires PHP:      7.0
- * Version:           1.27.6
+ * Version:           1.27.7
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       code-block-pro
