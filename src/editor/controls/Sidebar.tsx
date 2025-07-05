@@ -13,7 +13,7 @@ import { useDispatch } from '@wordpress/data';
 // @ts-ignore-next-line - store is not typed
 import { store as editPostStore } from '@wordpress/edit-post';
 import { useEffect, useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useCanEditHTML } from '../../hooks/useCanEditHTML';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useGlobalStore } from '../../state/global';
