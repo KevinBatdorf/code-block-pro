@@ -1,8 +1,8 @@
 === Code Block Pro - Beautiful Syntax Highlighting ===
 Contributors:      kbat82, dcooney, a169kai
 Tags:              block, code, syntax, highlighter, php
-Tested up to:      6.8
-Stable tag:        1.27.7
+Tested up to:      7.0
+Stable tag:        1.28.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -312,6 +312,12 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 5. ANSI support for rendering control sequences
 
 == Changelog ==
+
+= 1.28.0 - 2026-03-28 =
+- Modernize tooling: swap ESLint/Prettier to Biome, Cypress/wp-env to Playwright + WP Playground.
+- Update dependencies.
+- Update CI workflows.
+- Tested up to WordPress 7.0.
 
 = 1.27.7 - 2025-07-05 =
 - Fixes a bug where block error warning messages would only affect the first block.

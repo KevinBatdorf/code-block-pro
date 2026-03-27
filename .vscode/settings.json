@@ -1,0 +1,22 @@
+{
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit",
+		"source.fixAll.biome": "explicit"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
+}

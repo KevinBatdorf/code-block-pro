@@ -1,0 +1,70 @@
+name: Playwright Tests
+permissions:
+  contents: write
+on:
+  pull_request:
+  push:
+    branches: main
+
+jobs:
+  discover:
+    name: Discover test suites
+    runs-on: ubuntu-latest
+    outputs:
+      suites: ${{ steps.find.outputs.suites }}
+    steps:
+    - uses: actions/checkout@v6
+    - id: find
+      run: |
+        suites=$(find . -name '*.spec.ts' -not -path '*/node_modules/*' | while read spec; do
+          dir=$(dirname "$spec")
+          if [ -f "$dir/blueprint.json" ]; then
+            basename "$spec" .spec.ts
+          fi
+        done | jq -R -s -c 'split("\n") | map(select(length > 0))')
+        echo "suites=$suites" >> "$GITHUB_OUTPUT"
+
+  test:
+    name: ${{ matrix.suite }}
+    needs: discover
+    concurrency:
+      group: ${{ github.workflow }} - ${{ matrix.suite }} - ${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ${{ fromJson(needs.discover.outputs.suites) }}
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 22
+        cache: 'npm'
+
+    - run: npm ci --prefer-offline --no-audit --no-fund
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Build project
+      run: npm run build
+      env:
+        CI: true
+
+    - name: Run Playwright tests
+      run: RUN_PROJECT="${{ matrix.suite }}" npx playwright test --project="${{ matrix.suite }}"
+
+    - name: Set artifact name
+      if: ${{ !cancelled() }}
+      id: artifact
+      run: echo "name=pw-${{ matrix.suite }}" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/upload-artifact@v6
+      if: ${{ !cancelled() }}
+      with:
+        name: ${{ steps.artifact.outputs.name }}
+        path: playwright-report/
+        retention-days: 30

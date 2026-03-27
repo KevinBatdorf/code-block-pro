@@ -1,27 +1,27 @@
 import { useEffect, useState } from '@wordpress/element';
 import { useLanguageStore } from '../state/language';
-import { AttributesPropsAndSetter, Lang } from '../types';
+import type { AttributesPropsAndSetter, Lang } from '../types';
 
 export const useLanguage = ({
-    attributes,
-    setAttributes,
+	attributes,
+	setAttributes,
 }: AttributesPropsAndSetter) => {
-    const [language, set] = useState<Lang>(attributes.language);
-    const { previousLanguage, setPreviousLanguage } = useLanguageStore();
-    const setLanguage = (language: Lang) => {
-        setAttributes({ language });
-        set(language);
-        setPreviousLanguage(language);
-    };
+	const [language, set] = useState<Lang>(attributes.language);
+	const { previousLanguage, setPreviousLanguage } = useLanguageStore();
+	const setLanguage = (language: Lang) => {
+		setAttributes({ language });
+		set(language);
+		setPreviousLanguage(language);
+	};
 
-    useEffect(() => {
-        if (language) return;
-        setAttributes({ language: previousLanguage });
-    }, [language, previousLanguage, setAttributes]);
+	useEffect(() => {
+		if (language) return;
+		setAttributes({ language: previousLanguage });
+	}, [language, previousLanguage, setAttributes]);
 
-    useEffect(() => {
-        set(attributes.language);
-    }, [attributes.language]);
+	useEffect(() => {
+		set(attributes.language);
+	}, [attributes.language]);
 
-    return [language, setLanguage] as [Lang, typeof setLanguage];
+	return [language, setLanguage] as [Lang, typeof setLanguage];
 };

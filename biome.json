@@ -1,0 +1,56 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.9/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/build",
+			"!**/coverage",
+			"!**/.cache",
+			"!**/playwright-report",
+			"!**/artifacts",
+			"!**/test-results",
+			"!**/wordpress-org",
+			"!**/editor.css",
+			"!**/style.css"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2
+	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"style": {
+				"noDescendingSpecificity": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noImplicitAnyLet": "off",
+				"useIterableCallbackReturn": "off"
+			},
+			"performance": {
+				"noAccumulatingSpread": "off"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useSemanticElements": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	}
+}

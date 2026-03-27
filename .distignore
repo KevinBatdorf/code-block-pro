@@ -2,9 +2,15 @@
 /.git
 /.github
 /.gitignore
+/.vscode
 /node_modules
 /assets
 /scripts
-/package-lock.json
+/tests
 /target
-/cypress
+/test-results
+/playwright-report
+/package-lock.json
+/playwright.config.ts
+/biome.json
+/tsconfig.json
