@@ -2,10 +2,8 @@ node_modules
 build
 /target
 Cargo.lock
-
-cypress/screenshots/**/*
-!cypress/screenshots/**/.gitkeep
-cypress/videos/**/*
-!cypress/videos/**/.gitkeep
-cypress/downloads/**/*
-cypress/downloads/**/.gitkeep
+tsconfig.tsbuildinfo
+test-results
+playwright-report
+.claude
+.vscode
