@@ -33,11 +33,11 @@ const portMap = Object.fromEntries(
 
 export default defineConfig({
 	forbidOnly: !!process.env.CI,
-	retries: process.env.CI ? 2 : 0,
+	retries: 0,
 	workers: 1,
 	reporter: 'html',
 	use: {
-		trace: 'on-first-retry',
+		trace: 'retain-on-failure',
 		video: 'retain-on-failure',
 		screenshot: 'only-on-failure',
 	},

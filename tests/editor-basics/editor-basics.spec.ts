@@ -201,8 +201,21 @@ test.describe('Extra Settings', () => {
 
 test.describe('Settings Persistence', () => {
 	test('Theme persists across new posts', async ({ admin, page, editor }) => {
-		await setTheme(page, 'dracula');
 		await addCode(editor, 'const x = 1;');
+		await setTheme(page, 'dracula');
+		// Wait for Dracula to render (const = pink #FF79C6)
+		const block = getBlock(editor);
+		const constSelector =
+			'pre:not(.code-block-pro-copy-button-pre) span.line span';
+		await expect
+			.poll(
+				async () => {
+					const span = block.locator(constSelector).first();
+					return span.evaluate((el) => window.getComputedStyle(el).color);
+				},
+				{ timeout: 10000 },
+			)
+			.toBe('rgb(255, 121, 198)');
 		// Save draft to persist settings
 		await page.getByRole('button', { name: 'Save draft' }).click();
 		await expect(page.locator('.editor-post-saved-state.is-saved')).toBeVisible(
@@ -213,14 +226,15 @@ test.describe('Settings Persistence', () => {
 		await insertCodeBlock(editor);
 		await addCode(editor, 'const x = 1;');
 		// Verify the theme color persists (dracula const is pink #FF79C6)
-		const block = getBlock(editor);
-		const constSpan = block
-			.locator('pre:not(.code-block-pro-copy-button-pre) span.line span')
-			.first();
-		await expect(constSpan).toBeVisible();
-		const color = await constSpan.evaluate(
-			(el) => window.getComputedStyle(el).color,
-		);
-		expect(color).toBe('rgb(255, 121, 198)'); // Dracula #FF79C6
+		const newBlock = getBlock(editor);
+		await expect
+			.poll(
+				async () => {
+					const span = newBlock.locator(constSelector).first();
+					return span.evaluate((el) => window.getComputedStyle(el).color);
+				},
+				{ timeout: 10000 },
+			)
+			.toBe('rgb(255, 121, 198)');
 	});
 });

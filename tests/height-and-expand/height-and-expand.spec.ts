@@ -51,6 +51,8 @@ test.describe('Max Height', () => {
 		await enableMaxHeight(page);
 		await setHeightDesign(page, 'roundCenter');
 		await setCheckbox(page, 'enable-collapse', true);
+		// Explicitly set both texts to avoid state leakage from previous tests
+		await page.getByLabel('See more text').fill('Expand');
 		await page.getByLabel('Collapse text').fill('Hide');
 		await page.getByLabel('Hide after line').fill('3');
 		await previewPage(page);

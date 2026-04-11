@@ -313,10 +313,11 @@ Themes are rendered inside the editor as you type or make changes, so the code b
 
 == Changelog ==
 
-= 1.28.0 - 2026-03-28 =
+= 1.28.0 - 2026-04-11 =
 - Modernize tooling: swap ESLint/Prettier to Biome, Cypress/wp-env to Playwright + WP Playground.
+- Comprehensive Playwright test suite (49 tests across 9 spec files).
 - Update dependencies.
-- Update CI workflows.
+- Update CI workflows to use node lts/*.
 - Tested up to WordPress 7.0.
 
 = 1.27.7 - 2025-07-05 =
