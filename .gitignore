@@ -5,3 +5,4 @@ Cargo.lock
 tsconfig.tsbuildinfo
 test-results
 playwright-report
+.claude

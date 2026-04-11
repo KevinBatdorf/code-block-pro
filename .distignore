@@ -13,4 +13,5 @@
 /package-lock.json
 /playwright.config.ts
 /biome.json
+/.claude
 /tsconfig.json
