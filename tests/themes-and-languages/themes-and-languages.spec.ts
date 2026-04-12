@@ -112,17 +112,10 @@ test.describe('Theme switching', () => {
 		await expect(ctaLinks).toHaveCount(0);
 	});
 
-	test('Random theme renders without errors', async ({ page, editor }) => {
+	test('Theme renders without errors', async ({ page, editor }) => {
 		await addCode(editor, 'const x = 1;');
-		await openPanel(page, 'Theme');
-		const themeButtons = page.locator('button[id^="code-block-pro-theme-"]');
-		const count = await themeButtons.count();
-		expect(count).toBeGreaterThan(0);
-		const randomIndex = Math.floor(Math.random() * Math.min(count, 10));
-		const btn = themeButtons.nth(randomIndex);
-		await btn.scrollIntoViewIfNeeded();
-		await btn.click();
-		// Should not show loading or error text
+		// Switch to a specific non-default theme
+		await setTheme(page, 'github-dark');
 		const block = getBlock(editor);
 		await expect(block).toContainText('const');
 		const blockHtml = await block.innerHTML();
