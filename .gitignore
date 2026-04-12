@@ -5,5 +5,9 @@ Cargo.lock
 tsconfig.tsbuildinfo
 test-results
 playwright-report
-.claude
+# Claude Code — commit rules and skills, ignore user-specific files
+.claude/*
+!.claude/rules/
+!.claude/skills/
+!.claude/settings.json
 .vscode

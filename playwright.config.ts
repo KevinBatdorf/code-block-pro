@@ -7,13 +7,24 @@ const BASE_PORT = 9400;
 const WP_VERSION = process.env.WP_VERSION || 'latest';
 const RUN_PROJECT = process.env.RUN_PROJECT;
 
-// Discover spec files that have a blueprint.json in the same directory
+// Find the closest blueprint.json by walking up from the spec's directory
+function findBlueprint(dir: string): string | null {
+	let current = dir;
+	while (current !== '.' && current !== '/') {
+		const bp = join(current, 'blueprint.json');
+		if (existsSync(bp)) return bp;
+		current = dirname(current);
+	}
+	return null;
+}
+
+// Discover spec files that have a blueprint.json in their directory or any ancestor
 const specs = fg
 	.sync('**/*.spec.ts', { ignore: ['node_modules/**'] })
 	.map((spec) => {
 		const dir = dirname(spec);
-		const blueprint = join(dir, 'blueprint.json');
-		if (!existsSync(blueprint)) return null;
+		const blueprint = findBlueprint(dir);
+		if (!blueprint) return null;
 		return {
 			name: basename(spec, '.spec.ts'),
 			dir,
