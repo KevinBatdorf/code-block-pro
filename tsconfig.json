@@ -13,8 +13,15 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
+		"types": ["node"],
 		"incremental": true
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx", "src/front/front.js"],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/front/front.js",
+		"playwright.config.ts",
+		"tests/**/*.ts"
+	],
 	"exclude": ["node_modules"]
 }

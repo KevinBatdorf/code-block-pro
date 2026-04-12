@@ -89,8 +89,8 @@ test.describe('Theme switching', () => {
 	test('Theme CTA can be removed via filter hook', async ({ page, editor }) => {
 		// Use wp.hooks.addFilter to replace themes with only Nord
 		await page.evaluate(() => {
-			// @ts-expect-error wp is global in WP admin
-			window.wp.hooks.addFilter(
+			// biome-ignore lint/suspicious/noExplicitAny: WP global
+			(window as any).wp.hooks.addFilter(
 				'blocks.codeBlockPro.themes',
 				'test/override',
 				() => ({

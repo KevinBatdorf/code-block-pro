@@ -46,8 +46,24 @@ jobs:
 
     - run: npm ci --prefer-offline --no-audit --no-fund
 
+    - name: Get Playwright version
+      id: pw-version
+      run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      id: pw-cache
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ steps.pw-version.outputs.version }}
+
     - name: Install Playwright Browsers
+      if: steps.pw-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
+
+    - name: Install Playwright deps only
+      if: steps.pw-cache.outputs.cache-hit == 'true'
+      run: npx playwright install-deps
 
     - name: Build project
       run: npm run build
