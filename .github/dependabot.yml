@@ -4,10 +4,3 @@ updates:
       directory: '/'
       schedule:
           interval: 'monthly'
-      ignore:
-          # Transitive deps pinned by @wordpress/scripts — can't bump independently
-          - dependency-name: 'lodash'
-          - dependency-name: 'lodash-es'
-          - dependency-name: 'axios'
-          - dependency-name: 'node-forge'
-          - dependency-name: 'basic-ftp'
