@@ -1,4 +1,9 @@
-import type { Admin, Editor, Page } from '@wordpress/e2e-test-utils-playwright';
+import type { Page } from '@playwright/test';
+import type {
+	Admin,
+	Editor,
+	RequestUtils,
+} from '@wordpress/e2e-test-utils-playwright';
 import { expect } from '@wordpress/e2e-test-utils-playwright';
 
 /** Get the block locator within the editor canvas */
@@ -147,7 +152,7 @@ export async function setupCodeBlock({
 	admin: Admin;
 	editor: Editor;
 	page: Page;
-	requestUtils: { login: () => Promise<void> };
+	requestUtils: RequestUtils;
 }) {
 	await requestUtils.login();
 	await admin.createNewPost({ title: 'Test post' });

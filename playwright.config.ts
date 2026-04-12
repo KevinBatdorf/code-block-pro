@@ -1,13 +1,15 @@
-import { existsSync, globSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { defineConfig, devices } from '@playwright/test';
+import fg from 'fast-glob';
 
 const BASE_PORT = 9400;
 const WP_VERSION = process.env.WP_VERSION || 'latest';
 const RUN_PROJECT = process.env.RUN_PROJECT;
 
 // Discover spec files that have a blueprint.json in the same directory
-const specs = globSync('**/*.spec.ts', { ignore: ['node_modules/**'] })
+const specs = fg
+	.sync('**/*.spec.ts', { ignore: ['node_modules/**'] })
 	.map((spec) => {
 		const dir = dirname(spec);
 		const blueprint = join(dir, 'blueprint.json');
@@ -19,7 +21,16 @@ const specs = globSync('**/*.spec.ts', { ignore: ['node_modules/**'] })
 			blueprint,
 		};
 	})
-	.filter(Boolean);
+	.filter(
+		(
+			s,
+		): s is {
+			name: string;
+			dir: string;
+			spec: string;
+			blueprint: string;
+		} => s !== null,
+	);
 
 const active = RUN_PROJECT
 	? specs.filter((p) => p.name === RUN_PROJECT)

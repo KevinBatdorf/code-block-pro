@@ -8,7 +8,7 @@
 	"scripts": {
 		"build": "wp-scripts build",
 		"format": "biome format --write .",
-		"lint": "biome check .",
+		"lint": "biome check . && tsc --noEmit",
 		"lint:fix": "biome check --fix .",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
