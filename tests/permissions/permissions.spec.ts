@@ -1,5 +1,5 @@
 import { expect, test } from '@wordpress/e2e-test-utils-playwright';
-import { insertCodeBlock } from '../helpers';
+import { insertCodeBlock, newPost } from '../helpers';
 
 test.beforeEach(async ({ admin, page, requestUtils }) => {
 	await requestUtils.login();
@@ -11,7 +11,7 @@ test.beforeEach(async ({ admin, page, requestUtils }) => {
 			body: 'false',
 		}),
 	);
-	await admin.createNewPost({ title: 'Permissions test' });
+	await newPost(admin, 'Permissions test');
 });
 
 test.describe('Permissions', () => {

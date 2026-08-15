@@ -143,6 +143,14 @@ export async function previewPage(page: Page) {
 	await page.waitForLoadState('networkidle');
 }
 
+/** createNewPost's preference dispatch intermittently throws RangeError. */
+export async function newPost(admin: Admin, title: string) {
+	await admin.visitAdminPage(
+		'post-new.php',
+		new URLSearchParams({ post_title: title }).toString(),
+	);
+}
+
 /** Standard setup: login, create post, insert block, focus textarea */
 export async function setupCodeBlock({
 	admin,
@@ -155,7 +163,7 @@ export async function setupCodeBlock({
 	requestUtils: RequestUtils;
 }) {
 	await requestUtils.login();
-	await admin.createNewPost({ title: 'Test post' });
+	await newPost(admin, 'Test post');
 	await insertCodeBlock(editor);
 	await getTextarea(editor).click();
 }
