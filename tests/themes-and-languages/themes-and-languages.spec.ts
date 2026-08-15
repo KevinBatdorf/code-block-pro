@@ -75,14 +75,15 @@ test.describe('Theme switching', () => {
 		await openPanel(page, 'Theme');
 		// CTA links should appear in the panel
 		const ctaLinks = page.locator('a[href*="code-block-pro.com"]');
-		const panelCtaCount = await ctaLinks.count();
-		expect(panelCtaCount).toBeGreaterThanOrEqual(2);
+		// count() does not wait, so settle on the first link before counting
+		await expect(ctaLinks.first()).toBeVisible();
+		expect(await ctaLinks.count()).toBeGreaterThanOrEqual(2);
 		// Open modal, check CTA there too
 		await page.locator('[data-cy="manage-themes"]').click();
 		const modal = page.getByRole('dialog');
 		const modalCta = modal.locator('a[href*="code-block-pro.com"]');
-		const modalCtaCount = await modalCta.count();
-		expect(modalCtaCount).toBeGreaterThanOrEqual(1);
+		await expect(modalCta.first()).toBeVisible();
+		expect(await modalCta.count()).toBeGreaterThanOrEqual(1);
 		await modal.getByRole('button', { name: 'Close' }).click();
 	});
 
