@@ -1,5 +1,11 @@
 import { expect, test } from '@wordpress/e2e-test-utils-playwright';
-import { addCode, getBlock, insertCodeBlock, previewPage } from '../helpers';
+import {
+	addCode,
+	getBlock,
+	insertCodeBlock,
+	newPost,
+	previewPage,
+} from '../helpers';
 
 test.beforeEach(async ({ requestUtils }) => {
 	await requestUtils.login();
@@ -7,7 +13,7 @@ test.beforeEach(async ({ requestUtils }) => {
 
 test.describe('RTL', () => {
 	test('Code renders LTR in RTL locale', async ({ admin, page, editor }) => {
-		await admin.createNewPost({ title: 'RTL test' });
+		await newPost(admin, 'RTL test');
 		await insertCodeBlock(editor);
 		await addCode(editor, 'const foo = "bar";');
 		// Editor block should have direction: ltr

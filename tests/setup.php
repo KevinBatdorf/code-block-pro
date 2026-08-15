@@ -4,7 +4,7 @@ require '/wordpress/wp-load.php';
 $userId = 1;
 
 $userSettings = [
-	'core/edit-post' => ['welcomeGuide' => false],
+	'core/edit-post' => ['welcomeGuide' => false, 'fullscreenMode' => false],
 	'core/edit-site' => ['welcomeGuide' => false],
 	'core' => ['enableChoosePatternModal' => false],
 	'_modified' => gmdate('c'),

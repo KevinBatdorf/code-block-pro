@@ -4,6 +4,7 @@ import {
 	getBlock,
 	getCodePre,
 	insertCodeBlock,
+	newPost,
 	openPanel,
 	previewPage,
 	setCheckbox,
@@ -224,7 +225,7 @@ test.describe('Settings Persistence', () => {
 		// Wait for async settings save to finish
 		await page.waitForTimeout(1000);
 		// Create a new post and verify theme persists
-		await admin.createNewPost({ title: 'Persistence test' });
+		await newPost(admin, 'Persistence test');
 		await insertCodeBlock(editor);
 		await addCode(editor, 'const x = 1;');
 		const newBlock = getBlock(editor);
