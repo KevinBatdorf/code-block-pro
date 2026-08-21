@@ -1,34 +1,29 @@
 name: PHPUnit Tests
 permissions:
   contents: read
+  packages: write
 on:
   pull_request:
   push:
     branches: main
 
+env:
+  IMAGE: ghcr.io/kevinbatdorf/php-no-mbregex:8.4
+
 jobs:
-  test:
-    name: PHPUnit (${{ matrix.name }})
+  mbregex-present:
+    name: PHPUnit (mbregex present)
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }} - ${{ matrix.name }} - ${{ github.event.pull_request.number || github.ref }}
+      group: ${{ github.workflow }} - present - ${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - name: mbregex present
-          ini: ''
-        # No prebuilt PHP ships mbstring without mbregex.
-        - name: mbregex absent
-          ini: 'disable_functions=mb_ereg_search_init'
 
     services:
       mysql:
         image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: cbp_test
         ports:
         - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -40,14 +35,10 @@ jobs:
       with:
         php-version: '8.4'
         extensions: mbstring, mysqli
-        ini-values: ${{ matrix.ini }}
         coverage: none
 
     - name: Install Composer dependencies
       uses: ramsey/composer-install@v3
-
-    - name: Create the test database
-      run: mysql -h 127.0.0.1 -P 3306 -u root -e 'CREATE DATABASE cbp_test'
 
     - name: Download WordPress
       run: curl -sL https://wordpress.org/latest.tar.gz | tar xz
@@ -56,3 +47,55 @@ jobs:
       run: composer test
       env:
         WP_ABSPATH: ${{ github.workspace }}/wordpress
+
+  image:
+    name: Build the PHP image without mbregex
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: docker/setup-buildx-action@v3
+
+    - uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: .github/docker/php-no-mbregex.Dockerfile
+        push: true
+        tags: ${{ env.IMAGE }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  mbregex-absent:
+    name: PHPUnit (mbregex absent)
+    runs-on: ubuntu-latest
+    needs: image
+    container: ghcr.io/kevinbatdorf/php-no-mbregex:8.4
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: cbp_test
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --no-progress
+
+    - name: Download WordPress
+      run: curl -sL https://wordpress.org/latest.tar.gz | tar xz
+
+    - name: Run PHPUnit
+      run: composer test
+      env:
+        WP_ABSPATH: ${{ github.workspace }}/wordpress
+        WP_DB_HOST: mysql:3306
