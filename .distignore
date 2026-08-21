@@ -7,6 +7,10 @@
 /assets
 /scripts
 /tests
+/vendor
+/composer.json
+/composer.lock
+/phpunit.xml.dist
 /target
 /test-results
 /playwright-report

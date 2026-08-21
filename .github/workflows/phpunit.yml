@@ -1,0 +1,58 @@
+name: PHPUnit Tests
+permissions:
+  contents: read
+on:
+  pull_request:
+  push:
+    branches: main
+
+jobs:
+  test:
+    name: PHPUnit (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }} - ${{ matrix.name }} - ${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - name: mbregex present
+          ini: ''
+        # No prebuilt PHP ships mbstring without mbregex.
+        - name: mbregex absent
+          ini: 'disable_functions=mb_ereg_search_init'
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        ports:
+        - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: mbstring, mysqli
+        ini-values: ${{ matrix.ini }}
+        coverage: none
+
+    - name: Install Composer dependencies
+      uses: ramsey/composer-install@v3
+
+    - name: Create the test database
+      run: mysql -h 127.0.0.1 -P 3306 -u root -e 'CREATE DATABASE cbp_test'
+
+    - name: Download WordPress
+      run: curl -sL https://wordpress.org/latest.tar.gz | tar xz
+
+    - name: Run PHPUnit
+      run: composer test
+      env:
+        WP_ABSPATH: ${{ github.workspace }}/wordpress

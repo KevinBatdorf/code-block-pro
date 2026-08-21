@@ -33,5 +33,6 @@ add_action('admin_init', function () {
 });
 
 include_once(__DIR__ . '/php/compatibility.php');
+include_once(__DIR__ . '/php/update-gate.php');
 include_once(__DIR__ . '/php/router.php');
 include_once(__DIR__ . '/php/routes.php');
