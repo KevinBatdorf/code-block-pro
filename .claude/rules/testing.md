@@ -21,7 +21,7 @@ WordPress renders the block editor inside an iframe.
 ## Common Pitfalls
 
 - **Never use `page.goBack()`.** WP Playground crashes. Split into separate tests instead.
-- **No retries.** `retries: 0` in config. Retries mask real failures.
+- **Retries are CI-only.** `retries: process.env.CI ? 1 : 0` in config. One CI retry absorbs WP Playground flakes (random 500s); local runs stay at 0 so real failures surface.
 - **State leaks between tests.** Tests in the same spec share a Playground. Theme, settings, and block defaults persist. Explicitly reset anything a previous test might have changed.
 - **Duplicate IDs.** Some WP components render both a visible element and a loading placeholder with the same ID. Use `button#code-block-pro-theme-nord` instead of `#code-block-pro-theme-nord`.
 - **Hidden copy-button pre.** The block has a hidden `<pre class="code-block-pro-copy-button-pre">` for clipboard. Use `pre:not(.code-block-pro-copy-button-pre)` when querying the visible code pre.
