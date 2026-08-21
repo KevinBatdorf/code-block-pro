@@ -4,7 +4,7 @@ defined('ABSPATH') or die;
 
 function code_block_pro_can_highlight()
 {
-    return (bool) apply_filters('blocks.codeBlockPro.canHighlight', function_exists('mb_ereg_search_init'));
+    return (bool) apply_filters('blocks.codeBlockPro.canHighlight', extension_loaded('mbstring'));
 }
 
 // Without mbregex nothing renders, and only a different PHP build can add it.
