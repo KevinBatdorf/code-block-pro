@@ -2,9 +2,23 @@
 
 defined('ABSPATH') or die;
 
+function code_block_pro_highlighting_functions()
+{
+    return [
+        'mb_ereg_search_init',
+        'mb_ereg_search_pos',
+        'mb_ereg_search_getregs',
+        'mb_ereg_search_setpos',
+    ];
+}
+
 function code_block_pro_can_highlight()
 {
-    return (bool) apply_filters('blocks.codeBlockPro.canHighlight', function_exists('mb_ereg_search_init'));
+    $needed = code_block_pro_highlighting_functions();
+    // disable_functions hides these one at a time, so the whole set has to be checked.
+    $present = array_filter($needed, 'function_exists');
+
+    return (bool) apply_filters('blocks.codeBlockPro.canHighlight', count($present) === count($needed));
 }
 
 function code_block_pro_next_php()

@@ -70,11 +70,25 @@ class UpdateGateTest extends WP_UnitTestCase
         $this->assertArrayHasKey($this->basename, $filtered->response);
     }
 
+    public function test_every_function_phiki_calls_is_checked()
+    {
+        $this->assertSame(
+            [
+                'mb_ereg_search_init',
+                'mb_ereg_search_pos',
+                'mb_ereg_search_getregs',
+                'mb_ereg_search_setpos',
+            ],
+            code_block_pro_highlighting_functions()
+        );
+    }
+
     public function test_the_build_decides_when_nothing_overrides_the_capability()
     {
         $filtered = apply_filters('site_transient_update_plugins', $this->transient());
+        $present = array_filter(code_block_pro_highlighting_functions(), 'function_exists');
 
-        if (function_exists('mb_ereg_search_init')) {
+        if (count($present) === count(code_block_pro_highlighting_functions())) {
             $this->assertArrayHasKey($this->basename, $filtered->response);
 
             return;
