@@ -103,4 +103,24 @@ class UpdateGateTest extends WP_UnitTestCase
 
         $this->assertTrue($response);
     }
+
+    public function test_an_older_php_leaves_the_update_alone()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_true');
+        add_filter('blocks.codeBlockPro.hasNextPhp', '__return_false');
+
+        $filtered = apply_filters('site_transient_update_plugins', $this->transient());
+
+        $this->assertArrayHasKey($this->basename, $filtered->response);
+    }
+
+    public function test_an_older_php_leaves_the_upgrader_alone()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_true');
+        add_filter('blocks.codeBlockPro.hasNextPhp', '__return_false');
+
+        $response = apply_filters('upgrader_pre_install', true, ['plugin' => $this->basename]);
+
+        $this->assertTrue($response);
+    }
 }

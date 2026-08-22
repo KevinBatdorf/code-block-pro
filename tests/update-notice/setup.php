@@ -12,4 +12,4 @@ $userSettings = [
 update_user_meta($userId, 'wp_persisted_preferences', $userSettings);
 
 wp_mkdir_p(WPMU_PLUGIN_DIR);
-copy(__DIR__ . '/no-mbregex.php', WPMU_PLUGIN_DIR . '/no-mbregex.php');
+copy(__DIR__ . '/pretend-server.php', WPMU_PLUGIN_DIR . '/pretend-server.php');
