@@ -67,4 +67,40 @@ class UpdateGateTest extends WP_UnitTestCase
 
         $this->assertFalse(apply_filters('site_transient_update_plugins', false));
     }
+
+    public function test_the_upgrader_refuses_us_when_highlighting_is_unavailable()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_false');
+
+        $response = apply_filters('upgrader_pre_install', true, ['plugin' => $this->basename]);
+
+        $this->assertWPError($response);
+    }
+
+    public function test_the_upgrader_installs_us_when_highlighting_is_available()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_true');
+
+        $response = apply_filters('upgrader_pre_install', true, ['plugin' => $this->basename]);
+
+        $this->assertTrue($response);
+    }
+
+    public function test_the_upgrader_still_installs_other_plugins()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_false');
+
+        $response = apply_filters('upgrader_pre_install', true, ['plugin' => 'other-plugin/other-plugin.php']);
+
+        $this->assertTrue($response);
+    }
+
+    public function test_an_install_naming_no_plugin_is_left_alone()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_false');
+
+        $response = apply_filters('upgrader_pre_install', true, ['type' => 'plugin', 'action' => 'install']);
+
+        $this->assertTrue($response);
+    }
 }
