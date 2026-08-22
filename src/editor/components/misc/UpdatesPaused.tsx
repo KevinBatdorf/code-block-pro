@@ -14,7 +14,7 @@ const requirementMessage = ({
 		return sprintf(
 			// translators: %s is a PHP version number, such as 8.2
 			__(
-				'Version 2 is coming! However, it needs PHP %s or newer and mbregex, part of the PHP mbstring extension. This server has neither, so updates are paused here.',
+				'Version 2 is coming! 🎉 However, it needs PHP %s or newer and mbregex, part of the PHP mbstring extension. This server has neither, so updates are paused here.',
 				'code-block-pro',
 			),
 			nextPhp,
@@ -24,14 +24,14 @@ const requirementMessage = ({
 		return sprintf(
 			// translators: %s is a PHP version number, such as 8.2
 			__(
-				'Version 2 is coming! However, it needs PHP %s or newer, and this server runs an older version. Ask your host to upgrade.',
+				'Version 2 is coming! 🎉 However, it needs PHP %s or newer, and this server runs an older version. Ask your host to upgrade.',
 				'code-block-pro',
 			),
 			nextPhp,
 		);
 	}
 	return __(
-		'Version 2 is coming! However, it needs mbregex, part of the PHP mbstring extension, which this server was built without. Updates are paused until your host adds it.',
+		'Version 2 is coming! 🎉 However, it needs mbregex, part of the PHP mbstring extension, which this server was built without. Updates are paused until your host adds it.',
 		'code-block-pro',
 	);
 };
@@ -42,14 +42,16 @@ export const UpdatesPausedNotice = () => {
 	const needsMbregex = canHighlight === false;
 	if (!needsPhp && !needsMbregex) return null;
 	return (
-		<div className="code-block-pro-editor my-6" data-cy="updates-paused">
-			<Notice status="warning" isDismissible={false}>
-				{requirementMessage({
-					needsPhp,
-					needsMbregex,
-					nextPhp: nextPhp ?? '8.2',
-				})}
-			</Notice>
+		<div className="code-block-pro-editor" data-cy="updates-paused">
+			<div className="my-6">
+				<Notice status="warning" isDismissible={false}>
+					{requirementMessage({
+						needsPhp,
+						needsMbregex,
+						nextPhp: nextPhp ?? '8.2',
+					})}
+				</Notice>
+			</div>
 		</div>
 	);
 };
