@@ -40,6 +40,31 @@ add_filter('site_transient_update_plugins', function ($transient) {
     return $transient;
 });
 
+function code_block_pro_missing_mbregex_error()
+{
+    return new WP_Error(
+        'code_block_pro_missing_mbregex',
+        __('Code Block Pro needs mbregex, part of the PHP mbstring extension, to highlight code. This server was built without it, so nothing was installed.', 'code-block-pro')
+    );
+}
+
+function code_block_pro_source_is_ours($source)
+{
+    if (!function_exists('get_plugin_data')) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
+    foreach ((array) glob(trailingslashit($source) . '*.php') as $file) {
+        $data = get_plugin_data($file, false, false);
+
+        if (($data['TextDomain'] ?? '') === 'code-block-pro') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // wp-cli and the update screens run the upgrader without consulting the transient.
 add_filter('upgrader_pre_install', function ($response, $hook_extra) {
     if (code_block_pro_can_highlight()) {
@@ -50,8 +75,18 @@ add_filter('upgrader_pre_install', function ($response, $hook_extra) {
         return $response;
     }
 
-    return new WP_Error(
-        'code_block_pro_missing_mbregex',
-        __('Code Block Pro needs mbregex, part of the PHP mbstring extension, to highlight code. This server was built without it, so the update was stopped.', 'code-block-pro')
-    );
+    return code_block_pro_missing_mbregex_error();
 }, 10, 2);
+
+// An upload or a forced install names no plugin, so the package itself has to say.
+add_filter('upgrader_source_selection', function ($source) {
+    if (code_block_pro_can_highlight()) {
+        return $source;
+    }
+
+    if (!code_block_pro_source_is_ours($source)) {
+        return $source;
+    }
+
+    return code_block_pro_missing_mbregex_error();
+});

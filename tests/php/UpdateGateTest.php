@@ -10,6 +10,28 @@ class UpdateGateTest extends WP_UnitTestCase
         $this->basename = plugin_basename(dirname(__DIR__, 2) . '/code-block-pro.php');
     }
 
+    public function tear_down()
+    {
+        foreach ((array) glob(get_temp_dir() . 'cbp-source-*') as $dir) {
+            array_map('unlink', (array) glob(trailingslashit($dir) . '*.php'));
+            rmdir($dir);
+        }
+        parent::tear_down();
+    }
+
+    // A package's file names are arbitrary, so the header is what identifies it.
+    private function package($textDomain)
+    {
+        $dir = get_temp_dir() . 'cbp-source-' . $textDomain . '/';
+        wp_mkdir_p($dir);
+        file_put_contents(
+            $dir . 'entry.php',
+            "<?php\n/**\n * Plugin Name: Package\n * Text Domain: {$textDomain}\n */\n"
+        );
+
+        return $dir;
+    }
+
     private function transient()
     {
         $transient = new stdClass();
@@ -102,6 +124,33 @@ class UpdateGateTest extends WP_UnitTestCase
         $response = apply_filters('upgrader_pre_install', true, ['type' => 'plugin', 'action' => 'install']);
 
         $this->assertTrue($response);
+    }
+
+    public function test_our_package_is_refused_when_highlighting_is_unavailable()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_false');
+
+        $source = $this->package('code-block-pro');
+
+        $this->assertWPError(apply_filters('upgrader_source_selection', $source));
+    }
+
+    public function test_another_package_is_left_alone()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_false');
+
+        $source = $this->package('other-plugin');
+
+        $this->assertSame($source, apply_filters('upgrader_source_selection', $source));
+    }
+
+    public function test_our_package_installs_when_highlighting_is_available()
+    {
+        add_filter('blocks.codeBlockPro.canHighlight', '__return_true');
+
+        $source = $this->package('code-block-pro');
+
+        $this->assertSame($source, apply_filters('upgrader_source_selection', $source));
     }
 
     public function test_an_older_php_leaves_the_update_alone()
