@@ -64,6 +64,9 @@ declare global {
 	interface Window {
 		codeBlockPro: {
 			pluginUrl: string;
+			canHighlight?: boolean;
+			hasNextPhp?: boolean;
+			nextPhp?: string;
 		};
 		codeBlockProThemes?: {
 			pluginUrl?: string;

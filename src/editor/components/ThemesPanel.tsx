@@ -5,6 +5,7 @@ import type { Theme } from 'shiki';
 import { useSettingsStoreReady } from '../../state/settings';
 import { useThemeStore } from '../../state/theme';
 import type { AttributesPropsAndSetter } from '../../types';
+import { UpdatesPausedNotice } from './misc/UpdatesPaused';
 import { ThemeFilter } from './ThemeFilter';
 import { ThemeSelect } from './ThemeSelect';
 
@@ -21,6 +22,7 @@ export const ThemesPanel = ({
 			title={__('Theme', 'code-block-pro')}
 			initialOpen={bringAttentionToThemes ?? false}
 		>
+			<UpdatesPausedNotice />
 			{ready && <ThemeFilter search={search} setSearch={setSearch} />}
 			{ready && (
 				<ThemeSelect
