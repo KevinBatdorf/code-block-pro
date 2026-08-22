@@ -14,7 +14,7 @@ const requirementMessage = ({
 		return sprintf(
 			// translators: %s is a PHP version number, such as 8.2
 			__(
-				'The next version of Code Block Pro requires PHP %s or newer and mbregex, part of the PHP mbstring extension. This server has neither, so plugin updates are paused here. Your host can provide both.',
+				'Version 2 is coming! However, it needs PHP %s or newer and mbregex, part of the PHP mbstring extension. This server has neither, so updates are paused here.',
 				'code-block-pro',
 			),
 			nextPhp,
@@ -24,14 +24,14 @@ const requirementMessage = ({
 		return sprintf(
 			// translators: %s is a PHP version number, such as 8.2
 			__(
-				'The next version of Code Block Pro requires PHP %s or newer. This server runs an older PHP, so it will not be offered the next version. Your host can upgrade it.',
+				'Version 2 is coming! However, it needs PHP %s or newer, and this server runs an older version. Ask your host to upgrade.',
 				'code-block-pro',
 			),
 			nextPhp,
 		);
 	}
 	return __(
-		'The next version of Code Block Pro requires mbregex, part of the PHP mbstring extension. This server was built without it, so plugin updates are paused here. Your host can move the site to a PHP build that includes it.',
+		'Version 2 is coming! However, it needs mbregex, part of the PHP mbstring extension, which this server was built without. Updates are paused until your host adds it.',
 		'code-block-pro',
 	);
 };
@@ -42,7 +42,7 @@ export const UpdatesPausedNotice = () => {
 	const needsMbregex = canHighlight === false;
 	if (!needsPhp && !needsMbregex) return null;
 	return (
-		<div className="code-block-pro-editor" data-cy="updates-paused">
+		<div className="code-block-pro-editor my-6" data-cy="updates-paused">
 			<Notice status="warning" isDismissible={false}>
 				{requirementMessage({
 					needsPhp,
