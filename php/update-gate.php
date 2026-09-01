@@ -18,11 +18,6 @@ function code_block_pro_can_upgrade()
     return (bool) apply_filters('blocks.codeBlockPro.canUpgrade', count($present) === count($needed));
 }
 
-function code_block_pro_basename()
-{
-    return plugin_basename(dirname(__DIR__) . '/code-block-pro.php');
-}
-
 // Without mbregex nothing renders, and only a different PHP build can add it.
 add_filter('site_transient_update_plugins', function ($transient) {
     if (code_block_pro_can_upgrade()) {
@@ -33,7 +28,7 @@ add_filter('site_transient_update_plugins', function ($transient) {
         return $transient;
     }
 
-    unset($transient->response[code_block_pro_basename()]);
+    unset($transient->response[CODE_BLOCK_PRO_BASENAME]);
 
     return $transient;
 });
@@ -69,7 +64,7 @@ add_filter('upgrader_pre_install', function ($response, $hook_extra) {
         return $response;
     }
 
-    if (($hook_extra['plugin'] ?? '') !== code_block_pro_basename()) {
+    if (($hook_extra['plugin'] ?? '') !== CODE_BLOCK_PRO_BASENAME) {
         return $response;
     }
 

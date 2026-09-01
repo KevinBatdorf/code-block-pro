@@ -19,6 +19,7 @@
 defined('ABSPATH') or die;
 
 const CODE_BLOCK_PRO_NEXT_PHP = '8.2';
+define('CODE_BLOCK_PRO_BASENAME', plugin_basename(__FILE__));
 
 add_action('init', function () {
     register_block_type(__DIR__ . '/build');
