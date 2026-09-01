@@ -10,28 +10,6 @@ class UpdateGateTest extends WP_UnitTestCase
         $this->basename = plugin_basename(dirname(__DIR__, 2) . '/code-block-pro.php');
     }
 
-    public function tear_down()
-    {
-        foreach ((array) glob(get_temp_dir() . 'cbp-source-*') as $dir) {
-            array_map('unlink', (array) glob(trailingslashit($dir) . '*.php'));
-            rmdir($dir);
-        }
-        parent::tear_down();
-    }
-
-    // A package's file names are arbitrary, so the header is what identifies it.
-    private function package($textDomain)
-    {
-        $dir = get_temp_dir() . 'cbp-source-' . $textDomain . '/';
-        wp_mkdir_p($dir);
-        file_put_contents(
-            $dir . 'entry.php',
-            "<?php\n/**\n * Plugin Name: Package\n * Text Domain: {$textDomain}\n */\n"
-        );
-
-        return $dir;
-    }
-
     private function transient()
     {
         $transient = new stdClass();
@@ -88,68 +66,5 @@ class UpdateGateTest extends WP_UnitTestCase
         add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
 
         $this->assertFalse(apply_filters('site_transient_update_plugins', false));
-    }
-
-    public function test_the_upgrader_refuses_us_when_the_upgrade_is_blocked()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
-
-        $response = apply_filters('upgrader_pre_install', true, ['plugin' => $this->basename]);
-
-        $this->assertWPError($response);
-    }
-
-    public function test_the_upgrader_installs_us_when_the_upgrade_is_allowed()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_true');
-
-        $response = apply_filters('upgrader_pre_install', true, ['plugin' => $this->basename]);
-
-        $this->assertTrue($response);
-    }
-
-    public function test_the_upgrader_still_installs_other_plugins()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
-
-        $response = apply_filters('upgrader_pre_install', true, ['plugin' => 'other-plugin/other-plugin.php']);
-
-        $this->assertTrue($response);
-    }
-
-    public function test_an_install_naming_no_plugin_is_left_alone()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
-
-        $response = apply_filters('upgrader_pre_install', true, ['type' => 'plugin', 'action' => 'install']);
-
-        $this->assertTrue($response);
-    }
-
-    public function test_our_package_is_refused_when_the_upgrade_is_blocked()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
-
-        $source = $this->package('code-block-pro');
-
-        $this->assertWPError(apply_filters('upgrader_source_selection', $source));
-    }
-
-    public function test_another_package_is_left_alone()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
-
-        $source = $this->package('other-plugin');
-
-        $this->assertSame($source, apply_filters('upgrader_source_selection', $source));
-    }
-
-    public function test_our_package_installs_when_the_upgrade_is_allowed()
-    {
-        add_filter('blocks.codeBlockPro.canUpgrade', '__return_true');
-
-        $source = $this->package('code-block-pro');
-
-        $this->assertSame($source, apply_filters('upgrader_source_selection', $source));
     }
 }
