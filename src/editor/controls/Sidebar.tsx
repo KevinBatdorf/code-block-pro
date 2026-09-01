@@ -30,7 +30,6 @@ import { FooterSelect } from '../components/FooterSelect';
 import { HeaderSelect } from '../components/HeaderSelect';
 import { HeightPanel } from '../components/HeightPanel';
 import { MissingPermissionsTip } from '../components/misc/MissingPermissions';
-import { UpdatesPausedNotice } from '../components/misc/UpdatesPaused';
 import { SlotFactory } from '../components/SlotFactory';
 import { ThemesPanel } from '../components/ThemesPanel';
 import { BlurControl } from './BlurControl';
@@ -81,7 +80,6 @@ export const SidebarControls = ({
 
 	return (
 		<InspectorControls>
-			<UpdatesPausedNotice />
 			{window?.codeBlockProThemes &&
 			// If they have the pro versoin, aren't using the update server
 			!window?.codeBlockProThemes?.hasUpdateServer ? (
