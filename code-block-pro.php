@@ -18,6 +18,8 @@
 
 defined('ABSPATH') or die;
 
+const CODE_BLOCK_PRO_NEXT_PHP = '8.2';
+
 add_action('init', function () {
     register_block_type(__DIR__ . '/build');
     wp_set_script_translations('kevinbatdorf/code-block-pro', 'code-block-pro');
@@ -30,8 +32,11 @@ add_action('admin_init', function () {
     wp_add_inline_script('kevinbatdorf-code-block-pro-editor-script', 'window.codeBlockPro = ' . wp_json_encode([
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
         'canUpgrade' => code_block_pro_can_upgrade(),
-        'hasNextPhp' => code_block_pro_has_next_php(),
-        'nextPhp' => code_block_pro_next_php(),
+        'hasNextPhp' => (bool) apply_filters(
+            'blocks.codeBlockPro.hasNextPhp',
+            version_compare(PHP_VERSION, CODE_BLOCK_PRO_NEXT_PHP, '>=')
+        ),
+        'nextPhp' => CODE_BLOCK_PRO_NEXT_PHP,
     ]) . ';');
 });
 

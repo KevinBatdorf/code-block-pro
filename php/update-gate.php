@@ -18,19 +18,6 @@ function code_block_pro_can_upgrade()
     return (bool) apply_filters('blocks.codeBlockPro.canUpgrade', count($present) === count($needed));
 }
 
-function code_block_pro_next_php()
-{
-    return '8.2';
-}
-
-function code_block_pro_has_next_php()
-{
-    return (bool) apply_filters(
-        'blocks.codeBlockPro.hasNextPhp',
-        version_compare(PHP_VERSION, code_block_pro_next_php(), '>=')
-    );
-}
-
 function code_block_pro_basename()
 {
     return plugin_basename(dirname(__DIR__) . '/code-block-pro.php');
