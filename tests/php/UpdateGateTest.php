@@ -48,6 +48,30 @@ class UpdateGateTest extends WP_UnitTestCase
         $this->assertArrayHasKey($this->basename, $filtered->response);
     }
 
+    public function test_a_one_point_release_still_reaches_a_blocked_site()
+    {
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
+
+        $transient = $this->transient();
+        $transient->response[$this->basename] = (object) ['new_version' => '1.29.0'];
+
+        $filtered = apply_filters('site_transient_update_plugins', $transient);
+
+        $this->assertArrayHasKey($this->basename, $filtered->response);
+    }
+
+    public function test_an_offer_with_no_version_is_left_alone()
+    {
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
+
+        $transient = $this->transient();
+        $transient->response[$this->basename] = (object) [];
+
+        $filtered = apply_filters('site_transient_update_plugins', $transient);
+
+        $this->assertArrayHasKey($this->basename, $filtered->response);
+    }
+
     public function test_the_build_decides_when_nothing_overrides_the_capability()
     {
         $filtered = apply_filters('site_transient_update_plugins', $this->transient());

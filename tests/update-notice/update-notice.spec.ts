@@ -10,7 +10,7 @@ test.beforeEach(async ({ requestUtils }) => {
 });
 
 test.describe('Updates paused notice', () => {
-	test('Names mbregex when only mbregex is missing', async ({
+	test('Names mbregex when the server was built without it', async ({
 		admin,
 		editor,
 		page,
@@ -20,43 +20,9 @@ test.describe('Updates paused notice', () => {
 		await openPanel(page, 'Theme');
 
 		await expect(page.locator(notice)).toContainText('mbregex');
-		await expect(page.locator(notice)).not.toContainText('PHP 8.2');
 	});
 
-	test('Names the PHP version when only PHP is too old', async ({
-		admin,
-		editor,
-		page,
-	}) => {
-		await admin.visitAdminPage('post-new.php', 'cbp_old_php=1');
-		await insertCodeBlock(editor);
-		await openPanel(page, 'Theme');
-
-		await expect(page.locator(notice)).toContainText('PHP 8.2 or newer');
-		await expect(page.locator(notice)).not.toContainText('mbregex');
-	});
-
-	test('Names both when the server has neither', async ({
-		admin,
-		editor,
-		page,
-	}) => {
-		await admin.visitAdminPage(
-			'post-new.php',
-			'cbp_no_mbregex=1&cbp_old_php=1',
-		);
-		await insertCodeBlock(editor);
-		await openPanel(page, 'Theme');
-
-		await expect(page.locator(notice)).toContainText('PHP 8.2 or newer');
-		await expect(page.locator(notice)).toContainText('mbregex');
-	});
-
-	test('Stays away when the server meets both', async ({
-		admin,
-		editor,
-		page,
-	}) => {
+	test('Stays away when the server has it', async ({ admin, editor, page }) => {
 		await admin.visitAdminPage('post-new.php', '');
 		await insertCodeBlock(editor);
 		await openPanel(page, 'Theme');

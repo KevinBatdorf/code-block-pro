@@ -24,7 +24,14 @@ add_filter('site_transient_update_plugins', function ($transient) {
         return $transient;
     }
 
-    if (!isset($transient->response) || !is_array($transient->response)) {
+    if (!isset($transient->response[CODE_BLOCK_PRO_BASENAME])) {
+        return $transient;
+    }
+
+    $offered = $transient->response[CODE_BLOCK_PRO_BASENAME]->new_version ?? '';
+
+    // Withholding every release would strand these sites on the version that first refused one.
+    if ($offered === '' || version_compare($offered, CODE_BLOCK_PRO_NEXT_VERSION, '<')) {
         return $transient;
     }
 

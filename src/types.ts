@@ -65,8 +65,6 @@ declare global {
 		codeBlockPro: {
 			pluginUrl: string;
 			canUpgrade?: boolean;
-			hasNextPhp?: boolean;
-			nextPhp?: string;
 		};
 		codeBlockProThemes?: {
 			pluginUrl?: string;
