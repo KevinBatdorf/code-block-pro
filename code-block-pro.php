@@ -29,7 +29,7 @@ add_action('init', function () {
 add_action('admin_init', function () {
     wp_add_inline_script('kevinbatdorf-code-block-pro-editor-script', 'window.codeBlockPro = ' . wp_json_encode([
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
-        'canHighlight' => code_block_pro_can_highlight(),
+        'canUpgrade' => code_block_pro_can_upgrade(),
         'hasNextPhp' => code_block_pro_has_next_php(),
         'nextPhp' => code_block_pro_next_php(),
     ]) . ';');

@@ -28,8 +28,8 @@ const mbregexMessage = () =>
 	);
 
 export const UpdatesPausedNotice = () => {
-	const { canHighlight, hasNextPhp, nextPhp } = window.codeBlockPro ?? {};
-	const needsMbregex = canHighlight === false;
+	const { canUpgrade, hasNextPhp, nextPhp } = window.codeBlockPro ?? {};
+	const needsMbregex = canUpgrade === false;
 	const needsPhp = hasNextPhp === false && Boolean(nextPhp);
 	if (!needsPhp && !needsMbregex) return null;
 	const message = () => {
