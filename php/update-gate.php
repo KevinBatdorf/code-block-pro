@@ -2,20 +2,16 @@
 
 defined('ABSPATH') or die;
 
-// The mb_ereg_* set phiki v2.2.1 calls; no dependency here catches phiki adding one.
-function code_block_pro_highlighting_functions()
+function code_block_pro_can_upgrade()
 {
-    return [
+    // The mb_ereg_* set phiki v2.2.1 calls; phiki is not a dependency, so drift goes unnoticed.
+    $needed = [
         'mb_ereg_search_init',
         'mb_ereg_search_pos',
         'mb_ereg_search_getregs',
         'mb_ereg_search_setpos',
     ];
-}
 
-function code_block_pro_can_upgrade()
-{
-    $needed = code_block_pro_highlighting_functions();
     // disable_functions hides these one at a time, so the whole set has to be checked.
     $present = array_filter($needed, 'function_exists');
 
