@@ -2,6 +2,7 @@
 
 defined('ABSPATH') or die;
 
+// The mb_ereg_* set phiki v2.2.1 calls; no dependency here catches phiki adding one.
 function code_block_pro_highlighting_functions()
 {
     return [
