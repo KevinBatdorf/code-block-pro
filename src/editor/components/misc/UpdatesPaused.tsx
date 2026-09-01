@@ -6,7 +6,7 @@ export const UpdatesPausedNotice = () => {
 	if (canUpgrade !== false) return null;
 	return (
 		<div className="code-block-pro-editor" data-cy="updates-paused">
-			<div className="my-6">
+			<div className="m-4">
 				<Notice status="warning" isDismissible={false}>
 					{__(
 						'Version 2 is coming! 🎉 However, it needs mbregex, part of the PHP mbstring extension, which this server was built without. Updates are paused until your host adds it.',
