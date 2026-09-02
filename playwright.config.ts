@@ -3,7 +3,7 @@ import { basename, dirname, join } from 'node:path';
 import { defineConfig, devices } from '@playwright/test';
 import fg from 'fast-glob';
 
-const BASE_PORT = 9400;
+const BASE_PORT = Number(process.env.BASE_PORT) || 9400;
 const WP_VERSION = process.env.WP_VERSION || 'latest';
 const RUN_PROJECT = process.env.RUN_PROJECT;
 

@@ -18,6 +18,10 @@
 			"!**/artifacts",
 			"!**/test-results",
 			"!**/wordpress-org",
+			"!tests/fixtures/code",
+			"!tests/fixtures/blocks",
+			"!tests/fixtures/index.json",
+			"!tests/fixtures/baseline.json",
 			"!**/editor.css",
 			"!**/style.css"
 		]

@@ -1,0 +1,252 @@
+[
+	{
+		"slug": "01-bare",
+		"purpose": "The minimum a stored block can be: no chrome, no typography, no line features. Every attribute a later version added is absent.",
+		"file": "01-bare.html"
+	},
+	{
+		"slug": "02-empty-code",
+		"purpose": "Empty code with every piece of chrome enabled. Save renders the wrapper and nothing inside it — the guard the renderer has to keep.",
+		"file": "02-empty-code.html"
+	},
+	{
+		"slug": "03-trailing-newline",
+		"purpose": "Twelve lines plus a trailing newline. The stored render has 13 span.line, the last holding only the newline. Every line-index feature counts off this.",
+		"file": "03-trailing-newline.html"
+	},
+	{
+		"slug": "04-no-trailing-newline",
+		"purpose": "The same twelve lines without the trailing newline — 12 span.line. Diff against 03 to see whether a renderer invented or swallowed a line.",
+		"file": "04-no-trailing-newline.html"
+	},
+	{
+		"slug": "05-whitespace-lines",
+		"purpose": "A blank line, a line of only spaces, a line of only a tab, and one 400-character line. Empty span.line elements have to survive, and the long one has to scroll rather than wrap.",
+		"file": "05-whitespace-lines.html"
+	},
+	{
+		"slug": "06-long-file",
+		"purpose": "300 lines with line numbers and a copy button. Pins the three-digit gutter, and is the fixture to time a render against.",
+		"file": "06-long-file.html"
+	},
+	{
+		"slug": "07-crlf",
+		"purpose": "CRLF line endings throughout. A carriage return must never reach the page as a glyph or an extra line.",
+		"file": "07-crlf.html"
+	},
+	{
+		"slug": "08-php-shortcodes",
+		"purpose": "PHP with real shortcodes in the source and escaping left on. Both the visible code and the copy payload have to keep the brackets inert.",
+		"file": "08-php-shortcodes.html"
+	},
+	{
+		"slug": "09-tsx-highlight-range",
+		"purpose": "TSX (JSX, a template literal, a regex literal) with a nested highlight range and a custom highlight colour.",
+		"file": "09-tsx-highlight-range.html"
+	},
+	{
+		"slug": "10-python-highlight-list",
+		"purpose": "Python (decorators, an f-string, a docstring) with a flat highlight list. The other half of the highlight parser.",
+		"file": "10-python-highlight-list.html"
+	},
+	{
+		"slug": "11-bash-glob",
+		"purpose": "A bash loop variable and a *.txt glob on nord — the one case already measured as mis-scoped by phiki. This fixture is that fix acceptance test.",
+		"file": "11-bash-glob.html"
+	},
+	{
+		"slug": "12-diff-hover",
+		"purpose": "A diff with + and - lines and hover highlighting only. Pins the hover colour variable with no static highlights present.",
+		"file": "12-diff-hover.html"
+	},
+	{
+		"slug": "13-html-hazards",
+		"purpose": "HTML holding a closing pre tag, a script, a style, and entities. Escaping has to hold in the visible pre and in the copy pre both.",
+		"file": "13-html-hazards.html"
+	},
+	{
+		"slug": "14-yaml-deep-indent",
+		"purpose": "YAML with block scalars and anchors. Indentation is the meaning here, so a lost space is a broken render.",
+		"file": "14-yaml-deep-indent.html"
+	},
+	{
+		"slug": "15-markdown-see-more",
+		"purpose": "Markdown containing its own fenced block, cut off after line 5 by see-more. The most common max-height shape on the most nested grammar.",
+		"file": "15-markdown-see-more.html"
+	},
+	{
+		"slug": "16-ansi",
+		"purpose": "ANSI control sequences through the ansi renderer, which is a different code path from every other language.",
+		"file": "16-ansi.html"
+	},
+	{
+		"slug": "17-unknown-language",
+		"purpose": "A stored language slug the renderer will not recognise, with valid stored HTML from when it did. A language renamed or dropped upstream.",
+		"file": "17-unknown-language.html"
+	},
+	{
+		"slug": "18-no-language",
+		"purpose": "No language attribute at all. The renderer has to reach plain text without throwing.",
+		"file": "18-no-language.html"
+	},
+	{
+		"slug": "19-min-light-prose",
+		"purpose": "Mostly plain text on min-light, which colours plain text explicitly. A renderer that leaves plain text to the wrapper differs on every glyph here.",
+		"file": "19-min-light-prose.html"
+	},
+	{
+		"slug": "20-custom-colors-headlights",
+		"purpose": "Background and text colours overridden away from the theme, with a header that reads them. Chrome takes bgColor, not the theme.",
+		"file": "20-custom-colors-headlights.html"
+	},
+	{
+		"slug": "21-css-var-theme",
+		"purpose": "The pack CSS-variables theme: tokens resolve to var() at render, bgColor is a var(), and the header type that cannot support that is selected anyway.",
+		"file": "21-css-var-theme.html"
+	},
+	{
+		"slug": "22-third-party-theme",
+		"purpose": "A theme slug that only exists in the add-on pack, with stored HTML from a theme that does ship. Nothing may be generated for it and nothing may crash.",
+		"file": "22-third-party-theme.html"
+	},
+	{
+		"slug": "23-theme-pair",
+		"purpose": "Two blocks, two themes, one page. Any scheme that names colours globally instead of per block collides here.",
+		"file": "23-theme-pair.html"
+	},
+	{
+		"slug": "24-header-muted",
+		"purpose": "Muted headlights carrying a filename string.",
+		"file": "24-header-muted.html"
+	},
+	{
+		"slug": "25-header-simple-entities",
+		"purpose": "A header string with an ampersand, an angle bracket, and an emoji. Stored escaped, and it must not double-escape on the way out.",
+		"file": "25-header-simple-entities.html"
+	},
+	{
+		"slug": "26-header-small-empty",
+		"purpose": "A muted string header with no string set, so the placeholder falls back to the language name.",
+		"file": "26-header-small-empty.html"
+	},
+	{
+		"slug": "27-header-pill-overflow",
+		"purpose": "A pill header holding far more text than fits. Pins whatever overflow does today.",
+		"file": "27-header-pill-overflow.html"
+	},
+	{
+		"slug": "28-footer-end-link",
+		"purpose": "Footer at the end with a link that opens in a new tab. The only fixture carrying an anchor and a target.",
+		"file": "28-footer-end-link.html"
+	},
+	{
+		"slug": "29-footer-start-nolink",
+		"purpose": "Footer at the start with no link. The unlinked footer branch.",
+		"file": "29-footer-start-nolink.html"
+	},
+	{
+		"slug": "30-header-footer-nopadding",
+		"purpose": "Header, footer and disabled padding together, the only way to get both padding classes on the wrapper at once.",
+		"file": "30-header-footer-nopadding.html"
+	},
+	{
+		"slug": "31-nopadding-only",
+		"purpose": "Padding disabled with no chrome, so the code runs to the edge of the wrapper.",
+		"file": "31-nopadding-only.html"
+	},
+	{
+		"slug": "32-align-wide",
+		"purpose": "Wide alignment, which puts a core class on the wrapper.",
+		"file": "32-align-wide.html"
+	},
+	{
+		"slug": "33-align-full",
+		"purpose": "Full alignment with a header and a copy button, the widest thing the block can be.",
+		"file": "33-align-full.html"
+	},
+	{
+		"slug": "34-copy-two-squares",
+		"purpose": "The two-squares copy icon with a custom label.",
+		"file": "34-copy-two-squares.html"
+	},
+	{
+		"slug": "35-copy-text-simple",
+		"purpose": "The text copy button, the only type that renders both its label and its copied label into the markup.",
+		"file": "35-copy-text-simple.html"
+	},
+	{
+		"slug": "36-copy-textarea-encoded",
+		"purpose": "The copy payload in a textarea instead of a data attribute, with URI encoding on and shortcode escaping off. Every switch on the copy path at once.",
+		"file": "36-copy-textarea-encoded.html"
+	},
+	{
+		"slug": "37-line-numbers",
+		"purpose": "Line numbers on, nothing else. The plain numbered block.",
+		"file": "37-line-numbers.html"
+	},
+	{
+		"slug": "38-numbers-start-998",
+		"purpose": "Numbering from 998 over twelve lines, so the gutter crosses from three digits to four and the highlight offset is not zero.",
+		"file": "38-numbers-start-998.html"
+	},
+	{
+		"slug": "39-blur",
+		"purpose": "Blur with two lines exempt, unblurring on hover, and a highlight underneath it. Blur and highlight have to coexist on one render.",
+		"file": "39-blur.html"
+	},
+	{
+		"slug": "40-index-past-eof",
+		"purpose": "Highlight, blur and see-more all pointing past the last line of a twelve-line block. Nothing may throw and no phantom line may appear.",
+		"file": "40-index-past-eof.html"
+	},
+	{
+		"slug": "41-see-more-left-transition",
+		"purpose": "See-more on the left with the height transition on.",
+		"file": "41-see-more-left-transition.html"
+	},
+	{
+		"slug": "42-see-more-right-collapse",
+		"purpose": "See-more on the right that can be collapsed again, with both strings set. The only fixture with a collapse control.",
+		"file": "42-see-more-right-collapse.html"
+	},
+	{
+		"slug": "43-editor-height",
+		"purpose": "An editor height with no front-end max height. It must stay admin-only and leave the page alone.",
+		"file": "43-editor-height.html"
+	},
+	{
+		"slug": "44-font-tiny-tight",
+		"purpose": "The smallest font size against the tightest line height.",
+		"file": "44-font-tiny-tight.html"
+	},
+	{
+		"slug": "45-font-big-clamped",
+		"purpose": "The largest font size with clamping on, the only way a clamp() lands in the style attribute.",
+		"file": "45-font-big-clamped.html"
+	},
+	{
+		"slug": "46-font-fantasque-numbers",
+		"purpose": "Fantasque with line numbers, the one font with its own gutter-width ratio.",
+		"file": "46-font-fantasque-numbers.html"
+	},
+	{
+		"slug": "47-tabs-real-4",
+		"purpose": "Real tab characters at width 4. The stored code holds tabs and the width comes from a custom property.",
+		"file": "47-tabs-real-4.html"
+	},
+	{
+		"slug": "48-tabs-legacy-undefined",
+		"purpose": "Tab attributes absent entirely, the shape every block saved before they existed has. No tab custom property, no tab-size.",
+		"file": "48-tabs-legacy-undefined.html"
+	},
+	{
+		"slug": "49-legacy-no-modern-attrs",
+		"purpose": "An old numbered block: the legacy pixel gutter width instead of a computed one, and none of the attributes added since. Both bw-compat branches at once.",
+		"file": "49-legacy-no-modern-attrs.html"
+	},
+	{
+		"slug": "50-unicode-rtl",
+		"purpose": "Emoji, CJK, Arabic, combining marks, a zero-width space and a non-breaking space, numbered so the gutter is involved too.",
+		"file": "50-unicode-rtl.html"
+	}
+]
