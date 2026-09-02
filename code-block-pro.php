@@ -18,7 +18,6 @@
 
 defined('ABSPATH') or die;
 
-const CODE_BLOCK_PRO_NEXT_VERSION = '2.0';
 define('CODE_BLOCK_PRO_BASENAME', plugin_basename(__FILE__));
 
 add_action('init', function () {

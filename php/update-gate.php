@@ -30,8 +30,8 @@ add_filter('site_transient_update_plugins', function ($transient) {
 
     $offered = $transient->response[CODE_BLOCK_PRO_BASENAME]->new_version ?? '';
 
-    // Only 2.0 needs mbregex; a later 1.x fix must still reach a site without it.
-    if ($offered === '' || version_compare($offered, CODE_BLOCK_PRO_NEXT_VERSION, '<')) {
+    // A later 1.x fix must still reach a site without mbregex.
+    if ($offered === '' || version_compare($offered, '2.0', '<')) {
         return $transient;
     }
 
