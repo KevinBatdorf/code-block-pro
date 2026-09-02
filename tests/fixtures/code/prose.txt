@@ -1,0 +1,10 @@
+Code Block Pro renders code with the VS Code engine.
+
+Most of this fixture is plain prose on purpose: min-light colours plain
+text explicitly, and a renderer that leaves plain text to the wrapper
+instead will differ on every glyph here without differing on any token.
+
+That is the whole point of this one. Nothing below is a keyword.
+
+  indented continuation line
+  another one, two spaces in
