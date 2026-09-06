@@ -1,8 +1,6 @@
 import { FontSizePicker, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-// This file ignores types as they are outdated from the source
-
 export const FontSizeSelect = ({
 	value,
 	onChange,
@@ -13,33 +11,27 @@ export const FontSizeSelect = ({
 	return (
 		<FontSizePicker
 			onChange={(size) => {
-				// @ts-expect-error-next-line
-				onChange(size ?? '.875rem');
+				onChange(String(size ?? '.875rem'));
 			}}
-			// @ts-expect-error-next-line
 			value={value}
 			fontSizes={[
 				{
 					name: 'Tiny',
-					// @ts-expect-error-next-line
 					size: '.75rem',
 					slug: 'tiny',
 				},
 				{
 					name: 'Small',
-					// @ts-expect-error-next-line
 					size: '.875rem',
 					slug: 'small',
 				},
 				{
 					name: 'Normal',
-					// @ts-expect-error-next-line
 					size: '1rem',
 					slug: 'normal',
 				},
 				{
 					name: 'Big',
-					// @ts-expect-error-next-line
 					size: '1.125rem',
 					slug: 'big',
 				},
@@ -58,33 +50,27 @@ export const FontLineHeightSelect = ({
 	return (
 		<FontSizePicker
 			onChange={(size) => {
-				// @ts-expect-error-next-line
-				onChange(size ?? '.875rem');
+				onChange(String(size ?? '.875rem'));
 			}}
-			// @ts-expect-error-next-line
 			value={value}
 			fontSizes={[
 				{
 					name: 'None',
-					// @ts-expect-error-next-line
 					size: '1rem',
 					slug: 'none',
 				},
 				{
 					name: 'Tight',
-					// @ts-expect-error-next-line
 					size: '1.25rem',
 					slug: 'tight',
 				},
 				{
 					name: 'Normal',
-					// @ts-expect-error-next-line
 					size: '1.5rem',
 					slug: 'normal',
 				},
 				{
 					name: 'Relaxed',
-					// @ts-expect-error-next-line
 					size: '1.625rem',
 					slug: 'relaxed',
 				},

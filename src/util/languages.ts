@@ -61,17 +61,16 @@ export const getMainAlias = (
 
 export const removeAliases = (
 	langs: typeof defaultLanguages,
-): Partial<typeof defaultLanguages> => {
+): Partial<Record<Lang, string>> => {
 	const aliasesToRemove = Object.values(codeAliases).flat();
 	return Object.keys(langs).reduce(
 		(acc, key) => {
 			if (!aliasesToRemove.includes(key)) {
-				// @ts-expect-error
-				acc[key as Lang] = langs[key as Lang];
+				acc[key as Lang] = langs[key as keyof typeof langs];
 			}
 			return acc;
 		},
-		{} as Partial<typeof defaultLanguages>,
+		{} as Partial<Record<Lang, string>>,
 	);
 };
 

@@ -9,7 +9,6 @@ import {
 	TextControl,
 } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
-// @ts-expect-error-next-line - store is not typed
 import { store as editPostStore } from '@wordpress/edit-post';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
