@@ -18,6 +18,8 @@
 
 defined('ABSPATH') or die;
 
+define('CODE_BLOCK_PRO_BASENAME', plugin_basename(__FILE__));
+
 add_action('init', function () {
     register_block_type(__DIR__ . '/build');
     wp_set_script_translations('kevinbatdorf/code-block-pro', 'code-block-pro');
@@ -29,9 +31,11 @@ add_action('init', function () {
 add_action('admin_init', function () {
     wp_add_inline_script('kevinbatdorf-code-block-pro-editor-script', 'window.codeBlockPro = ' . wp_json_encode([
         'pluginUrl' => esc_url_raw(plugin_dir_url(__FILE__)),
+        'canUpgrade' => code_block_pro_can_upgrade(),
     ]) . ';');
 });
 
 include_once(__DIR__ . '/php/compatibility.php');
+include_once(__DIR__ . '/php/update-gate.php');
 include_once(__DIR__ . '/php/router.php');
 include_once(__DIR__ . '/php/routes.php');

@@ -64,6 +64,7 @@ declare global {
 	interface Window {
 		codeBlockPro: {
 			pluginUrl: string;
+			canUpgrade?: boolean;
 		};
 		codeBlockProThemes?: {
 			pluginUrl?: string;

@@ -1,9 +1,11 @@
+import { InspectorControls } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import blockConfig from './block.json';
 import { Editor } from './Editor';
 import { BlockFilter } from './editor/components/BlockFilter';
+import { UpdatesPausedNotice } from './editor/components/misc/UpdatesPaused';
 import './editor/editor.css';
 import { transformFromCBP, transformToCBP } from './editor/transforms';
 import { BlockOutput } from './front/BlockOutput';
@@ -109,4 +111,22 @@ addFilter(
 		// Not sure how to type these incoming props
 		(props: any) =>
 			BlockFilter(CurrentMenuItems, props),
+);
+
+// Priority 99 applies this last, so it mounts outermost and its fill registers first.
+addFilter(
+	'editor.BlockEdit',
+	`${blockConfig.name}/updates-paused`,
+	(BlockEdit: any) => (props: any) =>
+		props.name === blockConfig.name ? (
+			<>
+				<InspectorControls>
+					<UpdatesPausedNotice />
+				</InspectorControls>
+				<BlockEdit {...props} />
+			</>
+		) : (
+			<BlockEdit {...props} />
+		),
+	99,
 );

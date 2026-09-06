@@ -1,4 +1,7 @@
 node_modules
+/vendor
+/phpunit.xml
+.phpunit.result.cache
 build
 /target
 Cargo.lock

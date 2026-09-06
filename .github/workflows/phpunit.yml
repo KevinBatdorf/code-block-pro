@@ -1,0 +1,101 @@
+name: PHPUnit Tests
+permissions:
+  contents: read
+  packages: write
+on:
+  pull_request:
+  push:
+    branches: main
+
+env:
+  IMAGE: ghcr.io/kevinbatdorf/php-no-mbregex:8.4
+
+jobs:
+  mbregex-present:
+    name: PHPUnit (mbregex present)
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }} - present - ${{ github.event.pull_request.number || github.ref }}
+      cancel-in-progress: true
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: cbp_test
+        ports:
+        - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: mbstring, mysqli
+        coverage: none
+
+    - name: Install Composer dependencies
+      uses: ramsey/composer-install@v3
+
+    - name: Download WordPress
+      run: curl -sL https://wordpress.org/latest.tar.gz | tar xz
+
+    - name: Run PHPUnit
+      run: composer test
+      env:
+        WP_ABSPATH: ${{ github.workspace }}/wordpress
+
+  image:
+    name: Build the PHP image without mbregex
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: docker/setup-buildx-action@v3
+
+    - uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: .github/docker/php-no-mbregex.Dockerfile
+        push: true
+        tags: ${{ env.IMAGE }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  mbregex-absent:
+    name: PHPUnit (mbregex absent)
+    runs-on: ubuntu-latest
+    needs: image
+    container: ghcr.io/kevinbatdorf/php-no-mbregex:8.4
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: cbp_test
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --no-progress
+
+    - name: Download WordPress
+      run: curl -sL https://wordpress.org/latest.tar.gz | tar xz
+
+    - name: Run PHPUnit
+      run: composer test
+      env:
+        WP_ABSPATH: ${{ github.workspace }}/wordpress
+        WP_DB_HOST: mysql:3306
