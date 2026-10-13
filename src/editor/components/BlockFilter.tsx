@@ -16,16 +16,14 @@ export const BlockFilter = (CurrentMenuItems: any, props: any) => {
 	const { previousLanguage } = useLanguageStore();
 	const showMenu = useSelect(
 		(select) => {
-			// @ts-expect-error-next-line - getBlock not added as a type?
 			const currentBlock = select(blockEditorStore).getBlock(clientId);
 			return ['core/code', 'syntaxhighlighter/code'].includes(
-				currentBlock.name,
+				currentBlock?.name ?? '',
 			);
 		},
 		[clientId],
 	);
 
-	// @ts-expect-error-next-line - replaceBlock not added as a type?
 	const { replaceBlock } = useDispatch(blockEditorStore);
 
 	const decode = (value: string) => {

@@ -17,7 +17,7 @@ export const transformToCBP = (attrs: any) => {
 	});
 };
 
-export const transformFromCBP = (attrs: Attributes) => {
-	const { code: content } = attrs;
+export const transformFromCBP = (attrs: unknown) => {
+	const { code: content } = attrs as Attributes;
 	return createBlock('core/code', { content });
 };
