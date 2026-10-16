@@ -3,7 +3,7 @@ import { basename, dirname, join } from 'node:path';
 import { defineConfig, devices } from '@playwright/test';
 import fg from 'fast-glob';
 
-const BASE_PORT = 9400;
+const BASE_PORT = Number(process.env.BASE_PORT) || 9400;
 const WP_VERSION = process.env.WP_VERSION || 'latest';
 const RUN_PROJECT = process.env.RUN_PROJECT;
 
@@ -62,6 +62,8 @@ export default defineConfig({
 		trace: 'retain-on-failure',
 		video: 'retain-on-failure',
 		screenshot: 'only-on-failure',
+		// Headed runs draw scrollbars, which change pre heights and every screenshot.
+		launchOptions: { args: ['--hide-scrollbars'] },
 	},
 	webServer: blueprints.map((bp) => ({
 		command: `wp-playground-cli server --auto-mount --blueprint=${bp} --wp=${WP_VERSION} --port=${portMap[bp]} --internal-cookie-store=true --login=false`,

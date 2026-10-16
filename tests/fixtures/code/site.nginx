@@ -1,0 +1,10 @@
+server {
+	listen 443 ssl http2;
+	server_name example.com www.example.com;
+	root /var/www/html;
+
+	location ~ \.php$ {
+		include fastcgi_params;
+		fastcgi_pass unix:/run/php/php8.4-fpm.sock;
+	}
+}

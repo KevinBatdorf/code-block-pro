@@ -1,0 +1,11 @@
+$radius: 4px !default;
+
+@mixin rounded($r: $radius) {
+	border-radius: $r;
+}
+
+.button {
+	@include rounded(8px);
+	&:focus-visible { outline: 2px solid darken(#3b82f6, 10%); }
+	#{&}--wide { width: 100%; }
+}

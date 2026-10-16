@@ -1,0 +1,19 @@
+{
+	"name": "Use CSS Variables",
+	"custom": true,
+	"styles": {
+		"color-background": "var(--cbp-background)",
+		"color-text": "var(--cbp-text)",
+		"token-constant": "var(--cbp-constant)",
+		"token-string": "var(--cbp-string)",
+		"token-comment": "var(--cbp-comment)",
+		"token-keyword": "var(--cbp-keyword)",
+		"token-parameter": "var(--cbp-parameter)",
+		"token-function": "var(--cbp-function)",
+		"token-string-expression": "var(--cbp-string-expression)",
+		"token-punctuation": "var(--cbp-punctuation)",
+		"token-link": "var(--cbp-link)",
+		"line-background": "var(--cbp-line-background)",
+		"line-number-color": "var(--cbp-line-num-color)"
+	}
+}
