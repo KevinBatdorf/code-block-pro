@@ -1,24 +1,22 @@
-/* eslint @typescript-eslint/no-require-imports: 0 */
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
+const RtlCssPlugin = require('@wordpress/scripts/plugins/rtlcss-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const RtlCssPlugin = require('rtlcss-webpack-plugin');
 
 module.exports = {
 	...defaultConfig,
 	devServer: { ...defaultConfig.devServer, host: 'wordpress.test' },
 	plugins: [
 		...defaultConfig.plugins.filter(
-			(filter) =>
-				// Remove the rtl plugin
-				!(filter instanceof RtlCssPlugin) &&
-				filter.constructor.name !== 'RtlCssPlugin',
+			(plugin) => !(plugin instanceof RtlCssPlugin),
 		),
 		new CopyPlugin({
 			patterns: [
-				{ from: 'node_modules/shiki', to: 'shiki' },
-				{ from: 'src/fonts', to: 'fonts' },
+				// 1.28.0's built files, so a stored block renders exactly as 1.x did.
+				// Marked minimized, or Terser rewrites front.js.
+				{ from: 'src/legacy/assets', to: 'legacy', info: { minimized: true } },
+				// The 1.x front script fetches fonts from build/fonts/.
+				{ from: 'src/legacy/fonts', to: 'fonts' },
 			],
 		}),
 	],
-	experiments: { asyncWebAssembly: true },
 };

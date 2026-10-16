@@ -1,0 +1,37 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"tabWidth": 2,
+	"printWidth": 80,
+	"singleQuote": true,
+	"jsxSingleQuote": false,
+	"quoteProps": "as-needed",
+	"trailingComma": "all",
+	"semi": true,
+	"arrowParens": "always",
+	"bracketSameLine": false,
+	"bracketSpacing": true,
+	"sortPackageJson": false,
+	"sortImports": {
+		"newlinesBetween": false
+	},
+	"ignorePatterns": [
+		"**/node_modules",
+		"**/vendor",
+		"**/build",
+		"**/playwright-report",
+		"**/artifacts",
+		"**/test-results",
+		"**/*-snapshots",
+		"**/*.md",
+		"**/*.yml",
+		"**/*.yaml",
+		"src_old",
+		"tests_old",
+		"src/legacy/assets",
+		"tests/fixtures/code",
+		"tests/fixtures/blocks",
+		"tests/fixtures/index.json",
+		"tests/fixtures/baseline.json"
+	]
+}

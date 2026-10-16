@@ -6,7 +6,7 @@ import { basename, dirname, join } from 'node:path';
 const args = process.argv.slice(2).join(' ');
 
 // Find all spec files that have a blueprint.json in the same directory
-const projects = globSync('**/*.spec.ts', { ignore: ['node_modules/**'] })
+const projects = globSync('tests/**/*.spec.ts')
 	.filter((spec) => existsSync(join(dirname(spec), 'blueprint.json')))
 	.map((spec) => basename(spec, '.spec.ts'));
 

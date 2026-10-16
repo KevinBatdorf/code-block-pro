@@ -1,0 +1,44 @@
+{
+	"dark-plus": { "name": "Dark Plus" },
+	"dracula-soft": { "name": "Dracula Soft" },
+	"dracula": { "name": "Dracula" },
+	"github-dark-dimmed": { "name": "GitHub Dark Dimmed" },
+	"github-dark": { "name": "Github Dark" },
+	"github-light": { "name": "Github Light" },
+	"light-plus": { "name": "Light Plus" },
+	"material-darker": {
+		"name": "Material Darker",
+		"alias": "material-theme-darker"
+	},
+	"material-default": {
+		"name": "Material Default",
+		"alias": "material-theme"
+	},
+	"material-lighter": {
+		"name": "Material Lighter",
+		"alias": "material-theme-lighter"
+	},
+	"material-ocean": {
+		"name": "Material Ocean",
+		"alias": "material-theme-ocean"
+	},
+	"material-palenight": {
+		"name": "Material Palenight",
+		"alias": "material-theme-palenight"
+	},
+	"min-dark": { "name": "Min Dark" },
+	"min-light": { "name": "Min Light" },
+	"monokai": { "name": "Monokai" },
+	"nord": { "name": "Nord" },
+	"one-dark-pro": { "name": "One Dark Pro" },
+	"poimandres": { "name": "Poimandres" },
+	"rose-pine-dawn": { "name": "Rose Pine Dawn" },
+	"rose-pine-moon": { "name": "Rose Pine Moon" },
+	"rose-pine": { "name": "Rose Pine" },
+	"slack-dark": { "name": "Slack Dark" },
+	"slack-ochin": { "name": "Slack Ochin" },
+	"solarized-dark": { "name": "Solarized Dark" },
+	"solarized-light": { "name": "Solarized Light" },
+	"vitesse-dark": { "name": "Vitesse Dark" },
+	"vitesse-light": { "name": "Vitesse Light" }
+}

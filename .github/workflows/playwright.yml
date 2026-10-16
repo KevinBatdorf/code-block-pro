@@ -12,17 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       suites: ${{ steps.find.outputs.suites }}
+      image: ${{ steps.image.outputs.image }}
     steps:
     - uses: actions/checkout@v6
     - id: find
       run: |
-        suites=$(find . -name '*.spec.ts' -not -path '*/node_modules/*' | while read spec; do
+        suites=$(find tests -name '*.spec.ts' | while read spec; do
           dir=$(dirname "$spec")
           if [ -f "$dir/blueprint.json" ]; then
             basename "$spec" .spec.ts
           fi
         done | jq -R -s -c 'split("\n") | map(select(length > 0))')
         echo "suites=$suites" >> "$GITHUB_OUTPUT"
+    # container.image can't read env, so the tag travels as a job output.
+    - id: image
+      run: echo "image=mcr.microsoft.com/playwright:v$(node -p "require('./package.json').devDependencies['@playwright/test']")-noble" >> "$GITHUB_OUTPUT"
 
   test:
     name: ${{ matrix.suite }}
@@ -30,7 +34,15 @@ jobs:
     concurrency:
       group: ${{ github.workflow }} - ${{ matrix.suite }} - ${{ github.event.pull_request.number || github.ref }}
       cancel-in-progress: true
-    runs-on: ubuntu-latest
+    # The legacy-blocks screenshots were captured in this image on arm64.
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: ${{ needs.discover.outputs.image }}
+      options: --init --ipc=host
+    env:
+      PW_IMAGE: ${{ needs.discover.outputs.image }}
+      WP_VERSION: 7.1.3
+      PLAYWRIGHT_HTML_OPEN: never
     strategy:
       fail-fast: false
       matrix:
@@ -39,31 +51,14 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - uses: actions/setup-node@v6
+    - uses: actions/cache@v4
       with:
-        node-version: lts/*
-        cache: 'npm'
+        path: |
+          ~/.npm
+          ~/.wordpress-playground
+        key: e2e-${{ runner.arch }}-${{ hashFiles('package-lock.json') }}-wp-7.1.3
 
     - run: npm ci --prefer-offline --no-audit --no-fund
-
-    - name: Get Playwright version
-      id: pw-version
-      run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
-
-    - name: Cache Playwright browsers
-      uses: actions/cache@v4
-      id: pw-cache
-      with:
-        path: ~/.cache/ms-playwright
-        key: playwright-${{ steps.pw-version.outputs.version }}
-
-    - name: Install Playwright Browsers
-      if: steps.pw-cache.outputs.cache-hit != 'true'
-      run: npx playwright install --with-deps
-
-    - name: Install Playwright deps only
-      if: steps.pw-cache.outputs.cache-hit == 'true'
-      run: npx playwright install-deps
 
     - name: Build project
       run: npm run build

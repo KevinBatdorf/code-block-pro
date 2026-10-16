@@ -1,5 +1,7 @@
 {
-	"darwin": "25.5.0",
-	"chromium": "147.0.7727.15",
-	"playwright": "1.59.1"
+	"image": "mcr.microsoft.com/playwright:v1.64.1-noble",
+	"arch": "arm64",
+	"chromium": "156.0.8078.4",
+	"playwright": "1.64.1",
+	"wordpress": "WordPress 7.1.3"
 }

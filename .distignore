@@ -16,6 +16,9 @@
 /playwright-report
 /package-lock.json
 /playwright.config.ts
-/biome.json
+/oxlint.config.mts
+/.oxfmtrc.json
+/src_old
+/tests_old
 /.claude
 /tsconfig.json

@@ -1,7 +1,6 @@
-import { existsSync } from 'node:fs';
+import { existsSync, globSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { defineConfig, devices } from '@playwright/test';
-import fg from 'fast-glob';
 
 const BASE_PORT = Number(process.env.BASE_PORT) || 9400;
 const WP_VERSION = process.env.WP_VERSION || 'latest';
@@ -19,8 +18,7 @@ function findBlueprint(dir: string): string | null {
 }
 
 // Discover spec files that have a blueprint.json in their directory or any ancestor
-const specs = fg
-	.sync('**/*.spec.ts', { ignore: ['node_modules/**'] })
+const specs = globSync('tests/**/*.spec.ts')
 	.map((spec) => {
 		const dir = dirname(spec);
 		const blueprint = findBlueprint(dir);

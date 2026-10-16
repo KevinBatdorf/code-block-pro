@@ -23,25 +23,18 @@ export const publishFixtures = (page: Page, entries: FixtureEntry[]) =>
 	page.evaluate(
 		async (payloads) => {
 			const created: number[] = [];
-			for (const [i, payload] of payloads.entries()) {
-				let error: { message?: string } = {};
-				// Playground answers the odd request with a 500.
-				for (let attempt = 0; attempt < 3 && created.length === i; attempt++) {
-					const post = await window.wp
-						.apiFetch({
-							path: '/wp/v2/posts',
-							method: 'POST',
-							data: { ...payload, status: 'publish' },
-						})
-						.catch((failure: { message?: string }) => {
-							error = failure;
-							return null;
-						});
-					if (post) created.push(post.id as number);
-				}
-				if (created.length === i) {
-					throw new Error(`${payload.title}: ${error?.message ?? 'unknown'}`);
-				}
+			for (const payload of payloads) {
+				// apiFetch rejects with a plain object, which page.evaluate reports as "Object".
+				const post = await window.wp
+					.apiFetch({
+						path: '/wp/v2/posts',
+						method: 'POST',
+						data: { ...payload, status: 'publish' },
+					})
+					.catch((failure: unknown) => {
+						throw new Error(`${payload.title}: ${JSON.stringify(failure)}`);
+					});
+				created.push(post.id as number);
 			}
 			return created;
 		},

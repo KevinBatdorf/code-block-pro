@@ -1,5 +1,4 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { release } from 'node:os';
 import { dirname, join } from 'node:path';
 import type { Page } from '@playwright/test';
 import { expect, test } from '@wordpress/e2e-test-utils-playwright';
@@ -20,6 +19,11 @@ const baseline: Record<string, BlockDigest[]> = JSON.parse(
 
 /** Capture from a 1.x build only, or a newer renderer's regressions become the baseline. */
 const CAPTURE = !!process.env.CAPTURE_BASELINE;
+if (CAPTURE && existsSync(join(__dirname, '..', '..', 'src', 'legacy'))) {
+	throw new Error(
+		'This tree is not 1.x. Capture from the 1.28.0 zip: see tests/fixtures/README.md.',
+	);
+}
 
 const ENVIRONMENT = join(
 	__dirname,
@@ -27,16 +31,10 @@ const ENVIRONMENT = join(
 	'environment.json',
 );
 
-/** A playground 500 reads the same as a block the renderer dropped. */
 const visit = async (page: Page, id: number) => {
-	for (let attempt = 0; attempt < 5; attempt++) {
-		try {
-			await page.goto(`/?p=${id}`, { timeout: 60_000 });
-			const digest = await readDigest(page);
-			if (digest.length > 0) return digest;
-		} catch {}
-	}
-	return [];
+	const response = await page.goto(`/?p=${id}`, { timeout: 60_000 });
+	expect(response?.status(), `post ${id}: the front end answered`).toBe(200);
+	return readDigest(page);
 };
 
 test.beforeEach(async ({ requestUtils }) => {
@@ -112,10 +110,10 @@ test('every stored block renders the same on the front end', async ({
 	if (!CAPTURE) {
 		expect
 			.soft(
-				Object.keys(baseline).sort(),
+				Object.keys(baseline).toSorted(),
 				'baseline and index list different fixtures',
 			)
-			.toEqual(index.map(({ slug }) => slug).sort());
+			.toEqual(index.map(({ slug }) => slug).toSorted());
 	}
 
 	if (CAPTURE)
@@ -128,14 +126,20 @@ test('every stored block looks the same on the front end', async ({
 	page,
 }) => {
 	test.skip(
-		process.platform !== 'darwin',
-		'Font rasterising differs by platform, and the snapshots are the Mac set.',
+		!process.env.PW_IMAGE,
+		'Pixels only match inside the pinned Playwright image: npm run test:e2e:screens.',
 	);
-	// Rasterising also moves with macOS point releases and Chromium updates.
+	test.setTimeout(20 * 60 * 1000);
+	await page.goto('/');
+	// Rasterising moves with the image's fonts, its CPU, Chromium and core's CSS.
 	const environment = {
-		darwin: release(),
+		image: process.env.PW_IMAGE,
+		arch: process.arch,
 		chromium: browser.version(),
 		playwright: test.info().config.version,
+		wordpress: await page
+			.locator('meta[name="generator"]')
+			.getAttribute('content'),
 	};
 	if (CAPTURE) {
 		mkdirSync(dirname(ENVIRONMENT), { recursive: true });
@@ -144,7 +148,7 @@ test('every stored block looks the same on the front end', async ({
 		expect
 			.soft(
 				environment,
-				'the snapshots come from another macOS or Chromium; recapture them from 1.x before reading pixel diffs',
+				'the snapshots come from another image, Chromium or WordPress; recapture them from 1.x before reading pixel diffs',
 			)
 			.toEqual(
 				existsSync(ENVIRONMENT)
@@ -152,7 +156,6 @@ test('every stored block looks the same on the front end', async ({
 					: null,
 			);
 	}
-	test.setTimeout(20 * 60 * 1000);
 	await newPost(admin, 'screenshot harness');
 	const ids = await publishFixtures(page, index);
 
@@ -161,6 +164,17 @@ test('every stored block looks the same on the front end', async ({
 			await visit(page, ids[i]),
 			`${entry.slug} never rendered`,
 		).not.toHaveLength(0);
+		// A font that fails to load draws the fallback and fails nothing else.
+		expect
+			.soft(
+				await page.evaluate(() =>
+					[...document.fonts]
+						.filter((font) => font.status !== 'loaded')
+						.map((font) => `${font.family} ${font.status}`),
+				),
+				`${entry.slug}: a web font never loaded`,
+			)
+			.toEqual([]);
 		const blocks = page.locator('.wp-block-kevinbatdorf-code-block-pro');
 		const count = await blocks.count();
 		for (let b = 0; b < count; b++) {

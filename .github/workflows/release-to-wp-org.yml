@@ -18,8 +18,9 @@ jobs:
             - name: npm install and build
               run: |
                   npm ci
-                  npx biome check .
+                  npm run lint
                   npm run build
+                  diff -r src/legacy/assets build/legacy
               env:
                   CI: true
 

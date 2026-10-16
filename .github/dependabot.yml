@@ -4,3 +4,9 @@ updates:
       directory: '/'
       schedule:
           interval: 'monthly'
+      ignore:
+          # Their output lands in stored 1.x markup, so a bump invalidates saved blocks.
+          - dependency-name: 'colord'
+          - dependency-name: 'classnames'
+          # The screenshot image follows this pin, and a new one needs a 1.x recapture.
+          - dependency-name: '@playwright/test'

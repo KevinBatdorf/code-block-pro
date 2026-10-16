@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v6
     - id: find
       run: |
-        suites=$(find . -name '*.spec.ts' -not -path '*/node_modules/*' | while read spec; do
+        suites=$(find tests -name '*.spec.ts' | while read spec; do
           dir=$(dirname "$spec")
           if [ -f "$dir/blueprint.json" ]; then
             basename "$spec" .spec.ts
