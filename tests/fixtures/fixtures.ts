@@ -1,5 +1,5 @@
 /**
- * How each of the 50 stored blocks in ./blocks was originally produced.
+ * How each of the stored blocks in ./blocks was originally produced.
  *
  * The markup in ./blocks is the artifact, not this file. Regenerating it needs
  * the 1.x save path still in the tree, so once that changes these definitions
@@ -27,6 +27,10 @@ export type FixtureBlock = {
 export type Fixture = {
 	slug: string;
 	purpose: string;
+	/** An older release whose editor produced the stored markup. */
+	plugin?: string;
+	/** The 1.x editor flags the stored markup invalid and offers to recover it. */
+	opensInvalid?: boolean;
 	blocks: FixtureBlock[];
 };
 
@@ -932,6 +936,359 @@ export const fixtures: Fixture[] = [
 					copyButton: true,
 					copyButtonType: 'heroicons',
 					headerType: 'none',
+				},
+			},
+		],
+	},
+
+	// --------------------------------------------------------------- coverage
+	{
+		slug: '51-fonts',
+		purpose:
+			'Every bundled font the other fixtures leave out, each numbered with one highlighted line. Four fonts shift the highlighter, and the gutter is sized off the font.',
+		blocks: [
+			'Code-Pro-Comic-Mono.ttf',
+			'Code-Pro-Cozette',
+			'Code-Pro-Deja-Vu-Mono.ttf',
+			'Code-Pro-Fira-Code',
+			'Code-Pro-Geist-Mono',
+			'Code-Pro-Hack',
+			'Code-Pro-JetBrains-Mono-NL.ttf',
+			'Code-Pro-Monaspace-Argon.woff',
+			'Code-Pro-Monaspace-Krypton.woff',
+			'Code-Pro-Monaspace-Neon.woff',
+			'Code-Pro-Monaspace-Radon.woff',
+			'Code-Pro-Monaspace-Xenon.woff',
+			'Code-Pro-Roboto-Mono.ttf',
+		].map((fontFamily) => ({
+			code: 'twelve.ts',
+			attributes: {
+				language: 'typescript',
+				theme: 'github-dark',
+				fontFamily,
+				lineNumbers: true,
+				enableHighlighting: true,
+				lineHighlights: '3',
+				...plain,
+			},
+		})),
+	},
+	{
+		slug: '52-languages',
+		purpose:
+			'Twenty common languages the grammar fixtures leave out, across four themes. The corpus for measuring a new highlighter against the stored renders.',
+		blocks: [
+			['styles.css', 'css'],
+			['mixins.scss', 'scss'],
+			['data.json', 'json'],
+			['Button.jsx', 'jsx'],
+			['feed.xml', 'xml'],
+			['Main.java', 'java'],
+			['list.c', 'c'],
+			['vector.cpp', 'cpp'],
+			['Program.cs', 'csharp'],
+			['User.kt', 'kotlin'],
+			['View.swift', 'swift'],
+			['Dockerfile', 'dockerfile'],
+			['profile.ps1', 'powershell'],
+			['config.toml', 'toml'],
+			['schema.graphql', 'graphql'],
+			['Counter.vue', 'vue'],
+			['Toggle.svelte', 'svelte'],
+			['site.nginx', 'nginx'],
+			['settings.ini', 'ini'],
+			['plugin.lua', 'lua'],
+		].map(([code, language], i) => ({
+			code,
+			attributes: {
+				language,
+				theme: ['github-dark', 'nord', 'one-dark-pro', 'min-light'][i % 4],
+				...plain,
+			},
+		})),
+	},
+	{
+		slug: '53-light-themes-chrome',
+		purpose:
+			'The two free themes no other fixture uses, both light, with header, footer, copy button, numbers and a highlight. Chrome on a light background.',
+		blocks: ['material-lighter', 'rose-pine-dawn'].map((theme) => ({
+			code: 'query.sql',
+			attributes: {
+				language: 'sql',
+				theme,
+				headerType: 'headlights',
+				footerType: 'simpleStringEnd',
+				footerString: 'query.sql',
+				copyButton: true,
+				copyButtonType: 'heroicons',
+				lineNumbers: true,
+				enableHighlighting: true,
+				lineHighlights: '2',
+			},
+		})),
+	},
+	{
+		slug: '54-everything-on',
+		purpose:
+			'Every feature at once: header, linked footer, text copy button, numbering from 10, highlights, hover highlighting, blur, and a collapsible see-more. Interactions between features show up here first.',
+		blocks: [
+			{
+				code: 'decorators.py',
+				attributes: {
+					language: 'python',
+					theme: 'rose-pine-moon',
+					fontFamily: 'Code-Pro-Fira-Code',
+					fontSize: '1rem',
+					lineHeight: '1.5rem',
+					clampFonts: true,
+					headerType: 'headlights',
+					footerType: 'simpleStringEnd',
+					footerString: 'decorators.py',
+					footerLink: 'https://example.com/decorators',
+					footerLinkTarget: true,
+					copyButton: true,
+					copyButtonType: 'textSimple',
+					copyButtonString: 'Copy',
+					copyButtonStringCopied: 'Copied!',
+					lineNumbers: true,
+					startingLineNumber: '10',
+					enableHighlighting: true,
+					lineHighlights: '2,[4,5]',
+					highlightingHover: true,
+					enableBlurring: true,
+					lineBlurs: '[7,9]',
+					removeBlurOnHover: true,
+					enableMaxHeight: true,
+					seeMoreAfterLine: '8',
+					seeMoreType: 'roundCenter',
+					seeMoreString: 'Show more',
+					seeMoreTransition: true,
+					seeMoreCollapse: true,
+					seeMoreCollapseString: 'Show less',
+				},
+			},
+		],
+	},
+	{
+		slug: '55-numbers-see-more-highlight',
+		purpose:
+			'A long numbered file cut off by see-more, with one highlight above the fold and one far below it.',
+		blocks: [
+			{
+				code: 'long.php',
+				attributes: {
+					language: 'php',
+					theme: 'vitesse-dark',
+					lineNumbers: true,
+					enableHighlighting: true,
+					lineHighlights: '3,50',
+					enableMaxHeight: true,
+					seeMoreAfterLine: '10',
+					seeMoreType: 'blockLeft',
+					seeMoreString: 'Expand',
+					...plain,
+				},
+			},
+		],
+	},
+	{
+		slug: '56-pill-copy-nopadding-tabs',
+		purpose:
+			'Pill header, two-squares copy button, footer at the start and padding off, over real tabs at width 8 with numbers. Chrome crowding the code on every side.',
+		blocks: [
+			{
+				code: 'tabs.go',
+				attributes: {
+					language: 'go',
+					theme: 'solarized-dark',
+					headerType: 'pillString',
+					headerString: 'main.go',
+					copyButton: true,
+					copyButtonType: 'twoSquares',
+					footerType: 'simpleStringStart',
+					footerString: 'go run main.go',
+					disablePadding: true,
+					lineNumbers: true,
+					useTabs: true,
+					tabSize: 8,
+				},
+			},
+		],
+	},
+	{
+		slug: '57-hover-numbers-from-zero',
+		purpose:
+			'Numbering from 0 with hover highlighting and a static highlight. Zero is the start value most likely to be read as unset.',
+		blocks: [
+			{
+				code: 'spaces.rb',
+				attributes: {
+					language: 'ruby',
+					theme: 'material-palenight',
+					lineNumbers: true,
+					startingLineNumber: '0',
+					highlightingHover: true,
+					enableHighlighting: true,
+					lineHighlights: '1',
+					...plain,
+				},
+			},
+		],
+	},
+
+	// -------------------------------------------------- seen on real sites
+	{
+		slug: '58-numbers-turned-off',
+		purpose:
+			'Line numbers switched off after being on. The gutter width stays in the style with no numbers to size, the shape on 11 of 37 surveyed sites.',
+		blocks: [
+			{
+				code: 'twelve.ts',
+				attributes: {
+					language: 'typescript',
+					theme: 'github-dark',
+					lineNumbers: true,
+					...plain,
+				},
+				after: { lineNumbers: false },
+			},
+		],
+	},
+	{
+		slug: '59-header-copy-footer-data-code',
+		purpose:
+			'Header, copy button and footer in one block, the copy payload in data-code. The most common real shape: 519 blocks on 7 surveyed sites. The second block is the text button inside a headlights header.',
+		blocks: [
+			{
+				code: 'twelve.ts',
+				attributes: {
+					language: 'typescript',
+					theme: 'dark-plus',
+					headerType: 'headlights',
+					copyButton: true,
+					copyButtonType: 'heroicons',
+					footerType: 'simpleStringEnd',
+					footerString: 'geometry.ts',
+				},
+				after: { copyButtonUseTextarea: false },
+			},
+			{
+				code: 'hello.js',
+				attributes: {
+					language: 'javascript',
+					theme: 'github-dark',
+					headerType: 'headlights',
+					copyButton: true,
+					copyButtonType: 'textSimple',
+				},
+				after: { copyButtonUseTextarea: false },
+			},
+		],
+	},
+	{
+		slug: '60-system-font',
+		purpose:
+			'The System Default font: an empty font data attribute and no font-family in the style. The commonest font on surveyed sites, over a thousand blocks.',
+		blocks: [
+			{
+				code: 'twelve.ts',
+				attributes: {
+					language: 'typescript',
+					theme: 'one-dark-pro',
+					headerType: 'headlights',
+					copyButton: true,
+					copyButtonType: 'heroicons',
+				},
+				after: { fontFamily: '' },
+			},
+		],
+	},
+	{
+		slug: '61-custom-class',
+		purpose:
+			'Extra classes from the Advanced panel on the wrapper. Seen on surveyed sites, and the wrapper classes are something front.js and the stylesheet both select on.',
+		blocks: [
+			{
+				code: 'hello.js',
+				attributes: {
+					language: 'javascript',
+					theme: 'nord',
+					...plain,
+				},
+				after: { className: 'my-snippet margin-top--m' },
+			},
+		],
+	},
+	{
+		slug: '62-highlight-on-unblurred-line',
+		purpose:
+			'A highlighted line inside the range exempt from blur, so one line carries both classes.',
+		blocks: [
+			{
+				code: 'decorators.py',
+				attributes: {
+					language: 'python',
+					theme: 'poimandres',
+					enableBlurring: true,
+					lineBlurs: '[2,4]',
+					enableHighlighting: true,
+					lineHighlights: '3',
+					...plain,
+				},
+			},
+		],
+	},
+	{
+		slug: '63-copy-textarea-in-button',
+		plugin: '1.27.3',
+		opensInvalid: true,
+		purpose:
+			'Saved by 1.27.3: the copy textarea sits directly in the button with no pre around it, a save only 1.27.2 and 1.27.3 made. 1.27.4 onwards flags it invalid. 108 blocks on 3 surveyed sites.',
+		blocks: [
+			{
+				code: 'twelve.ts',
+				attributes: {
+					language: 'typescript',
+					theme: 'github-dark',
+					headerType: 'headlights',
+					copyButton: true,
+					copyButtonType: 'heroicons',
+				},
+				after: { copyButtonUseTextarea: true },
+			},
+		],
+	},
+	{
+		slug: '64-saved-by-1-17',
+		plugin: '1.17.0',
+		purpose:
+			'Saved by 1.17.0, the release current in May 2023: with no font ever chosen there is no font attribute or font-family at all, no tab width, and the copy payload in data-code. The oldest shape on surveyed sites.',
+		blocks: [
+			{
+				code: 'twelve.ts',
+				attributes: {
+					language: 'typescript',
+					theme: 'github-dark',
+					headerType: 'headlights',
+					copyButton: true,
+				},
+			},
+		],
+	},
+	{
+		slug: '65-saved-by-1-17-numbers',
+		plugin: '1.17.0',
+		purpose:
+			'The same 1.17.0 shape with line numbers and a string header naming the language, on a theme whose header takes its own colours.',
+		blocks: [
+			{
+				code: 'decorators.py',
+				attributes: {
+					language: 'python',
+					theme: 'github-dark-dimmed',
+					headerType: 'simpleString',
+					lineNumbers: true,
+					copyButton: true,
 				},
 			},
 		],

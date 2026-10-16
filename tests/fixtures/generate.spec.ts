@@ -1,19 +1,21 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Page } from '@playwright/test';
 import type { Editor } from '@wordpress/e2e-test-utils-playwright';
 import { test } from '@wordpress/e2e-test-utils-playwright';
 import { newPost } from '../helpers';
-import { readDigest } from './digest';
 import { type FixtureBlock, fixtures } from './fixtures';
-import { publishFixtures, readIndex } from './publish';
 
 /**
- * Writes tests/fixtures/blocks and tests/fixtures/baseline.json from the 1.x
- * editor. Skipped unless GENERATE_FIXTURES is set — the output is committed,
- * and regenerating it against a rebuilt block would defeat the whole set.
+ * Writes tests/fixtures/blocks and index.json from the 1.x editor. Skipped
+ * unless GENERATE_FIXTURES is set — the output is committed, and regenerating
+ * it against a rebuilt block would defeat the whole set.
  *
  *   GENERATE_FIXTURES=1 RUN_PROJECT=generate npx playwright test --project=generate
+ *
+ * ONLY=<slug,slug> writes just those. A fixture that names an older `plugin`
+ * release is skipped unless named, and is produced by running this spec from
+ * that release's own files.
  */
 test.skip(
 	!process.env.GENERATE_FIXTURES,
@@ -21,6 +23,7 @@ test.skip(
 );
 
 const BLOCK = 'kevinbatdorf/code-block-pro';
+const ONLY = process.env.ONLY?.split(',');
 const BLOCKS_DIR = join(__dirname, 'blocks');
 
 /** The add-on pack's own theme, shared with the mu-plugin the fixtures run under. */
@@ -94,10 +97,8 @@ test('write the block markup', async ({
 	await requestUtils.login();
 	mkdirSync(BLOCKS_DIR, { recursive: true });
 
-	const index: { slug: string; purpose: string; file: string }[] = [];
-	const combined: string[] = [];
-
 	for (const fixture of fixtures) {
+		if (ONLY ? !ONLY.includes(fixture.slug) : fixture.plugin) continue;
 		await newPost(admin, fixture.slug);
 		if (fixture.blocks.some((block) => block.themeFilter === 'cssVars')) {
 			await page.evaluate((theme) => {
@@ -143,42 +144,24 @@ test('write the block markup', async ({
 			page,
 			fixture.blocks.map((block) => block.strip),
 		);
-		const file = `${fixture.slug}.html`;
-		writeFileSync(join(BLOCKS_DIR, file), `${content}\n`);
-		index.push({ slug: fixture.slug, purpose: fixture.purpose, file });
-		combined.push(`<!-- ${fixture.slug} -->`, content);
+		writeFileSync(join(BLOCKS_DIR, `${fixture.slug}.html`), `${content}\n`);
 	}
 
+	const index = fixtures
+		.map(({ slug, purpose, opensInvalid }) => ({
+			slug,
+			purpose,
+			file: `${slug}.html`,
+			...(opensInvalid && { opensInvalid }),
+		}))
+		.filter(({ file }) => existsSync(join(BLOCKS_DIR, file)));
+	const combined = index.flatMap(({ slug, file }) => [
+		`<!-- ${slug} -->`,
+		readFileSync(join(BLOCKS_DIR, file), 'utf8').replace(/\n$/, ''),
+	]);
 	writeFileSync(
 		join(__dirname, 'index.json'),
 		`${JSON.stringify(index, null, '\t')}\n`,
 	);
 	writeFileSync(join(BLOCKS_DIR, 'all.html'), `${combined.join('\n\n')}\n`);
-});
-
-test('write the render baseline', async ({ admin, page, requestUtils }) => {
-	test.setTimeout(30 * 60 * 1000);
-	await requestUtils.login();
-	const index = readIndex();
-
-	await newPost(admin, 'fixture harness');
-	const ids = await publishFixtures(page, index);
-
-	const baseline: Record<string, unknown> = {};
-	for (const [i, entry] of index.entries()) {
-		// A playground 500 reads the same as a block the renderer dropped.
-		for (let attempt = 0; attempt < 5; attempt++) {
-			await page.goto(`/?p=${ids[i]}`);
-			const digest = await readDigest(page);
-			if (digest.length > 0) {
-				baseline[entry.slug] = digest;
-				break;
-			}
-		}
-		if (!baseline[entry.slug]) throw new Error(`${entry.slug} never rendered.`);
-	}
-	writeFileSync(
-		join(__dirname, 'baseline.json'),
-		`${JSON.stringify(baseline, null, '\t')}\n`,
-	);
 });

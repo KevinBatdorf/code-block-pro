@@ -248,5 +248,81 @@
 		"slug": "50-unicode-rtl",
 		"purpose": "Emoji, CJK, Arabic, combining marks, a zero-width space and a non-breaking space, numbered so the gutter is involved too.",
 		"file": "50-unicode-rtl.html"
+	},
+	{
+		"slug": "51-fonts",
+		"purpose": "Every bundled font the other fixtures leave out, each numbered with one highlighted line. Four fonts shift the highlighter, and the gutter is sized off the font.",
+		"file": "51-fonts.html"
+	},
+	{
+		"slug": "52-languages",
+		"purpose": "Twenty common languages the grammar fixtures leave out, across four themes. The corpus for measuring a new highlighter against the stored renders.",
+		"file": "52-languages.html"
+	},
+	{
+		"slug": "53-light-themes-chrome",
+		"purpose": "The two free themes no other fixture uses, both light, with header, footer, copy button, numbers and a highlight. Chrome on a light background.",
+		"file": "53-light-themes-chrome.html"
+	},
+	{
+		"slug": "54-everything-on",
+		"purpose": "Every feature at once: header, linked footer, text copy button, numbering from 10, highlights, hover highlighting, blur, and a collapsible see-more. Interactions between features show up here first.",
+		"file": "54-everything-on.html"
+	},
+	{
+		"slug": "55-numbers-see-more-highlight",
+		"purpose": "A long numbered file cut off by see-more, with one highlight above the fold and one far below it.",
+		"file": "55-numbers-see-more-highlight.html"
+	},
+	{
+		"slug": "56-pill-copy-nopadding-tabs",
+		"purpose": "Pill header, two-squares copy button, footer at the start and padding off, over real tabs at width 8 with numbers. Chrome crowding the code on every side.",
+		"file": "56-pill-copy-nopadding-tabs.html"
+	},
+	{
+		"slug": "57-hover-numbers-from-zero",
+		"purpose": "Numbering from 0 with hover highlighting and a static highlight. Zero is the start value most likely to be read as unset.",
+		"file": "57-hover-numbers-from-zero.html"
+	},
+	{
+		"slug": "58-numbers-turned-off",
+		"purpose": "Line numbers switched off after being on. The gutter width stays in the style with no numbers to size, the shape on 11 of 37 surveyed sites.",
+		"file": "58-numbers-turned-off.html"
+	},
+	{
+		"slug": "59-header-copy-footer-data-code",
+		"purpose": "Header, copy button and footer in one block, the copy payload in data-code. The most common real shape: 519 blocks on 7 surveyed sites. The second block is the text button inside a headlights header.",
+		"file": "59-header-copy-footer-data-code.html"
+	},
+	{
+		"slug": "60-system-font",
+		"purpose": "The System Default font: an empty font data attribute and no font-family in the style. The commonest font on surveyed sites, over a thousand blocks.",
+		"file": "60-system-font.html"
+	},
+	{
+		"slug": "61-custom-class",
+		"purpose": "Extra classes from the Advanced panel on the wrapper. Seen on surveyed sites, and the wrapper classes are something front.js and the stylesheet both select on.",
+		"file": "61-custom-class.html"
+	},
+	{
+		"slug": "62-highlight-on-unblurred-line",
+		"purpose": "A highlighted line inside the range exempt from blur, so one line carries both classes.",
+		"file": "62-highlight-on-unblurred-line.html"
+	},
+	{
+		"slug": "63-copy-textarea-in-button",
+		"purpose": "Saved by 1.27.3: the copy textarea sits directly in the button with no pre around it, a save only 1.27.2 and 1.27.3 made. 1.27.4 onwards flags it invalid. 108 blocks on 3 surveyed sites.",
+		"file": "63-copy-textarea-in-button.html",
+		"opensInvalid": true
+	},
+	{
+		"slug": "64-saved-by-1-17",
+		"purpose": "Saved by 1.17.0, the release current in May 2023: with no font ever chosen there is no font attribute or font-family at all, no tab width, and the copy payload in data-code. The oldest shape on surveyed sites.",
+		"file": "64-saved-by-1-17.html"
+	},
+	{
+		"slug": "65-saved-by-1-17-numbers",
+		"purpose": "The same 1.17.0 shape with line numbers and a string header naming the language, on a theme whose header takes its own colours.",
+		"file": "65-saved-by-1-17-numbers.html"
 	}
 ]

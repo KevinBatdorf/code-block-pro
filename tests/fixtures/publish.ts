@@ -2,7 +2,12 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Page } from '@playwright/test';
 
-export type FixtureEntry = { slug: string; purpose?: string; file: string };
+export type FixtureEntry = {
+	slug: string;
+	purpose?: string;
+	file: string;
+	opensInvalid?: boolean;
+};
 
 export const readIndex = (): FixtureEntry[] =>
 	JSON.parse(readFileSync(join(__dirname, 'index.json'), 'utf8'));
