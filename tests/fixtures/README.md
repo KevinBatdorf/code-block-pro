@@ -9,7 +9,8 @@ highlighter. Every one of those blocks is already sitting in `post_content` on a
 real site, and none of them can break. This set is how that gets proved:
 
 1. **They still open.** `tests/legacy-blocks` loads each one into the editor and
-   asserts the block parses valid and shows no warning.
+   asserts the block parses valid and shows no warning, and that saving a post
+   writes each one back byte for byte.
 2. **They still render.** The same spec publishes each one and compares the front
    end against `baseline.json` — text, every glyph's colour, each line's blur,
    highlight and numbering, typography and height — and, inside the pinned
@@ -34,8 +35,7 @@ real site, and none of them can break. This set is how that gets proved:
 
 Fixture 63 opens invalid in the 1.x editor, as every 1.27.2–1.27.3 block saved
 with the copy button's textarea option (`copyButtonUseTextarea`) does since
-1.27.4. `opensInvalid` in `index.json` holds the validation test to that, so
-accepting those blocks has to be a deliberate change.
+1.27.4. 2.0 saves a stored block back exactly as it was saved, so it opens valid.
 
 ## Do not regenerate them
 
@@ -102,15 +102,15 @@ anywhere else says so first.
 
 ## Two things worth knowing
 
-**Fixture 21 needs the add-on pack.** It stores a theme the pack registers
-through the `blocks.codeBlockPro.themes` filter. With no pack installed the
-editor rebuilds the block without that theme's custom properties and declares the
-stored markup invalid — real 1.x behaviour, and one of the things the render
-callback removes. `tests/legacy-blocks/mu-plugin.php` supplies the filter so the
-fixture runs the way a site with the pack does.
+**Fixture 21 needs the add-on pack in the 1.x editor.** It stores a theme the
+pack registers through the `blocks.codeBlockPro.themes` filter. With no pack
+installed the 1.x editor rebuilds the block without that theme's custom
+properties and declares the stored markup invalid. 2.0 never rebuilds a stored
+block, so it opens valid either way. `tests/legacy-blocks/mu-plugin.php`
+supplies the filter for runs against a 1.x build.
 
 **Three fixtures hold attributes the editor will not produce.** A missing
 `language`, absent tab attributes, and the legacy pixel gutter width all get
 refilled or recomputed on sight, so `fixtures.ts` clears them through `unset` and
-`strip` after highlighting. The markup is still whatever the current `save()`
-emits for those attributes — the validation test is what proves it.
+`strip` after highlighting. The markup is still whatever the 1.x `save()`
+emits for those attributes — the validation test proved it against 1.x.

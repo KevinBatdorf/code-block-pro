@@ -1,0 +1,11 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - code-block-pro.php
+        - php
+        - src/render.php
+    bootstrapFiles:
+        - tests/phpstan/bootstrap.php

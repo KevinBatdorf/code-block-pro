@@ -7,7 +7,12 @@ import {
 	expectSameBlocks,
 	readDigest,
 } from '../fixtures/digest';
-import { publishFixtures, readIndex, readMarkup } from '../fixtures/publish';
+import {
+	publishFixtures,
+	publishPosts,
+	readIndex,
+	readMarkup,
+} from '../fixtures/publish';
 import { shootBlock } from '../fixtures/shoot';
 import { newPost } from '../helpers';
 
@@ -30,6 +35,9 @@ const ENVIRONMENT = join(
 	'legacy-blocks.spec.ts-snapshots',
 	'environment.json',
 );
+
+const paragraph = (text: string) =>
+	`<!-- wp:paragraph -->\n<p>${text}</p>\n<!-- /wp:paragraph -->`;
 
 const visit = async (page: Page, id: number) => {
 	const response = await page.goto(`/?p=${id}`, { timeout: 60_000 });
@@ -61,27 +69,89 @@ test('every stored block still validates in the editor', async ({
 				})),
 		);
 		expect.soft(blocks, `${entry.slug}: no blocks parsed`).not.toHaveLength(0);
-		// Asserts what 1.x does, so accepting these blocks takes a deliberate change.
-		const valid = !entry.opensInvalid;
 		for (const block of blocks) {
 			// An unregistered block parses as core/missing, which always counts as valid.
 			expect
 				.soft(block.name, `${entry.slug}: the block never registered`)
 				.toBe('kevinbatdorf/code-block-pro');
 			expect
-				.soft(
-					block.isValid,
-					`${entry.slug}: ${block.name} ${valid ? 'is invalid' : 'now validates, where 1.x flagged it'}`,
-				)
-				.toBe(valid);
+				.soft(block.isValid, `${entry.slug}: ${block.name} is invalid`)
+				.toBe(true);
 		}
 		expect
 			.soft(
 				await editor.canvas.locator('.block-editor-warning').count(),
-				`${entry.slug}: the editor's block warnings changed`,
+				`${entry.slug}: the editor shows a block warning`,
 			)
-			.toBe(valid ? 0 : blocks.length);
+			.toBe(0);
 	}
+});
+
+test('saving a post writes every stored block back byte for byte', async ({
+	admin,
+	editor,
+	page,
+}) => {
+	test.setTimeout(5 * 60 * 1000);
+	await newPost(admin, 'save harness');
+	const stored = index.map((entry) => readMarkup(entry).trimEnd());
+	const [id] = await publishPosts(page, [
+		{
+			title: 'save harness',
+			content: [...stored, paragraph('Untouched')].join('\n\n'),
+		},
+	]);
+
+	await admin.visitAdminPage('post.php', `post=${id}&action=edit`);
+	await editor.canvas.getByText('Untouched', { exact: true }).click();
+	await page.keyboard.press('End');
+	await page.keyboard.type(' and edited');
+	await page.evaluate(() => window.wp.data.dispatch('core/editor').savePost());
+
+	const saved: string = await page.evaluate(
+		async (id) =>
+			(
+				await window.wp.apiFetch({
+					path: `/wp/v2/posts/${id}?context=edit`,
+				})
+			).content.raw,
+		id,
+	);
+	for (const [i, entry] of index.entries()) {
+		expect
+			.soft(saved.includes(stored[i]), `${entry.slug}: changed on save`)
+			.toBe(true);
+	}
+	expect(saved).toBe(
+		[...stored, paragraph('Untouched and edited')].join('\n\n'),
+	);
+});
+
+test('a new block saves no markup', async ({ admin, editor, page }) => {
+	await newPost(admin, 'new block');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await editor.canvas
+		.getByRole('textbox', { name: 'Code' })
+		.fill('<b>bold</b> & [gallery]');
+	await editor.saveDraft();
+
+	const saved: string = await page.evaluate(
+		async () =>
+			(
+				await window.wp.apiFetch({
+					path: `/wp/v2/posts/${window.wp.data.select('core/editor').getCurrentPostId()}?context=edit`,
+				})
+			).content.raw,
+	);
+	expect(saved).toMatch(/^<!-- wp:kevinbatdorf\/code-block-pro \{.*\} \/-->$/);
+	const [block] = await page.evaluate(
+		(content) => window.wp.blocks.parse(content),
+		saved,
+	);
+	expect(block.attributes).toMatchObject({
+		version: 2,
+		panes: [{ code: '<b>bold</b> & [gallery]' }],
+	});
 });
 
 test('every stored block renders the same on the front end', async ({

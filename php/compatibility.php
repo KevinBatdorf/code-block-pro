@@ -11,11 +11,17 @@ defined('ABSPATH') or die;
 if (!class_exists('Prismatic')) {
     class Prismatic
     {
+        /** @return void */
         public static function options_general() {}
+        /** @return void */
         public static function options_advanced() {}
+        /** @return void */
         public static function options_prism() {}
+        /** @return void */
         public static function options_highlight() {}
+        /** @return void */
         public static function options_plain() {}
     }
+    /** @return void */
     function prismatic() {}
 }

@@ -148,12 +148,7 @@ test('write the block markup', async ({
 	}
 
 	const index = fixtures
-		.map(({ slug, purpose, opensInvalid }) => ({
-			slug,
-			purpose,
-			file: `${slug}.html`,
-			...(opensInvalid && { opensInvalid }),
-		}))
+		.map(({ slug, purpose }) => ({ slug, purpose, file: `${slug}.html` }))
 		.filter(({ file }) => existsSync(join(BLOCKS_DIR, file)));
 	const combined = index.flatMap(({ slug, file }) => [
 		`<!-- ${slug} -->`,

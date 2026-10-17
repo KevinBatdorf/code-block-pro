@@ -11,6 +11,7 @@
 /composer.json
 /composer.lock
 /phpunit.xml.dist
+/phpstan.neon.dist
 /target
 /test-results
 /playwright-report

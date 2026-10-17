@@ -11,9 +11,18 @@ module.exports = {
 		),
 		new CopyPlugin({
 			patterns: [
-				// 1.28.0's built files, so a stored block renders exactly as 1.x did.
-				// Marked minimized, or Terser rewrites front.js.
-				{ from: 'src/legacy/assets', to: 'legacy', info: { minimized: true } },
+				// 1.28.0's built files at their 1.x paths, which pages cached under 1.x request.
+				// Marked minimized, or Terser rewrites them.
+				{
+					from: 'src/legacy/assets/front.js',
+					to: 'front/front.js',
+					info: { minimized: true },
+				},
+				{
+					from: 'src/legacy/assets/style-index.css',
+					to: 'style-index.css',
+					info: { minimized: true },
+				},
 				// The 1.x front script fetches fonts from build/fonts/.
 				{ from: 'src/legacy/fonts', to: 'fonts' },
 			],

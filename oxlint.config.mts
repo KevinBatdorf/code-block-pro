@@ -20,26 +20,6 @@ export default defineConfig({
 		'typescript/no-unsafe-type-assertion': 'off',
 		'eslint/no-shadow': 'off',
 	},
-	overrides: [
-		{
-			// Frozen 1.x save code: any change, even a fix, invalidates stored blocks.
-			files: ['src/legacy/**'],
-			rules: {
-				'react-doctor/prefer-tag-over-role': 'off',
-				'react-doctor/no-high-complexity-react-function': 'off',
-				'react-doctor/html-no-nested-interactive': 'off',
-				'react-doctor/no-spread-accumulator-in-reduce': 'off',
-				'typescript/unbound-method': 'off',
-				'typescript/consistent-return': 'off',
-				'typescript/no-unnecessary-type-assertion': 'off',
-				'unicorn/consistent-function-scoping': 'off',
-			},
-		},
-		{
-			files: ['src/index.tsx'],
-			rules: { 'unicorn/no-empty-file': 'off' },
-		},
-	],
 	// Type checking covers only linted files, so this list must match tsconfig's exclude.
 	ignorePatterns: [
 		'build',

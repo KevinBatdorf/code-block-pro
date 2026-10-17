@@ -20,7 +20,8 @@ jobs:
                   npm ci
                   npm run lint
                   npm run build
-                  diff -r src/legacy/assets build/legacy
+                  cmp src/legacy/assets/front.js build/front/front.js
+                  cmp src/legacy/assets/style-index.css build/style-index.css
               env:
                   CI: true
 

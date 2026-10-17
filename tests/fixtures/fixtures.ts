@@ -29,8 +29,6 @@ export type Fixture = {
 	purpose: string;
 	/** An older release whose editor produced the stored markup. */
 	plugin?: string;
-	/** The 1.x editor flags the stored markup invalid and offers to recover it. */
-	opensInvalid?: boolean;
 	blocks: FixtureBlock[];
 };
 
@@ -1241,9 +1239,8 @@ export const fixtures: Fixture[] = [
 	{
 		slug: '63-copy-textarea-in-button',
 		plugin: '1.27.3',
-		opensInvalid: true,
 		purpose:
-			'Saved by 1.27.3: the copy textarea sits directly in the button with no pre around it, a save only 1.27.2 and 1.27.3 made. 1.27.4 onwards flags it invalid. 108 blocks on 3 surveyed sites.',
+			'Saved by 1.27.3: the copy textarea sits directly in the button with no pre around it, a save only 1.27.2 and 1.27.3 made. 1.27.4 onwards flags it invalid; 2.0 writes it back as stored, so it opens valid. 108 blocks on 3 surveyed sites.',
 		blocks: [
 			{
 				code: 'twelve.ts',

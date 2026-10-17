@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die;
 
-function code_block_pro_can_upgrade()
+function code_block_pro_can_upgrade(): bool
 {
     // The mb_ereg_* set phiki v2.2.1 calls; phiki is not a dependency, so drift goes unnoticed.
     $needed = [
