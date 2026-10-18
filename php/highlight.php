@@ -74,8 +74,9 @@ function code_block_pro_highlight(string $code, string $language, string $theme)
             return code_block_pro_plain($code, $theme);
         }
         require_once __DIR__ . '/highlight-transformer.php';
+        require_once __DIR__ . '/highlight-theme.php';
 
-        $phiki = (new \Phiki\Phiki())->theme($theme['slug'], $theme['json']);
+        $phiki = (new \Phiki\Phiki())->theme($theme['slug'], CodeBlockProTheme::fromFile($theme['json']));
         if (!$phiki->environment->grammars->has($language)) {
             return code_block_pro_plain($code, $theme);
         }

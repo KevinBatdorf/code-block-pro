@@ -144,6 +144,25 @@ class HighlightTest extends WP_UnitTestCase
         }
     }
 
+    public function test_a_filter_theme_cannot_add_attributes_through_its_colors()
+    {
+        $this->needsMbregex();
+        $theme = $this->themeFile(wp_json_encode([
+            'name' => 'hostile',
+            'colors' => ['editor.background' => '#000" onmouseover="alert(1)', 'editor.foreground' => "#fff\n"],
+            'tokenColors' => [['scope' => 'storage', 'settings' => ['foreground' => '#81a1c1" onclick="alert(1)']]],
+        ]));
+        add_filter('blocks.codeBlockPro.themeFiles', function ($themes) use ($theme) {
+            return $themes + ['hostile' => $theme];
+        });
+
+        $html = $this->render('const a = 1;', 'javascript', 'hostile');
+
+        $this->assertStringNotContainsString('onmouseover', $html);
+        $this->assertStringNotContainsString('onclick', $html);
+        $this->assertSame('const a = 1;', $this->codeText($html));
+    }
+
     public function test_multibyte_code_keeps_every_character_and_its_scopes()
     {
         $this->needsMbregex();
@@ -170,6 +189,76 @@ class HighlightTest extends WP_UnitTestCase
 
         $this->assertSame($expected, $html);
         $this->assertSame($options, mb_regex_set_options());
+    }
+
+    /**
+     * @return list<array{string, string|null}> each character with the color it is painted
+     */
+    private function paintedGlyphs($html, callable $colorOf)
+    {
+        $doc = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $doc->loadHTML('<?xml encoding="UTF-8">' . $html);
+        libxml_clear_errors();
+        $glyphs = [];
+        foreach ((new DOMXPath($doc))->query('//code/span[contains(concat(" ", @class, " "), " line ")]') as $i => $line) {
+            if ($i > 0) {
+                $glyphs[] = ["\n", null];
+            }
+            foreach ((new DOMXPath($doc))->query('.//text()', $line) as $text) {
+                $color = $colorOf($text->parentNode);
+                foreach (mb_str_split($text->nodeValue) as $char) {
+                    $glyphs[] = [$char, $color];
+                }
+            }
+        }
+        while ($glyphs && end($glyphs)[0] === "\n") {
+            array_pop($glyphs);
+        }
+
+        return $glyphs;
+    }
+
+    private function normalizedColor($color)
+    {
+        $color = strtolower($color);
+        if (strlen($color) === 4) {
+            $color = '#' . $color[1] . $color[1] . $color[2] . $color[2] . $color[3] . $color[3];
+        }
+
+        return strlen($color) === 9 && str_ends_with($color, 'ff') ? substr($color, 0, 7) : $color;
+    }
+
+    public function test_js_ts_php_and_python_fixtures_paint_every_character_the_color_1x_did()
+    {
+        $this->needsMbregex();
+        $languages = ['javascript', 'typescript', 'tsx', 'jsx', 'php', 'python'];
+        $build = dirname(__DIR__, 2) . '/build/themes';
+        $misses = [];
+
+        foreach ($this->storedPanes() as $where => $pane) {
+            $theme = $pane['theme'] ?? 'nord';
+            if (!in_array($pane['language'] ?? 'javascript', $languages, true) || !is_file("$build/$theme.css")) {
+                continue;
+            }
+            preg_match("/\\.cbp-theme-$theme\\{color:(#[0-9a-f]+)/", file_get_contents("$build/$theme.css"), $default);
+            $code = empty($pane['useDecodeURI']) ? html_entity_decode($pane['code'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : rawurldecode($pane['code']);
+            $ours = $this->paintedGlyphs(code_block_pro_highlight($code, $pane['language'] ?? 'javascript', $theme), function ($node) use ($default) {
+                return preg_match('/\bcbp-([0-9a-f]{3,8})\b/', $node->getAttribute('class'), $m) ? "#$m[1]" : $default[1];
+            });
+            $theirs = $this->paintedGlyphs($pane['codeHTML'], function ($node) {
+                return preg_match('/color: (#[0-9A-Fa-f]+)/', $node->getAttribute('style'), $m) ? $m[1] : null;
+            });
+
+            $this->assertSame(array_column($theirs, 0), array_column($ours, 0), "$where: text");
+            foreach ($theirs as $i => [$char, $color]) {
+                if (trim($char) !== '' && $this->normalizedColor($color) !== $this->normalizedColor($ours[$i][1])) {
+                    $misses[] = "$where ($theme) char $i '$char': 1.x $color, 2.0 {$ours[$i][1]}";
+                }
+            }
+        }
+
+        $this->assertSame([], array_slice($misses, 0, 25), count($misses) . ' characters differ');
     }
 
     public function test_no_2x_block_carries_an_inline_style()
