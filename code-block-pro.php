@@ -6,7 +6,7 @@
  * Plugin URI:        https://code-block-pro.com
  * Author:            Kevin Batdorf
  * Author URI:        https://code-block-pro.com
- * Requires at least: 6.6
+ * Requires at least: 7.0
  * Requires PHP:      8.2
  * Version:           1.28.0
  * License:           GPL-2.0-or-later
