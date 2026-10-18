@@ -43,14 +43,16 @@ test('a 2.x block keeps its colors under a strict style-src', async ({
 	expect(await color(page, '.cbp-theme-nord .phiki-storage\\.type\\.js')).toBe(
 		'rgb(129, 161, 193)',
 	);
-	expect(await background(page, 'pre.cbp-theme-nord')).toBe('rgb(46, 52, 64)');
+	expect(await background(page, '.cbp-pane.cbp-theme-nord')).toBe(
+		'rgb(46, 52, 64)',
+	);
 	expect(
 		await color(
 			page,
 			'.cbp-theme-github-light .phiki-storage\\.type\\.function\\.php',
 		),
 	).toBe('rgb(215, 58, 73)');
-	expect(await background(page, 'pre.cbp-theme-github-light')).toBe(
+	expect(await background(page, '.cbp-pane.cbp-theme-github-light')).toBe(
 		'rgb(255, 255, 255)',
 	);
 

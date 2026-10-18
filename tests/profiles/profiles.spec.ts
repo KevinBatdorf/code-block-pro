@@ -23,7 +23,7 @@ const paint = (page: Page) =>
 					]);
 				}
 			}
-			const pre = getComputedStyle(block.querySelector('pre') as Element);
+			const pre = getComputedStyle(block.querySelector('.cbp-pane') as Element);
 			return { glyphs, color: pre.color, background: pre.backgroundColor };
 		}),
 	);
@@ -197,12 +197,14 @@ test('editing a profile recolors every block that uses it, with no re-save', asy
 	for (const path of pages) {
 		await page.goto(path);
 		before.push(
-			await page.locator('.cbp-profile-default pre').getAttribute('class'),
+			await page
+				.locator('.cbp-profile-default .cbp-pane')
+				.getAttribute('class'),
 		);
 	}
 	// A retry finds the theme the first attempt saved, so switch to the other one.
 	const [theme, background] =
-		before[0] === 'cbp-theme-dracula'
+		before[0] === 'cbp-pane cbp-theme-dracula'
 			? ['monokai', 'rgb(39, 40, 34)']
 			: ['dracula', 'rgb(40, 42, 54)'];
 	expect(before).toEqual([before[0], before[0]]);
@@ -217,14 +219,14 @@ test('editing a profile recolors every block that uses it, with no re-save', asy
 
 	for (const path of pages) {
 		await page.goto(path);
-		const pre = page.locator('.cbp-profile-default pre');
-		await expect(pre).toHaveClass(`cbp-theme-${theme}`);
+		const pre = page.locator('.cbp-profile-default .cbp-pane');
+		await expect(pre).toHaveClass(`cbp-pane cbp-theme-${theme}`);
 		expect(
 			await pre.evaluate((el) => getComputedStyle(el).backgroundColor),
 		).toBe(background);
 	}
 	await page.goto('/uses-default/');
 	await expect(
-		page.locator('.cbp-block:not(.cbp-profile-default) pre'),
-	).toHaveClass('cbp-theme-github-light');
+		page.locator('.cbp-block:not(.cbp-profile-default) .cbp-pane'),
+	).toHaveClass('cbp-pane cbp-theme-github-light');
 });

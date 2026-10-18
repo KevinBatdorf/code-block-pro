@@ -41,7 +41,12 @@ add_action('init', function () {
         'style_handles' => ['kevinbatdorf-code-block-pro-style'],
         'supports' => ['inserter' => false],
     ]);
-    register_block_type(__DIR__ . '/build');
+    // By URL with no path, so WordPress never inlines them into a page a strict CSP guards.
+    wp_register_style('code-block-pro', plugin_dir_url(__FILE__) . 'build/front.css', [], (string) @filemtime(__DIR__ . '/build/front.css'));
+    $asset = is_file(__DIR__ . '/build/view.asset.php') ? include __DIR__ . '/build/view.asset.php' : ['dependencies' => [], 'version' => CODE_BLOCK_PRO_VERSION];
+    wp_register_script('code-block-pro-view', plugin_dir_url(__FILE__) . 'build/view.js', $asset['dependencies'], $asset['version'], ['strategy' => 'defer', 'in_footer' => true]);
+    // Not block.json's style field: WordPress would name it after the block, which is 1.x's handle.
+    register_block_type(__DIR__ . '/build', ['style_handles' => ['code-block-pro']]);
 });
 
 add_action('admin_init', function () {
@@ -52,10 +57,12 @@ add_action('admin_init', function () {
 });
 
 include_once(__DIR__ . '/php/compatibility.php');
+include_once(__DIR__ . '/php/lines.php');
 include_once(__DIR__ . '/php/highlight.php');
 include_once(__DIR__ . '/php/profiles.php');
 include_once(__DIR__ . '/php/profile-css.php');
 include_once(__DIR__ . '/php/profile-screen.php');
+include_once(__DIR__ . '/php/block.php');
 include_once(__DIR__ . '/php/update-gate.php');
 include_once(__DIR__ . '/php/router.php');
 include_once(__DIR__ . '/php/routes.php');

@@ -1,0 +1,457 @@
+/*
+ * Scoped to .cbp-block: 1.x markup reuses several cbp- class names.
+ * A site restyles every block by setting --code-block-pro-padding, -highlight, -added, -removed, -blur or -dim on any ancestor.
+ */
+.cbp-block,
+.cbp-block * {
+	box-sizing: border-box;
+}
+.cbp-block {
+	--cbp-p: var(--code-block-pro-padding, 16px);
+	position: relative;
+	direction: ltr;
+	text-align: left;
+	font-family:
+		Code-Pro-JetBrains-Mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
+		Consolas, monospace;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	tab-size: 2;
+}
+/* Declared where the theme classes set --cbp-fg and --cbp-bg, or they resolve against nothing. */
+.cbp-block :is(.cbp-header, .cbp-pane, .cbp-footer) {
+	--cbp-hl: var(
+		--code-block-pro-highlight,
+		color-mix(in srgb, var(--cbp-fg) 20%, transparent)
+	);
+	--cbp-bar: color-mix(in srgb, var(--cbp-bg) 92%, var(--cbp-fg));
+}
+
+/* Outranks a site theme's .entry-content pre. */
+.cbp-block .cbp-pane > pre {
+	margin: 0;
+	padding: var(--cbp-p) 0;
+	max-height: none;
+	border: 0;
+	border-radius: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	white-space: pre;
+	overflow: auto;
+	--cbp-numbers-w: 0px;
+	--cbp-diff-w: 0px;
+	--cbp-pre-top: var(--cbp-p);
+}
+/* A grid lays out none of the newlines between lines, and every line spans the scroll width. */
+.cbp-block .cbp-pane > pre > code {
+	display: grid;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+}
+.cbp-block .line {
+	position: relative;
+	min-height: 1lh;
+	padding: 0 var(--cbp-p) 0
+		calc(var(--cbp-p) + var(--cbp-numbers-w) + var(--cbp-diff-w));
+}
+.cbp-block.cbp-no-padding .cbp-pane > pre {
+	padding: 0;
+	--cbp-pre-top: 0px;
+}
+.cbp-block.cbp-no-padding .line {
+	padding: 0 0 0 calc(var(--cbp-numbers-w) + var(--cbp-diff-w));
+}
+.cbp-block.cbp-has-footer .cbp-pane > pre {
+	padding-bottom: 0;
+}
+
+.cbp-block.cbp-numbers .cbp-pane > pre {
+	--cbp-numbers-w: calc(var(--cbp-digits, 1) * 1ch + 12px);
+}
+.cbp-block pre.cbp-digits-2 {
+	--cbp-digits: 2;
+}
+.cbp-block pre.cbp-digits-3 {
+	--cbp-digits: 3;
+}
+.cbp-block pre.cbp-digits-4 {
+	--cbp-digits: 4;
+}
+.cbp-block pre.cbp-digits-5 {
+	--cbp-digits: 5;
+}
+.cbp-block pre.cbp-digits-6 {
+	--cbp-digits: 6;
+}
+.cbp-block.cbp-numbers .line::before,
+.cbp-block .line:is(.cbp-add, .cbp-del)::after {
+	position: absolute;
+	top: 0;
+	user-select: none;
+	-webkit-user-select: none;
+}
+.cbp-block.cbp-numbers .line::before {
+	content: attr(data-line) / '';
+	left: var(--cbp-p);
+	width: calc(var(--cbp-digits, 1) * 1ch);
+	text-align: right;
+	opacity: 0.5;
+}
+.cbp-block .line:is(.cbp-add, .cbp-del)::after {
+	left: calc(var(--cbp-p) + var(--cbp-numbers-w));
+}
+.cbp-block.cbp-no-padding .line::before {
+	left: 0;
+}
+.cbp-block.cbp-no-padding .line:is(.cbp-add, .cbp-del)::after {
+	left: var(--cbp-numbers-w);
+}
+
+.cbp-block .line:is(.cbp-hl, :target),
+.cbp-block.cbp-hover .line:hover {
+	background-color: var(--cbp-hl);
+}
+.cbp-block .line:target {
+	scroll-margin-block: 4rem;
+}
+.cbp-block pre.cbp-has-sharp .line:not(.cbp-sharp) {
+	filter: blur(var(--code-block-pro-blur, 1.35px));
+	opacity: 0.8;
+	pointer-events: none;
+	transition: 0.2s;
+}
+.cbp-block pre.cbp-has-focus .line:not(.cbp-focus) {
+	opacity: var(--code-block-pro-dim, 0.5);
+	transition: 0.2s;
+}
+.cbp-block.cbp-reveal:is(:hover, :focus-within) pre .line {
+	filter: none;
+	opacity: 1;
+	pointer-events: auto;
+}
+.cbp-block pre.cbp-has-diff {
+	--cbp-diff-w: 2ch;
+}
+.cbp-block .line:is(ins, del) {
+	color: inherit;
+	text-decoration: none;
+}
+.cbp-block .line.cbp-add {
+	background-color: var(--code-block-pro-added, rgb(16 185 129 / 0.16));
+}
+.cbp-block .line.cbp-del {
+	background-color: var(--code-block-pro-removed, rgb(244 63 94 / 0.16));
+}
+.cbp-block .line.cbp-add::after {
+	content: '+' / '';
+	color: rgb(16 185 129);
+}
+.cbp-block .line.cbp-del::after {
+	content: '-' / '';
+	color: rgb(244 63 94);
+}
+
+/* Safari can't read a number from an attribute in CSS, so the fold point comes one digit per class. */
+.cbp-block pre.cbp-fold {
+	max-height: calc(
+		(
+				var(--cbp-fold3, 0) * 100 + var(--cbp-fold2, 0) * 10 +
+					var(--cbp-fold1, 0)
+			) *
+			1lh + var(--cbp-pre-top)
+	);
+}
+/* With script, view.js opens a fold its linked line sits in, so the button stays in step. */
+.cbp-block .cbp-pane.cbp-expanded > pre.cbp-fold,
+.cbp-block:not(.cbp-js) .cbp-pane:has(.line:target) > pre.cbp-fold {
+	max-height: none;
+}
+.cbp-block.cbp-more-transition pre.cbp-fold {
+	transition: max-height 0.5s ease-out;
+}
+.cbp-fold1-1 {
+	--cbp-fold1: 1;
+}
+.cbp-fold1-2 {
+	--cbp-fold1: 2;
+}
+.cbp-fold1-3 {
+	--cbp-fold1: 3;
+}
+.cbp-fold1-4 {
+	--cbp-fold1: 4;
+}
+.cbp-fold1-5 {
+	--cbp-fold1: 5;
+}
+.cbp-fold1-6 {
+	--cbp-fold1: 6;
+}
+.cbp-fold1-7 {
+	--cbp-fold1: 7;
+}
+.cbp-fold1-8 {
+	--cbp-fold1: 8;
+}
+.cbp-fold1-9 {
+	--cbp-fold1: 9;
+}
+.cbp-fold2-1 {
+	--cbp-fold2: 1;
+}
+.cbp-fold2-2 {
+	--cbp-fold2: 2;
+}
+.cbp-fold2-3 {
+	--cbp-fold2: 3;
+}
+.cbp-fold2-4 {
+	--cbp-fold2: 4;
+}
+.cbp-fold2-5 {
+	--cbp-fold2: 5;
+}
+.cbp-fold2-6 {
+	--cbp-fold2: 6;
+}
+.cbp-fold2-7 {
+	--cbp-fold2: 7;
+}
+.cbp-fold2-8 {
+	--cbp-fold2: 8;
+}
+.cbp-fold2-9 {
+	--cbp-fold2: 9;
+}
+.cbp-fold3-1 {
+	--cbp-fold3: 1;
+}
+.cbp-fold3-2 {
+	--cbp-fold3: 2;
+}
+.cbp-fold3-3 {
+	--cbp-fold3: 3;
+}
+.cbp-fold3-4 {
+	--cbp-fold3: 4;
+}
+.cbp-fold3-5 {
+	--cbp-fold3: 5;
+}
+.cbp-fold3-6 {
+	--cbp-fold3: 6;
+}
+.cbp-fold3-7 {
+	--cbp-fold3: 7;
+}
+.cbp-fold3-8 {
+	--cbp-fold3: 8;
+}
+.cbp-fold3-9 {
+	--cbp-fold3: 9;
+}
+
+.cbp-block .cbp-header {
+	display: flex;
+	align-items: center;
+	gap: var(--cbp-p);
+	min-height: calc(var(--cbp-p) + 1lh);
+	padding: var(--cbp-p) var(--cbp-p) 0;
+}
+.cbp-block .cbp-header.cbp-header-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	padding: 0;
+	background: none;
+}
+.cbp-block .cbp-header.cbp-header-headlightsMutedAlt,
+.cbp-block .cbp-header.cbp-header-simpleString {
+	padding: 10px var(--cbp-p);
+	background-color: var(--cbp-bar);
+}
+.cbp-block .cbp-header-headlightsMuted circle {
+	fill: color-mix(in srgb, var(--cbp-fg) 20%, transparent);
+}
+.cbp-block .cbp-header-headlightsMutedAlt circle {
+	fill: var(--cbp-bg);
+}
+.cbp-block .cbp-header-stringSmall {
+	font-size: 0.8em;
+	font-style: italic;
+}
+.cbp-block .cbp-header-stringSmall .cbp-title {
+	border-bottom: 1px solid var(--cbp-hl);
+}
+.cbp-block .cbp-header-pillString .cbp-title {
+	padding: 0.3rem 0.5rem 0.2rem;
+	border-radius: 1rem;
+	background-color: var(--cbp-fg);
+	color: var(--cbp-bg);
+	font-size: 0.8em;
+	line-height: 1;
+}
+.cbp-block.cbp-no-padding .cbp-header {
+	padding-inline: 0;
+}
+
+.cbp-block :is(.cbp-tab, .cbp-button, .cbp-more-button) {
+	all: unset;
+	cursor: pointer;
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
+.cbp-block :is(.cbp-tab, .cbp-button, .cbp-more-button):focus-visible {
+	outline: 2px solid var(--cbp-fg);
+	outline-offset: 2px;
+}
+.cbp-block .cbp-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+.cbp-block .cbp-tab {
+	padding: 4px 8px;
+	border-radius: 6px;
+	opacity: 0.75;
+}
+.cbp-block .cbp-tab[aria-selected='true'] {
+	background-color: var(--cbp-hl);
+	opacity: 1;
+}
+.cbp-block .cbp-pane-label {
+	padding: 10px var(--cbp-p) 0;
+	font-size: 0.8em;
+}
+
+.cbp-block .cbp-buttons {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-left: auto;
+}
+.cbp-block:not(.cbp-tabbed) .cbp-buttons {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.cbp-block .cbp-button {
+	color: var(--cbp-fg);
+}
+/* 1.x's steps: the icon stays faint over the code until the block, then the button, is hovered. */
+.cbp-block .cbp-copy:not(.cbp-copy-text) {
+	opacity: 0.1;
+}
+.cbp-block:is(:hover, :focus-within) .cbp-copy:not(.cbp-copy-text) {
+	opacity: 0.5;
+}
+.cbp-block:is(:hover, :focus-within)
+	.cbp-copy:not(.cbp-copy-text):is(:hover, :focus-visible),
+.cbp-block .cbp-copy.cbp-copied:not(.cbp-copy-text) {
+	opacity: 0.9;
+}
+.cbp-block :is(.cbp-copy-text, .cbp-toggle, .cbp-custom) {
+	padding: 2px 6px;
+	border-radius: 12px;
+	background-color: var(--cbp-fg);
+	color: var(--cbp-bg);
+}
+.cbp-block :is(.cbp-copy-text, .cbp-toggle, .cbp-custom):hover {
+	opacity: 0.8;
+}
+.cbp-block .cbp-copy svg {
+	display: block;
+}
+.cbp-block .cbp-copy:not(.cbp-copied) .cbp-icon-done,
+.cbp-block .cbp-copied .cbp-icon-copy {
+	display: none;
+}
+.cbp-block .cbp-status {
+	position: absolute;
+	clip-path: inset(50%);
+}
+
+.cbp-block .cbp-more {
+	display: flex;
+	padding: 8px var(--cbp-p);
+}
+.cbp-block .cbp-more-blockRight {
+	justify-content: flex-end;
+}
+.cbp-block .cbp-more-roundCenter {
+	justify-content: center;
+}
+.cbp-block .cbp-more-button {
+	padding: 6px 14px;
+	background-color: var(--cbp-bar);
+}
+.cbp-block .cbp-more-roundCenter .cbp-more-button {
+	border-radius: 6px;
+}
+
+.cbp-block .cbp-footer {
+	display: flex;
+	justify-content: flex-end;
+	padding: 10px var(--cbp-p);
+	font-size: 12px;
+	line-height: 1;
+}
+.cbp-block .cbp-footer-simpleStringStart {
+	justify-content: flex-start;
+}
+.cbp-block .cbp-footer-link {
+	color: inherit;
+	text-decoration: none;
+}
+.cbp-block .cbp-footer-link:hover {
+	text-decoration: underline;
+}
+
+/* Tabs need view.js; without script every pane shows under its label. */
+@media (scripting: enabled) {
+	.cbp-block.cbp-tabbed > .cbp-pane:not(.cbp-active),
+	.cbp-block .cbp-pane-label {
+		display: none;
+	}
+}
+.cbp-block.cbp-js.cbp-tabbed > .cbp-pane:not(.cbp-active),
+.cbp-block.cbp-js .cbp-pane-label {
+	display: none;
+}
+@media (scripting: none) {
+	.cbp-block :is(.cbp-tabs, .cbp-buttons, .cbp-more) {
+		display: none;
+	}
+	.cbp-block .cbp-pane:has(> .cbp-more) > pre.cbp-fold {
+		max-height: none;
+	}
+}
+/* Forced colors drop backgrounds, so a marked line or the chosen tab keeps an outline. */
+@media (forced-colors: active) {
+	.cbp-block :is(.line.cbp-hl, .line:target, .cbp-tab[aria-selected='true']) {
+		outline: 1px solid Highlight;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.cbp-block * {
+		transition: none !important;
+	}
+}
+@media print {
+	.cbp-block .cbp-pane > pre {
+		max-height: none !important;
+	}
+	.cbp-block.cbp-tabbed > .cbp-pane,
+	.cbp-block .cbp-pane-label {
+		display: block !important;
+	}
+	.cbp-block :is(.cbp-header, .cbp-footer, .cbp-more) {
+		display: none !important;
+	}
+}

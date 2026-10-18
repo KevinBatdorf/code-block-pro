@@ -57,6 +57,7 @@
 		"useTabs": { "type": "boolean" },
 		"version": { "type": "number" },
 		"profile": { "type": "string", "default": "default" },
+		"lineAnchors": { "type": "boolean" },
 		"panes": {
 			"type": "array",
 			"items": {
@@ -64,14 +65,23 @@
 				"properties": {
 					"language": { "type": "string" },
 					"code": { "type": "string" },
-					"label": { "type": "string" }
+					"label": { "type": "string" },
+					"startLine": { "type": ["number", "string"] },
+					"highlightLines": { "type": "string" },
+					"focusLines": { "type": "string" },
+					"sharpLines": { "type": "string" },
+					"addedLines": { "type": "string" },
+					"removedLines": { "type": "string" },
+					"seeMoreAfter": { "type": ["number", "string"] }
 				}
-			}
+			},
+			"role": "content"
 		},
 		"legacyContent": { "type": "string", "source": "raw" }
 	},
 	"supports": {
 		"html": false,
+		"anchor": true,
 		"className": false,
 		"align": ["wide", "full"]
 	},

@@ -87,9 +87,47 @@ function code_block_pro_profile_themes(array $profile, string $language): array
 }
 
 /**
- * @param CodeBlockProProfile $profile
+ * The classes that color a pane, its header and its footer, or the inline style when a lone theme has no stylesheet.
+ *
+ * @param non-empty-array<string, array{slug: string, json: string, css: string|null}> $themes Condition id => theme, base first.
+ * @return array{class: string, style: string}
  */
-function code_block_pro_cache_key(string $code, string $language, array $profile, string $version = CODE_BLOCK_PRO_VERSION): string
+function code_block_pro_theme_attributes(array $themes, bool $classes): array
+{
+    if (!$classes) {
+        $colors = code_block_pro_theme_colors(reset($themes)['json']);
+
+        return ['class' => '', 'style' => "--cbp-fg:{$colors['fg']};--cbp-bg:{$colors['bg']};color:{$colors['fg']};background-color:{$colors['bg']}"];
+    }
+
+    $names = [];
+    foreach ($themes as $id => $theme) {
+        $names[] = $names ? "cbp-$id-theme-{$theme['slug']}" : "cbp-theme-{$theme['slug']}";
+    }
+
+    return ['class' => implode(' ', $names), 'style' => ''];
+}
+
+/**
+ * @param CodeBlockProProfile $profile
+ * @param non-empty-array<string, array{slug: string, json: string, css: string|null}> $themes
+ */
+function code_block_pro_uses_classes(array $profile, array $themes): bool
+{
+    // Feed readers load no stylesheets.
+    if (is_feed()) {
+        return false;
+    }
+
+    // A profile stylesheet names the colors of themes that have no stylesheet of their own.
+    return reset($themes)['css'] !== null || code_block_pro_profile_needs_stylesheet($profile);
+}
+
+/**
+ * @param CodeBlockProProfile $profile
+ * @param array<mixed> $context Anything else the output depends on.
+ */
+function code_block_pro_cache_key(string $code, string $language, array $profile, array $context = [], string $version = CODE_BLOCK_PRO_VERSION): string
 {
     $themes = [];
     foreach (code_block_pro_profile_themes($profile, $language) as $id => $theme) {
@@ -100,22 +138,64 @@ function code_block_pro_cache_key(string $code, string $language, array $profile
     // Prefixed by profile, so a profile's save can delete the renders it made stale.
     $prefix = $profile['id'] ? "code_block_pro_p{$profile['id']}_" : 'code_block_pro_';
 
-    return $prefix . md5(serialize([$code, $language, $themes, $profile['slug'], $profile['stamp'], $version]));
+    return $prefix . md5(serialize([$code, $language, $themes, $profile['slug'], $profile['stamp'], $context, $version]));
+}
+
+/**
+ * @param array{html: string, lines: int} $render
+ */
+function code_block_pro_cache_set(string $key, array $render): void
+{
+    $value = (string) wp_json_encode($render);
+    // Four themes on a long file reach 1 MB, memcached's item limit; compressed it is a few percent of that.
+    // Base64, because the options table refuses bytes that aren't valid UTF-8.
+    if (function_exists('gzdeflate')) {
+        $value = 'z:' . base64_encode((string) gzdeflate($value, 6));
+    }
+    set_transient($key, $value, MONTH_IN_SECONDS);
+}
+
+/**
+ * @return array{html: string, lines: int}|null
+ */
+function code_block_pro_cache_get(string $key): ?array
+{
+    $value = get_transient($key);
+    if (!is_string($value)) {
+        return null;
+    }
+    if (str_starts_with($value, 'z:')) {
+        $value = function_exists('gzinflate') ? @gzinflate((string) base64_decode(substr($value, 2), true)) : false;
+    }
+    $render = is_string($value) ? json_decode($value, true) : null;
+
+    return is_array($render) && is_string($render['html'] ?? null) && is_int($render['lines'] ?? null) ? ['html' => $render['html'], 'lines' => $render['lines']] : null;
 }
 
 /**
  * @param CodeBlockProProfile $profile
+ * @param CodeBlockProLineOptions|null $options
  */
-function code_block_pro_highlight(string $code, string $language, array $profile): string
+function code_block_pro_highlight(string $code, string $language, array $profile, ?array $options = null): string
 {
+    return code_block_pro_render_code($code, $language, $profile, $options)['html'];
+}
+
+/**
+ * @param CodeBlockProProfile $profile
+ * @param CodeBlockProLineOptions|null $options
+ * @return array{html: string, lines: int} The `<pre>`, and how many lines it shows once markers are out.
+ */
+function code_block_pro_render_code(string $code, string $language, array $profile, ?array $options = null): array
+{
+    $options ??= code_block_pro_no_line_options();
     $code = preg_replace("/\n\z/", '', str_replace(["\r\n", "\r"], "\n", $code)) ?? $code;
     $themes = code_block_pro_profile_themes($profile, $language);
-    // A profile stylesheet names the colors of themes that have no stylesheet of their own.
-    $classes = reset($themes)['css'] !== null || code_block_pro_profile_needs_stylesheet($profile);
+    $classes = code_block_pro_uses_classes($profile, $themes);
 
     // Further conditions are colored by the profile stylesheet alone.
     $base = reset($themes);
-    if ($base['css']) {
+    if ($base['css'] && $classes) {
         wp_enqueue_style(
             "code-block-pro-theme-{$base['slug']}",
             plugins_url("build/themes/{$base['slug']}.css", __DIR__),
@@ -126,12 +206,12 @@ function code_block_pro_highlight(string $code, string $language, array $profile
 
     // ANSI escapes carry arbitrary colors, which no prebuilt stylesheet can name.
     if (!code_block_pro_can_upgrade() || in_array($language, ['ansi', 'terminal'], true)) {
-        return code_block_pro_plain($code, $themes, $classes);
+        return code_block_pro_plain($code, $options);
     }
 
-    $key = code_block_pro_cache_key($code, $language, $profile);
-    $cached = get_transient($key);
-    if (is_string($cached)) {
+    $key = code_block_pro_cache_key($code, $language, $profile, [$options, $classes]);
+    $cached = code_block_pro_cache_get($key);
+    if ($cached) {
         return $cached;
     }
 
@@ -146,7 +226,7 @@ function code_block_pro_highlight(string $code, string $language, array $profile
         // Another plugin's phiki would make the transformer class fail to compile, uncatchably.
         $parent = new \ReflectionClass(\Phiki\Transformers\AbstractTransformer::class);
         if (!str_starts_with((string) $parent->getFileName(), dirname(__DIR__) . '/vendor/')) {
-            return code_block_pro_plain($code, $themes, $classes);
+            return code_block_pro_plain($code, $options);
         }
         require_once __DIR__ . '/highlight-transformer.php';
         require_once __DIR__ . '/highlight-theme.php';
@@ -164,14 +244,16 @@ function code_block_pro_highlight(string $code, string $language, array $profile
             $conditions[$id] = ['slug' => $theme['slug'], 'fg' => code_block_pro_theme_colors($theme['json'])['fg']];
         }
         if (!$phiki->environment->grammars->has($language)) {
-            return code_block_pro_plain($code, $themes, $classes);
+            return code_block_pro_plain($code, $options);
         }
 
-        $html = $phiki->codeToHtml($code, $language, array_map(fn ($condition) => $condition['slug'], $conditions))
-            ->transformer(new CodeBlockProTransformer($conditions, $classes))
-            ->toString();
+        $transformer = new CodeBlockProTransformer($conditions, $classes, $options);
+        $render = [
+            'html' => $phiki->codeToHtml($code, $language, array_map(fn ($condition) => $condition['slug'], $conditions))->transformer($transformer)->toString(),
+            'lines' => $transformer->count(),
+        ];
     } catch (\Throwable $e) {
-        return code_block_pro_plain($code, $themes, $classes);
+        return code_block_pro_plain($code, $options);
     } finally {
         if (isset($saved)) {
             mb_regex_encoding((string) $saved[0]);
@@ -180,27 +262,34 @@ function code_block_pro_highlight(string $code, string $language, array $profile
         }
     }
 
-    set_transient($key, $html, MONTH_IN_SECONDS);
+    code_block_pro_cache_set($key, $render);
 
-    return $html;
+    return $render;
 }
 
 /**
- * @param non-empty-array<string, array{slug: string, css: string|null}> $themes Condition id => theme, base first.
+ * @param CodeBlockProLineOptions $options
+ * @return array{html: string, lines: int}
  */
-function code_block_pro_plain(string $code, array $themes, bool $classes): string
+function code_block_pro_plain(string $code, array $options): array
 {
-    $lines = array_map(function ($line) {
-        return '<span class="line">' . htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '</span>';
-    }, explode("\n", $code));
+    ['lines' => $lines, 'marked' => $marked] = code_block_pro_strip_markers_plain(explode("\n", $code));
+    $count = count($lines);
+    $flags = code_block_pro_line_flags($count, $options, $marked);
 
-    $names = [];
-    foreach ($themes as $id => $theme) {
-        $names[] = $names ? "cbp-$id-theme-{$theme['slug']}" : "cbp-theme-{$theme['slug']}";
+    $html = '';
+    foreach ($lines as $index => $line) {
+        $attributes = '';
+        foreach (code_block_pro_line_attributes($index, $options, $flags[$index] ?? []) as $name => $value) {
+            $attributes .= " $name=\"" . esc_attr($value) . '"';
+        }
+        $tag = code_block_pro_line_tag($flags[$index] ?? []);
+        $html .= "<$tag$attributes>" . htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . ($index < $count - 1 ? "\n" : '') . "</$tag>";
     }
-    $class = $classes ? ' class="' . implode(' ', $names) . '"' : '';
+    $classes = code_block_pro_pre_classes($count, $options, $flags);
+    $class = $classes ? ' class="' . implode(' ', $classes) . '"' : '';
 
-    return code_block_pro_inert_brackets("<pre$class tabindex=\"0\"><code>" . implode("\n", $lines) . '</code></pre>');
+    return ['html' => code_block_pro_inert_brackets("<pre$class tabindex=\"0\"><code>$html</code></pre>"), 'lines' => $count];
 }
 
 function code_block_pro_inert_brackets(string $html): string

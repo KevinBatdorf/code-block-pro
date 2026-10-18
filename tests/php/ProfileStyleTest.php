@@ -91,7 +91,7 @@ class ProfileStyleTest extends WP_UnitTestCase
 
         $html = $this->block(['profile' => 'twotone']);
 
-        $this->assertStringContainsString('<pre class="cbp-theme-github-light cbp-dark-theme-dracula" tabindex="0">', $html);
+        $this->assertStringContainsString('<div class="cbp-pane cbp-theme-github-light cbp-dark-theme-dracula"><pre tabindex="0">', $html);
         $tokens = $this->tokens($html);
         $this->assertNotEmpty($tokens);
         foreach ($tokens as $classes) {
@@ -190,8 +190,8 @@ class ProfileStyleTest extends WP_UnitTestCase
             ['id' => 'dark', 'theme' => 'dracula', 'trigger' => ['type' => 'class', 'value' => 'dark'], 'background' => ['type' => 'color', 'value' => '#000000']],
         ]]));
 
-        $this->assertStringContainsString('.cbp-profile-twotone :is(.cbp-theme-github-light){background-color:#fafafa}', $css);
-        $this->assertMatchesRegularExpression('/\.cbp-profile-twotone:where\(\[data-cbp-condition~="dark"\]\) \.cbp-dark-theme-dracula\{color:#[0-9a-f]+;background-color:#000000\}/', $css);
+        $this->assertStringContainsString('.cbp-profile-twotone :is(.cbp-theme-github-light){background-color:#fafafa;--cbp-bg:#fafafa}', $css);
+        $this->assertMatchesRegularExpression('/\.cbp-profile-twotone:where\(\[data-cbp-condition~="dark"\]\) \.cbp-dark-theme-dracula\{color:#[0-9a-f]+;background-color:#000000;--cbp-fg:#[0-9a-f]+;--cbp-bg:#000000\}/', $css);
     }
 
     public function test_a_slot_background_leaves_a_place_for_a_canvas()
@@ -286,7 +286,7 @@ class ProfileStyleTest extends WP_UnitTestCase
 
         $html = $this->block(['profile' => 'twotone']);
 
-        $this->assertStringContainsString('<pre class="cbp-theme-github-light cbp-dark-theme-dracula" tabindex="0">', $html);
+        $this->assertStringContainsString('<div class="cbp-pane cbp-theme-github-light cbp-dark-theme-dracula"><pre tabindex="0">', $html);
         $this->assertStringContainsString('.cbp-profile-twotone:where([data-cbp-condition~="dark"]) .cbp-dark-theme-dracula code{color:', code_block_pro_profile_css(code_block_pro_profile('twotone')));
     }
 

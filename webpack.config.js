@@ -1,10 +1,14 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const RtlCssPlugin = require('@wordpress/scripts/plugins/rtlcss-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const { themeCssPlugin } = require('./scripts/theme-css');
+const { themeCssPlugin, fontCssPlugin } = require('./scripts/theme-css');
 
 module.exports = {
 	...defaultConfig,
+	entry: () => ({
+		...defaultConfig.entry(),
+		view: './src/front/view.ts',
+	}),
 	devServer: { ...defaultConfig.devServer, host: 'wordpress.test' },
 	plugins: [
 		...defaultConfig.plugins.filter(
@@ -27,8 +31,16 @@ module.exports = {
 				// The 1.x front script fetches fonts from build/fonts/.
 				{ from: 'src/legacy/fonts', to: 'fonts' },
 				{ from: 'src/themes', to: 'themes' },
+				{ from: 'src/languages.json', to: 'languages.json' },
+				// Plain CSS with no build step, so its font URLs stay relative to build/.
+				{
+					from: 'src/front/front.css',
+					to: 'front.css',
+					info: { minimized: true },
+				},
 			],
 		}),
 		themeCssPlugin('src/themes'),
+		fontCssPlugin('src/legacy/fonts'),
 	],
 };

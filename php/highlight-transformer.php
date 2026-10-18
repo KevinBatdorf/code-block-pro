@@ -6,6 +6,7 @@ use Phiki\Phast\Properties;
 use Phiki\Phast\Text;
 use Phiki\Theme\TokenSettings;
 use Phiki\Token\HighlightedToken;
+use Phiki\Token\Token;
 use Phiki\Transformers\AbstractTransformer;
 
 defined('ABSPATH') or die;
@@ -21,44 +22,176 @@ class CodeBlockProTransformer extends AbstractTransformer
 
     private const FONT_BITS = ['italic' => 1, 'bold' => 2, 'underline' => 4, 'strikethrough' => 8];
 
+    /** @var array<int, list<string>> */
+    private array $flags = [];
+
+    private int $count = 0;
+
     /**
      * @param array<string, array{slug: string, fg: string}> $conditions Condition id => its theme, the base condition first.
      * @param bool $classes False keeps phiki's inline styles, for a lone theme with no stylesheet.
+     * @param CodeBlockProLineOptions $options
      */
-    public function __construct(private array $conditions, private bool $classes = true)
+    public function __construct(private array $conditions, private bool $classes, private array $options)
     {
+    }
+
+    public function count(): int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param array<int, array<Token>> $tokens
+     * @return array<int, array<Token>>
+     */
+    public function tokens(array $tokens): array
+    {
+        $kept = [];
+        $marked = [];
+        $pending = [];
+        foreach ($tokens as $line) {
+            [$line, $markers] = self::stripMarkers(array_values($line));
+            array_push($pending, ...$markers);
+            // A line that held only a marker goes, and the marker applies to the line after it.
+            if ($markers && trim(implode('', array_map(fn ($token) => $token->text, $line))) === '') {
+                continue;
+            }
+            $kept[] = $line;
+            code_block_pro_mark($marked, count($kept) - 1, $pending);
+            $pending = [];
+        }
+        if (!$kept) {
+            $kept[] = [new Token($tokens[0][0]->scopes ?? ['source'], '', 0, 0)];
+        }
+
+        $this->count = count($kept);
+        $this->flags = code_block_pro_line_flags($this->count, $this->options, $marked);
+
+        return $kept;
+    }
+
+    /**
+     * Markers only count inside a comment, so one in a string or heredoc stays as written.
+     *
+     * @param list<Token> $line
+     * @return array{list<Token>, list<array<int|string, string>>}
+     */
+    private static function stripMarkers(array $line): array
+    {
+        $has = fn (Token $token, string $prefix) => (bool) array_filter($token->scopes, fn ($scope) => str_starts_with($scope, $prefix));
+        $text = fn (array $tokens) => implode('', array_map(fn ($token) => $token->text, $tokens));
+        $marker = '/[ \t]*' . CODE_BLOCK_PRO_MARKER . '/i';
+        $markers = [];
+
+        for ($i = 0, $count = count($line); $i < $count; $i = $end) {
+            $end = $i;
+            while ($end < $count && $has($line[$end], 'comment')) {
+                $end++;
+            }
+            if ($end === $i) {
+                $end++;
+                continue;
+            }
+            $run = array_slice($line, $i, $end - $i);
+            if (stripos($text($run), '[!code') === false || !preg_match_all($marker, $text($run), $found, PREG_SET_ORDER)) {
+                continue;
+            }
+            array_push($markers, ...$found);
+            foreach ($run as $token) {
+                $token->text = (string) preg_replace($marker, '', $token->text);
+            }
+            // A grammar that splits a comment's text into several tokens can split a marker too.
+            $body = array_values(array_filter($run, fn ($token) => !$has($token, 'punctuation.definition.comment')));
+            if ($body && preg_match($marker, $text($body))) {
+                $body[0]->text = (string) preg_replace($marker, '', $text($body));
+                foreach (array_slice($body, 1) as $token) {
+                    $token->text = '';
+                }
+            }
+
+            // Delimiters alone may go only when the comment opens and closes on this line.
+            $left = trim($text($run));
+            $closed = $has($run[0], 'comment.line') || preg_match('/^(\/\*|<!--|\{-|\(\*).*(\*\/|-->|-\}|\*\))$/s', $left);
+            if (preg_match('/[\p{L}\p{N}]/u', $left) || !$closed) {
+                continue;
+            }
+            foreach ($run as $token) {
+                $token->text = str_ends_with($token->text, "\n") ? "\n" : '';
+            }
+            // JSX wraps a comment in braces of its own.
+            $from = $i - 1;
+            $before = self::neighbor($line, $from, -1);
+            $after = self::neighbor($line, $end, 1);
+            if ($before !== null && $after !== null && $has($line[$before], 'punctuation.section.embedded.begin') && $has($line[$after], 'punctuation.section.embedded.end')) {
+                $line[$before]->text = '';
+                $line[$after]->text = str_ends_with($line[$after]->text, "\n") ? "\n" : '';
+                $from = $before - 1;
+                $after = self::neighbor($line, $after + 1, 1);
+            }
+            // Code after the comment keeps the indent before it; a comment ending the line takes its space along.
+            if ($after !== null && trim($line[$after]->text) !== '') {
+                for ($k = $end; $k < $after; $k++) {
+                    $line[$k]->text = str_ends_with($line[$k]->text, "\n") ? "\n" : '';
+                }
+                $line[$after]->text = ltrim($line[$after]->text, " \t");
+                continue;
+            }
+            for ($back = $from; $back >= 0; $back--) {
+                $line[$back]->text = rtrim($line[$back]->text, " \t");
+                if ($line[$back]->text !== '') {
+                    break;
+                }
+            }
+        }
+
+        return [array_values(array_filter($line, fn ($token) => $token->text !== '')), $markers];
+    }
+
+    /**
+     * The nearest token from $at, stepping by $step, that holds more than spaces.
+     *
+     * @param list<Token> $line
+     */
+    private static function neighbor(array $line, int $at, int $step): ?int
+    {
+        for (; $at >= 0 && $at < count($line); $at += $step) {
+            if (trim($line[$at]->text, " \t") !== '') {
+                return $at;
+            }
+        }
+
+        return null;
     }
 
     public function pre(Element $pre): Element
     {
+        $properties = new Properties();
+        $classes = code_block_pro_pre_classes($this->count, $this->options, $this->flags);
+        if ($classes) {
+            $properties->set('class', new ClassList($classes));
+        }
         if (!$this->classes) {
-            return new Element('pre', new Properties(['style' => $pre->properties->get('style'), 'tabindex' => self::tabindex()]), $pre->children);
+            $properties->set('style', (string) $pre->properties->get('style'));
         }
-
-        $classes = new ClassList();
-        foreach ($this->conditions as $id => $theme) {
-            $classes->add($id === $this->baseId() ? "cbp-theme-{$theme['slug']}" : "cbp-$id-theme-{$theme['slug']}");
-        }
-
-        return new Element('pre', new Properties(['class' => $classes, 'tabindex' => self::tabindex()]), $pre->children);
-    }
-
-    private static function tabindex(): Text
-    {
         // Properties drops falsy values, which includes the string '0'.
-        return new Text('0');
+        $properties->set('tabindex', new Text('0'));
+
+        return new Element('pre', $properties, $pre->children);
     }
 
     public function code(Element $code): Element
     {
-        $children = [];
-        foreach ($code->children as $i => $line) {
-            if ($i > 0) {
-                $children[] = new Text("\n");
+        // Phiki ends every line with the newline it split on; the last one has nothing after it.
+        $last = end($code->children);
+        $token = $last instanceof Element ? end($last->children) : null;
+        $text = $token instanceof Element ? ($token->children[0] ?? null) : null;
+        if ($last instanceof Element && $text instanceof Text && str_ends_with($text->value, "\n")) {
+            $text->value = substr($text->value, 0, -1);
+            if ($text->value === '') {
+                array_pop($last->children);
             }
-            $children[] = $line;
         }
-        $code->children = $children;
 
         return $code;
     }
@@ -68,19 +201,12 @@ class CodeBlockProTransformer extends AbstractTransformer
      */
     public function line(Element $span, array $tokens, int $index): Element
     {
-        // Phiki ends every line's last token with the newline it split on.
-        $last = end($span->children);
-        $text = $last instanceof Element ? ($last->children[0] ?? null) : null;
-        if (!$text instanceof Text || !str_ends_with($text->value, "\n")) {
-            return $span;
+        $classes = $this->flags[$index] ?? [];
+        foreach (code_block_pro_line_attributes($index, $this->options, $classes) as $name => $value) {
+            $span->properties->set($name, $name === 'class' ? new ClassList(explode(' ', $value)) : new Text(esc_attr($value)));
         }
 
-        $text->value = substr($text->value, 0, -1);
-        if ($text->value === '') {
-            array_pop($span->children);
-        }
-
-        return $span;
+        return new Element(code_block_pro_line_tag($classes), $span->properties, $span->children);
     }
 
     public function token(Element $span, HighlightedToken $token, int $index, int $line): Element

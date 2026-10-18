@@ -12,11 +12,46 @@ function code_block_pro_profile_needs_stylesheet(array $profile): bool
     if ($profile['slug'] === null) {
         return false;
     }
-    if (count($profile['conditions']) > 1 || $profile['conditions'][0]['background']['type'] !== 'theme') {
+    if (count($profile['conditions']) > 1 || $profile['conditions'][0]['background']['type'] !== 'theme' || code_block_pro_profile_setting_rules($profile)) {
         return true;
     }
 
     return (bool) array_filter(code_block_pro_condition_themes($profile, $profile['conditions'][0]['id']), fn ($theme) => $theme['css'] === null);
+}
+
+/**
+ * Font settings that differ from the ones front.css starts every block with.
+ *
+ * @param CodeBlockProProfile $profile
+ * @return list<string>
+ */
+function code_block_pro_profile_setting_rules(array $profile): array
+{
+    $settings = $profile['settings'];
+    $defaults = code_block_pro_profile_setting_defaults();
+    // 1.x's maybeClamp: a rem size between 16 and 24 pixels per rem. 1.x clamped px too, to 16 times their size.
+    $clamp = fn (string $size) => $settings['clampFonts'] && preg_match('/^\d*\.?\d+r?em$/', $size) ? sprintf('clamp(%spx, %s, %spx)', (float) $size * 16, $size, (float) $size * 24) : $size;
+    $declarations = [];
+    foreach (['fontSize' => 'font-size', 'lineHeight' => 'line-height'] as $key => $property) {
+        $value = (string) $settings[$key];
+        if ($value !== '' && ($value !== $defaults[$key] || $settings['clampFonts'])) {
+            $declarations[] = "$property:" . $clamp($value);
+        }
+    }
+    $family = (string) $settings['fontFamily'];
+    if ($family !== $defaults['fontFamily']) {
+        $stack = 'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace';
+        $declarations[] = 'font-family:' . match (true) {
+            $family === '' => $stack,
+            (bool) preg_match('/^Code-Pro-[A-Za-z-]+(\.[a-z0-9]+)?$/', $family) => preg_replace('/\..*$/', '', $family) . ",$stack",
+            default => $family,
+        };
+    }
+    if ($settings['tabSize'] !== $defaults['tabSize']) {
+        $declarations[] = "tab-size:{$settings['tabSize']}";
+    }
+
+    return $declarations ? [".cbp-block.cbp-profile-{$profile['slug']}{" . implode(';', $declarations) . '}'] : [];
 }
 
 /**
@@ -58,7 +93,7 @@ function code_block_pro_profile_css(array $profile): string
     // Scoped to the theme a page was rendered with, so a page cached before an edit falls back to the base whole.
     $basePre = ':is(' . implode(',', array_map(fn ($slug) => ".cbp-theme-$slug", array_keys($baseThemes))) . ')';
     $slots = array_filter($profile['conditions'], fn ($condition) => $condition['background']['type'] === 'slot');
-    $rules = [];
+    $rules = code_block_pro_profile_setting_rules($profile);
 
     foreach ($baseThemes as $theme) {
         if ($theme['css'] === null) {
@@ -66,10 +101,10 @@ function code_block_pro_profile_css(array $profile): string
         }
     }
     if ($slots) {
-        array_push($rules, "$scope{position:relative}", "$scope .cbp-background{position:absolute;inset:0;pointer-events:none;display:none}", "$scope pre{position:relative}");
+        array_push($rules, "$scope .cbp-background{position:absolute;inset:0;pointer-events:none;display:none}", "$scope :is(.cbp-header,.cbp-pane,.cbp-footer){position:relative}");
     }
     if ($base['background']['type'] === 'color') {
-        $rules[] = "$scope $basePre{background-color:{$base['background']['value']}}";
+        $rules[] = "$scope $basePre{background-color:{$base['background']['value']};--cbp-bg:{$base['background']['value']}}";
     }
     if ($base['background']['type'] === 'slot') {
         array_push($rules, "$scope $basePre{background-color:transparent}", "$scope .cbp-background:where([data-cbp-condition=\"{$base['id']}\"]){display:block}");
@@ -89,7 +124,7 @@ function code_block_pro_profile_css(array $profile): string
                 'slot' => 'transparent',
                 default => $palette['bg'],
             };
-            $own[] = "$scope .cbp-$id-theme-{$theme['slug']}{color:{$palette['fg']};background-color:$background}";
+            $own[] = "$scope .cbp-$id-theme-{$theme['slug']}{color:{$palette['fg']};background-color:$background;--cbp-fg:{$palette['fg']};--cbp-bg:" . ($condition['background']['type'] === 'color' ? $background : $palette['bg']) . '}';
             $own[] = "$scope .cbp-$id-theme-{$theme['slug']} code{color:{$palette['fg']}}";
         }
         foreach (array_unique($colors) as $color) {
@@ -122,7 +157,7 @@ function code_block_pro_base_theme_rules(array $theme): array
 {
     $colors = code_block_pro_theme_colors($theme['json']);
     $rules = [
-        ".cbp-theme-{$theme['slug']}{color:{$colors['fg']};background-color:{$colors['bg']}}",
+        ".cbp-theme-{$theme['slug']}{color:{$colors['fg']};background-color:{$colors['bg']};--cbp-fg:{$colors['fg']};--cbp-bg:{$colors['bg']}}",
         ".cbp-theme-{$theme['slug']} code{color:{$colors['fg']}}",
     ];
     foreach ($colors['colors'] as $color) {

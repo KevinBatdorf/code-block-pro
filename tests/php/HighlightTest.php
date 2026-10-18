@@ -78,10 +78,16 @@ class HighlightTest extends WP_UnitTestCase
         libxml_clear_errors();
         $lines = [];
         foreach ((new DOMXPath($doc))->query('//code/span[@class="line"]') as $line) {
-            $lines[] = $line->textContent;
+            $lines[] = preg_replace("/\n\z/", '', $line->textContent);
         }
 
         return $lines;
+    }
+
+    /** The key a freeflow nord block with no line features caches under. */
+    private function key($code, $language = 'javascript')
+    {
+        return code_block_pro_cache_key($code, $language, code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), [code_block_pro_no_line_options(), true]);
     }
 
     private function themeFile($json)
@@ -114,7 +120,7 @@ class HighlightTest extends WP_UnitTestCase
         $html = $this->render('const a = 1;', 'javascript', 'nord');
 
         $this->assertMatchesRegularExpression('#<span class="[^"]*phiki-storage\.type\.js[^"]*cbp-81a1c1[^"]*">const</span>#', $html);
-        $this->assertStringContainsString('<pre class="cbp-theme-nord" tabindex="0">', $html);
+        $this->assertStringContainsString('<div class="cbp-pane cbp-theme-nord"><pre tabindex="0">', $html);
     }
 
     public function test_code_cannot_add_attributes_through_scope_names()
@@ -134,7 +140,7 @@ class HighlightTest extends WP_UnitTestCase
                 $doc->loadHTML('<?xml encoding="UTF-8">' . $html);
                 libxml_clear_errors();
                 $names = [];
-                foreach ((new DOMXPath($doc))->query('//@*') as $attribute) {
+                foreach ((new DOMXPath($doc))->query('//pre//@*') as $attribute) {
                     $names[$attribute->nodeName] = true;
                 }
 
@@ -181,7 +187,7 @@ class HighlightTest extends WP_UnitTestCase
     {
         $this->needsMbregex();
         $expected = $this->render('const FUNCTION = 1;', 'javascript', 'nord');
-        delete_transient(code_block_pro_cache_key('const FUNCTION = 1;', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord'])));
+        delete_transient($this->key('const FUNCTION = 1;'));
         mb_regex_set_options('i');
         $options = mb_regex_set_options();
 
@@ -205,11 +211,16 @@ class HighlightTest extends WP_UnitTestCase
             if ($i > 0) {
                 $glyphs[] = ["\n", null];
             }
+            $start = count($glyphs);
             foreach ((new DOMXPath($doc))->query('.//text()', $line) as $text) {
                 $color = $colorOf($text->parentNode);
                 foreach (mb_str_split($text->nodeValue) as $char) {
                     $glyphs[] = [$char, $color];
                 }
+            }
+            // 2.x lines end with their own newline; 1.x put it between them.
+            if (count($glyphs) > $start && end($glyphs)[0] === "\n") {
+                array_pop($glyphs);
             }
         }
         while ($glyphs && end($glyphs)[0] === "\n") {
@@ -298,7 +309,7 @@ class HighlightTest extends WP_UnitTestCase
 
     public function test_without_mbregex_a_cached_highlight_is_not_served()
     {
-        set_transient(code_block_pro_cache_key('const a = 1;', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord'])), '<pre>cached</pre>');
+        code_block_pro_cache_set($this->key('const a = 1;'), ['html' => '<pre>cached</pre>', 'lines' => 1]);
         add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
 
         $html = $this->render('const a = 1;', 'javascript', 'nord');
@@ -346,14 +357,23 @@ class HighlightTest extends WP_UnitTestCase
         $this->assertSame([''], $this->lines($this->render('')));
     }
 
-    public function test_lines_are_separated_by_newlines_between_their_spans()
+    public function test_each_line_but_the_last_ends_with_its_own_newline()
     {
         $this->needsMbregex();
 
-        $html = $this->render("a\n\nb");
+        foreach ([true, false] as $mbregex) {
+            add_filter('blocks.codeBlockPro.canUpgrade', $mbregex ? '__return_true' : '__return_false');
+            $doc = new DOMDocument();
+            libxml_use_internal_errors(true);
+            $doc->loadHTML('<?xml encoding="UTF-8">' . $this->render("a\n\nb"));
+            libxml_clear_errors();
+            $xpath = new DOMXPath($doc);
 
-        $this->assertSame(['a', '', 'b'], $this->lines($html));
-        $this->assertSame("a\n\nb", $this->codeText($html));
+            $this->assertSame(["a\n", "\n", 'b'], array_map(fn ($line) => $line->textContent, iterator_to_array($xpath->query('//code/span'))));
+            // Blank lines drop out of a copied selection in Chrome and Safari when the newline sits between lines.
+            $this->assertSame(0, $xpath->query('//code/text()')->length);
+            remove_all_filters('blocks.codeBlockPro.canUpgrade');
+        }
     }
 
     public function test_highlighted_code_is_inert()
@@ -425,7 +445,7 @@ class HighlightTest extends WP_UnitTestCase
         foreach ($themes as $json) {
             $slug = basename($json, '.json');
             $css = file_get_contents("$build/$slug.css");
-            $this->assertMatchesRegularExpression("/\\.cbp-theme-$slug\\{color:#[0-9a-f]+;background-color:#[0-9a-f]+\\}/", $css, $slug);
+            $this->assertMatchesRegularExpression("/\\.cbp-theme-$slug\\{color:(#[0-9a-f]+);background-color:(#[0-9a-f]+);--cbp-fg:\\1;--cbp-bg:\\2\\}/", $css, $slug);
             $this->assertMatchesRegularExpression("/\\.cbp-theme-$slug code\\{color:#[0-9a-f]+\\}/", $css, $slug);
             foreach (json_decode(file_get_contents($json), true)['tokenColors'] as $rule) {
                 $color = $rule['settings']['foreground'] ?? null;
@@ -455,25 +475,35 @@ class HighlightTest extends WP_UnitTestCase
     public function test_a_highlight_is_cached()
     {
         $this->needsMbregex();
-        $key = code_block_pro_cache_key('const a = 1;', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']));
+        $key = $this->key('const a = 1;');
 
         $first = $this->render('const a = 1;', 'javascript', 'nord');
-        $this->assertIsString(get_transient($key));
-        $this->assertStringContainsString(get_transient($key), $first);
+        $this->assertStringContainsString(code_block_pro_cache_get($key)['html'], $first);
+        $this->assertStringStartsWith('z:', get_transient($key));
 
-        set_transient($key, '<pre>cached</pre>');
+        code_block_pro_cache_set($key, ['html' => '<pre>cached</pre>', 'lines' => 1]);
         $this->assertStringContainsString('<pre>cached</pre>', $this->render('const a = 1;', 'javascript', 'nord'));
     }
 
     public function test_the_cache_key_changes_with_each_input()
     {
-        $key = code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0');
+        $nord = code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']);
+        $key = code_block_pro_cache_key('a', 'javascript', $nord, [1], '2.0.0');
 
-        $this->assertNotSame($key, code_block_pro_cache_key('b', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0'));
-        $this->assertNotSame($key, code_block_pro_cache_key('a', 'php', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0'));
-        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'dracula']), '2.0.0'));
-        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.1'));
-        $this->assertSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('b', 'javascript', $nord, [1], '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'php', $nord, [1], '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'dracula']), [1], '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', $nord, [2], '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', $nord, [1], '2.0.1'));
+        $this->assertSame($key, code_block_pro_cache_key('a', 'javascript', $nord, [1], '2.0.0'));
+    }
+
+    public function test_a_cached_value_that_does_not_decode_is_a_miss()
+    {
+        set_transient('code_block_pro_test', 'z:not base64');
+        $this->assertNull(code_block_pro_cache_get('code_block_pro_test'));
+        set_transient('code_block_pro_test', '<pre>raw</pre>');
+        $this->assertNull(code_block_pro_cache_get('code_block_pro_test'));
     }
 
     public function test_the_version_constant_matches_the_plugin_header()

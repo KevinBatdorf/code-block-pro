@@ -37,7 +37,7 @@ const themeCss = (slug, theme) => {
 			.filter(Boolean),
 	);
 	return [
-		`.cbp-theme-${slug}{color:${fg.toLowerCase()};background-color:${bg.toLowerCase()}}`,
+		`.cbp-theme-${slug}{color:${fg.toLowerCase()};background-color:${bg.toLowerCase()};--cbp-fg:${fg.toLowerCase()};--cbp-bg:${bg.toLowerCase()}}`,
 		// Tokens with no color of their own inherit through <code>, which site themes often color.
 		`.cbp-theme-${slug} code{color:${fg.toLowerCase()}}`,
 		...[...colors].map((color) => `.${colorClass(color)}{color:${color}}`),
@@ -76,4 +76,34 @@ const themeCssPlugin = (dir) => ({
 	},
 });
 
-module.exports = { themeCssPlugin };
+// One stylesheet per font, so a block loads only the face its profile uses.
+const fontCssPlugin = (dir) => ({
+	apply: (compiler) => {
+		const { Compilation, sources } = compiler.webpack;
+		compiler.hooks.thisCompilation.tap('FontCss', (compilation) => {
+			compilation.hooks.processAssets.tap(
+				{
+					name: 'FontCss',
+					stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
+				},
+				() => {
+					const files = fs
+						.readdirSync(dir)
+						.filter((f) => /\.(woff2?|ttf)$/.test(f));
+					for (const file of files) {
+						const name = file.replace(/\..*$/, '');
+						compilation.emitAsset(
+							`fonts/${name}.css`,
+							new sources.RawSource(
+								`@font-face{font-family:${name};src:url(${file});font-display:swap}\n`,
+							),
+							{ minimized: true },
+						);
+					}
+				},
+			);
+		});
+	},
+});
+
+module.exports = { themeCssPlugin, fontCssPlugin };
