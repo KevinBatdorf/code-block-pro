@@ -1,0 +1,18 @@
+{
+	"name": "kevinbatdorf/code-block-pro-tools",
+	"description": "Test and lint tools, kept apart so the committed vendor/ holds only what the plugin ships",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"phpunit/phpunit": "^9.6",
+		"wp-phpunit/wp-phpunit": "^7.0",
+		"yoast/phpunit-polyfills": "^2.0",
+		"phpstan/phpstan": "^2.1",
+		"szepeviktor/phpstan-wordpress": "^2.0",
+		"laravel/pint": "^1.18"
+	},
+	"config": {
+		"platform": {
+			"php": "8.2"
+		}
+	}
+}

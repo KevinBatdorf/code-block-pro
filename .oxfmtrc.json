@@ -29,6 +29,8 @@
 		"src_old",
 		"tests_old",
 		"src/legacy/assets",
+		"src/themes",
+		"tools",
 		"tests/fixtures/code",
 		"tests/fixtures/blocks",
 		"tests/fixtures/index.json",

@@ -1,5 +1,5 @@
 node_modules
-/vendor
+/tools/vendor
 /phpunit.xml
 .phpunit.result.cache
 build

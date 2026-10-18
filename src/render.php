@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var array{version?: int, panes?: list<array{code?: string}>} $attributes
+ * @var array{version?: int, theme?: string, panes?: list<array{language?: string, code?: string}>} $attributes
  * @var string $content
  */
 
@@ -14,8 +14,12 @@ if (!isset($attributes['version'])) {
     return;
 }
 ?>
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo get_block_wrapper_attributes(['class' => 'cbp-block']); ?>>
 <?php foreach ($attributes['panes'] ?? [] as $pane) : ?>
-    <pre><code><?php echo str_replace(['[', ']'], ['&#91;', '&#93;'], htmlspecialchars($pane['code'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')); ?></code></pre>
+    <?php
+    // Undoes the editor's encode().
+    $code = strtr($pane['code'] ?? '', ['&amp;' => '&', '&lt;' => '<', '&gt;' => '>']);
+    echo code_block_pro_highlight($code, $pane['language'] ?? '', $attributes['theme'] ?? 'nord');
+    ?>
 <?php endforeach; ?>
 </div>

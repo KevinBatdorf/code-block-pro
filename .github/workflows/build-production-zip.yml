@@ -36,6 +36,7 @@ jobs:
                       !${{ github.workspace }}/node_modules/
                       !${{ github.workspace }}/tests/
                       !${{ github.workspace }}/tests_old/
+                      !${{ github.workspace }}/tools/
                       !${{ github.workspace }}/src_old/
                       !${{ github.workspace }}/target/
                       !${{ github.workspace }}/scripts/

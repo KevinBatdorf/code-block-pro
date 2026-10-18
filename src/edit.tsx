@@ -10,6 +10,17 @@ import { RawHTML, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import type { Attributes } from './types';
 
+// kses rewrites raw <, > and & in block attributes for users without unfiltered_html.
+const ESCAPES: Record<string, string> = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+};
+const UNESCAPES: Record<string, string> = { amp: '&', lt: '<', gt: '>' };
+const encode = (code: string) => code.replace(/[&<>]/g, (c) => ESCAPES[c]);
+const decode = (code: string) =>
+	code.replace(/&(amp|lt|gt);/g, (_, name: string) => UNESCAPES[name]);
+
 export const Edit = ({
 	attributes,
 	setAttributes,
@@ -43,9 +54,9 @@ export const Edit = ({
 		<div {...blockProps}>
 			<PlainText
 				aria-label={__('Code', 'code-block-pro')}
-				value={first.code ?? ''}
+				value={decode(first.code ?? '')}
 				onChange={(code: string) =>
-					setAttributes({ panes: [{ ...first, code }, ...rest] })
+					setAttributes({ panes: [{ ...first, code: encode(code) }, ...rest] })
 				}
 			/>
 		</div>

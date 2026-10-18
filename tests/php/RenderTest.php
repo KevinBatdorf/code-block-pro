@@ -2,9 +2,9 @@
 
 class RenderTest extends WP_UnitTestCase
 {
-    const NAME = 'kevinbatdorf/code-block-pro';
-    const SCRIPT = 'kevinbatdorf-code-block-pro-view-script';
-    const STYLE = 'kevinbatdorf-code-block-pro-style';
+    public const NAME = 'kevinbatdorf/code-block-pro';
+    public const SCRIPT = 'kevinbatdorf-code-block-pro-view-script';
+    public const STYLE = 'kevinbatdorf-code-block-pro-style';
 
     public function tear_down()
     {
@@ -40,7 +40,7 @@ class RenderTest extends WP_UnitTestCase
 
     private function v2Block($code)
     {
-        $attributes = wp_json_encode(['version' => 2, 'panes' => [['language' => 'html', 'code' => $code]]]);
+        $attributes = serialize_block_attributes(['version' => 2, 'panes' => [['language' => 'html', 'code' => strtr($code, ['&' => '&amp;', '<' => '&lt;', '>' => '&gt;'])]]]);
 
         return parse_blocks('<!-- wp:' . self::NAME . ' ' . $attributes . ' /-->')[0];
     }
@@ -139,7 +139,7 @@ class RenderTest extends WP_UnitTestCase
     {
         $html = render_block($this->v2Block('<b>bold</b> &amp; [gallery]'));
 
-        $this->assertStringContainsString('&lt;b&gt;bold&lt;/b&gt; &amp;amp; &#91;gallery&#93;', $html);
+        $this->assertSame('<b>bold</b> &amp; [gallery]', trim(html_entity_decode(strip_tags($html), ENT_QUOTES | ENT_HTML5, 'UTF-8')));
         $this->assertSame($html, do_shortcode($html));
     }
 }

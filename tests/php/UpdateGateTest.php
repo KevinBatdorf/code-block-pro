@@ -91,4 +91,21 @@ class UpdateGateTest extends WP_UnitTestCase
 
         $this->assertFalse(apply_filters('site_transient_update_plugins', false));
     }
+
+    public function test_the_capability_check_covers_every_mbregex_function_phiki_calls()
+    {
+        $gate = file_get_contents(dirname(__DIR__, 2) . '/php/update-gate.php');
+        $called = [];
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__DIR__, 2) . '/vendor/phiki/phiki/src'));
+        foreach ($files as $file) {
+            if ($file->getExtension() === 'php' && preg_match_all('/\bmb_ereg\w*(?=\()/', file_get_contents($file->getPathname()), $found)) {
+                $called = array_merge($called, $found[0]);
+            }
+        }
+
+        $this->assertNotEmpty($called);
+        foreach (array_unique($called) as $function) {
+            $this->assertStringContainsString("'$function'", $gate);
+        }
+    }
 }

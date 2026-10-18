@@ -60,8 +60,17 @@ jobs:
         extensions: mbstring, mysqli
         coverage: none
 
-    - name: Install Composer dependencies
+    - name: Install the test tools
       uses: ramsey/composer-install@v3
+      with:
+        working-directory: tools
+
+    # vendor/ is committed and ships in the plugin.
+    - name: Committed vendor matches composer.lock
+      run: composer install --dry-run --no-interaction 2>&1 | tee /dev/stderr | grep -q 'Nothing to install, update or remove'
+
+    - name: Pint
+      run: composer lint
 
     - name: PHPStan
       run: composer phpstan
@@ -120,8 +129,8 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - name: Install Composer dependencies
-      run: composer install --no-interaction --no-progress
+    - name: Install the test tools
+      run: composer install --working-dir=tools --no-interaction --no-progress
 
     - uses: actions/download-artifact@v6
       with:

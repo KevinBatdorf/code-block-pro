@@ -4,7 +4,7 @@ defined('ABSPATH') or die;
 
 function code_block_pro_can_upgrade(): bool
 {
-    // The mb_ereg_* set phiki v2.2.1 calls; phiki is not a dependency, so drift goes unnoticed.
+    // Every mb_ereg_* function phiki calls; UpdateGateTest fails when phiki starts calling another.
     $needed = [
         'mb_ereg_search_init',
         'mb_ereg_search_pos',

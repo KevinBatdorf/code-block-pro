@@ -1,0 +1,4 @@
+{
+	"preset": "psr12",
+	"exclude": ["src_old", "tests_old", "tests/fixtures", "tools"]
+}

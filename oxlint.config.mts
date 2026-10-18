@@ -26,6 +26,7 @@ export default defineConfig({
 		'vendor',
 		'src_old',
 		'src/legacy/assets',
+		'tools',
 		'tests_old',
 		'tests/fixtures/code',
 		'tests/fixtures/blocks',

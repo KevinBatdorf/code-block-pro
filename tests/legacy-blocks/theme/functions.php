@@ -1,7 +1,7 @@
 <?php
 
 add_action('wp_enqueue_scripts', function () {
-	wp_enqueue_style('cbp-baseline', get_stylesheet_uri());
+    wp_enqueue_style('cbp-baseline', get_stylesheet_uri());
 });
 
 // The fixed admin bar covers a block scrolled to the top, and shows in its screenshot.

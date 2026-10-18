@@ -1,6 +1,7 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const RtlCssPlugin = require('@wordpress/scripts/plugins/rtlcss-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const { themeCssPlugin } = require('./scripts/theme-css');
 
 module.exports = {
 	...defaultConfig,
@@ -25,7 +26,9 @@ module.exports = {
 				},
 				// The 1.x front script fetches fonts from build/fonts/.
 				{ from: 'src/legacy/fonts', to: 'fonts' },
+				{ from: 'src/themes', to: 'themes' },
 			],
 		}),
+		themeCssPlugin('src/themes'),
 	],
 };

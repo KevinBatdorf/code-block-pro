@@ -148,9 +148,10 @@ test('a new block saves no markup', async ({ admin, editor, page }) => {
 		(content) => window.wp.blocks.parse(content),
 		saved,
 	);
+	// The editor stores code escaped.
 	expect(block.attributes).toMatchObject({
 		version: 2,
-		panes: [{ code: '<b>bold</b> & [gallery]' }],
+		panes: [{ code: '&lt;b&gt;bold&lt;/b&gt; &amp; [gallery]' }],
 	});
 });
 

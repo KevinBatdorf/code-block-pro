@@ -7,7 +7,6 @@
 /assets
 /scripts
 /tests
-/vendor
 /composer.json
 /composer.lock
 /phpunit.xml.dist
@@ -23,3 +22,14 @@
 /tests_old
 /.claude
 /tsconfig.json
+/tools
+/pint.json
+/vendor/phiki/phiki/src/Tests
+/vendor/phiki/phiki/src/Adapters
+/vendor/phiki/phiki/package.json
+/vendor/phiki/phiki/package-lock.json
+/vendor/phiki/phiki/phpunit.xml
+/vendor/phiki/phiki/phpstan.neon
+/vendor/phiki/phiki/testbench.yaml
+/vendor/phiki/phiki/CONTRIBUTING.md
+/vendor/phiki/phiki/UPGRADE-2.x.md

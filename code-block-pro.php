@@ -7,7 +7,7 @@
  * Author:            Kevin Batdorf
  * Author URI:        https://code-block-pro.com
  * Requires at least: 6.6
- * Requires PHP:      7.0
+ * Requires PHP:      8.2
  * Version:           1.28.0
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,6 +19,7 @@
 defined('ABSPATH') or die;
 
 define('CODE_BLOCK_PRO_BASENAME', plugin_basename(__FILE__));
+define('CODE_BLOCK_PRO_VERSION', '1.28.0');
 
 add_action('init', function () {
     // 1.x's handles and versions, so cached copies and handle-based site tweaks keep working.
@@ -51,6 +52,7 @@ add_action('admin_init', function () {
 });
 
 include_once(__DIR__ . '/php/compatibility.php');
+include_once(__DIR__ . '/php/highlight.php');
 include_once(__DIR__ . '/php/update-gate.php');
 include_once(__DIR__ . '/php/router.php');
 include_once(__DIR__ . '/php/routes.php');
