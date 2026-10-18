@@ -4,10 +4,11 @@ permissions:
 on:
   pull_request:
   push:
-    branches: main
 
 jobs:
   discover:
+    # A branch in this repo already ran on push.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     name: Discover test suites
     runs-on: ubuntu-latest
     outputs:

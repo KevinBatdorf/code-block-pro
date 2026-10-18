@@ -5,13 +5,14 @@ permissions:
 on:
   pull_request:
   push:
-    branches: main
 
 env:
   IMAGE: ghcr.io/kevinbatdorf/php-no-mbregex:8.4
 
 jobs:
   build:
+    # A branch in this repo already ran on push.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     name: Build the plugin
     runs-on: ubuntu-latest
     steps:
@@ -79,6 +80,7 @@ jobs:
         WP_ABSPATH: ${{ github.workspace }}/wordpress
 
   image:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     name: Build the PHP image without mbregex
     runs-on: ubuntu-latest
     steps:
