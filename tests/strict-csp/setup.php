@@ -9,7 +9,7 @@ copy(__DIR__ . '/mu-plugin.php', WPMU_PLUGIN_DIR . '/cbp-strict-csp.php');
 
 $block = function ($theme, $language, $code) {
     // Escaped, as the editor stores it.
-    $attributes = ['version' => 2, 'theme' => $theme, 'panes' => [['language' => $language, 'code' => htmlspecialchars($code, ENT_NOQUOTES)]]];
+    $attributes = ['version' => 2, 'profile' => '', 'theme' => $theme, 'panes' => [['language' => $language, 'code' => htmlspecialchars($code, ENT_NOQUOTES)]]];
 
     return '<!-- wp:kevinbatdorf/code-block-pro ' . serialize_block_attributes($attributes) . ' /-->';
 };

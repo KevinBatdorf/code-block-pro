@@ -4,6 +4,7 @@ use Phiki\Phast\ClassList;
 use Phiki\Phast\Element;
 use Phiki\Phast\Properties;
 use Phiki\Phast\Text;
+use Phiki\Theme\TokenSettings;
 use Phiki\Token\HighlightedToken;
 use Phiki\Transformers\AbstractTransformer;
 
@@ -18,20 +19,28 @@ class CodeBlockProTransformer extends AbstractTransformer
         'strikethrough' => 'cbp-strike',
     ];
 
+    private const FONT_BITS = ['italic' => 1, 'bold' => 2, 'underline' => 4, 'strikethrough' => 8];
+
     /**
-     * @param string|null $theme Slug of a theme with a stylesheet, or null to keep phiki's inline styles.
+     * @param array<string, array{slug: string, fg: string}> $conditions Condition id => its theme, the base condition first.
+     * @param bool $classes False keeps phiki's inline styles, for a lone theme with no stylesheet.
      */
-    public function __construct(private ?string $theme)
+    public function __construct(private array $conditions, private bool $classes = true)
     {
     }
 
     public function pre(Element $pre): Element
     {
-        if ($this->theme === null) {
+        if (!$this->classes) {
             return new Element('pre', new Properties(['style' => $pre->properties->get('style'), 'tabindex' => self::tabindex()]), $pre->children);
         }
 
-        return new Element('pre', new Properties(['class' => "cbp-theme-{$this->theme}", 'tabindex' => self::tabindex()]), $pre->children);
+        $classes = new ClassList();
+        foreach ($this->conditions as $id => $theme) {
+            $classes->add($id === $this->baseId() ? "cbp-theme-{$theme['slug']}" : "cbp-$id-theme-{$theme['slug']}");
+        }
+
+        return new Element('pre', new Properties(['class' => $classes, 'tabindex' => self::tabindex()]), $pre->children);
     }
 
     private static function tabindex(): Text
@@ -86,22 +95,47 @@ class CodeBlockProTransformer extends AbstractTransformer
         }
         $span->properties->set('class', $classes);
 
-        if ($this->theme === null) {
+        if (!$this->classes) {
             return $span;
         }
 
-        $settings = $token->settings['default'] ?? null;
-        if ($settings && $settings->foreground) {
-            $classes->add(code_block_pro_color_class($settings->foreground));
+        $base = $token->settings[$this->baseId()] ?? null;
+        if ($base && $base->foreground) {
+            $classes->add(code_block_pro_color_class($base->foreground));
         }
-        foreach (preg_split('/\s+/', (string) $settings?->fontStyle, -1, PREG_SPLIT_NO_EMPTY) ?: [] as $style) {
+        foreach (self::fontStyles($base) as $style) {
             if (isset(self::FONT_STYLES[$style])) {
                 $classes->add(self::FONT_STYLES[$style]);
+            }
+        }
+
+        $bits = [];
+        foreach ($this->conditions as $id => $theme) {
+            $bits[$id] = array_sum(array_intersect_key(self::FONT_BITS, array_flip(self::fontStyles($token->settings[$id] ?? null))));
+        }
+        foreach (array_slice($this->conditions, 1, null, true) as $id => $theme) {
+            // Every condition names a color, or the base condition's would show through.
+            $classes->add(code_block_pro_color_class($token->settings[$id]->foreground ?? $theme['fg'], $id));
+            if (array_filter($bits)) {
+                $classes->add("cbp-$id-font{$bits[$id]}");
             }
         }
         $span->properties->remove('style');
 
         return $span;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private static function fontStyles(?TokenSettings $settings): array
+    {
+        return preg_split('/\s+/', (string) $settings?->fontStyle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    }
+
+    private function baseId(): string
+    {
+        return (string) array_key_first($this->conditions);
     }
 
     public function postprocess(string $html): string

@@ -56,7 +56,7 @@
 		"tabSize": { "type": "number", "default": 2 },
 		"useTabs": { "type": "boolean" },
 		"version": { "type": "number" },
-		"profile": { "type": "string" },
+		"profile": { "type": "string", "default": "default" },
 		"panes": {
 			"type": "array",
 			"items": {

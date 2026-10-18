@@ -9,3 +9,10 @@ parameters:
         - src/render.php
     bootstrapFiles:
         - tests/phpstan/bootstrap.php
+    typeAliases:
+        CodeBlockProTrigger: "array{type: 'base'|'button'}|array{type: 'media'|'class', value: string}"
+        CodeBlockProBackground: "array{type: 'theme'|'slot'}|array{type: 'color', value: string}"
+        CodeBlockProCondition: 'array{id: string, name: string, theme: string, trigger: CodeBlockProTrigger, background: CodeBlockProBackground}'
+        CodeBlockProButton: "array{type: 'copy', icon: string, label: string, copiedLabel: string}|array{type: 'toggle', label: string, conditions: list<string>}|array{type: 'custom', id: string, label: string}"
+        CodeBlockProProfileData: 'array{version: int, settings: array<string, string|int|bool>, conditions: non-empty-list<CodeBlockProCondition>, languages: array<string, array<string, string>>, buttons: list<CodeBlockProButton>}'
+        CodeBlockProProfile: 'array{id: int, slug: string|null, stamp: string, version: int, settings: array<string, string|int|bool>, conditions: non-empty-list<CodeBlockProCondition>, languages: array<string, array<string, string>>, buttons: list<CodeBlockProButton>}'

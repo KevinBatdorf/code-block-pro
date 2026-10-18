@@ -42,7 +42,7 @@ class HighlightTest extends WP_UnitTestCase
     /** The editor stores code HTML-escaped. */
     private function markup($code, $language = 'javascript', $theme = null)
     {
-        $attributes = ['version' => 2, 'panes' => [['language' => $language, 'code' => strtr($code, ['&' => '&amp;', '<' => '&lt;', '>' => '&gt;'])]]];
+        $attributes = ['version' => 2, 'profile' => '', 'panes' => [['language' => $language, 'code' => strtr($code, ['&' => '&amp;', '<' => '&lt;', '>' => '&gt;'])]]];
         if ($theme !== null) {
             $attributes['theme'] = $theme;
         }
@@ -58,7 +58,7 @@ class HighlightTest extends WP_UnitTestCase
     private function renderStored($attributes)
     {
         $pane = ['language' => $attributes['language'] ?? 'javascript', 'code' => $attributes['code']];
-        $block = ['version' => 2, 'theme' => $attributes['theme'] ?? 'nord', 'panes' => [$pane]];
+        $block = ['version' => 2, 'profile' => '', 'theme' => $attributes['theme'] ?? 'nord', 'panes' => [$pane]];
 
         return render_block(parse_blocks('<!-- wp:' . self::NAME . ' ' . serialize_block_attributes($block) . ' /-->')[0]);
     }
@@ -181,7 +181,7 @@ class HighlightTest extends WP_UnitTestCase
     {
         $this->needsMbregex();
         $expected = $this->render('const FUNCTION = 1;', 'javascript', 'nord');
-        delete_transient(code_block_pro_cache_key('const FUNCTION = 1;', 'javascript', 'nord'));
+        delete_transient(code_block_pro_cache_key('const FUNCTION = 1;', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord'])));
         mb_regex_set_options('i');
         $options = mb_regex_set_options();
 
@@ -243,7 +243,7 @@ class HighlightTest extends WP_UnitTestCase
             }
             preg_match("/\\.cbp-theme-$theme\\{color:(#[0-9a-f]+)/", file_get_contents("$build/$theme.css"), $default);
             $code = empty($pane['useDecodeURI']) ? html_entity_decode($pane['code'], ENT_QUOTES | ENT_HTML5, 'UTF-8') : rawurldecode($pane['code']);
-            $ours = $this->paintedGlyphs(code_block_pro_highlight($code, $pane['language'] ?? 'javascript', $theme), function ($node) use ($default) {
+            $ours = $this->paintedGlyphs(code_block_pro_highlight($code, $pane['language'] ?? 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => $theme])), function ($node) use ($default) {
                 return preg_match('/\bcbp-([0-9a-f]{3,8})\b/', $node->getAttribute('class'), $m) ? "#$m[1]" : $default[1];
             });
             $theirs = $this->paintedGlyphs($pane['codeHTML'], function ($node) {
@@ -298,7 +298,7 @@ class HighlightTest extends WP_UnitTestCase
 
     public function test_without_mbregex_a_cached_highlight_is_not_served()
     {
-        set_transient(code_block_pro_cache_key('const a = 1;', 'javascript', 'nord'), '<pre>cached</pre>');
+        set_transient(code_block_pro_cache_key('const a = 1;', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord'])), '<pre>cached</pre>');
         add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
 
         $html = $this->render('const a = 1;', 'javascript', 'nord');
@@ -384,7 +384,7 @@ class HighlightTest extends WP_UnitTestCase
     public function test_only_the_three_escapes_the_editor_writes_are_decoded()
     {
         $this->needsMbregex();
-        $stored = serialize_block_attributes(['version' => 2, 'panes' => [['language' => 'javascript', 'code' => 'f("?a=1&copy=2&copy;&quot;&amp;lt;")']]]);
+        $stored = serialize_block_attributes(['version' => 2, 'profile' => '', 'panes' => [['language' => 'javascript', 'code' => 'f("?a=1&copy=2&copy;&quot;&amp;lt;")']]]);
 
         $html = render_block(parse_blocks('<!-- wp:' . self::NAME . " $stored /-->")[0]);
 
@@ -455,7 +455,7 @@ class HighlightTest extends WP_UnitTestCase
     public function test_a_highlight_is_cached()
     {
         $this->needsMbregex();
-        $key = code_block_pro_cache_key('const a = 1;', 'javascript', 'nord');
+        $key = code_block_pro_cache_key('const a = 1;', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']));
 
         $first = $this->render('const a = 1;', 'javascript', 'nord');
         $this->assertIsString(get_transient($key));
@@ -467,13 +467,13 @@ class HighlightTest extends WP_UnitTestCase
 
     public function test_the_cache_key_changes_with_each_input()
     {
-        $key = code_block_pro_cache_key('a', 'javascript', 'nord', '2.0.0');
+        $key = code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0');
 
-        $this->assertNotSame($key, code_block_pro_cache_key('b', 'javascript', 'nord', '2.0.0'));
-        $this->assertNotSame($key, code_block_pro_cache_key('a', 'php', 'nord', '2.0.0'));
-        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', 'dracula', '2.0.0'));
-        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', 'nord', '2.0.1'));
-        $this->assertSame($key, code_block_pro_cache_key('a', 'javascript', 'nord', '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('b', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'php', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'dracula']), '2.0.0'));
+        $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.1'));
+        $this->assertSame($key, code_block_pro_cache_key('a', 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']), '2.0.0'));
     }
 
     public function test_the_version_constant_matches_the_plugin_header()
