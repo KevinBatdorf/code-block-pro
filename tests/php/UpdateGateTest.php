@@ -115,6 +115,7 @@ class UpdateGateTest extends WP_UnitTestCase
         $this->assertArrayHasKey('code_block_pro_mbregex', $tests['direct']);
         $run = $tests['direct']['code_block_pro_mbregex']['test'];
 
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_true');
         $this->assertSame('good', $run()['status']);
 
         add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
@@ -133,6 +134,7 @@ class UpdateGateTest extends WP_UnitTestCase
             return (string) ob_get_clean();
         };
 
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_true');
         $this->assertSame('', $row());
 
         add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
@@ -147,6 +149,7 @@ class UpdateGateTest extends WP_UnitTestCase
     {
         $args = fn () => apply_filters('register_block_type_args', ['supports' => ['anchor' => true]], 'kevinbatdorf/code-block-pro');
 
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_true');
         $this->assertArrayNotHasKey('inserter', $args()['supports']);
 
         add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
