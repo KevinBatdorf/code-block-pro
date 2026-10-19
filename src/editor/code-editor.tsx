@@ -323,8 +323,7 @@ export const CodeEditor = ({
 				error={error}
 				retry={retry}
 			/>
-			{/* The content group still shows when the block sits in a pattern or template part. */}
-			<InspectorControls group="content">
+			<InspectorControls>
 				<PanelBody title={__('Code', 'code-block-pro')}>
 					<Panes
 						panes={panes}
@@ -343,8 +342,6 @@ export const CodeEditor = ({
 						onChange={(language) => setPane({ language: language ?? '' })}
 					/>
 				</PanelBody>
-			</InspectorControls>
-			<InspectorControls>
 				<PanelBody title={__('Profile', 'code-block-pro')}>
 					<ProfilePicker
 						value={attributes.profile ?? 'default'}

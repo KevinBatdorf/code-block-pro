@@ -277,7 +277,6 @@ test('the sidebar sets line options the editor and the front end both show', asy
 	await page.keyboard.press('Enter');
 	await page.keyboard.type('c');
 
-	await page.getByRole('tab', { name: 'Settings' }).click();
 	await page.getByRole('button', { name: 'Lines' }).click();
 	await page.getByRole('spinbutton', { name: 'First line number' }).fill('10');
 	await page.getByRole('textbox', { name: 'Highlight lines' }).fill('11');
