@@ -332,7 +332,16 @@ function code_block_pro_block_profile(array $attributes): array
 {
     $slug = $attributes['profile'] ?? 'default';
     if ($slug !== '') {
-        return code_block_pro_profile(is_string($slug) ? $slug : 'default');
+        $profile = code_block_pro_profile(is_string($slug) ? $slug : 'default');
+        if (is_string($slug) && $profile['slug'] !== $slug) {
+            code_block_pro_report_issue('missing-profile', fn () => sprintf(
+                /* translators: %s: the name of a profile, as saved in the block. */
+                __('The profile “%s” does not exist or is not published, so this block uses the Default profile. Choose another profile, or publish one with that name.', 'code-block-pro'),
+                code_block_pro_plain_text($slug, 200)
+            ));
+        }
+
+        return $profile;
     }
 
     $profile = code_block_pro_sanitize_profile(['conditions' => [['id' => 'main', 'theme' => $attributes['theme'] ?? 'nord']]]);

@@ -1,0 +1,55 @@
+/* The textarea shares the code's grid cell, so both grow to the longer of the two. */
+.cbp-editor .cbp-block .cbp-pane > pre {
+	display: grid;
+}
+.cbp-editor .cbp-block .cbp-pane > pre.cbp-fold {
+	max-height: none;
+}
+.cbp-editor .cbp-block .cbp-pane > pre > code {
+	grid-area: 1 / 1;
+}
+.cbp-editor .cbp-block .cbp-pane > pre > .cbp-input {
+	all: unset;
+	grid-area: 1 / 1;
+	/* Lines are positioned, so they would paint over the textarea and take its clicks. */
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	min-width: 0;
+	/* Over the pre's padding too, or a click there focuses the pre and typing is lost. */
+	margin-block: calc(-1 * var(--cbp-p));
+	padding: var(--cbp-p) var(--cbp-p) var(--cbp-p)
+		calc(var(--cbp-p) + var(--cbp-numbers-w) + var(--cbp-diff-w));
+	overflow: hidden;
+	resize: none;
+	white-space: pre;
+	-webkit-text-fill-color: transparent;
+	caret-color: currentColor;
+	cursor: text;
+}
+.cbp-editor .cbp-block.cbp-no-padding .cbp-pane > pre > .cbp-input {
+	margin-block: 0;
+	padding: 0 0 0 calc(var(--cbp-numbers-w) + var(--cbp-diff-w));
+}
+.cbp-editor .cbp-block.cbp-has-footer .cbp-pane > pre > .cbp-input {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+.cbp-editor .cbp-block .cbp-pane > pre > .cbp-input::selection {
+	background-color: color-mix(in srgb, currentColor 25%, transparent);
+}
+.cbp-editor .cbp-block .cbp-more {
+	display: none;
+}
+.cbp-panes {
+	margin: 0 0 16px;
+	padding: 0;
+	list-style: none;
+}
+.cbp-panes .cbp-pane-select {
+	flex: 1;
+	min-width: 0;
+}
+.cbp-add-pane {
+	margin-bottom: 16px;
+}

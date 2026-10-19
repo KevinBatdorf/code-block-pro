@@ -702,4 +702,30 @@ class ProfileTest extends WP_UnitTestCase
         $this->assertStringContainsString('cbp_refused=1', $location);
         $this->assertStringNotContainsString('cbp_refused', $clean);
     }
+
+    public function test_the_editor_lists_published_profiles_default_first()
+    {
+        code_block_pro_insert_profile('zebra', ['conditions' => [['id' => 'main', 'theme' => 'nord']]], 'Alpha');
+        code_block_pro_insert_profile('apple', ['conditions' => [['id' => 'main', 'theme' => 'nord']]], 'Zulu');
+        self::factory()->post->create(['post_type' => CODE_BLOCK_PRO_PROFILE_TYPE, 'post_name' => 'draft', 'post_status' => 'draft', 'post_content' => '{}']);
+        $list = function () {
+            return rest_get_server()->dispatch(new WP_REST_Request('GET', '/code-block-pro/v1/profiles'));
+        };
+
+        // A visitor would learn the site's profile names.
+        $this->assertSame(401, $list()->get_status());
+        wp_set_current_user(self::factory()->user->create(['role' => 'subscriber']));
+        $this->assertSame(403, $list()->get_status());
+
+        wp_set_current_user(self::factory()->user->create(['role' => 'contributor']));
+        $response = $list();
+        $this->assertSame(200, $response->get_status());
+        $this->assertSame(['default', 'zebra', 'apple'], array_column($response->get_data(), 'slug'));
+        $this->assertSame(['Alpha', 'Zulu'], array_slice(array_column($response->get_data(), 'title'), 1));
+
+        remove_all_filters('pre_delete_post');
+        wp_delete_post(code_block_pro_profile_post('default')->ID, true);
+        $this->assertSame(['default', 'zebra', 'apple'], array_column($list()->get_data(), 'slug'));
+        $this->assertNull(code_block_pro_profile_post('default'));
+    }
 }

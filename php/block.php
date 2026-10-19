@@ -17,7 +17,7 @@ function code_block_pro_render_block(array $attributes): string
     code_block_pro_enqueue_font((string) $settings['fontFamily']);
     $panes = array_values(array_filter(is_array($attributes['panes'] ?? null) ? $attributes['panes'] : [], 'is_array')) ?: [[]];
     $anchor = code_block_pro_anchor($attributes['anchor'] ?? '');
-    $uid = wp_unique_id('cbp-');
+    $uid = code_block_pro_preview_uid() ?: wp_unique_id('cbp-');
     // Ids must be unique on the page: the first block without an anchor gets #L12, later ones #code2-L12.
     static $anchorless = 0;
     $base = $anchor !== '' ? "$anchor-" : '';
@@ -36,9 +36,10 @@ function code_block_pro_render_block(array $attributes): string
         $options = code_block_pro_line_options($pane, $settings, $prefix, !empty($attributes['lineAnchors']));
         $themes = code_block_pro_profile_themes($profile, $language);
         $label = code_block_pro_plain_text($pane['label'] ?? '', 100);
-        $rendered[] = code_block_pro_render_code($code, $language, $profile, $options) + [
+        $label = $label !== '' ? $label : code_block_pro_language_name($language);
+        $rendered[] = code_block_pro_render_code($code, $language, $profile, $options, $tabbed ? $label : '') + [
             'theme' => code_block_pro_theme_attributes($themes, code_block_pro_uses_classes($profile, $themes)),
-            'label' => $label !== '' ? $label : code_block_pro_language_name($language),
+            'label' => $label,
             'language' => code_block_pro_language_name($language),
             'fold' => $options['fold'],
         ];
@@ -97,6 +98,152 @@ function code_block_pro_render_block(array $attributes): string
     }
 
     return code_block_pro_inert_brackets($html . '</div>');
+}
+
+/**
+ * A 1.x block's saved HTML, with the align and anchor the editor set since, which only reach its comment.
+ *
+ * @param array<string, mixed> $attributes
+ */
+function code_block_pro_legacy_html(string $content, array $attributes): string
+{
+    $tags = new WP_HTML_Tag_Processor($content);
+    if (!$tags->next_tag() || !$tags->has_class('wp-block-kevinbatdorf-code-block-pro')) {
+        return $content;
+    }
+
+    $align = in_array($attributes['align'] ?? '', ['wide', 'full'], true) ? 'align' . $attributes['align'] : '';
+    foreach (['alignwide', 'alignfull'] as $class) {
+        if ($class !== $align && $tags->has_class($class)) {
+            $tags->remove_class($class);
+        }
+    }
+    if ($align !== '' && !$tags->has_class($align)) {
+        $tags->add_class($align);
+    }
+
+    $anchor = $attributes['anchor'] ?? null;
+    if (is_string($anchor) && $anchor !== $tags->get_attribute('id')) {
+        if ($anchor === '') {
+            $tags->remove_attribute('id');
+        } else {
+            $tags->set_attribute('id', $anchor);
+        }
+    }
+
+    return $tags->get_updated_html();
+}
+
+/**
+ * Through render_block, so the editor gets block supports and render_block filters as visitors do.
+ *
+ * @param array<mixed> $attributes
+ * @return array{html: string, styles: list<array{handle: string, href: string}>, ms: float, indent: string, issues: list<array{code: string, message: string}>}
+ */
+function code_block_pro_preview(array $attributes, bool $keepMarkers, string $uid = ''): array
+{
+    $attributes['version'] = 2;
+    $settings = code_block_pro_block_profile($attributes)['settings'];
+    $queued = wp_styles()->queue;
+    $start = hrtime(true);
+    code_block_pro_keep_markers($keepMarkers);
+    code_block_pro_issues(true);
+    code_block_pro_preview_uid(preg_match('/^[a-z][a-z0-9-]{0,39}$/', $uid) ? $uid : '');
+    try {
+        $html = render_block(['blockName' => 'kevinbatdorf/code-block-pro', 'attrs' => $attributes, 'innerBlocks' => [], 'innerHTML' => '', 'innerContent' => []]);
+        $issues = code_block_pro_issues() ?? [];
+    } finally {
+        code_block_pro_keep_markers(false);
+        code_block_pro_issues(false);
+        code_block_pro_preview_uid('');
+    }
+    $ms = round((hrtime(true) - $start) / 1e6, 1);
+
+    return [
+        'html' => $html,
+        'styles' => code_block_pro_stylesheets(array_values(array_diff(wp_styles()->queue, $queued))),
+        'ms' => $ms,
+        'indent' => $settings['useTabs'] ? "\t" : str_repeat(' ', max(1, (int) $settings['tabSize'])),
+        'issues' => $issues,
+    ];
+}
+
+/**
+ * Each preview is its own request, so wp_unique_id() gives every block in the canvas the same ids.
+ */
+function code_block_pro_preview_uid(?string $set = null): string
+{
+    static $uid = '';
+    if ($set !== null) {
+        $uid = $set;
+    }
+
+    return $uid;
+}
+
+/**
+ * What a render fell back from, for the editor to show the post's author.
+ * Null unless a preview is rendering, so the front end builds no messages.
+ *
+ * @param bool|null $collect True starts an empty list, false stops collecting.
+ * @return list<array{code: string, message: string}>|null
+ */
+function &code_block_pro_issues(?bool $collect = null): ?array
+{
+    static $issues = null;
+    if ($collect !== null) {
+        $issues = $collect ? [] : null;
+    }
+
+    return $issues;
+}
+
+/**
+ * @param callable(): string $message
+ * @param string $pane The tab to name, when the block has several.
+ */
+function code_block_pro_report_issue(string $code, callable $message, string $pane = ''): void
+{
+    $issues = &code_block_pro_issues();
+    if ($issues === null) {
+        return;
+    }
+    $text = $message();
+    if ($pane !== '') {
+        /* translators: 1: a tab's label, 2: a problem with the code in that tab. */
+        $text = sprintf(__('In the “%1$s” tab: %2$s', 'code-block-pro'), $pane, $text);
+    }
+    $issue = ['code' => $code, 'message' => $text];
+    if (!in_array($issue, $issues, true)) {
+        $issues[] = $issue;
+    }
+}
+
+/**
+ * Each stylesheet after the ones it depends on, at the URL WordPress would print for it.
+ *
+ * @param list<string> $handles
+ * @return list<array{handle: string, href: string}>
+ */
+function code_block_pro_stylesheets(array $handles): array
+{
+    $styles = wp_styles();
+    // all_deps fills the to-do list the page prints from, so it runs on a resolver of its own.
+    $resolver = new WP_Dependencies();
+    $resolver->registered = $styles->registered;
+    $resolver->all_deps($handles);
+
+    $stylesheets = [];
+    foreach ($resolver->to_do as $handle) {
+        $style = $styles->registered[$handle];
+        $href = is_string($style->src) && $style->src !== '' ? $styles->_css_href($style->src, $style->ver, $handle) : '';
+        if ($href !== '') {
+            // Escaped for an HTML attribute; the editor needs the URL itself.
+            $stylesheets[] = ['handle' => $handle, 'href' => html_entity_decode($href, ENT_QUOTES | ENT_HTML5, 'UTF-8')];
+        }
+    }
+
+    return $stylesheets;
 }
 
 /**

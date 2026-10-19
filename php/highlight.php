@@ -80,7 +80,15 @@ function code_block_pro_profile_themes(array $profile, string $language): array
     $themes = [];
     $overrides = $profile['languages'] ? $profile['languages'][code_block_pro_language($language)] ?? [] : [];
     foreach ($profile['conditions'] as $condition) {
-        $themes[$condition['id']] = code_block_pro_theme($overrides[$condition['id']] ?? $condition['theme']);
+        $slug = $overrides[$condition['id']] ?? $condition['theme'];
+        $themes[$condition['id']] = code_block_pro_theme($slug);
+        if ($themes[$condition['id']]['slug'] !== $slug) {
+            code_block_pro_report_issue('unknown-theme', fn () => sprintf(
+                /* translators: %s: the name of a color theme, as saved in the block or its profile. */
+                __('The theme “%s” is not installed, so Nord is used instead. Choose another theme, or reactivate the plugin that added it.', 'code-block-pro'),
+                $slug
+            ));
+        }
     }
 
     return $themes;
@@ -184,11 +192,13 @@ function code_block_pro_highlight(string $code, string $language, array $profile
 /**
  * @param CodeBlockProProfile $profile
  * @param CodeBlockProLineOptions|null $options
+ * @param string $pane The tab its issues name, when the block has several.
  * @return array{html: string, lines: int} The `<pre>`, and how many lines it shows once markers are out.
  */
-function code_block_pro_render_code(string $code, string $language, array $profile, ?array $options = null): array
+function code_block_pro_render_code(string $code, string $language, array $profile, ?array $options = null, string $pane = ''): array
 {
     $options ??= code_block_pro_no_line_options();
+    $keep = code_block_pro_keep_markers();
     $code = preg_replace("/\n\z/", '', str_replace(["\r\n", "\r"], "\n", $code)) ?? $code;
     $themes = code_block_pro_profile_themes($profile, $language);
     $classes = code_block_pro_uses_classes($profile, $themes);
@@ -204,12 +214,26 @@ function code_block_pro_render_code(string $code, string $language, array $profi
         );
     }
 
+    $upgrade = code_block_pro_can_upgrade();
+    if (!$upgrade) {
+        code_block_pro_report_issue('no-mbregex', fn () => __('Code shows without colors because PHP on this server was built without mbregex, a part of the mbstring extension. Ask your web host to enable it.', 'code-block-pro'));
+    }
     // ANSI escapes carry arbitrary colors, which no prebuilt stylesheet can name.
-    if (!code_block_pro_can_upgrade() || in_array($language, ['ansi', 'terminal'], true)) {
-        return code_block_pro_plain($code, $options);
+    $terminal = in_array($language, ['ansi', 'terminal'], true);
+    if ($terminal) {
+        code_block_pro_report_issue('plain-language', fn () => sprintf(
+            /* translators: %s: a language name, such as ANSI. */
+            __('Code set to “%s” shows as plain text, because Code Block Pro does not color terminal output. To highlight it, choose the language the code is written in.', 'code-block-pro'),
+            code_block_pro_language_name($language)
+        ), $pane);
+    }
+    if (!$upgrade || $terminal) {
+        return code_block_pro_plain($code, $options, $keep);
     }
 
-    $key = code_block_pro_cache_key($code, $language, $profile, [$options, $classes]);
+    // Without a marker the editor's render is the page's, so it reads the page's entry.
+    $marked = $keep && stripos($code, '[!code') !== false;
+    $key = code_block_pro_cache_key($code, $language, $profile, $marked ? [$options, $classes, 'keep-markers'] : [$options, $classes]);
     $cached = code_block_pro_cache_get($key);
     if ($cached) {
         return $cached;
@@ -226,14 +250,24 @@ function code_block_pro_render_code(string $code, string $language, array $profi
         // Another plugin's phiki would make the transformer class fail to compile, uncatchably.
         $parent = new \ReflectionClass(\Phiki\Transformers\AbstractTransformer::class);
         if (!str_starts_with((string) $parent->getFileName(), dirname(__DIR__) . '/vendor/')) {
-            return code_block_pro_plain($code, $options);
+            code_block_pro_report_issue('highlighter-conflict', fn () => __('Another plugin loads its own copy of the highlighter Code Block Pro uses, so code shows as plain text. To find that plugin, deactivate your other plugins one at a time.', 'code-block-pro'));
+
+            return code_block_pro_plain($code, $options, $keep);
         }
         require_once __DIR__ . '/highlight-transformer.php';
         require_once __DIR__ . '/highlight-theme.php';
 
         // One instance per request keeps the grammars and themes it has already parsed.
         static $phiki = null, $parsed = [], $registered = [];
-        $phiki ??= new \Phiki\Phiki();
+        if ($phiki === null) {
+            $phiki = new \Phiki\Phiki();
+            // Phiki ships these grammars but leaves them out of its own list. Its Bicep grammar recurses forever.
+            $grammars = dirname(__DIR__) . '/vendor/phiki/phiki/resources/grammars';
+            foreach (['jinja-html', 'wenyan'] as $name) {
+                $phiki->grammar($name, "$grammars/$name.json");
+            }
+            $phiki->alias('文言', 'wenyan');
+        }
         $conditions = [];
         foreach ($themes as $id => $theme) {
             if (($registered[$theme['slug']] ?? null) !== $theme['json']) {
@@ -244,16 +278,31 @@ function code_block_pro_render_code(string $code, string $language, array $profi
             $conditions[$id] = ['slug' => $theme['slug'], 'fg' => code_block_pro_theme_colors($theme['json'])['fg']];
         }
         if (!$phiki->environment->grammars->has($language)) {
-            return code_block_pro_plain($code, $options);
+            if ($language !== '') {
+                code_block_pro_report_issue('unknown-language', fn () => sprintf(
+                    /* translators: %s: a language name, as typed in the block. */
+                    __('Code Block Pro cannot color “%s” code, so it shows as plain text. Check the language name, or choose another language.', 'code-block-pro'),
+                    // The internal encoding counts bytes here.
+                    wp_strip_all_tags(mb_substr($language, 0, 100, 'UTF-8'))
+                ), $pane);
+            }
+
+            return code_block_pro_plain($code, $options, $keep);
         }
 
-        $transformer = new CodeBlockProTransformer($conditions, $classes, $options);
+        $transformer = new CodeBlockProTransformer($conditions, $classes, $options, $keep);
         $render = [
             'html' => $phiki->codeToHtml($code, $language, array_map(fn ($condition) => $condition['slug'], $conditions))->transformer($transformer)->toString(),
             'lines' => $transformer->count(),
         ];
     } catch (\Throwable $e) {
-        return code_block_pro_plain($code, $options);
+        if (defined('WP_DEBUG') && WP_DEBUG && code_block_pro_issues() !== null) {
+            error_log("Code Block Pro could not highlight “{$language}” code: {$e->getMessage()}");
+        }
+        // The exception's message can name server paths, so the author gets none of it.
+        code_block_pro_report_issue('highlight-failed', fn () => __('Something went wrong while coloring this code, so it shows as plain text. Try another theme or language. If that does not help, contact Code Block Pro support.', 'code-block-pro'), $pane);
+
+        return code_block_pro_plain($code, $options, $keep);
     } finally {
         if (isset($saved)) {
             mb_regex_encoding((string) $saved[0]);
@@ -262,29 +311,40 @@ function code_block_pro_render_code(string $code, string $language, array $profi
         }
     }
 
-    code_block_pro_cache_set($key, $render);
+    // The editor renders on every pause in typing, which would leave a row per keystroke.
+    if (!$keep) {
+        code_block_pro_cache_set($key, $render);
+    }
 
     return $render;
 }
 
 /**
  * @param CodeBlockProLineOptions $options
+ * @param bool $keep Keep markers as typed, each marker-only line in a `cbp-marker` span that takes no line number.
  * @return array{html: string, lines: int}
  */
-function code_block_pro_plain(string $code, array $options): array
+function code_block_pro_plain(string $code, array $options, bool $keep = false): array
 {
-    ['lines' => $lines, 'marked' => $marked] = code_block_pro_strip_markers_plain(explode("\n", $code));
-    $count = count($lines);
+    ['lines' => $lines, 'marked' => $marked, 'markers' => $markers] = code_block_pro_strip_markers_plain(explode("\n", $code), $keep);
+    $count = count($lines) - count($markers);
     $flags = code_block_pro_line_flags($count, $options, $marked);
 
     $html = '';
-    foreach ($lines as $index => $line) {
+    $index = 0;
+    foreach ($lines as $i => $line) {
+        $text = htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . ($i < count($lines) - 1 ? "\n" : '');
+        if (isset($markers[$i])) {
+            $html .= "<span class=\"line cbp-marker\">$text</span>";
+            continue;
+        }
         $attributes = '';
         foreach (code_block_pro_line_attributes($index, $options, $flags[$index] ?? []) as $name => $value) {
             $attributes .= " $name=\"" . esc_attr($value) . '"';
         }
         $tag = code_block_pro_line_tag($flags[$index] ?? []);
-        $html .= "<$tag$attributes>" . htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . ($index < $count - 1 ? "\n" : '') . "</$tag>";
+        $html .= "<$tag$attributes>$text</$tag>";
+        $index++;
     }
     $classes = code_block_pro_pre_classes($count, $options, $flags);
     $class = $classes ? ' class="' . implode(' ', $classes) . '"' : '';

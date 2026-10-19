@@ -125,6 +125,29 @@ class LinesTest extends WP_UnitTestCase
         $this->assertSame([1, 2, 4, 5], array_keys($stripped['marked']));
     }
 
+    public function test_kept_markers_leave_each_plain_line_as_written_and_name_the_lines_the_front_end_drops()
+    {
+        $lines = ['// [!code highlight]', 'a(); // [!code ++]', '    # [!code focus:2]', 'b();', 'c(); // note [!code --]', 's = "[!code ++]";'];
+
+        $front = code_block_pro_strip_markers_plain($lines);
+        $kept = code_block_pro_strip_markers_plain($lines, true);
+
+        $this->assertSame(['a();', 'b();', 'c(); // note', 's = "[!code ++]";'], $front['lines']);
+        $this->assertSame([], $front['markers']);
+        $this->assertSame($lines, $kept['lines']);
+        $this->assertSame([0 => true, 2 => true], $kept['markers']);
+        $this->assertSame($front['marked'], $kept['marked']);
+    }
+
+    public function test_keep_markers_is_off_until_switched_on()
+    {
+        $this->assertFalse(code_block_pro_keep_markers());
+        $this->assertTrue(code_block_pro_keep_markers(true));
+        $this->assertTrue(code_block_pro_keep_markers());
+        $this->assertFalse(code_block_pro_keep_markers(false));
+        $this->assertFalse(code_block_pro_keep_markers());
+    }
+
     public function test_marker_ranges_cost_one_step_per_line()
     {
         $start = microtime(true);

@@ -34,6 +34,7 @@
 		"typescript": "7.0.2"
 	},
 	"dependencies": {
+		"@wordpress/api-fetch": "7.43.0",
 		"@wordpress/html-entities": "4.43.0",
 		"@wordpress/i18n": "6.16.0"
 	}

@@ -108,4 +108,49 @@ class UpdateGateTest extends WP_UnitTestCase
             $this->assertStringContainsString("'$function'", $gate);
         }
     }
+
+    public function test_site_health_says_whether_this_server_can_color_code()
+    {
+        $tests = apply_filters('site_status_tests', ['direct' => [], 'async' => []]);
+        $this->assertArrayHasKey('code_block_pro_mbregex', $tests['direct']);
+        $run = $tests['direct']['code_block_pro_mbregex']['test'];
+
+        $this->assertSame('good', $run()['status']);
+
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
+        $result = $run();
+        $this->assertSame('critical', $result['status']);
+        $this->assertStringContainsString('mbregex', $result['description']);
+        $this->assertStringContainsString('https://wordpress.org/plugins/code-block-pro/advanced/', $result['actions']);
+    }
+
+    public function test_the_plugins_screen_explains_a_server_without_mbregex()
+    {
+        $row = function () {
+            ob_start();
+            do_action("after_plugin_row_{$this->basename}", $this->basename, [], 'all');
+
+            return (string) ob_get_clean();
+        };
+
+        $this->assertSame('', $row());
+
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
+        $this->assertStringContainsString('mbregex', $row());
+
+        $this->assertStringContainsString('<tr class="plugin-update-tr">', $row());
+        update_option('active_plugins', [$this->basename]);
+        $this->assertStringContainsString('<tr class="plugin-update-tr active">', $row());
+    }
+
+    public function test_the_inserter_offers_no_block_on_a_server_without_mbregex()
+    {
+        $args = fn () => apply_filters('register_block_type_args', ['supports' => ['anchor' => true]], 'kevinbatdorf/code-block-pro');
+
+        $this->assertArrayNotHasKey('inserter', $args()['supports']);
+
+        add_filter('blocks.codeBlockPro.canUpgrade', '__return_false');
+        $this->assertSame(['anchor' => true, 'inserter' => false], $args()['supports']);
+        $this->assertSame([], apply_filters('register_block_type_args', [], 'core/paragraph'));
+    }
 }

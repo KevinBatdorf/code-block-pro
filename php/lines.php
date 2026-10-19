@@ -175,32 +175,52 @@ function code_block_pro_digit_classes(string $name, int $value): array
 }
 
 /**
+ * The editor types into a textarea over the render, so its text must match the source.
+ * Not a block attribute: stored content could then switch it on for visitors.
+ */
+function code_block_pro_keep_markers(?bool $set = null): bool
+{
+    static $keep = false;
+    if ($set !== null) {
+        $keep = $set;
+    }
+
+    return $keep;
+}
+
+/**
  * The plain fallback has no tokens to tell a comment by, so only markers that end the line count,
  * and only after a comment opener that starts the line or follows a space.
  *
  * @param list<string> $lines
- * @return array{lines: list<string>, marked: array<int, list<string>>}
+ * @param bool $keep Keep every line as written; markers names the ones the front end drops.
+ * @return array{lines: list<string>, marked: array<int, list<string>>, markers: array<int, true>} Marked is keyed by front-end line.
  */
-function code_block_pro_strip_markers_plain(array $lines): array
+function code_block_pro_strip_markers_plain(array $lines, bool $keep = false): array
 {
     $kept = [];
     $marked = [];
+    $markers = [];
     $pending = [];
+    $shown = 0;
     foreach ($lines as $line) {
         $stripped = stripos($line, '[!code') === false ? null : code_block_pro_strip_marker_comment($line);
         if ($stripped) {
             array_push($pending, ...$stripped['markers']);
-            $line = $stripped['line'];
-            if (trim($line) === '') {
+            if (trim($stripped['line']) === '') {
+                if ($keep) {
+                    $markers[count($kept)] = true;
+                    $kept[] = $line;
+                }
                 continue;
             }
         }
-        $kept[] = $line;
-        code_block_pro_mark($marked, count($kept) - 1, $pending);
+        $kept[] = $stripped && !$keep ? $stripped['line'] : $line;
+        code_block_pro_mark($marked, $shown++, $pending);
         $pending = [];
     }
 
-    return ['lines' => $kept ?: [''], 'marked' => $marked];
+    return ['lines' => $kept ?: [''], 'marked' => $marked, 'markers' => $markers];
 }
 
 /**

@@ -123,6 +123,29 @@ class HighlightTest extends WP_UnitTestCase
         $this->assertStringContainsString('<div class="cbp-pane cbp-theme-nord"><pre tabindex="0">', $html);
     }
 
+    public function test_every_language_the_editor_offers_has_a_grammar()
+    {
+        $this->needsMbregex();
+        $samples = ['jinja-html' => '{% if a %}<b>{{ a }}</b>{% endif %}', 'wenyan' => '吾有一數。曰三。', '文言' => '吾有一數。曰三。'];
+        foreach ($samples as $language => $code) {
+            $html = $this->render($code, $language, 'nord');
+            $this->assertMatchesRegularExpression('#class="[^"]*phiki-[^"]* cbp-[0-9a-f]{6}#', $html, $language);
+        }
+
+        // The editor leaves out ANSI, which 2.0 shows as plain text, and Bicep, whose grammar phiki can't compile.
+        $offered = array_diff(array_keys(json_decode((string) file_get_contents(dirname(__DIR__, 2) . '/src/languages.json'), true)), ['ansi', 'bicep']);
+        code_block_pro_issues(true);
+        try {
+            foreach ($offered as $language) {
+                code_block_pro_highlight('x', (string) $language, code_block_pro_profile('default'));
+            }
+            $issues = code_block_pro_issues();
+        } finally {
+            code_block_pro_issues(false);
+        }
+        $this->assertSame([], array_column((array) $issues, 'message'));
+    }
+
     public function test_code_cannot_add_attributes_through_scope_names()
     {
         $this->needsMbregex();
@@ -496,6 +519,50 @@ class HighlightTest extends WP_UnitTestCase
         $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', $nord, [2], '2.0.0'));
         $this->assertNotSame($key, code_block_pro_cache_key('a', 'javascript', $nord, [1], '2.0.1'));
         $this->assertSame($key, code_block_pro_cache_key('a', 'javascript', $nord, [1], '2.0.0'));
+    }
+
+    private function renderKept($code, $language = 'javascript')
+    {
+        code_block_pro_keep_markers(true);
+        try {
+            return code_block_pro_render_code($code, $language, code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']));
+        } finally {
+            code_block_pro_keep_markers(false);
+        }
+    }
+
+    public function test_kept_markers_count_only_the_lines_the_front_end_shows()
+    {
+        $this->needsMbregex();
+        $code = "// [!code hl]\na(); // [!code ++]\n  // [!code focus]";
+
+        foreach (['__return_true', '__return_false'] as $canUpgrade) {
+            add_filter('blocks.codeBlockPro.canUpgrade', $canUpgrade);
+            $front = code_block_pro_render_code($code, 'javascript', code_block_pro_block_profile(['profile' => '', 'theme' => 'nord']));
+            $kept = $this->renderKept($code);
+
+            $this->assertSame(1, $front['lines'], $canUpgrade);
+            $this->assertSame(1, $kept['lines'], $canUpgrade);
+            $this->assertSame($code, $this->codeText($kept['html']), $canUpgrade);
+            $this->assertSame(2, preg_match_all('#<span class="line cbp-marker">#', $kept['html']), $canUpgrade);
+            $this->assertMatchesRegularExpression('#^<pre class="cbp-has-diff" tabindex="0"><code><span class="line cbp-marker">.*</span><ins class="line cbp-hl cbp-add">.*</ins><span class="line cbp-marker">.*</span></code></pre>$#s', $kept['html'], $canUpgrade);
+            remove_all_filters('blocks.codeBlockPro.canUpgrade');
+        }
+    }
+
+    public function test_kept_markers_cache_apart_from_the_front_end()
+    {
+        $this->needsMbregex();
+        $code = 'a(); // [!code hl]';
+
+        $kept = $this->renderKept($code);
+        $this->assertFalse(get_transient($this->key($code)));
+        $front = $this->render($code);
+
+        $this->assertSame($code, $this->codeText($kept['html']));
+        $this->assertSame('a();', $this->codeText($front));
+        $this->assertNotFalse(get_transient($this->key($code)));
+        $this->assertSame($kept, $this->renderKept($code));
     }
 
     public function test_a_cached_value_that_does_not_decode_is_a_miss()

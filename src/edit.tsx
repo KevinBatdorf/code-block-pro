@@ -1,36 +1,25 @@
 import {
-	PlainText,
 	store as blockEditorStore,
+	InspectorControls,
 	useBlockProps,
 } from '@wordpress/block-editor';
 import type { BlockEditProps } from '@wordpress/blocks';
+import { ExternalLink, Notice } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { safeHTML } from '@wordpress/dom';
-import { RawHTML, useEffect } from '@wordpress/element';
+import { RawHTML, useCallback, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { CodeEditor } from './editor/code-editor';
+import { loadStyles } from './editor/preview';
 import type { Attributes } from './types';
 
-// kses rewrites raw <, > and & in block attributes for users without unfiltered_html.
-const ESCAPES: Record<string, string> = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-};
-const UNESCAPES: Record<string, string> = { amp: '&', lt: '<', gt: '>' };
-const encode = (code: string) => code.replace(/[&<>]/g, (c) => ESCAPES[c]);
-const decode = (code: string) =>
-	code.replace(/&(amp|lt|gt);/g, (_, name: string) => UNESCAPES[name]);
-
-export const Edit = ({
-	attributes,
-	setAttributes,
-}: BlockEditProps<Attributes>) => {
-	const { version, panes = [], legacyContent } = attributes;
+export const Edit = (props: BlockEditProps<Attributes>) => {
+	const { attributes, setAttributes } = props;
+	const { version, legacyContent } = attributes;
 	// Missing from the store's published types.
 	const { __unstableMarkNextChangeAsNotPersistent: skipUndo } = useDispatch(
 		blockEditorStore,
 	) as unknown as { __unstableMarkNextChangeAsNotPersistent: () => void };
-	const blockProps = useBlockProps();
 	// The raw source gives every parsed block a string, so undefined means created here.
 	const isNew = version === undefined && legacyContent === undefined;
 
@@ -40,25 +29,54 @@ export const Edit = ({
 		setAttributes({ version: 2 });
 	}, [isNew, skipUndo, setAttributes]);
 
-	if (version === undefined) {
+	if (version === undefined && !isNew) {
 		return (
-			<div {...blockProps}>
-				{/* Pasted block markup arrives unfiltered, so its scripts would run in the editor. */}
-				<RawHTML>{safeHTML(legacyContent ?? '')}</RawHTML>
-			</div>
+			<Legacy
+				html={legacyContent ?? ''}
+				fontFamily={attributes.fontFamily ?? ''}
+			/>
 		);
 	}
+	return <CodeEditor {...props} />;
+};
 
-	const [first = {}, ...rest] = panes;
+const Legacy = ({ html, fontFamily }: { html: string; fontFamily: string }) => {
+	// 1.x loaded its fonts from a front-end script, which never runs in the editor.
+	const font = fontFamily.replace(/\..*$/, '');
+	const loadFont = useCallback(
+		(el: HTMLElement | null) => {
+			const url = window.codeBlockPro?.pluginUrl;
+			if (!el || !url || !/^Code-Pro-[A-Za-z-]+$/.test(font)) return;
+			loadStyles(el.ownerDocument, [
+				{
+					handle: `code-block-pro-font-${font}`,
+					href: `${url}build/fonts/${font}.css`,
+				},
+			]);
+		},
+		[font],
+	);
 	return (
-		<div {...blockProps}>
-			<PlainText
-				aria-label={__('Code', 'code-block-pro')}
-				value={decode(first.code ?? '')}
-				onChange={(code: string) =>
-					setAttributes({ panes: [{ ...first, code: encode(code) }, ...rest] })
-				}
-			/>
+		<div {...useBlockProps({ ref: loadFont })}>
+			{window.codeBlockPro?.canUpgrade === false && (
+				<InspectorControls group="content">
+					<div style={{ padding: 16 }}>
+						<Notice status="warning" isDismissible={false}>
+							<p>
+								{__(
+									'This block can’t be edited on this server, because PHP was built without mbregex, a part of the mbstring extension. It still shows on your pages as it was saved. Ask your web host to enable mbregex, or install Code Block Pro 1.x to edit it.',
+									'code-block-pro',
+								)}
+							</p>
+							<ExternalLink href="https://wordpress.org/plugins/code-block-pro/advanced/">
+								{__('Download Code Block Pro 1.x', 'code-block-pro')}
+							</ExternalLink>
+						</Notice>
+					</div>
+				</InspectorControls>
+			)}
+			{/* Pasted block markup arrives unfiltered, so its scripts would run in the editor. */}
+			<RawHTML>{safeHTML(html)}</RawHTML>
 		</div>
 	);
 };

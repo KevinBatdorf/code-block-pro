@@ -27,12 +27,16 @@ class CodeBlockProTransformer extends AbstractTransformer
 
     private int $count = 0;
 
+    /** @var array<int, int> Output line => the line it is on the front end; a kept marker-only line has none. */
+    private array $rows = [];
+
     /**
      * @param array<string, array{slug: string, fg: string}> $conditions Condition id => its theme, the base condition first.
      * @param bool $classes False keeps phiki's inline styles, for a lone theme with no stylesheet.
      * @param CodeBlockProLineOptions $options
+     * @param bool $keepMarkers Keep markers as typed, each marker-only line in a `cbp-marker` span that takes no line number.
      */
-    public function __construct(private array $conditions, private bool $classes, private array $options)
+    public function __construct(private array $conditions, private bool $classes, private array $options, private bool $keepMarkers = false)
     {
     }
 
@@ -50,22 +54,31 @@ class CodeBlockProTransformer extends AbstractTransformer
         $kept = [];
         $marked = [];
         $pending = [];
+        $this->rows = [];
+        $shown = 0;
         foreach ($tokens as $line) {
-            [$line, $markers] = self::stripMarkers(array_values($line));
+            $line = array_values($line);
+            // stripMarkers rewrites token text in place.
+            [$stripped, $markers] = self::stripMarkers($this->keepMarkers ? array_map(fn ($token) => clone $token, $line) : $line);
             array_push($pending, ...$markers);
-            // A line that held only a marker goes, and the marker applies to the line after it.
-            if ($markers && trim(implode('', array_map(fn ($token) => $token->text, $line))) === '') {
+            // A marker-only line leaves the front end; its marker applies to the line after it.
+            if ($markers && trim(implode('', array_map(fn ($token) => $token->text, $stripped))) === '') {
+                if ($this->keepMarkers) {
+                    $kept[] = $line;
+                }
                 continue;
             }
-            $kept[] = $line;
-            code_block_pro_mark($marked, count($kept) - 1, $pending);
+            $this->rows[count($kept)] = $shown;
+            $kept[] = $this->keepMarkers ? $line : $stripped;
+            code_block_pro_mark($marked, $shown++, $pending);
             $pending = [];
         }
         if (!$kept) {
+            $this->rows[0] = $shown++;
             $kept[] = [new Token($tokens[0][0]->scopes ?? ['source'], '', 0, 0)];
         }
 
-        $this->count = count($kept);
+        $this->count = $shown;
         $this->flags = code_block_pro_line_flags($this->count, $this->options, $marked);
 
         return $kept;
@@ -201,6 +214,12 @@ class CodeBlockProTransformer extends AbstractTransformer
      */
     public function line(Element $span, array $tokens, int $index): Element
     {
+        if (!isset($this->rows[$index])) {
+            $span->properties->set('class', new ClassList(['line', 'cbp-marker']));
+
+            return $span;
+        }
+        $index = $this->rows[$index];
         $classes = $this->flags[$index] ?? [];
         foreach (code_block_pro_line_attributes($index, $this->options, $classes) as $name => $value) {
             $span->properties->set($name, $name === 'class' ? new ClassList(explode(' ', $value)) : new Text(esc_attr($value)));

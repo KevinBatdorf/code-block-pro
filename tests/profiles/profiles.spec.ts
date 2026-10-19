@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from '@wordpress/e2e-test-utils-playwright';
+import { newPost } from '../helpers';
 
 type Glyph = [string, string, string, string, string];
 
@@ -229,4 +230,58 @@ test('editing a profile recolors every block that uses it, with no re-save', asy
 	await expect(
 		page.locator('.cbp-block:not(.cbp-profile-default) .cbp-pane'),
 	).toHaveClass('cbp-pane cbp-theme-github-light');
+});
+
+test('the editor picks a block’s profile from the published ones', async ({
+	page,
+	admin,
+	editor,
+	requestUtils,
+}) => {
+	await requestUtils.login();
+	await newPost(admin, 'picker');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('const a = 1;');
+	await page.getByRole('tab', { name: 'Settings' }).click();
+	const picker = page.getByRole('combobox', { name: 'Profile' });
+
+	await expect(picker.locator('option')).toHaveText([
+		'Default',
+		'Stacked & layered',
+		'Two tone',
+	]);
+	await expect(picker).toHaveValue('default');
+	await picker.selectOption('stacked');
+	await expect(editor.canvas.locator('.cbp-block')).toHaveClass(
+		/\bcbp-profile-stacked\b/,
+	);
+
+	await editor.saveDraft();
+	const postId = new URL(page.url()).searchParams.get('post');
+	await page.goto(`/?p=${postId}&preview=true`);
+	await expect(page.locator('.cbp-block')).toHaveClass(
+		/\bcbp-profile-stacked\b/,
+	);
+});
+
+// Plain permalinks put the route in the query string.
+const PROFILES = (url: URL) =>
+	decodeURIComponent(url.href).includes('/code-block-pro/v1/profiles');
+
+test('a picker whose profiles failed to load says so, not that the profile is missing', async ({
+	page,
+	admin,
+	editor,
+	requestUtils,
+}) => {
+	await requestUtils.login();
+	await page.route(PROFILES, (route) => route.abort());
+	await newPost(admin, 'picker offline');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.getByRole('tab', { name: 'Settings' }).click();
+	const picker = page.getByRole('combobox', { name: 'Profile' });
+
+	await expect(page.getByText('The profiles could not load.')).toBeVisible();
+	await expect(picker.locator('option')).toHaveText(['default']);
+	await expect(picker).toBeDisabled();
 });

@@ -33,7 +33,7 @@ code_block_pro_insert_profile('stacked', [
         ['id' => 'contrast', 'theme' => 'nord', 'trigger' => ['type' => 'button']],
     ],
     'languages' => ['php' => ['dark' => 'solarized-dark']],
-], 'Stacked');
+], 'Stacked & layered');
 
 $posts = [
     'two-conditions' => [],

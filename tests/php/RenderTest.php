@@ -93,6 +93,29 @@ class RenderTest extends WP_UnitTestCase
         }
     }
 
+    public function test_align_and_anchor_set_in_the_editor_reach_a_stored_blocks_saved_html()
+    {
+        $wrapper = function ($block, $attributes) {
+            $block['attrs'] = $attributes + $block['attrs'];
+            $tags = new WP_HTML_Tag_Processor(render_block($block));
+            $tags->next_tag();
+
+            return [$tags->get_attribute('class'), $tags->get_attribute('id')];
+        };
+        $wide = $this->storedBlock('32-align-wide');
+        $bare = $this->storedBlock('01-bare');
+
+        $this->assertSame(['wp-block-kevinbatdorf-code-block-pro alignfull', null], $wrapper($wide, ['align' => 'full']));
+        $this->assertSame(['wp-block-kevinbatdorf-code-block-pro', null], $wrapper(array_merge($wide, ['attrs' => array_diff_key($wide['attrs'], ['align' => 1])]), []));
+        $this->assertSame(['wp-block-kevinbatdorf-code-block-pro alignwide', 'setup'], $wrapper($bare, ['align' => 'wide', 'anchor' => 'setup']));
+        // Only what the block supports, so a stored class can't be swapped for an arbitrary one.
+        $this->assertSame(['wp-block-kevinbatdorf-code-block-pro', null], $wrapper($bare, ['align' => 'evil" onload="x']));
+        $this->assertSame('wp-block-kevinbatdorf-code-block-pro', $wrapper($bare, ['anchor' => ''])[0]);
+
+        // Unchanged settings leave the saved HTML byte for byte.
+        $this->assertSame($wide['innerHTML'], render_block($wide));
+    }
+
     public function test_a_stored_block_loads_the_1x_front_end_from_its_1x_paths()
     {
         render_block($this->storedBlock('01-bare'));
