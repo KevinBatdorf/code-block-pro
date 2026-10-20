@@ -1,13 +1,19 @@
 import apiFetch from '@wordpress/api-fetch';
-import { BlockControls, useBlockEditingMode } from '@wordpress/block-editor';
+import {
+	BlockControls,
+	useBlockEditContext,
+	useBlockEditingMode,
+} from '@wordpress/block-editor';
 import {
 	MenuGroup,
+	MenuItem,
 	MenuItemsChoice,
 	SelectControl,
 	ToolbarDropdownMenu,
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
+import { doAction, hasAction } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -44,8 +50,12 @@ const useProfiles = () => {
 	return { profiles, failed };
 };
 
+// Without a listener for this action, the menu leaves out Edit and Manage profiles.
+const OPEN_PROFILES = 'codeBlockPro.openProfiles';
+
 export const ProfileToolbar = ({ value, onChange }: Props) => {
 	const { profiles } = useProfiles();
+	const { clientId } = useBlockEditContext();
 	// Inside a library pattern or template part, the profile stays as the pattern set it.
 	const editable = useBlockEditingMode() === 'default';
 	const current = profiles?.find(({ slug }) => slug === value);
@@ -63,20 +73,50 @@ export const ProfileToolbar = ({ value, onChange }: Props) => {
 					label={__('Profile', 'code-block-pro')}
 				>
 					{({ onClose }) => (
-						<MenuGroup label={__('Profile', 'code-block-pro')}>
-							<MenuItemsChoice
-								value={value}
-								onHover={() => {}}
-								choices={(profiles ?? []).map(({ slug, title }) => ({
-									value: slug,
-									label: decodeEntities(title),
-								}))}
-								onSelect={(slug: string) => {
-									onChange(slug);
-									onClose();
-								}}
-							/>
-						</MenuGroup>
+						<>
+							{hasAction(OPEN_PROFILES) && (
+								<MenuGroup>
+									<MenuItem
+										onClick={() => {
+											onClose();
+											doAction(OPEN_PROFILES, {
+												clientId,
+												slug: value,
+												view: 'edit',
+											});
+										}}
+									>
+										{__('Edit profile', 'code-block-pro')}
+									</MenuItem>
+									<MenuItem
+										onClick={() => {
+											onClose();
+											doAction(OPEN_PROFILES, {
+												clientId,
+												slug: value,
+												view: 'manage',
+											});
+										}}
+									>
+										{__('Manage profiles', 'code-block-pro')}
+									</MenuItem>
+								</MenuGroup>
+							)}
+							<MenuGroup label={__('Profile', 'code-block-pro')}>
+								<MenuItemsChoice
+									value={value}
+									onHover={() => {}}
+									choices={(profiles ?? []).map(({ slug, title }) => ({
+										value: slug,
+										label: decodeEntities(title),
+									}))}
+									onSelect={(slug: string) => {
+										onChange(slug);
+										onClose();
+									}}
+								/>
+							</MenuGroup>
+						</>
 					)}
 				</ToolbarDropdownMenu>
 			</ToolbarGroup>
