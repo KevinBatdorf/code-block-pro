@@ -21,7 +21,7 @@ import { applyEdit, indentEdit } from './indent';
 import { Panes } from './panes';
 import { patchCode } from './patch';
 import { loadStyles, type Preview, usePreview } from './preview';
-import { ProfilePicker } from './profiles';
+import { ProfilePicker, ProfileToolbar } from './profiles';
 import { BlockSettings, LineSettings } from './sidebar';
 import { Status } from './status';
 
@@ -317,13 +317,18 @@ export const CodeEditor = ({
 
 	return (
 		<div {...blockProps}>
+			<ProfileToolbar
+				value={attributes.profile ?? 'default'}
+				onChange={(profile) => setAttributes({ profile })}
+			/>
 			<Status
 				waiting={busy}
 				issues={preview?.issues ?? []}
 				error={error}
 				retry={retry}
 			/>
-			<InspectorControls>
+			{/* The content group still shows when the block sits in a pattern or template part. */}
+			<InspectorControls group="content">
 				<PanelBody title={__('Code', 'code-block-pro')}>
 					<Panes
 						panes={panes}
@@ -342,6 +347,8 @@ export const CodeEditor = ({
 						onChange={(language) => setPane({ language: language ?? '' })}
 					/>
 				</PanelBody>
+			</InspectorControls>
+			<InspectorControls>
 				<PanelBody title={__('Profile', 'code-block-pro')}>
 					<ProfilePicker
 						value={attributes.profile ?? 'default'}

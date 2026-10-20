@@ -1,5 +1,12 @@
 import apiFetch from '@wordpress/api-fetch';
-import { SelectControl } from '@wordpress/components';
+import { BlockControls, useBlockEditingMode } from '@wordpress/block-editor';
+import {
+	MenuGroup,
+	MenuItemsChoice,
+	SelectControl,
+	ToolbarDropdownMenu,
+	ToolbarGroup,
+} from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __, sprintf } from '@wordpress/i18n';
@@ -20,7 +27,7 @@ const loadProfiles = () => {
 
 type Props = { value: string; onChange: (profile: string) => void };
 
-export const ProfilePicker = ({ value, onChange }: Props) => {
+const useProfiles = () => {
 	const [profiles, setProfiles] = useState<Profile[] | null>(null);
 	const [failed, setFailed] = useState(false);
 
@@ -33,6 +40,52 @@ export const ProfilePicker = ({ value, onChange }: Props) => {
 			live = false;
 		};
 	}, []);
+
+	return { profiles, failed };
+};
+
+export const ProfileToolbar = ({ value, onChange }: Props) => {
+	const { profiles } = useProfiles();
+	// Inside a library pattern or template part, the profile stays as the pattern set it.
+	const editable = useBlockEditingMode() === 'default';
+	const current = profiles?.find(({ slug }) => slug === value);
+	const name = current
+		? decodeEntities(current.title)
+		: value || __('This block’s own settings', 'code-block-pro');
+
+	if (!editable) return null;
+	return (
+		<BlockControls group="block">
+			<ToolbarGroup>
+				<ToolbarDropdownMenu
+					icon={null}
+					text={name}
+					label={__('Profile', 'code-block-pro')}
+				>
+					{({ onClose }) => (
+						<MenuGroup label={__('Profile', 'code-block-pro')}>
+							<MenuItemsChoice
+								value={value}
+								onHover={() => {}}
+								choices={(profiles ?? []).map(({ slug, title }) => ({
+									value: slug,
+									label: decodeEntities(title),
+								}))}
+								onSelect={(slug: string) => {
+									onChange(slug);
+									onClose();
+								}}
+							/>
+						</MenuGroup>
+					)}
+				</ToolbarDropdownMenu>
+			</ToolbarGroup>
+		</BlockControls>
+	);
+};
+
+export const ProfilePicker = ({ value, onChange }: Props) => {
+	const { profiles, failed } = useProfiles();
 
 	const options = (profiles ?? []).map(({ slug, title }) => ({
 		value: slug,

@@ -59,7 +59,7 @@ const Legacy = ({ html, fontFamily }: { html: string; fontFamily: string }) => {
 	return (
 		<div {...useBlockProps({ ref: loadFont })}>
 			{window.codeBlockPro?.canUpgrade === false && (
-				<InspectorControls>
+				<InspectorControls group="content">
 					<div style={{ padding: 16 }}>
 						<Notice status="warning" isDismissible={false}>
 							<p>
