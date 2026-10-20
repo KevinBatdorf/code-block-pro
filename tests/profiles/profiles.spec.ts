@@ -242,6 +242,7 @@ test('the editor picks a block’s profile from the published ones', async ({
 	await newPost(admin, 'picker');
 	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
 	await page.keyboard.type('const a = 1;');
+	await page.getByRole('tab', { name: 'Settings' }).click();
 	const picker = page.getByRole('combobox', { name: 'Profile' });
 
 	await expect(picker.locator('option')).toHaveText([
@@ -277,6 +278,7 @@ test('a picker whose profiles failed to load says so, not that the profile is mi
 	await page.route(PROFILES, (route) => route.abort());
 	await newPost(admin, 'picker offline');
 	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.getByRole('tab', { name: 'Settings' }).click();
 	const picker = page.getByRole('combobox', { name: 'Profile' });
 
 	await expect(page.getByText('The profiles could not load.')).toBeVisible();
