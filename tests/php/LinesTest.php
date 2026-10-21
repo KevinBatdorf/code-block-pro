@@ -125,6 +125,19 @@ class LinesTest extends WP_UnitTestCase
         $this->assertSame([1, 2, 4, 5], array_keys($stripped['marked']));
     }
 
+    public function test_a_block_comment_left_open_keeps_its_opener()
+    {
+        $stripped = code_block_pro_strip_markers_plain([
+            'a(); /* [!code hl]',
+            'still a comment */',
+            '<div> <!-- [!code ++]',
+            'more -->',
+        ]);
+
+        $this->assertSame(['a(); /*', 'still a comment */', '<div> <!--', 'more -->'], $stripped['lines']);
+        $this->assertSame([0, 2], array_keys($stripped['marked']));
+    }
+
     public function test_kept_markers_leave_each_plain_line_as_written_and_name_the_lines_the_front_end_drops()
     {
         $lines = ['// [!code highlight]', 'a(); // [!code ++]', '    # [!code focus:2]', 'b();', 'c(); // note [!code --]', 's = "[!code ++]";'];

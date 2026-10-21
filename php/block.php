@@ -21,7 +21,10 @@ function code_block_pro_render_block(array $attributes): string
     // Ids must be unique on the page: the first block without an anchor gets #L12, later ones #code2-L12.
     static $anchorless = 0;
     $base = $anchor !== '' ? "$anchor-" : '';
-    if ($anchor === '' && !empty($attributes['lineAnchors']) && ++$anchorless > 1) {
+    if (code_block_pro_preview_uid() !== '') {
+        // Each preview is its own request, so every block in the canvas would count itself first.
+        $base = code_block_pro_preview_uid() . "-$base";
+    } elseif ($anchor === '' && !empty($attributes['lineAnchors']) && ++$anchorless > 1) {
         $base = "code$anchorless-";
     }
     $tabbed = count($panes) > 1;

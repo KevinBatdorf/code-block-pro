@@ -247,9 +247,11 @@ function code_block_pro_strip_marker_comment(string $line): ?array
     $opener = end($openers[0]);
     $text = trim(substr($head, $opener[1] + strlen($opener[0])));
     $closer = $tail[3][0] ?? '';
+    // With no closer the comment runs on; dropping the opener would uncomment the next lines.
+    $open = $text === '' && $closer === '' && !in_array($opener[0], ['//', '#', '--', ';', '%'], true);
 
     return [
-        'line' => $text === '' ? rtrim(substr($head, 0, $opener[1])) : rtrim($head) . ($closer === '' ? '' : " $closer"),
+        'line' => $text === '' && !$open ? rtrim(substr($head, 0, $opener[1])) : rtrim($head) . ($closer === '' ? '' : " $closer"),
         'markers' => $markers,
     ];
 }

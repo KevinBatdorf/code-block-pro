@@ -154,6 +154,20 @@ class PreviewTest extends WP_UnitTestCase
         $this->assertSame(round($response->get_data()['ms'], 1), $response->get_data()['ms']);
     }
 
+    public function test_line_anchors_in_a_preview_carry_the_id_the_editor_sends()
+    {
+        $anchored = $this->attributes(['profile' => '', 'lineAnchors' => true], ['code' => "a();\nb();"]);
+        $lineIds = function ($uid) use ($anchored) {
+            preg_match_all('/\bid="([^"]*L\d+)"/', $this->preview(['attributes' => $anchored, 'uid' => $uid])->get_data()['html'], $found);
+
+            return $found[1];
+        };
+
+        $this->assertSame(['cbp-e1-L1', 'cbp-e1-L2'], $lineIds('cbp-e1'));
+        $this->assertSame(['cbp-e2-L1', 'cbp-e2-L2'], $lineIds('cbp-e2'));
+        $this->assertMatchesRegularExpression('/id="(code\d+-)?L1"/', $this->frontEnd($anchored));
+    }
+
     public function test_each_block_names_its_tabs_with_the_id_the_editor_sends()
     {
         $tabbed = $this->attributes(['profile' => ''], ['code' => 'a();'], ['code' => 'b();']);
