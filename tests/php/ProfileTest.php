@@ -148,6 +148,16 @@ class ProfileTest extends WP_UnitTestCase
         $this->assertSame('publish', $this->defaultPost()->post_status);
     }
 
+    public function test_a_site_without_1x_settings_starts_on_dracula()
+    {
+        $this->deleteDefault();
+        delete_option('code_block_pro_settings');
+
+        do_action('activate_' . CODE_BLOCK_PRO_BASENAME);
+
+        $this->assertSame('dracula', code_block_pro_profile('default')['conditions'][0]['theme']);
+    }
+
     public function test_the_default_profile_is_recreated_when_missing()
     {
         $this->deleteDefault();
@@ -494,8 +504,8 @@ class ProfileTest extends WP_UnitTestCase
 
     public function test_a_profile_always_has_a_base_condition()
     {
-        $this->assertSame('nord', code_block_pro_sanitize_profile([])['conditions'][0]['theme']);
-        $this->assertSame('nord', code_block_pro_sanitize_profile(['conditions' => 'x'])['conditions'][0]['theme']);
+        $this->assertSame('dracula', code_block_pro_sanitize_profile([])['conditions'][0]['theme']);
+        $this->assertSame('dracula', code_block_pro_sanitize_profile(['conditions' => 'x'])['conditions'][0]['theme']);
     }
 
     public function test_a_profile_survives_being_saved_by_an_admin_without_unfiltered_html()

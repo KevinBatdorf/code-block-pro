@@ -218,7 +218,7 @@ class PreviewTest extends WP_UnitTestCase
 
     public function test_the_preview_lists_the_stylesheets_the_render_loaded()
     {
-        code_block_pro_insert_profile('sized', ['settings' => ['fontSize' => '1rem', 'fontFamily' => 'Code-Pro-Fira-Code']]);
+        code_block_pro_insert_profile('sized', ['settings' => ['fontSize' => '1rem', 'fontFamily' => 'Code-Pro-Fira-Code'], 'conditions' => [['id' => 'main', 'theme' => 'nord']]]);
         wp_register_style('cbp-test-base', 'https://cdn.example.com/base.css', [], '1.0');
         wp_register_style('cbp-test-group', false, ['cbp-test-base']);
         wp_register_style('cbp-test-child', '/wp-content/child.css', ['cbp-test-group'], '2.0');

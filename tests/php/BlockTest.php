@@ -224,7 +224,7 @@ class BlockTest extends WP_UnitTestCase
     {
         $this->needsMbregex();
 
-        $html = $this->render(['profile' => ''], ['code' => 'a();', 'label' => 'index.js'], ['code' => '<?php b();', 'language' => 'php']);
+        $html = $this->render(['profile' => '', 'theme' => 'nord'], ['code' => 'a();', 'label' => 'index.js'], ['code' => '<?php b();', 'language' => 'php']);
         $xpath = $this->xpath($html);
         $tabs = $xpath->query('//*[@role="tab"]');
         $panes = $xpath->query('//*[@role="tabpanel"]');
@@ -399,7 +399,7 @@ class BlockTest extends WP_UnitTestCase
         $this->needsMbregex();
         $GLOBALS['wp_query']->is_feed = true;
 
-        $html = $this->render(['profile' => ''], ['code' => 'const a = 1;']);
+        $html = $this->render(['profile' => '', 'theme' => 'nord'], ['code' => 'const a = 1;']);
 
         $this->assertStringContainsString('<div class="cbp-pane" style="--cbp-fg:#d8dee9ff;--cbp-bg:#2e3440ff;color:#d8dee9ff;background-color:#2e3440ff">', $html);
         $this->assertMatchesRegularExpression('#<span [^>]*style="color: \#81A1C1;"[^>]*>const</span>#', $html);

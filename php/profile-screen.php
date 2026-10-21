@@ -81,7 +81,7 @@ function code_block_pro_profile_meta_box(WP_Post $post): void
         echo '<tr><td>';
         echo code_block_pro_input("{$name}[name]", $condition['name'] ?? '', $condition ? '' : __('Add a theme', 'code-block-pro'));
         echo '<input type="hidden" name="' . esc_attr("{$name}[id]") . '" value="' . esc_attr($condition['id'] ?? '') . '">';
-        echo '</td><td>' . code_block_pro_select("{$name}[theme]", $condition['theme'] ?? 'nord', $themes) . '</td><td>';
+        echo '</td><td>' . code_block_pro_select("{$name}[theme]", $condition['theme'] ?? CODE_BLOCK_PRO_DEFAULT_THEME, $themes) . '</td><td>';
         if ($i === 0) {
             esc_html_e('Always', 'code-block-pro');
         } else {
@@ -107,7 +107,7 @@ function code_block_pro_profile_meta_box(WP_Post $post): void
         $name = "{$field}[languages][$i]";
         echo '<tr><td>' . code_block_pro_input("{$name}[language]", $row['language'] ?? '', $row ? '' : 'php') . '</td>';
         echo '<td>' . code_block_pro_select("{$name}[condition]", $row['condition'] ?? '', $conditions) . '</td>';
-        echo '<td>' . code_block_pro_select("{$name}[theme]", $row['theme'] ?? 'nord', $themes) . '</td>';
+        echo '<td>' . code_block_pro_select("{$name}[theme]", $row['theme'] ?? CODE_BLOCK_PRO_DEFAULT_THEME, $themes) . '</td>';
         echo '<td>' . ($row ? code_block_pro_remove_box($name) : '') . '</td></tr>';
     }
     echo '</tbody></table>';

@@ -50,7 +50,7 @@ class HighlightTest extends WP_UnitTestCase
         return '<!-- wp:' . self::NAME . ' ' . serialize_block_attributes($attributes) . ' /-->';
     }
 
-    private function render($code, $language = 'javascript', $theme = null)
+    private function render($code, $language = 'javascript', $theme = 'nord')
     {
         return render_block(parse_blocks($this->markup($code, $language, $theme))[0]);
     }
@@ -442,12 +442,12 @@ class HighlightTest extends WP_UnitTestCase
         $this->assertStringContainsString('cbp-theme-nord', $html);
     }
 
-    public function test_an_unknown_theme_renders_with_nord()
+    public function test_an_unknown_theme_renders_with_dracula()
     {
         $html = $this->render('const a = 1;', 'javascript', 'not-a-theme');
 
-        $this->assertStringContainsString('cbp-theme-nord', $html);
-        $this->assertTrue(wp_style_is('code-block-pro-theme-nord', 'enqueued'));
+        $this->assertStringContainsString('cbp-theme-dracula', $html);
+        $this->assertTrue(wp_style_is('code-block-pro-theme-dracula', 'enqueued'));
     }
 
     public function test_the_block_loads_its_theme_stylesheet()

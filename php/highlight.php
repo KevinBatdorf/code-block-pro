@@ -17,7 +17,7 @@ function code_block_pro_theme(string $slug): array
         return ['slug' => $slug, 'json' => (string) $extra[$slug], 'css' => null];
     }
 
-    $slug = $shipped ? $slug : 'nord';
+    $slug = $shipped ? $slug : CODE_BLOCK_PRO_DEFAULT_THEME;
 
     return ['slug' => $slug, 'json' => "$dir/$slug.json", 'css' => is_file("$dir/$slug.css") ? "$dir/$slug.css" : null];
 }

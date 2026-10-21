@@ -3,6 +3,7 @@
 defined('ABSPATH') or die;
 
 const CODE_BLOCK_PRO_PROFILE_TYPE = 'cbp_profile';
+const CODE_BLOCK_PRO_DEFAULT_THEME = 'dracula';
 
 add_action('init', 'code_block_pro_register_profile_type');
 
@@ -101,7 +102,7 @@ function code_block_pro_sanitize_profile(mixed $data): array
         ];
     }
     if (!$conditions) {
-        $conditions[] = ['id' => 'main', 'name' => 'main', 'theme' => 'nord', 'trigger' => ['type' => 'base'], 'background' => ['type' => 'theme']];
+        $conditions[] = ['id' => 'main', 'name' => 'main', 'theme' => CODE_BLOCK_PRO_DEFAULT_THEME, 'trigger' => ['type' => 'base'], 'background' => ['type' => 'theme']];
     }
 
     $languages = [];
@@ -229,7 +230,7 @@ function code_block_pro_theme_slug(mixed $slug): string
 {
     $slug = is_string($slug) ? strtolower($slug) : '';
 
-    return preg_match('/^[a-z0-9-]{1,80}$/', $slug) ? $slug : 'nord';
+    return preg_match('/^[a-z0-9-]{1,80}$/', $slug) ? $slug : CODE_BLOCK_PRO_DEFAULT_THEME;
 }
 
 /**
@@ -344,7 +345,7 @@ function code_block_pro_block_profile(array $attributes): array
         return $profile;
     }
 
-    $profile = code_block_pro_sanitize_profile(['conditions' => [['id' => 'main', 'theme' => $attributes['theme'] ?? 'nord']]]);
+    $profile = code_block_pro_sanitize_profile(['conditions' => [['id' => 'main', 'theme' => $attributes['theme'] ?? CODE_BLOCK_PRO_DEFAULT_THEME]]]);
 
     return ['id' => 0, 'slug' => null, 'stamp' => ''] + $profile;
 }
@@ -535,7 +536,7 @@ function code_block_pro_maybe_seed_default_profile(): void
  */
 function code_block_pro_profile_from_1x(array $settings): array
 {
-    $profile = ['settings' => [], 'conditions' => [['id' => 'main', 'name' => __('Main', 'code-block-pro'), 'theme' => $settings['previousTheme'] ?? 'nord']]];
+    $profile = ['settings' => [], 'conditions' => [['id' => 'main', 'name' => __('Main', 'code-block-pro'), 'theme' => $settings['previousTheme'] ?? CODE_BLOCK_PRO_DEFAULT_THEME]]];
     foreach (array_keys(code_block_pro_profile_setting_defaults()) as $key) {
         if (isset($settings['previous' . ucfirst($key)])) {
             $profile['settings'][$key] = $settings['previous' . ucfirst($key)];
