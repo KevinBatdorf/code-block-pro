@@ -44,6 +44,8 @@ add_action('rest_api_init', function () {
             return new WP_Error('rest_invalid_param', __('The block attributes must be an object.', 'code-block-pro'), ['status' => 400]);
         }
 
-        return new WP_REST_Response(code_block_pro_preview($attributes, filter_var($request->get_param('keepMarkers'), FILTER_VALIDATE_BOOLEAN), is_string($uid) ? $uid : ''));
+        $flag = fn (string $name) => filter_var($request->get_param($name), FILTER_VALIDATE_BOOLEAN);
+
+        return new WP_REST_Response(code_block_pro_preview($attributes, $flag('keepMarkers'), is_string($uid) ? $uid : '', $flag('saved')));
     });
 });

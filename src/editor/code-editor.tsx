@@ -140,6 +140,39 @@ const replaceAround = (
 	keep.after(...nodes.slice(at + 1));
 };
 
+// Only the lines between the first and last that differ are swapped; replacing thousands froze typing.
+const mergeLines = (live: Element, next: Element) => {
+	const old = Array.from(live.childNodes);
+	const fresh = Array.from(next.childNodes);
+	let start = 0;
+	while (
+		start < old.length &&
+		start < fresh.length &&
+		old[start].isEqualNode(fresh[start])
+	) {
+		start++;
+	}
+	let end = 0;
+	while (
+		end < old.length - start &&
+		end < fresh.length - start &&
+		old[old.length - 1 - end].isEqualNode(fresh[fresh.length - 1 - end])
+	) {
+		end++;
+	}
+	const after = old[old.length - end] ?? null;
+	for (const node of old.slice(start, old.length - end)) node.remove();
+	for (const node of fresh.slice(start, fresh.length - end)) {
+		live.insertBefore(node, after);
+	}
+};
+
+const sameShape = (pre: Element, nextPre: Element) =>
+	pre.children.length === 2 &&
+	pre.firstElementChild?.tagName === 'CODE' &&
+	nextPre.children.length === 1 &&
+	nextPre.firstElementChild?.tagName === 'CODE';
+
 /**
  * Swaps in a new render without moving the textarea's `<pre>`, which would drop focus mid-word.
  * False when the two renders differ in shape and the caller has to start over.
@@ -164,6 +197,13 @@ const merge = (
 	replaceAround(root, next, live[0], fresh[0]);
 	live.forEach((el, i) => {
 		syncAttributes(el, fresh[i]);
+		if (el === pre && sameShape(pre, fresh[i])) {
+			const code = pre.firstElementChild as Element;
+			const nextCode = fresh[i].firstElementChild as Element;
+			syncAttributes(code, nextCode);
+			mergeLines(code, nextCode);
+			return;
+		}
 		replaceAround(el, fresh[i], live[i + 1] ?? input, fresh[i + 1] ?? null);
 	});
 	return true;
@@ -191,7 +231,10 @@ export const CodeEditor = ({
 	const installed = useRef<{
 		preview: Preview | null;
 		index: number;
-		text: string;
+		html: string;
+		// The text the render shows, and the text the lines read now that typing has patched them.
+		rendered: string;
+		current: string;
 		patched: boolean;
 	} | null>(null);
 	const blockProps = useBlockProps({ className: 'cbp-editor' });
@@ -212,11 +255,16 @@ export const CodeEditor = ({
 		const root = host.current;
 		if (!root) return;
 		const last = installed.current;
+		const html = preview?.html ?? SKELETON;
+		const patched = last?.patched ?? false;
 		const changed = last?.preview !== preview || last?.index !== index;
+		// A render the lines already show, unpatched, would cost a full swap for nothing.
+		const same = last?.index === index && last.html === html && !patched;
+		if (changed && same && last) last.preview = preview;
 		// Typing back to the rendered text leaves split and empty spans; the render itself is exact.
-		if (changed || (last?.patched && code === last.text)) {
+		else if (changed || (patched && code === last?.rendered)) {
 			const template = root.ownerDocument.createElement('template');
-			template.innerHTML = preview?.html ?? SKELETON;
+			template.innerHTML = html;
 			addMissingPanes(template.content, index);
 			select(template.content, index);
 			const live = root.querySelector<HTMLElement>('pre:has(> textarea)');
@@ -225,7 +273,14 @@ export const CodeEditor = ({
 			}
 			const shown = preOf(root, index);
 			const text = shown?.querySelector(':scope > code')?.textContent ?? '';
-			installed.current = { preview, index, text, patched: false };
+			installed.current = {
+				preview,
+				index,
+				html,
+				rendered: text,
+				current: text,
+				patched: false,
+			};
 			setPre(shown);
 			if (preview) loadStyles(root.ownerDocument, preview.styles);
 		}
@@ -234,9 +289,11 @@ export const CodeEditor = ({
 			focusTab.current = null;
 		}
 		const lines = preOf(root, index)?.querySelector(':scope > code');
-		if (!lines || !installed.current || code === lines.textContent) return;
-		patchCode(lines, code);
-		installed.current.patched = true;
+		const state = installed.current;
+		if (!lines || !state || code === state.current) return;
+		patchCode(lines, code, state.current);
+		state.current = code;
+		state.patched = true;
 	}, [preview, index, code]);
 
 	// The editor focuses a new block before the textarea exists, leaving focus on the wrapper.

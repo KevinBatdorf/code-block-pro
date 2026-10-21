@@ -7,6 +7,8 @@
 }
 .cbp-editor .cbp-block .cbp-pane > pre > code {
 	grid-area: 1 / 1;
+	/* Faked bold is wider in Safari, so the caret in the plain textarea drifts off the text. */
+	font-synthesis-weight: none;
 }
 .cbp-editor .cbp-block .cbp-pane > pre > .cbp-input {
 	all: unset;

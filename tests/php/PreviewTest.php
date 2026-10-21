@@ -605,7 +605,7 @@ class PreviewTest extends WP_UnitTestCase
         $this->assertSame("\t", $indent('tabbed'));
     }
 
-    public function test_a_preview_reads_the_page_render_cache_but_never_writes_it()
+    public function test_a_preview_of_edited_code_reads_the_page_render_cache_but_never_writes_it()
     {
         $this->needsMbregex();
         $written = [];
@@ -624,6 +624,27 @@ class PreviewTest extends WP_UnitTestCase
         $this->assertCount(1, $written);
         code_block_pro_cache_set($written[0], ['html' => '<pre><code>from the cache</code></pre>', 'lines' => 1]);
         $this->assertStringContainsString('from the cache', $this->previewHtml($attributes, true));
+    }
+
+    public function test_the_first_preview_of_saved_code_writes_the_page_render_cache()
+    {
+        $this->needsMbregex();
+        $written = [];
+        add_action('set_transient', function ($name) use (&$written) {
+            if (str_starts_with($name, 'code_block_pro_')) {
+                $written[] = $name;
+            }
+        });
+        $saved = $this->attributes(['profile' => ''], ['code' => 'const saved = 1;']);
+
+        $this->preview(['attributes' => $saved, 'keepMarkers' => true, 'saved' => true]);
+        $this->assertCount(1, $written);
+        // A marker makes the editor's render differ from the page's, so it has no page entry to fill.
+        $this->preview(['attributes' => $this->attributes(['profile' => ''], ['code' => 'a(); // [!code hl]']), 'keepMarkers' => true, 'saved' => true]);
+        $this->assertCount(1, $written);
+
+        code_block_pro_cache_set($written[0], ['html' => '<pre><code>from the cache</code></pre>', 'lines' => 1]);
+        $this->assertStringContainsString('from the cache', $this->frontEnd($saved));
     }
 
     public function test_a_kept_render_and_a_front_end_render_never_share_a_cache_entry()

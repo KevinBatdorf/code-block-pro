@@ -148,13 +148,14 @@ function code_block_pro_legacy_html(string $content, array $attributes): string
  * @param array<mixed> $attributes
  * @return array{html: string, styles: list<array{handle: string, href: string}>, ms: float, indent: string, issues: list<array{code: string, message: string}>}
  */
-function code_block_pro_preview(array $attributes, bool $keepMarkers, string $uid = ''): array
+function code_block_pro_preview(array $attributes, bool $keepMarkers, string $uid = '', bool $saved = false): array
 {
     $attributes['version'] = 2;
     $settings = code_block_pro_block_profile($attributes)['settings'];
     $queued = wp_styles()->queue;
     $start = hrtime(true);
     code_block_pro_keep_markers($keepMarkers);
+    code_block_pro_save_preview($saved);
     code_block_pro_issues(true);
     code_block_pro_preview_uid(preg_match('/^[a-z][a-z0-9-]{0,39}$/', $uid) ? $uid : '');
     try {
@@ -162,6 +163,7 @@ function code_block_pro_preview(array $attributes, bool $keepMarkers, string $ui
         $issues = code_block_pro_issues() ?? [];
     } finally {
         code_block_pro_keep_markers(false);
+        code_block_pro_save_preview(false);
         code_block_pro_issues(false);
         code_block_pro_preview_uid('');
     }

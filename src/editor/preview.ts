@@ -18,6 +18,19 @@ export type Preview = Response & { body: string };
 // Caps typing on a fast server at a few requests a second; a slow one is paced by its replies.
 const SPACING = 150;
 
+// Recent renders by attributes, so a block that remounts shows its code at once, not a blank skeleton.
+const recent = new Map<string, Preview>();
+const remember = (preview: Preview) => {
+	recent.delete(preview.body);
+	recent.set(preview.body, preview);
+	let size = 0;
+	for (const [body, each] of Array.from(recent).toReversed()) {
+		size += each.html.length;
+		// A few long blocks' worth; one of 3,000 lines is about 8 MB of HTML.
+		if (size > 32_000_000 || recent.size > 20) recent.delete(body);
+	}
+};
+
 const messageOf = (error: unknown) =>
 	error && typeof error === 'object' && 'message' in error
 		? String(error.message)
@@ -28,7 +41,13 @@ const messageOf = (error: unknown) =>
  * One request at a time and one waiting, the newest edit, so a slow server never builds a queue.
  */
 export const usePreview = (attributes: Attributes, uid: string) => {
-	const [preview, setPreview] = useState<Preview | null>(null);
+	const { legacyContent: _legacy, ...rest } = attributes;
+	const body = JSON.stringify(rest);
+	const [preview, setPreview] = useState<Preview | null>(
+		() => recent.get(body) ?? null,
+	);
+	// The code as the block opened with it, saved or not; its render can fill the page's cache entry.
+	const opened = useRef(body);
 	const [error, setError] = useState('');
 	const [attempt, setAttempt] = useState(0);
 	const queue = useRef({
@@ -38,8 +57,6 @@ export const usePreview = (attributes: Attributes, uid: string) => {
 		timer: 0,
 		disposed: false,
 	});
-	const { legacyContent: _legacy, ...rest } = attributes;
-	const body = JSON.stringify(rest);
 
 	useEffect(() => {
 		const state = queue.current;
@@ -76,11 +93,18 @@ export const usePreview = (attributes: Attributes, uid: string) => {
 			apiFetch<Response>({
 				path: '/code-block-pro/v1/preview',
 				method: 'POST',
-				data: { attributes: JSON.parse(data), keepMarkers: true, uid },
+				data: {
+					attributes: JSON.parse(data),
+					keepMarkers: true,
+					uid,
+					saved: data === opened.current,
+				},
 			})
 				.then((response) => {
 					if (state.disposed) return;
-					setPreview({ ...response, body: data });
+					const next = { ...response, body: data };
+					remember(next);
+					setPreview(next);
 					setError('');
 				})
 				.catch((failure: unknown) => {
@@ -107,8 +131,11 @@ export const loadStyles = (doc: Document, styles: Response['styles']) => {
 	for (const { handle, href } of styles) {
 		const id = `${handle}-css`;
 		const link = doc.getElementById(id);
-		if (link instanceof HTMLLinkElement) {
-			if (link.href !== href) link.href = href;
+		// Not instanceof: the canvas iframe has its own HTMLLinkElement, and a missed link is added again.
+		if (link?.tagName === 'LINK') {
+			if ((link as HTMLLinkElement).href !== href) {
+				(link as HTMLLinkElement).href = href;
+			}
 			continue;
 		}
 		const added = doc.createElement('link');

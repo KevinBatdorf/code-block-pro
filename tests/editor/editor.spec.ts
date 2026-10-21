@@ -93,6 +93,52 @@ test('typed code stays lined up and the server colors it as the front end does',
 	expect(await tokens(page.locator('.cbp-block pre > code'))).toEqual(inEditor);
 });
 
+test('a new render swaps only the lines that changed and adds no stylesheet twice', async ({
+	admin,
+	editor,
+	page,
+}) => {
+	await newPost(admin, 'swaps');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	const block = editor.canvas.locator(
+		'[data-type="kevinbatdorf/code-block-pro"]',
+	);
+	const input = block.locator('textarea.cbp-input');
+	const code = block.locator('pre > code');
+	const settled = async () => {
+		await expect(block.locator('[aria-busy]')).toHaveAttribute(
+			'aria-busy',
+			'false',
+		);
+		await expect(code.locator('.cbp-pending')).toHaveCount(0);
+	};
+	await page.getByRole('combobox', { name: 'Language' }).fill('JavaScript');
+	await page.getByRole('option', { name: 'JavaScript', exact: true }).click();
+	await input.fill('const a = 1;\nconst b = 2;\nconst c = 3;');
+	await settled();
+	await code.evaluate((el) => {
+		for (const line of el.children) Object.assign(line, { kept: true });
+	});
+
+	await input.fill('const a = 1;\nconst b = 24;\nconst c = 3;');
+	await settled();
+
+	expect(await code.textContent()).toBe(await input.inputValue());
+	expect(
+		await code.evaluate((el) =>
+			Array.from(el.children, (line) => 'kept' in line),
+		),
+	).toEqual([true, false, true]);
+	const links = await block.evaluate((el) =>
+		Array.from(
+			el.ownerDocument.querySelectorAll('link[id^="code-block-pro"]'),
+			(link) => link.id,
+		),
+	);
+	expect(links.length).toBeGreaterThan(0);
+	expect(new Set(links).size).toBe(links.length);
+});
+
 test('the inserter offers the block', async ({ admin, page }) => {
 	await newPost(admin, 'inserter');
 	await page.getByRole('button', { name: 'Block Inserter' }).click();
@@ -284,9 +330,10 @@ test('the sidebar sets line options the editor and the front end both show', asy
 	await page.getByRole('checkbox', { name: 'Link to each line' }).check();
 	const highlighted = block.locator('pre > code > .line.cbp-hl');
 	await expect(highlighted).toHaveText('b');
+	// The editor's ids start with the block's own, so two blocks never share #L10.
 	await expect(block.locator('pre > code > .line').first()).toHaveAttribute(
 		'id',
-		'L10',
+		/^cbp-e\d+-L10$/,
 	);
 
 	await editor.saveDraft();
@@ -378,6 +425,81 @@ test.describe('preview requests', () => {
 		).toBeVisible({ timeout: 10000 });
 		const gaps = times.slice(1).map((time, i) => time - times[i]);
 		expect(Math.min(...gaps)).toBeGreaterThanOrEqual(140);
+	});
+
+	test('only a render of the code as it opened may fill the page cache', async ({
+		admin,
+		editor,
+		page,
+	}) => {
+		const saved: boolean[] = [];
+		await page.route(PREVIEW, async (route) => {
+			saved.push(route.request().postDataJSON().saved);
+			await route.continue();
+		});
+		const input = await insertBlock({ admin, editor });
+		await expect.poll(() => saved.length).toBeGreaterThan(0);
+		await input.pressSequentially('abc', { delay: 200 });
+		await expect.poll(() => saved.length).toBeGreaterThan(1);
+		expect(saved[0]).toBe(true);
+		expect(saved.slice(1)).not.toContain(true);
+	});
+
+	test('a block that remounts shows its last render at once', async ({
+		admin,
+		editor,
+		page,
+	}) => {
+		const input = await insertBlock({ admin, editor });
+		await page.getByRole('combobox', { name: 'Language' }).fill('JavaScript');
+		await page.getByRole('option', { name: 'JavaScript', exact: true }).click();
+		await input.fill('const a = 1;');
+		const block = editor.canvas.locator(
+			'[data-type="kevinbatdorf/code-block-pro"]',
+		);
+		await expect(block.locator('[aria-busy="false"]')).toBeVisible({
+			timeout: 10000,
+		});
+		await expect(block.locator('pre > code .token').first()).toBeVisible();
+
+		await page.route(PREVIEW, async (route) => {
+			await new Promise((resolve) => setTimeout(resolve, 5000));
+			await route.continue();
+		});
+		await page.evaluate(() => {
+			const { dispatch } = (
+				window as unknown as {
+					wp: {
+						data: {
+							dispatch: (store: string) => {
+								switchEditorMode: (mode: string) => void;
+							};
+						};
+					};
+				}
+			).wp.data;
+			dispatch('core/editor').switchEditorMode('text');
+		});
+		await expect(block).toHaveCount(0);
+		await page.evaluate(() => {
+			const { dispatch } = (
+				window as unknown as {
+					wp: {
+						data: {
+							dispatch: (store: string) => {
+								switchEditorMode: (mode: string) => void;
+							};
+						};
+					};
+				}
+			).wp.data;
+			dispatch('core/editor').switchEditorMode('visual');
+		});
+		// Well before the held request answers.
+		await expect(block.locator('pre > code .token').first()).toBeVisible({
+			timeout: 2000,
+		});
+		await page.unroute(PREVIEW);
 	});
 
 	test('a failed request shows a warning that can try again', async ({

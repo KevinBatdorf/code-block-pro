@@ -133,6 +133,19 @@ function code_block_pro_uses_classes(array $profile, array $themes): bool
 }
 
 /**
+ * On while the editor renders code as it was saved, before any edit.
+ */
+function code_block_pro_save_preview(?bool $set = null): bool
+{
+    static $save = false;
+    if ($set !== null) {
+        $save = $set;
+    }
+
+    return $save;
+}
+
+/**
  * @param CodeBlockProProfile $profile
  * @param array<mixed> $context Anything else the output depends on.
  */
@@ -312,8 +325,8 @@ function code_block_pro_render_code(string $code, string $language, array $profi
         }
     }
 
-    // The editor renders on every pause in typing, which would leave a row per keystroke.
-    if (!$keep) {
+    // Edits would leave a row per keystroke; saved code without markers or line ids renders as the page does.
+    if (!$keep || (code_block_pro_save_preview() && !$marked && $options['anchor'] === null)) {
         code_block_pro_cache_set($key, $render);
     }
 

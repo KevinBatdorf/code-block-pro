@@ -7,23 +7,45 @@ const lineOf = (code: Element, node: Node) => {
 	return line as Element | null;
 };
 
-// Before character `offset`, so text typed at a line's start lands in that line, not the one above.
-const locate = (code: Element, offset: number) => {
-	const walker = code.ownerDocument.createTreeWalker(
-		code,
+const walk = (root: Node, offset: number) => {
+	const walker = root.ownerDocument?.createTreeWalker(
+		root,
 		NodeFilter.SHOW_TEXT,
 	);
 	let seen = 0;
-	for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+	for (let node = walker?.nextNode(); node; node = walker?.nextNode()) {
 		const text = node as Text;
 		if (offset < seen + text.data.length) {
 			return { node: text as Node, offset: offset - seen };
 		}
 		seen += text.data.length;
 	}
+	return null;
+};
+
+/**
+ * Before character `offset` of `text`, so text typed at a line's start lands in that line, not the one above.
+ * Each line holds its own newline, so counting them finds the line without reading the others.
+ */
+const locate = (code: Element, text: string, offset: number) => {
+	let index = 0;
+	for (
+		let at = text.indexOf('\n');
+		at !== -1 && at < offset;
+		at = text.indexOf('\n', at + 1)
+	) {
+		index++;
+	}
+	const lineStart = offset ? text.lastIndexOf('\n', offset - 1) + 1 : 0;
+	const line =
+		code.childNodes.length === code.children.length
+			? code.children[index]
+			: null;
+	const found = line ? walk(line, offset - lineStart) : walk(code, offset);
+	if (found) return found;
 	// The end of the code is the end of its last line, which may hold no text yet.
-	const line = code.lastElementChild;
-	return line ? { node: line as Node, offset: line.childNodes.length } : null;
+	const last = code.lastElementChild;
+	return last ? { node: last as Node, offset: last.childNodes.length } : null;
 };
 
 const pending = (doc: Document, text: string) => {
@@ -33,22 +55,30 @@ const pending = (doc: Document, text: string) => {
 	return span;
 };
 
-const renumber = (code: Element) => {
-	const lines = Array.from(code.children).filter(
-		(line) => !line.classList.contains('cbp-marker'),
-	);
-	const start = Number(lines[0]?.getAttribute('data-line') ?? Number.NaN);
+const counted = (line: Element) => !line.classList.contains('cbp-marker');
+
+// Only lines from `from` on can have moved, so the ones before it keep their numbers.
+const renumber = (code: Element, from: Element) => {
+	const all = Array.from(code.children);
+	const before = all.slice(0, all.indexOf(from)).filter(counted);
+	const lines = all.slice(all.indexOf(from)).filter(counted);
+	const start = before.length
+		? Number(before.at(-1)?.getAttribute('data-line')) + 1
+		: Number(lines[0]?.getAttribute('data-line') ?? Number.NaN);
 	if (Number.isNaN(start)) return;
-	lines.forEach((line, i) => line.setAttribute('data-line', String(start + i)));
+	lines.forEach((line, i) => {
+		if (line.getAttribute('data-line') !== String(start + i)) {
+			line.setAttribute('data-line', String(start + i));
+		}
+	});
 };
 
 /**
- * Edits the rendered lines in place until they read `next`, typed text uncolored.
+ * Edits the rendered lines, which read `old`, in place until they read `next`, typed text uncolored.
  * Every line stays one element, so the lines keep matching the textarea's.
  */
-export const patchCode = (code: Element, next: string) => {
+export const patchCode = (code: Element, next: string, old: string) => {
 	const doc = code.ownerDocument;
-	const old = code.textContent ?? '';
 	if (old === next) return;
 
 	const limit = Math.min(old.length, next.length);
@@ -67,8 +97,8 @@ export const patchCode = (code: Element, next: string) => {
 	}
 	if (tail > 0 && isLow(next.charCodeAt(next.length - tail))) tail--;
 
-	const from = locate(code, start);
-	const to = locate(code, old.length - tail);
+	const from = locate(code, old, start);
+	const to = locate(code, old, old.length - tail);
 	const first = from && lineOf(code, from.node);
 	const last = to && lineOf(code, to.node);
 	if (!from || !to || !first || !last) return;
@@ -105,5 +135,5 @@ export const patchCode = (code: Element, next: string) => {
 			}),
 		);
 	}
-	if (rest.length || last !== first) renumber(code);
+	if (rest.length || last !== first) renumber(code, first);
 };
