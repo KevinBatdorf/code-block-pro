@@ -245,7 +245,7 @@ class BlockTest extends WP_UnitTestCase
     public function test_the_buttons_come_from_the_profile()
     {
         $slug = $this->profile('buttons', [
-            'conditions' => [['id' => 'light', 'name' => 'Light', 'theme' => 'github-light'], ['id' => 'dark', 'name' => 'Dark', 'theme' => 'dracula', 'trigger' => ['type' => 'button']]],
+            'conditions' => [['id' => 'light', 'name' => 'Light', 'theme' => 'github-light'], ['id' => 'dark', 'name' => 'Dark', 'theme' => 'dracula', 'trigger' => ['type' => 'media', 'value' => '(prefers-color-scheme: dark)']]],
             'buttons' => [
                 ['type' => 'copy', 'icon' => 'twoSquares', 'label' => '', 'copiedLabel' => ''],
                 ['type' => 'copy', 'icon' => 'textSimple', 'label' => 'Grab', 'copiedLabel' => 'Got it'],
@@ -349,6 +349,8 @@ class BlockTest extends WP_UnitTestCase
 
     public function test_attribute_values_from_the_block_and_profile_are_escaped()
     {
+        // Condition names reach the switch only with the Theme Pack's conditions on.
+        add_filter('blocks.codeBlockPro.customConditions', '__return_true');
         $hostile = 'x" onclick="alert(1)';
         $slug = $this->profile('quotes', [
             'conditions' => [['id' => 'main', 'name' => $hostile, 'theme' => 'nord'], ['id' => 'dark', 'name' => '</button><b>', 'theme' => 'dracula', 'trigger' => ['type' => 'button']]],

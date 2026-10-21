@@ -4,6 +4,7 @@ defined('ABSPATH') or die;
 
 const CODE_BLOCK_PRO_PROFILE_TYPE = 'cbp_profile';
 const CODE_BLOCK_PRO_DEFAULT_THEME = 'dracula';
+const CODE_BLOCK_PRO_DARK_QUERY = '(prefers-color-scheme: dark)';
 
 add_action('init', 'code_block_pro_register_profile_type');
 
@@ -100,6 +101,10 @@ function code_block_pro_sanitize_profile(mixed $data): array
             'trigger' => code_block_pro_sanitize_trigger($condition['trigger'] ?? null, count($conditions)),
             'background' => code_block_pro_sanitize_background($condition['background'] ?? null),
         ];
+    }
+    if (!code_block_pro_custom_conditions()) {
+        $conditions = array_slice(array_values(array_filter($conditions, fn ($condition, $i) => $i === 0 || code_block_pro_is_dark_trigger($condition['trigger']), ARRAY_FILTER_USE_BOTH)), 0, 2);
+        $ids = array_column($conditions, 'id');
     }
     if (!$conditions) {
         $conditions[] = ['id' => 'main', 'name' => 'main', 'theme' => CODE_BLOCK_PRO_DEFAULT_THEME, 'trigger' => ['type' => 'base'], 'background' => ['type' => 'theme']];
@@ -234,6 +239,22 @@ function code_block_pro_theme_slug(mixed $slug): string
 }
 
 /**
+ * Light and one Dark, switched by the browser or a class on the page, unless the Theme Pack allows more.
+ */
+function code_block_pro_custom_conditions(): bool
+{
+    return (bool) apply_filters('blocks.codeBlockPro.customConditions', false);
+}
+
+/**
+ * @param CodeBlockProTrigger $trigger
+ */
+function code_block_pro_is_dark_trigger(array $trigger): bool
+{
+    return $trigger['type'] === 'class' || ($trigger['type'] === 'media' && $trigger['value'] === CODE_BLOCK_PRO_DARK_QUERY);
+}
+
+/**
  * @param int $position The first condition always applies, so it has no trigger.
  * @return CodeBlockProTrigger
  */
@@ -312,7 +333,13 @@ function code_block_pro_sanitize_button(array $button, array $conditions): ?arra
     if ($type === 'toggle') {
         $toggles = array_values(array_intersect(array_map('strval', (array) ($button['conditions'] ?? [])), $conditions));
 
-        return ['type' => 'toggle', 'label' => $label, 'conditions' => $toggles ?: $conditions];
+        return [
+            'type' => 'toggle',
+            'label' => $label,
+            'conditions' => $toggles ?: $conditions,
+            'scope' => in_array($button['scope'] ?? '', ['block', 'page', 'site'], true) ? $button['scope'] : 'page',
+            'remember' => (bool) ($button['remember'] ?? true),
+        ];
     }
     if ($type === 'custom') {
         $id = sanitize_key((string) ($button['id'] ?? ''));

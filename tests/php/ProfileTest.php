@@ -7,6 +7,8 @@ class ProfileTest extends WP_UnitTestCase
     public function set_up()
     {
         parent::set_up();
+        // These cover the conditions and triggers only the Theme Pack turns on.
+        add_filter('blocks.codeBlockPro.customConditions', '__return_true');
         code_block_pro_ensure_default_profile();
         $this->dequeueThemes();
     }

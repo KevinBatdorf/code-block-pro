@@ -50,7 +50,9 @@ function code_block_pro_render_block(array $attributes): string
 
     $buttons = code_block_pro_buttons($profile);
     $footer = in_array($settings['footerType'], CODE_BLOCK_PRO_FOOTERS, true) ? (string) $settings['footerType'] : '';
-    if ($tabbed || $buttons || array_filter(array_column($rendered, 'more'))) {
+    $switchable = count($profile['conditions']) > 1;
+    // A choice remembered for the page or the site also has to reach blocks without a switch.
+    if ($tabbed || $buttons || $switchable || array_filter(array_column($rendered, 'more'))) {
         wp_enqueue_script('code-block-pro-view');
     }
 
@@ -71,8 +73,12 @@ function code_block_pro_render_block(array $attributes): string
     if ($anchor !== '') {
         $wrapper['id'] = $anchor;
     }
-    if ($profile['slug'] !== null && str_contains($buttons, 'cbp-toggle')) {
+    if ($profile['slug'] !== null && $switchable) {
         $wrapper['data-cbp-profile'] = $profile['slug'];
+    }
+    if ($switchable && !code_block_pro_custom_conditions()) {
+        $wrapper['data-cbp-light'] = $profile['conditions'][0]['id'];
+        $wrapper['data-cbp-dark'] = $profile['conditions'][1]['id'];
     }
 
     $html = '<div ' . get_block_wrapper_attributes($wrapper) . '>';
@@ -360,12 +366,21 @@ function code_block_pro_buttons(array $profile): string
         }
         if ($button['type'] === 'toggle') {
             $states = [['', __('Auto', 'code-block-pro')]];
-            foreach ($button['conditions'] as $id) {
-                $states[] = [$id, ($names[$id] ?? '') ?: $id];
+            if (code_block_pro_custom_conditions()) {
+                foreach ($button['conditions'] as $id) {
+                    $states[] = [$id, ($names[$id] ?? '') ?: $id];
+                }
+            } elseif (count($profile['conditions']) > 1) {
+                array_push($states, ['light', __('Light', 'code-block-pro')], ['dark', __('Dark', 'code-block-pro')]);
+            }
+            if (count($states) < 2) {
+                continue;
             }
             $html .= sprintf(
-                '<button type="button" class="cbp-button cbp-toggle" data-cbp-states="%s"><span class="cbp-button-text">%s</span> <span class="cbp-toggle-state">%s</span></button>',
+                '<button type="button" class="cbp-button cbp-toggle" data-cbp-states="%s" data-cbp-scope="%s" data-cbp-remember="%s"><span class="cbp-button-text">%s</span> <span class="cbp-toggle-state">%s</span></button>',
                 esc_attr((string) wp_json_encode($states)),
+                esc_attr($button['scope']),
+                $button['remember'] ? '1' : '0',
                 esc_html($button['label'] !== '' ? $button['label'] : __('Theme', 'code-block-pro')),
                 esc_html($states[0][1])
             );

@@ -7,6 +7,11 @@ require __DIR__ . '/../setup.php';
 wp_mkdir_p(WPMU_PLUGIN_DIR);
 copy(__DIR__ . '/../strict-csp/mu-plugin.php', WPMU_PLUGIN_DIR . '/cbp-strict-csp.php');
 
+// The stacked conditions here are the Theme Pack's; this setup and every page request need them on.
+$custom = "<?php add_filter('blocks.codeBlockPro.customConditions', '__return_true');\n";
+file_put_contents(WPMU_PLUGIN_DIR . '/cbp-custom-conditions.php', $custom);
+add_filter('blocks.codeBlockPro.customConditions', '__return_true');
+
 $code = [
     'javascript' => "// Greets someone\nclass Greeter extends Base {\n  static #count = 0;\n  greet(name = 'you') {\n    return `Hello, \${name}` + /\\d+/.source + this.x;\n  }\n}\n",
     'markdown' => "# Title\n\nSome **bold**, _italic_, ~~struck~~ and `code`.\n\n> quoted [link](https://example.com)\n",

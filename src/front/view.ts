@@ -99,42 +99,111 @@ const copy = async (button: HTMLElement) => {
 	);
 };
 
-const storageKey = (profile: string) => `code-block-pro-condition:${profile}`;
+type Scope = 'block' | 'page' | 'site';
 
 const statesOf = (toggle: HTMLElement): States =>
 	JSON.parse(toggle.dataset.cbpStates ?? '[]');
 
-// A switch changes every block of its profile, so a page never shows two at once.
-const showCondition = (profile: string, condition: string) => {
-	for (const block of document.querySelectorAll<HTMLElement>(
-		`.cbp-block[data-cbp-profile="${CSS.escape(profile)}"]`,
-	)) {
-		if (condition) block.dataset.cbpCondition = condition;
-		else delete block.dataset.cbpCondition;
-		for (const toggle of block.querySelectorAll<HTMLElement>('.cbp-toggle')) {
-			const name = statesOf(toggle).find(([id]) => id === condition)?.[1];
-			const state = toggle.querySelector('.cbp-toggle-state');
-			if (state && name !== undefined) state.textContent = name;
-		}
+// Light and Dark carry across profiles; the Theme Pack's states name conditions of one profile.
+const isLightDark = (block: HTMLElement) => block.dataset.cbpDark !== undefined;
+
+const showState = (block: HTMLElement, state: string) => {
+	const condition =
+		state === 'light' && isLightDark(block)
+			? block.dataset.cbpLight
+			: state === 'dark' && isLightDark(block)
+				? block.dataset.cbpDark
+				: state;
+	if (state) block.dataset.cbpState = state;
+	else delete block.dataset.cbpState;
+	if (condition) block.dataset.cbpCondition = condition;
+	else delete block.dataset.cbpCondition;
+	for (const toggle of block.querySelectorAll<HTMLElement>('.cbp-toggle')) {
+		const name = statesOf(toggle).find(([id]) => id === state)?.[1];
+		const label = toggle.querySelector('.cbp-toggle-state');
+		if (label && name !== undefined) label.textContent = name;
 	}
+};
+
+const reach = (block: HTMLElement, scope: Scope) => {
+	if (scope === 'block') return [block];
+	const selector = isLightDark(block)
+		? '.cbp-block[data-cbp-dark]'
+		: `.cbp-block[data-cbp-profile="${CSS.escape(block.dataset.cbpProfile ?? '')}"]`;
+	return Array.from(document.querySelectorAll<HTMLElement>(selector));
+};
+
+const storageKey = (block: HTMLElement, scope: Scope) => {
+	const owner = isLightDark(block) ? '' : `:${block.dataset.cbpProfile}`;
+	const key = `code-block-pro-switch${owner}`;
+	if (scope === 'site') return key;
+	if (scope === 'page') return `${key}:${location.pathname}`;
+	const index = Array.from(document.querySelectorAll('.cbp-block')).indexOf(
+		block,
+	);
+	return `${key}:${location.pathname}:${block.id || index}`;
 };
 
 const toggle = (button: HTMLElement) => {
 	const block = button.closest<HTMLElement>('.cbp-block');
-	const profile = block?.dataset.cbpProfile;
-	if (!block || !profile) return;
+	if (!block) return;
+	const scope = (button.dataset.cbpScope ?? 'page') as Scope;
 	const states = statesOf(button);
 	const current = states.findIndex(
-		([id]) => id === (block.dataset.cbpCondition ?? ''),
+		([id]) => id === (block.dataset.cbpState ?? ''),
 	);
 	const [next, name] = states[(current + 1) % states.length] ?? ['', ''];
-	showCondition(profile, next);
+	for (const each of reach(block, scope)) showState(each, next);
 	announce(block, name);
+	if (button.dataset.cbpRemember !== '1') return;
 	try {
-		if (next) localStorage.setItem(storageKey(profile), next);
-		else localStorage.removeItem(storageKey(profile));
+		if (next) localStorage.setItem(storageKey(block, scope), next);
+		else localStorage.removeItem(storageKey(block, scope));
 	} catch {
 		// With storage off, the choice lasts until the page reloads.
+	}
+};
+
+// A page or block choice counts only while a switch still remembers it; the site's applies everywhere.
+const remembers = (block: HTMLElement, scope: Scope) => {
+	if (scope === 'site') return true;
+	const within = scope === 'block' ? [block] : reach(block, 'page');
+	return within.some((each) =>
+		each.querySelector(
+			`.cbp-toggle[data-cbp-scope="${scope}"][data-cbp-remember="1"]`,
+		),
+	);
+};
+
+const offers = (block: HTMLElement, state: string) =>
+	isLightDark(block)
+		? state === 'light' || state === 'dark'
+		: reach(block, 'page').some((each) =>
+				Array.from(each.querySelectorAll<HTMLElement>('.cbp-toggle')).some(
+					(toggle) => statesOf(toggle).some(([id]) => id === state),
+				),
+			);
+
+const restoreSwitches = () => {
+	const blocks = document.querySelectorAll<HTMLElement>(
+		'.cbp-block[data-cbp-profile]',
+	);
+	// Broadest first, so a choice made for one page or one block wins over the site's.
+	for (const scope of ['site', 'page', 'block'] as Scope[]) {
+		for (const block of blocks) {
+			try {
+				const key = storageKey(block, scope);
+				const saved = localStorage.getItem(key);
+				if (saved === null) continue;
+				if (!remembers(block, scope) || !offers(block, saved)) {
+					if (scope !== 'site') localStorage.removeItem(key);
+					continue;
+				}
+				showState(block, saved);
+			} catch {
+				// With storage off, every page starts on the profile's own triggers.
+			}
+		}
 	}
 };
 
@@ -242,24 +311,5 @@ window.addEventListener('hashchange', revealTarget);
 for (const block of document.querySelectorAll('.cbp-block')) {
 	block.classList.add('cbp-js');
 }
-const profiles = new Set(
-	Array.from(
-		document.querySelectorAll<HTMLElement>('.cbp-block[data-cbp-profile]'),
-		(block) => block.dataset.cbpProfile ?? '',
-	),
-);
-for (const profile of profiles) {
-	try {
-		const saved = localStorage.getItem(storageKey(profile));
-		// The profile may have dropped that choice from its switch since.
-		const toggle = document.querySelector<HTMLElement>(
-			`.cbp-block[data-cbp-profile="${CSS.escape(profile)}"] .cbp-toggle`,
-		);
-		const offered = toggle && statesOf(toggle).some(([id]) => id === saved);
-		if (saved && offered) showCondition(profile, saved);
-		else if (saved) localStorage.removeItem(storageKey(profile));
-	} catch {
-		// With storage off, every page starts on the profile's own triggers.
-	}
-}
+restoreSwitches();
 revealTarget();

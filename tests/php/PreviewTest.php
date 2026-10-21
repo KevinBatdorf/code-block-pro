@@ -493,7 +493,7 @@ class PreviewTest extends WP_UnitTestCase
 
         $this->assertSame(['unknown-theme'], array_column($freeflow, 'code'));
         $this->assertStringContainsString('“not-a-theme”', $freeflow[0]['message']);
-        $this->assertStringContainsString('Nord', $freeflow[0]['message']);
+        $this->assertStringContainsString('so Dracula is used instead', $freeflow[0]['message']);
         $this->assertSame(['unknown-theme'], array_column($profile, 'code'));
         $this->assertStringContainsString('“retired-theme”', $profile[0]['message']);
         $this->assertSame([], $this->issues($this->attributes(['profile' => 'php-only'])));

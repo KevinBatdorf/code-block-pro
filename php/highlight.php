@@ -84,9 +84,10 @@ function code_block_pro_profile_themes(array $profile, string $language): array
         $themes[$condition['id']] = code_block_pro_theme($slug);
         if ($themes[$condition['id']]['slug'] !== $slug) {
             code_block_pro_report_issue('unknown-theme', fn () => sprintf(
-                /* translators: %s: the name of a color theme, as saved in the block or its profile. */
-                __('The theme “%s” is not installed, so Nord is used instead. Choose another theme, or reactivate the plugin that added it.', 'code-block-pro'),
-                $slug
+                /* translators: 1: the name of a color theme, as saved in the block or its profile. 2: the name of the theme used in its place. */
+                __('The theme “%1$s” is not installed, so %2$s is used instead. Choose another theme, or reactivate the plugin that added it.', 'code-block-pro'),
+                $slug,
+                ucwords(str_replace('-', ' ', CODE_BLOCK_PRO_DEFAULT_THEME))
             ));
         }
     }

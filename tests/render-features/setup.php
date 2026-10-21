@@ -21,15 +21,23 @@ code_block_pro_insert_profile('features', [
     'settings' => ['lineNumbers' => true, 'highlightingHover' => true, 'headerType' => 'headlights', 'footerType' => 'simpleStringEnd', 'seeMoreType' => 'blockLeft', 'seeMoreCollapse' => true],
     'conditions' => [
         ['id' => 'light', 'name' => 'Light', 'theme' => 'github-light'],
-        ['id' => 'dark', 'name' => 'Dark', 'theme' => 'dracula', 'trigger' => ['type' => 'button']],
+        ['id' => 'dark', 'name' => 'Dark', 'theme' => 'dracula', 'trigger' => ['type' => 'media', 'value' => '(prefers-color-scheme: dark)']],
     ],
     'languages' => ['php' => ['light' => 'nord']],
     'buttons' => [
         ['type' => 'copy', 'icon' => 'textSimple'],
-        ['type' => 'toggle', 'conditions' => ['light', 'dark']],
+        ['type' => 'toggle'],
         ['type' => 'custom', 'id' => 'run', 'label' => 'Run'],
     ],
 ], 'Features');
+
+$lightDark = [
+    ['id' => 'light', 'theme' => 'github-light'],
+    ['id' => 'dark', 'theme' => 'dracula', 'trigger' => ['type' => 'media', 'value' => '(prefers-color-scheme: dark)']],
+];
+code_block_pro_insert_profile('switch-block', ['conditions' => $lightDark, 'buttons' => [['type' => 'toggle', 'scope' => 'block', 'remember' => false]]]);
+code_block_pro_insert_profile('switch-site', ['conditions' => $lightDark, 'buttons' => [['type' => 'toggle', 'scope' => 'site']]]);
+code_block_pro_insert_profile('no-switch', ['conditions' => $lightDark]);
 
 $long = "const line = '" . str_repeat('x', 300) . "';";
 $thirty = implode("\n", array_map(fn ($n) => "const n$n = $n;", range(1, 30)));
@@ -53,6 +61,9 @@ $posts = [
         ),
         $block([], ['code' => 'second();']),
     ],
+    'switch-block' => [$block(['profile' => 'switch-block'], ['code' => 'one();']), $block(['profile' => 'switch-block'], ['code' => 'two();'])],
+    'switch-site' => [$block(['profile' => 'switch-site'], ['code' => 'here();'])],
+    'switch-elsewhere' => [$block(['profile' => 'no-switch'], ['code' => 'there();'])],
 ];
 
 foreach ($posts as $slug => $blocks) {

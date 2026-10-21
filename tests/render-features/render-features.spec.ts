@@ -259,7 +259,7 @@ test('a custom button sends its id and the code to the page', async ({
 	});
 });
 
-test('the switch recolors every block of its profile without a reload', async ({
+test('the switch recolors every block on the page without a reload', async ({
 	page,
 }) => {
 	await page.goto('/panes/');
@@ -286,6 +286,41 @@ test('the switch recolors every block of its profile without a reload', async ({
 	await blocks.first().locator('.cbp-toggle').click();
 	await expect(blocks.first()).not.toHaveAttribute('data-cbp-condition');
 	await expect(blocks.first().locator('.cbp-toggle')).toHaveText('Theme Auto');
+});
+
+test('a switch for one block changes only that block and forgets on reload', async ({
+	page,
+}) => {
+	await page.goto('/switch-block/');
+	const blocks = page.locator('.cbp-profile-switch-block');
+	const toggle = blocks.first().locator('.cbp-toggle');
+
+	await toggle.click();
+	await toggle.click();
+	await expect(toggle).toHaveText('Theme Dark');
+	await expect(blocks.first()).toHaveAttribute('data-cbp-condition', 'dark');
+	await expect(blocks.nth(1)).not.toHaveAttribute('data-cbp-condition');
+	await expect(blocks.nth(1).locator('.cbp-toggle')).toHaveText('Theme Auto');
+
+	await page.reload();
+	await expect(blocks.first().locator('.cbp-toggle')).toHaveText('Theme Auto');
+	await expect(blocks.first()).not.toHaveAttribute('data-cbp-condition');
+});
+
+test('a switch for the whole site follows the reader to other pages', async ({
+	page,
+}) => {
+	await page.goto('/switch-site/');
+	const toggle = page.locator('.cbp-toggle');
+	await toggle.click();
+	await toggle.click();
+	await expect(toggle).toHaveText('Theme Dark');
+
+	// That page's block has no switch of its own.
+	await page.goto('/switch-elsewhere/');
+	const block = page.locator('.cbp-profile-no-switch');
+	await expect(block.locator('.cbp-toggle')).toHaveCount(0);
+	await expect(block).toHaveAttribute('data-cbp-condition', 'dark');
 });
 
 test('two panes with a highlight, a blur and the buttons row', async ({
