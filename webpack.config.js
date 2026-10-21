@@ -8,6 +8,7 @@ module.exports = {
 	entry: () => ({
 		...defaultConfig.entry(),
 		view: './src/front/view.ts',
+		profiles: './src/profiles/index.tsx',
 	}),
 	devServer: { ...defaultConfig.devServer, host: 'wordpress.test' },
 	plugins: [

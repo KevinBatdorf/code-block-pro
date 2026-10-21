@@ -61,7 +61,7 @@ include_once(__DIR__ . '/php/lines.php');
 include_once(__DIR__ . '/php/highlight.php');
 include_once(__DIR__ . '/php/profiles.php');
 include_once(__DIR__ . '/php/profile-css.php');
-include_once(__DIR__ . '/php/profile-screen.php');
+include_once(__DIR__ . '/php/profile-manager.php');
 include_once(__DIR__ . '/php/block.php');
 include_once(__DIR__ . '/php/update-gate.php');
 include_once(__DIR__ . '/php/router.php');

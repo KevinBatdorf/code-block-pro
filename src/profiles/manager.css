@@ -1,0 +1,671 @@
+/* Core's preferences modal styles the frame, sections and options through the shared class names.
+   These rules stand in for what core's private Tabs component and its own header draw. */
+
+/* Header: core's markup, drawn by us so each screen can have a back button. */
+
+.cbp-manager-header.components-modal__header {
+	position: sticky;
+	top: -24px;
+	width: auto;
+	height: 72px;
+	margin: -24px -24px 4px;
+	padding: 16px 24px;
+	background: #fff;
+}
+
+.cbp-manager-header .components-modal__header-heading-container {
+	gap: 4px;
+}
+
+.cbp-manager-header svg,
+.cbp-manager-modal .components-button svg {
+	fill: currentColor;
+}
+
+.cbp-manager-error.components-notice {
+	margin: 8px 0 16px;
+}
+
+/* Vertical tabs */
+
+.cbp-manager-tablist {
+	display: flex;
+	flex-direction: column;
+}
+
+.cbp-manager-tab {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 160px;
+	height: 40px;
+	padding: 8px 12px;
+	border: 0;
+	border-radius: 2px;
+	background: none;
+	color: #1e1e1e;
+	font-size: 13px;
+	line-height: 1.2;
+	text-align: start;
+	cursor: pointer;
+}
+
+.cbp-manager-tab[aria-selected='true'] {
+	background-color: var(
+		--wp-components-color-gray-100,
+		var(--wpds-color-background-surface-neutral, #fcfcfc)
+	);
+}
+
+.cbp-manager-tab:focus-visible {
+	outline: 2px solid var(--wp-admin-theme-color, #3858e9);
+	outline-offset: -2px;
+}
+
+.cbp-manager-tab-label {
+	flex: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cbp-manager-tab svg {
+	flex: none;
+	fill: currentColor;
+	opacity: 0;
+}
+
+.cbp-manager-tab[aria-selected='true'] svg,
+.cbp-manager-tab:hover svg {
+	opacity: 1;
+}
+
+.cbp-manager-tabpanel {
+	flex: 1;
+	min-width: 0;
+}
+
+/* A fieldset is as wide as its widest unbreakable line unless told otherwise. */
+.cbp-manager-tabpanel fieldset {
+	min-width: 0;
+}
+
+/* Profile list */
+
+.cbp-manager-cards {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}
+
+.cbp-manager-profile {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+	min-height: 64px;
+	padding: 12px 8px 12px 16px;
+	border: 0;
+	border-top: 1px solid #e0e0e0;
+	background: #fff;
+	color: #1e1e1e;
+	text-align: start;
+	cursor: pointer;
+}
+
+.cbp-manager-profile:first-child {
+	border-top: 0;
+	border-radius: 4px 4px 0 0;
+}
+
+.cbp-manager-profile:last-child {
+	border-radius: 0 0 4px 4px;
+}
+
+.cbp-manager-profile:hover {
+	background: #f9f9f9;
+}
+
+.cbp-manager-profile:focus-visible {
+	position: relative;
+	outline: 2px solid var(--wp-admin-theme-color, #3858e9);
+	outline-offset: -2px;
+}
+
+.cbp-manager-profile svg {
+	flex: none;
+	fill: #757575;
+}
+
+.cbp-manager-profile-swatch {
+	flex: none;
+	width: 40px;
+	height: 28px;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
+}
+
+.cbp-manager-profile-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+}
+
+.cbp-manager-profile-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+.cbp-manager-profile-meta,
+.cbp-manager-profile-count {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+	line-height: 1.4;
+	color: #757575;
+}
+
+.cbp-manager-profile-count {
+	flex: none;
+}
+
+.cbp-manager-add-button.components-button {
+	margin-top: 16px;
+}
+
+.cbp-manager-add {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.cbp-manager-add .components-base-control {
+	flex: 1;
+}
+
+/* Theme tiles and the theme grid */
+
+.cbp-manager-tiles,
+.cbp-manager-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px 16px;
+}
+
+.cbp-manager-tile,
+.cbp-manager-card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #1e1e1e;
+	text-align: start;
+	cursor: pointer;
+}
+
+.cbp-manager-tile:focus-visible,
+.cbp-manager-card:focus-visible {
+	outline: none;
+}
+
+.cbp-manager-box {
+	box-sizing: border-box;
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	border-radius: 4px;
+	color: #757575;
+	--cbp-manager-scale: 0.58;
+}
+
+/* Drawn over the preview, which would cover an inset shadow on the box itself. */
+.cbp-manager-box:not(.is-empty)::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
+	pointer-events: none;
+}
+
+.cbp-manager-box.is-empty {
+	box-shadow: none;
+	outline: 1px dashed #949494;
+	outline-offset: -1px;
+}
+
+.cbp-manager-box svg {
+	fill: currentColor;
+}
+
+.cbp-manager-tile:not(:disabled):hover .cbp-manager-box,
+.cbp-manager-card:hover .cbp-manager-box {
+	color: #1e1e1e;
+}
+
+.cbp-manager-tile:not(:disabled):hover .cbp-manager-box.is-empty,
+.cbp-manager-card:hover .cbp-manager-box.is-empty {
+	outline-color: #1e1e1e;
+}
+
+.cbp-manager-grid.is-quiet .cbp-manager-card:focus-visible .cbp-manager-box {
+	box-shadow: none;
+}
+
+/* Focus: the theme-color ring, set off from the preview by a white gap. */
+.cbp-manager-tile:focus-visible .cbp-manager-box,
+.cbp-manager-card:focus-visible .cbp-manager-box {
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 calc(2px + var(--wp-admin-border-width-focus, 2px))
+			var(--wp-admin-theme-color, #3858e9);
+}
+
+.cbp-manager-check {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	display: grid;
+	place-items: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 999px;
+	background: var(--wp-admin-theme-color, #3858e9);
+	box-shadow: 0 0 0 2px #fff;
+	color: #fff;
+}
+
+.cbp-manager-check svg {
+	fill: #fff;
+}
+
+.cbp-manager-tile:disabled {
+	cursor: not-allowed;
+}
+
+.cbp-manager-tile:disabled .cbp-manager-box,
+.cbp-manager-tile:disabled .cbp-manager-label {
+	opacity: 0.6;
+}
+
+.cbp-manager-label {
+	margin-top: 8px;
+	font-size: 13px;
+	line-height: 1.4;
+	font-weight: 500;
+}
+
+.cbp-manager-meta {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+	line-height: 1.4;
+	color: #757575;
+}
+
+/* A real highlighted sample, drawn at full size and scaled into its box. */
+.cbp-manager-sample {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.cbp-manager-sample-inner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 260px;
+	transform: scale(var(--cbp-manager-scale));
+	transform-origin: top left;
+}
+
+.cbp-manager-sample-inner pre {
+	margin: 0;
+	padding: 16px 18px;
+	font-family: var(
+		--cbp-manager-font,
+		'Code-Pro-JetBrains-Mono',
+		ui-monospace,
+		SFMono-Regular,
+		Menlo,
+		monospace
+	);
+	font-size: 13px;
+	line-height: 20px;
+	white-space: pre;
+}
+
+/* WordPress admin gives every code element a gray background and padding. */
+.cbp-manager-sample-inner code {
+	margin: 0;
+	padding: 0;
+	background: none;
+	font: inherit;
+}
+
+.cbp-manager-sample-inner .line,
+.cbp-manager-editor-colors .line {
+	display: block;
+	min-height: 20px;
+}
+
+/* Code sample */
+
+.cbp-manager-sample-editor {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+}
+
+.cbp-manager-sample-editor .components-base-control {
+	width: 100%;
+}
+
+/* The textarea sits under the server's colored copy of the same text; both use one font and box. */
+.cbp-manager-editor-field {
+	width: 100%;
+}
+
+.cbp-manager-editor-label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.cbp-manager-editor {
+	position: relative;
+	overflow: hidden;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
+}
+
+.cbp-manager-editor:focus-within {
+	box-shadow: 0 0 0 var(--wp-admin-border-width-focus, 2px)
+		var(--wp-admin-theme-color, #3858e9);
+}
+
+.cbp-manager-editor textarea,
+.cbp-manager-editor-colors pre {
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 16px;
+	border: 0;
+	font-family:
+		'Code-Pro-JetBrains-Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-size: 13px;
+	line-height: 20px;
+	tab-size: 2;
+	white-space: pre;
+	overflow: hidden;
+}
+
+.cbp-manager-editor textarea {
+	resize: none;
+	background: transparent;
+	color: inherit;
+	box-shadow: none;
+	outline: none;
+}
+
+.cbp-manager-editor.is-fresh textarea {
+	color: transparent;
+}
+
+.cbp-manager-editor-colors {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.cbp-manager-editor-colors pre {
+	background: transparent !important;
+}
+
+.cbp-manager-editor-colors code {
+	margin: 0;
+	padding: 0;
+	background: none;
+	font: inherit;
+}
+
+.cbp-manager-header-back.components-button {
+	margin-inline-start: -8px;
+	padding-inline-start: 2px;
+	font-size: 13px;
+}
+
+/* Pages and screens inside a profile */
+
+.cbp-manager-screen fieldset {
+	min-width: 0;
+}
+
+.cbp-manager-modal .preferences-modal__option + .preferences-modal__option {
+	margin-top: 16px;
+}
+
+.cbp-manager-modal .preferences-modal__section-content > .components-button {
+	margin-top: 16px;
+}
+
+/* A whole block drawn at 340px wide and zoomed to fit its tile. */
+.cbp-manager-thumb {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	background: #f0f0f0;
+	pointer-events: none;
+}
+
+.cbp-manager-thumb-inner {
+	box-sizing: border-box;
+	width: 340px;
+	padding: 0 20px;
+}
+
+/* Zoomed on the block's top right, where its buttons sit. */
+.cbp-manager-thumb.is-corner {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	padding-top: 28px;
+}
+
+.cbp-manager-thumb.is-corner .cbp-manager-thumb-inner {
+	padding: 0;
+}
+
+/* The block keeps its copy icon faint until hovered, too faint to pick from. */
+.cbp-manager-thumb.is-corner .cbp-block .cbp-copy {
+	opacity: 0.9;
+}
+
+.cbp-manager-thumb-inner .cbp-block,
+.cbp-manager-live .cbp-block {
+	margin: 0;
+}
+
+.cbp-manager-live {
+	padding: 16px;
+	border-radius: 4px;
+	background: #f0f0f0;
+}
+
+/* Button list rows: the row opens the button, the arrows reorder it. */
+.cbp-manager-row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding-inline-end: 8px;
+	border-top: 1px solid #e0e0e0;
+}
+
+.cbp-manager-row:first-child {
+	border-top: 0;
+}
+
+.cbp-manager-row-main {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	min-height: 56px;
+	padding: 10px 8px 10px 16px;
+	border: 0;
+	background: none;
+	color: #1e1e1e;
+	text-align: start;
+	cursor: pointer;
+}
+
+.cbp-manager-row-main:hover {
+	background: #f9f9f9;
+}
+
+.cbp-manager-row-main:focus-visible {
+	outline: 2px solid var(--wp-admin-theme-color, #3858e9);
+	outline-offset: -2px;
+}
+
+.cbp-manager-row-main svg {
+	flex: none;
+	fill: #757575;
+}
+
+/* Screens without the settings sidebar have tiles about a third wider. */
+.cbp-manager-screen .cbp-manager-box {
+	--cbp-manager-scale: 0.82;
+}
+
+/* Save stays in view at the bottom of every screen, however short the screen. */
+.cbp-manager-modal .components-modal__children-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
+.cbp-manager-footer {
+	position: sticky;
+	bottom: -24px;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	margin: auto -24px -24px;
+	padding: 16px 24px;
+	border-top: 1px solid #e0e0e0;
+	background: #fff;
+}
+
+.cbp-manager-empty {
+	margin: 0;
+	color: #757575;
+}
+
+a.cbp-manager-page {
+	box-sizing: border-box;
+	width: 100%;
+	border-top: 1px solid #e0e0e0;
+	text-decoration: none;
+}
+
+a.cbp-manager-page:first-child {
+	border-top: 0;
+}
+
+/* Core rings buttons and toggles on any focus, mouse clicks included; the ring is for the keyboard. */
+.cbp-manager-modal .components-button:focus:not(:focus-visible),
+.cbp-manager-confirm .components-button:focus:not(:focus-visible) {
+	outline: none;
+	box-shadow: none;
+}
+
+.cbp-manager-modal .components-button.is-secondary:focus:not(:focus-visible) {
+	box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.cbp-manager-modal
+	.components-form-toggle__input:focus:not(:focus-visible)
+	+ .components-form-toggle__track {
+	box-shadow: none;
+}
+
+.cbp-manager-footer > .components-button:first-of-type {
+	margin-inline-start: auto;
+}
+
+.cbp-manager-footer > .components-button + .components-button {
+	margin-inline-start: -16px;
+}
+
+.cbp-manager-preview-popover .components-popover__content {
+	width: 520px;
+	padding: 0;
+}
+
+/* Room between the last setting and the Save bar. */
+.cbp-manager-tabpanel,
+.cbp-manager-screen {
+	padding-bottom: 32px;
+}
+
+.cbp-manager-impact {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.cbp-manager-impact svg {
+	flex: none;
+	fill: #bd8600;
+}
+
+.cbp-manager-impact-title {
+	margin: 0 0 4px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.5;
+}
+
+.cbp-manager-description {
+	margin: 0 0 24px;
+	color: #757575;
+}
+
+/* How Dark switches on, above the Dark theme grid. */
+.cbp-manager-settings {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-bottom: 24px;
+	padding: 16px;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}

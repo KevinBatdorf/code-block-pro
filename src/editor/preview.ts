@@ -1,7 +1,9 @@
 import apiFetch from '@wordpress/api-fetch';
 import { useEffect, useRef, useState } from '@wordpress/element';
+import { addAction, removeAction } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import type { Attributes } from '../types';
+import { PROFILES_CHANGED } from './actions';
 
 export type Issue = { code: string; message: string };
 
@@ -30,6 +32,8 @@ const remember = (preview: Preview) => {
 		if (size > 32_000_000 || recent.size > 20) recent.delete(body);
 	}
 };
+
+addAction(PROFILES_CHANGED, 'code-block-pro/preview', () => recent.clear());
 
 const messageOf = (error: unknown) =>
 	error && typeof error === 'object' && 'message' in error
@@ -66,6 +70,18 @@ export const usePreview = (attributes: Attributes, uid: string) => {
 			window.clearTimeout(state.timer);
 		};
 	}, []);
+
+	// A saved profile restyles every block that uses it.
+	const profile = attributes.profile ?? 'default';
+	useEffect(() => {
+		const namespace = `code-block-pro/preview/${uid}`;
+		addAction(PROFILES_CHANGED, namespace, (slug: string) => {
+			if (slug === profile) setAttempt((count) => count + 1);
+		});
+		return () => {
+			removeAction(PROFILES_CHANGED, namespace);
+		};
+	}, [profile, uid]);
 
 	useEffect(() => {
 		const state = queue.current;

@@ -248,7 +248,9 @@ function code_block_pro_render_code(string $code, string $language, array $profi
     // Without a marker the editor's render is the page's, so it reads the page's entry.
     $marked = $keep && stripos($code, '[!code') !== false;
     $key = code_block_pro_cache_key($code, $language, $profile, $marked ? [$options, $classes, 'keep-markers'] : [$options, $classes]);
-    $cached = code_block_pro_cache_get($key);
+    // A draft's renders would leave rows that no page ever reads.
+    $draft = code_block_pro_draft_profile() !== null;
+    $cached = $draft ? null : code_block_pro_cache_get($key);
     if ($cached) {
         return $cached;
     }
@@ -326,7 +328,7 @@ function code_block_pro_render_code(string $code, string $language, array $profi
     }
 
     // Edits would leave a row per keystroke; saved code without markers or line ids renders as the page does.
-    if (!$keep || (code_block_pro_save_preview() && !$marked && $options['anchor'] === null)) {
+    if (!$draft && (!$keep || (code_block_pro_save_preview() && !$marked && $options['anchor'] === null))) {
         code_block_pro_cache_set($key, $render);
     }
 

@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from '@wordpress/e2e-test-utils-playwright';
-import { newPost } from '../helpers';
+import { apiFetch, newPost } from '../helpers';
 
 type Glyph = [string, string, string, string, string];
 
@@ -210,13 +210,20 @@ test('editing a profile recolors every block that uses it, with no re-save', asy
 			: ['dracula', 'rgb(40, 42, 54)'];
 	expect(before).toEqual([before[0], before[0]]);
 
-	await admin.visitAdminPage('edit.php', 'post_type=cbp_profile');
-	await page.locator('a.row-title', { hasText: 'Default' }).click();
-	await page
-		.locator('select[name="cbp_profile[conditions][0][theme]"]')
-		.selectOption(theme);
-	await page.locator('#publish').click();
-	await expect(page.locator('#message')).toBeVisible();
+	// As the profile manager saves it, from an editor with nothing to save.
+	await admin.visitAdminPage('post-new.php');
+	const path = '/code-block-pro/v1/manage/profiles';
+	const { profiles } = await apiFetch<{
+		profiles: { slug: string; data: { conditions: { theme: string }[] } }[];
+	}>(page, { path });
+	const { data } = profiles.find(({ slug }) => slug === 'default') ?? {};
+	if (!data) throw new Error('No default profile');
+	data.conditions[0].theme = theme;
+	await apiFetch(page, {
+		path,
+		method: 'POST',
+		data: { slug: 'default', data },
+	});
 
 	for (const path of pages) {
 		await page.goto(path);

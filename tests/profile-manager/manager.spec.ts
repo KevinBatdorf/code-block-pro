@@ -1,0 +1,113 @@
+import type { Page } from '@playwright/test';
+import {
+	type Editor,
+	expect,
+	test,
+} from '@wordpress/e2e-test-utils-playwright';
+import { apiFetch, newPost } from '../helpers';
+
+test.beforeEach(async ({ requestUtils }) => {
+	await requestUtils.login();
+});
+
+const openFromToolbar = async (
+	page: Page,
+	editor: Editor,
+	item: 'Edit profile' | 'Manage profiles',
+) => {
+	await editor.showBlockToolbar();
+	await page
+		.getByRole('toolbar', { name: 'Block tools' })
+		.getByRole('button', { name: 'Profile' })
+		.click();
+	await page.getByRole('menuitem', { name: item }).click();
+	return page.locator('.cbp-manager-modal');
+};
+
+test('a block’s profile is edited from its toolbar, and the block shows the saved change', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await newPost(admin, 'manager');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('const a = 1;');
+	const block = editor.canvas.locator('.cbp-block');
+	await expect(block).not.toHaveClass(/\bcbp-numbers\b/);
+
+	const modal = await openFromToolbar(page, editor, 'Edit profile');
+	await expect(modal.locator('.cbp-manager-impact-title')).toHaveText(
+		'Default',
+	);
+	const save = modal.getByRole('button', { name: 'Save' });
+	await expect(save).toBeDisabled();
+	await modal.getByRole('tab', { name: 'Line numbers' }).click();
+	await modal.getByRole('checkbox', { name: 'Show line numbers' }).check();
+	await save.click();
+
+	await expect(
+		page.locator('.components-snackbar', { hasText: 'Profile updated.' }),
+	).toBeVisible();
+	await expect(save).toBeDisabled();
+	await expect(block).toHaveClass(/\bcbp-numbers\b/);
+});
+
+test('closing with unsaved changes asks first, and nothing is saved', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await newPost(admin, 'manager close');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('a');
+	const modal = await openFromToolbar(page, editor, 'Edit profile');
+	await modal.getByRole('tab', { name: 'Line numbers' }).click();
+	const box = modal.getByRole('checkbox', { name: 'Highlight lines on hover' });
+	const before = await box.isChecked();
+	await box.setChecked(!before);
+
+	await modal.getByRole('button', { name: 'Close', exact: true }).click();
+	await page.getByRole('button', { name: 'Keep editing' }).click();
+	await expect(box).toBeChecked({ checked: !before });
+	await modal.getByRole('button', { name: 'Close', exact: true }).click();
+	await page.getByRole('button', { name: 'Close without saving' }).click();
+
+	await expect(modal).toBeHidden();
+	const { profiles } = await apiFetch<{
+		profiles: {
+			slug: string;
+			data: { settings: { highlightingHover: boolean } };
+		}[];
+	}>(page, { path: '/code-block-pro/v1/manage/profiles' });
+	expect(
+		profiles.find(({ slug }) => slug === 'default')?.data.settings
+			.highlightingHover,
+	).toBe(before);
+});
+
+test('a profile added in the list can be picked for the block', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await newPost(admin, 'manager add');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('a');
+	const modal = await openFromToolbar(page, editor, 'Manage profiles');
+	await modal.getByRole('button', { name: 'Add profile' }).click();
+	await modal.getByRole('textbox', { name: 'Name' }).fill('Docs');
+	await modal.getByRole('button', { name: 'Add', exact: true }).click();
+	await expect(modal.locator('.cbp-manager-impact-title')).toHaveText('Docs');
+	await modal.getByRole('button', { name: 'Close', exact: true }).click();
+	await expect(modal).toBeHidden();
+
+	await editor.showBlockToolbar();
+	await page
+		.getByRole('toolbar', { name: 'Block tools' })
+		.getByRole('button', { name: 'Profile' })
+		.click();
+	await page.getByRole('menuitemradio', { name: 'Docs' }).click();
+	await expect(editor.canvas.locator('.cbp-block')).toHaveClass(
+		/\bcbp-profile-docs\b/,
+	);
+});

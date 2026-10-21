@@ -22,8 +22,8 @@ function code_block_pro_register_profile_type(): void
             'not_found_in_trash' => __('No profiles found in Trash.', 'code-block-pro'),
         ],
         'public' => false,
-        'show_ui' => true,
-        'show_in_menu' => 'themes.php',
+        // The profile manager in the block editor is the only place to edit them.
+        'show_ui' => false,
         'rewrite' => false,
         'query_var' => false,
         // Profiles restyle every block on the site, so only site designers may change them.
@@ -382,6 +382,11 @@ function code_block_pro_block_profile(array $attributes): array
  */
 function code_block_pro_profile(string $slug): array
 {
+    $draft = code_block_pro_draft_profile();
+    if ($draft && $draft['slug'] === $slug) {
+        return $draft;
+    }
+
     foreach (array_unique([$slug, 'default']) as $candidate) {
         $post = code_block_pro_profile_post($candidate);
         $data = $post ? json_decode($post->post_content, true) : null;
@@ -395,6 +400,22 @@ function code_block_pro_profile(string $slug): array
 
     // What the default profile is seeded with, so nothing changes when an admin's visit creates it.
     return ['id' => 0, 'slug' => 'default', 'stamp' => ''] + code_block_pro_sanitize_profile(code_block_pro_profile_from_1x((array) get_option('code_block_pro_settings', [])));
+}
+
+/**
+ * An unsaved profile the profile manager previews, used in place of its slug until cleared.
+ *
+ * @param CodeBlockProProfile|false|null $set False clears it.
+ * @return CodeBlockProProfile|null
+ */
+function code_block_pro_draft_profile(array|false|null $set = null): ?array
+{
+    static $draft = null;
+    if ($set !== null) {
+        $draft = $set ?: null;
+    }
+
+    return $draft;
 }
 
 function code_block_pro_profile_post(string $slug): ?WP_Post
@@ -456,12 +477,6 @@ add_filter('wp_insert_post_data', function ($data, $postarr) {
 
     $id = (int) ($postarr['ID'] ?? 0);
     $stored = $id ? get_post($id) : null;
-    // Blocks forged requests, and users who can't edit this profile, from replacing it.
-    $form = $_POST['cbp_profile'] ?? null;
-    $nonce = $_POST['code_block_pro_profile_nonce'] ?? '';
-    if (is_array($form) && $id && $id === (int) ($_POST['post_ID'] ?? 0) && is_string($nonce) && wp_verify_nonce($nonce, 'code_block_pro_profile') && current_user_can('edit_post', $id)) {
-        $data['post_content'] = wp_slash((string) wp_json_encode(code_block_pro_profile_from_form(wp_unslash($form))));
-    }
 
     $profile = json_decode(wp_unslash((string) $data['post_content']), true);
     if (!is_array($profile) && $stored && is_array(json_decode($stored->post_content, true))) {
@@ -509,10 +524,6 @@ add_filter('map_meta_cap', function ($caps, $cap, $userId, $args) {
 
     return $caps;
 }, 10, 4);
-
-add_action('add_meta_boxes_' . CODE_BLOCK_PRO_PROFILE_TYPE, function () {
-    remove_meta_box('slugdiv', CODE_BLOCK_PRO_PROFILE_TYPE, 'normal');
-});
 
 add_filter('pre_trash_post', function ($trash, $post) {
     return code_block_pro_is_default_profile($post) ? false : $trash;

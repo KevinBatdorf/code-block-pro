@@ -13,9 +13,10 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
-import { doAction, hasAction } from '@wordpress/hooks';
+import { addAction, doAction, hasAction } from '@wordpress/hooks';
 import { decodeEntities } from '@wordpress/html-entities';
 import { __, sprintf } from '@wordpress/i18n';
+import { OPEN_PROFILES, PROFILES_CHANGED } from './actions';
 
 type Summary = {
 	settings: Record<string, string | number | boolean>;
@@ -36,27 +37,43 @@ const loadProfiles = () => {
 	return request;
 };
 
+const reloads = new Set<() => void>();
+addAction(PROFILES_CHANGED, 'code-block-pro/profiles-list', () => {
+	request = null;
+	for (const reload of reloads) reload();
+});
+
 type Props = { value: string; onChange: (profile: string) => void };
 
 export const useProfiles = () => {
 	const [profiles, setProfiles] = useState<Profile[] | null>(null);
 	const [failed, setFailed] = useState(false);
+	const [generation, setGeneration] = useState(0);
+
+	useEffect(() => {
+		const reload = () => setGeneration((count) => count + 1);
+		reloads.add(reload);
+		return () => {
+			reloads.delete(reload);
+		};
+	}, []);
 
 	useEffect(() => {
 		let live = true;
 		loadProfiles()
-			.then((list) => live && setProfiles(list))
+			.then((list) => {
+				if (!live) return;
+				setProfiles(list);
+				setFailed(false);
+			})
 			.catch(() => live && setFailed(true));
 		return () => {
 			live = false;
 		};
-	}, []);
+	}, [generation]);
 
 	return { profiles, failed };
 };
-
-// Without a listener for this action, the menu leaves out Edit and Manage profiles.
-const OPEN_PROFILES = 'codeBlockPro.openProfiles';
 
 export const ProfileToolbar = ({ value, onChange }: Props) => {
 	const { profiles } = useProfiles();

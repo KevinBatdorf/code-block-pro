@@ -217,7 +217,8 @@ function code_block_pro_profile_style_version(array $profile): string
  */
 function code_block_pro_enqueue_profile_style(array $profile): void
 {
-    if (!code_block_pro_profile_needs_stylesheet($profile)) {
+    // A draft's stylesheet has no URL; the profile manager adds its rules itself.
+    if (!code_block_pro_profile_needs_stylesheet($profile) || $profile['slug'] === (code_block_pro_draft_profile()['slug'] ?? null)) {
         return;
     }
 
