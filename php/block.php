@@ -51,8 +51,7 @@ function code_block_pro_render_block(array $attributes): string
     $buttons = code_block_pro_buttons($profile);
     $footer = in_array($settings['footerType'], CODE_BLOCK_PRO_FOOTERS, true) ? (string) $settings['footerType'] : '';
     $switchable = count($profile['conditions']) > 1;
-    // A choice remembered for the page or the site also has to reach blocks without a switch.
-    if ($tabbed || $buttons || $switchable || array_filter(array_column($rendered, 'more'))) {
+    if ($tabbed || $buttons || array_filter(array_column($rendered, 'more'))) {
         wp_enqueue_script('code-block-pro-view');
     }
 

@@ -37,7 +37,7 @@ $lightDark = [
 ];
 code_block_pro_insert_profile('switch-block', ['conditions' => $lightDark, 'buttons' => [['type' => 'toggle', 'scope' => 'block', 'remember' => false]]]);
 code_block_pro_insert_profile('switch-site', ['conditions' => $lightDark, 'buttons' => [['type' => 'toggle', 'scope' => 'site']]]);
-code_block_pro_insert_profile('no-switch', ['conditions' => $lightDark]);
+code_block_pro_insert_profile('no-switch', ['conditions' => $lightDark, 'buttons' => [['type' => 'copy']]]);
 
 $long = "const line = '" . str_repeat('x', 300) . "';";
 $thirty = implode("\n", array_map(fn ($n) => "const n$n = $n;", range(1, 30)));

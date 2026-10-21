@@ -115,7 +115,7 @@ class LightDarkTest extends WP_UnitTestCase
         $this->assertSame([['page', true], ['site', false], ['page', true]], array_map(fn ($button) => [$button['scope'], $button['remember']], $buttons));
     }
 
-    public function test_a_block_with_a_dark_theme_names_both_and_loads_the_script()
+    public function test_a_block_with_a_dark_theme_names_both_and_needs_no_script()
     {
         code_block_pro_insert_profile('both', ['conditions' => [
             ['id' => 'light', 'theme' => 'github-light'],
@@ -125,7 +125,7 @@ class LightDarkTest extends WP_UnitTestCase
         $block = $this->xpath($this->render('both'))->query('//div')->item(0);
 
         $this->assertSame(['light', 'dark'], [$block->getAttribute('data-cbp-light'), $block->getAttribute('data-cbp-dark')]);
-        $this->assertTrue(wp_script_is('code-block-pro-view', 'enqueued'));
+        $this->assertFalse(wp_script_is('code-block-pro-view', 'enqueued'));
     }
 
     public function test_the_switch_offers_auto_light_and_dark_with_its_settings()

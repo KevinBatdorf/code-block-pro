@@ -316,7 +316,7 @@ test('a switch for the whole site follows the reader to other pages', async ({
 	await toggle.click();
 	await expect(toggle).toHaveText('Theme Dark');
 
-	// That page's block has no switch of its own.
+	// That page's block has no switch, only a copy button, which loads the script.
 	await page.goto('/switch-elsewhere/');
 	const block = page.locator('.cbp-profile-no-switch');
 	await expect(block.locator('.cbp-toggle')).toHaveCount(0);
