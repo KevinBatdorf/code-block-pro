@@ -14,6 +14,10 @@ function code_block_pro_render_block(array $attributes): string
     $profile = code_block_pro_block_profile($attributes);
     code_block_pro_enqueue_profile_style($profile);
     $settings = $profile['settings'];
+    $overrides = is_array($attributes['overrides'] ?? null) ? $attributes['overrides'] : [];
+    if (is_bool($overrides['lineNumbers'] ?? null)) {
+        $settings['lineNumbers'] = $overrides['lineNumbers'];
+    }
     code_block_pro_enqueue_font((string) $settings['fontFamily']);
     $panes = array_values(array_filter(is_array($attributes['panes'] ?? null) ? $attributes['panes'] : [], 'is_array')) ?: [[]];
     $anchor = code_block_pro_anchor($attributes['anchor'] ?? '');

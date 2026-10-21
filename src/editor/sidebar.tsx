@@ -87,6 +87,48 @@ export const LineSettings = ({
 	</PanelBody>
 );
 
+type OverrideProps = {
+	attributes: Attributes;
+	// The profile's own setting, or null while the profiles load.
+	lineNumbers: boolean | null;
+	onBlock: (changes: Attributes) => void;
+};
+
+export const Overrides = ({
+	attributes,
+	lineNumbers,
+	onBlock,
+}: OverrideProps) => {
+	const override = attributes.overrides?.lineNumbers;
+	// Matching the profile again drops the override, so a later profile edit reaches this block.
+	const setLineNumbers = (next: boolean) => {
+		const { lineNumbers: _old, ...rest } = attributes.overrides ?? {};
+		const overrides =
+			next === lineNumbers ? rest : { ...rest, lineNumbers: next };
+		onBlock({
+			overrides: Object.keys(overrides).length ? overrides : undefined,
+		});
+	};
+	let help: string = __('Set for this block only.', 'code-block-pro');
+	if (override === undefined) {
+		help = lineNumbers
+			? __('On, as the profile sets.', 'code-block-pro')
+			: __('Off, as the profile sets.', 'code-block-pro');
+	}
+
+	return (
+		<PanelBody title={__('Overrides', 'code-block-pro')}>
+			<ToggleControl
+				label={__('Line numbers', 'code-block-pro')}
+				help={lineNumbers === null ? undefined : help}
+				disabled={lineNumbers === null}
+				checked={override ?? lineNumbers ?? false}
+				onChange={setLineNumbers}
+			/>
+		</PanelBody>
+	);
+};
+
 type BlockProps = {
 	attributes: Attributes;
 	onBlock: (changes: Attributes) => void;

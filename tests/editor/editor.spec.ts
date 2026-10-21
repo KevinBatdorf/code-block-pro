@@ -139,6 +139,57 @@ test('a new render swaps only the lines that changed and adds no stylesheet twic
 	expect(new Set(links).size).toBe(links.length);
 });
 
+test('the sidebar sums up the profile, and one block can override its line numbers', async ({
+	admin,
+	editor,
+	page,
+}) => {
+	await newPost(admin, 'overrides');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	const block = editor.canvas.locator(
+		'[data-type="kevinbatdorf/code-block-pro"]',
+	);
+	await page.keyboard.type('a');
+	await page.keyboard.press('Enter');
+	await page.keyboard.type('b');
+	await page.getByRole('tab', { name: 'Settings' }).click();
+
+	await expect(page.locator('.cbp-profile-summary__title')).toHaveText(
+		'Default',
+	);
+	await expect(
+		page.locator('.cbp-profile-summary__features li').first(),
+	).toHaveText('Dracula');
+	const numbers = page.getByRole('checkbox', { name: 'Line numbers' });
+	await expect(numbers).not.toBeChecked();
+	await expect(page.getByText('Off, as the profile sets.')).toBeVisible();
+
+	await numbers.check();
+	await expect(block.locator('.cbp-block')).toHaveClass(/\bcbp-numbers\b/);
+	await expect(page.getByText('Set for this block only.')).toBeVisible();
+
+	await numbers.uncheck();
+	await expect(block.locator('.cbp-block')).not.toHaveClass(/\bcbp-numbers\b/);
+	expect(
+		await page.evaluate(
+			() =>
+				(
+					window as unknown as {
+						wp: {
+							data: {
+								select: (store: string) => {
+									getBlocks: () => { attributes: Record<string, unknown> }[];
+								};
+							};
+						};
+					}
+				).wp.data
+					.select('core/block-editor')
+					.getBlocks()[0].attributes.overrides,
+		),
+	).toBeUndefined();
+});
+
 test('the inserter offers the block', async ({ admin, page }) => {
 	await newPost(admin, 'inserter');
 	await page.getByRole('button', { name: 'Block Inserter' }).click();
@@ -466,34 +517,32 @@ test.describe('preview requests', () => {
 			await new Promise((resolve) => setTimeout(resolve, 5000));
 			await route.continue();
 		});
+		// Switching to the code editor would persist that mode for every later test.
 		await page.evaluate(() => {
-			const { dispatch } = (
+			const { select, dispatch } = (
 				window as unknown as {
 					wp: {
 						data: {
+							select: (store: string) => { getBlockOrder: () => string[] };
 							dispatch: (store: string) => {
-								switchEditorMode: (mode: string) => void;
+								removeBlock: (id: string) => void;
 							};
 						};
 					};
 				}
 			).wp.data;
-			dispatch('core/editor').switchEditorMode('text');
+			dispatch('core/block-editor').removeBlock(
+				select('core/block-editor').getBlockOrder()[0],
+			);
 		});
 		await expect(block).toHaveCount(0);
 		await page.evaluate(() => {
 			const { dispatch } = (
 				window as unknown as {
-					wp: {
-						data: {
-							dispatch: (store: string) => {
-								switchEditorMode: (mode: string) => void;
-							};
-						};
-					};
+					wp: { data: { dispatch: (store: string) => { undo: () => void } } };
 				}
 			).wp.data;
-			dispatch('core/editor').switchEditorMode('visual');
+			dispatch('core/editor').undo();
 		});
 		// Well before the held request answers.
 		await expect(block.locator('pre > code .token').first()).toBeVisible({

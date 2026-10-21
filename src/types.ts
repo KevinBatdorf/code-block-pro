@@ -18,6 +18,7 @@ export type Attributes = {
 	legacyContent?: string;
 	fontFamily?: string;
 	lineAnchors?: boolean;
+	overrides?: { lineNumbers?: boolean };
 	removeBlurOnHover?: boolean;
 	headerString?: string;
 	footerString?: string;

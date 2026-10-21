@@ -242,16 +242,21 @@ test('the editor picks a block’s profile from the published ones', async ({
 	await newPost(admin, 'picker');
 	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
 	await page.keyboard.type('const a = 1;');
-	await page.getByRole('tab', { name: 'Settings' }).click();
-	const picker = page.getByRole('combobox', { name: 'Profile' });
+	await editor.showBlockToolbar();
+	await page
+		.getByRole('toolbar', { name: 'Block tools' })
+		.getByRole('button', { name: 'Profile' })
+		.click();
 
-	await expect(picker.locator('option')).toHaveText([
+	await expect(page.getByRole('menuitemradio')).toHaveText([
 		'Default',
 		'Stacked & layered',
 		'Two tone',
 	]);
-	await expect(picker).toHaveValue('default');
-	await picker.selectOption('stacked');
+	await expect(
+		page.getByRole('menuitemradio', { name: 'Default' }),
+	).toHaveAttribute('aria-checked', 'true');
+	await page.getByRole('menuitemradio', { name: 'Stacked & layered' }).click();
 	await expect(editor.canvas.locator('.cbp-block')).toHaveClass(
 		/\bcbp-profile-stacked\b/,
 	);
@@ -268,7 +273,7 @@ test('the editor picks a block’s profile from the published ones', async ({
 const PROFILES = (url: URL) =>
 	decodeURIComponent(url.href).includes('/code-block-pro/v1/profiles');
 
-test('a picker whose profiles failed to load says so, not that the profile is missing', async ({
+test('a sidebar whose profiles failed to load says so, not that the profile is missing', async ({
 	page,
 	admin,
 	editor,
@@ -279,9 +284,12 @@ test('a picker whose profiles failed to load says so, not that the profile is mi
 	await newPost(admin, 'picker offline');
 	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
 	await page.getByRole('tab', { name: 'Settings' }).click();
-	const picker = page.getByRole('combobox', { name: 'Profile' });
 
 	await expect(page.getByText('The profiles could not load.')).toBeVisible();
-	await expect(picker.locator('option')).toHaveText(['default']);
-	await expect(picker).toBeDisabled();
+	await expect(page.locator('.cbp-profile-summary__title')).toHaveText(
+		'default',
+	);
+	await expect(
+		page.getByRole('checkbox', { name: 'Line numbers' }),
+	).toBeDisabled();
 });

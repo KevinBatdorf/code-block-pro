@@ -740,4 +740,23 @@ class ProfileTest extends WP_UnitTestCase
         $this->assertSame(['default', 'zebra', 'apple'], array_column($list()->get_data(), 'slug'));
         $this->assertNull(code_block_pro_profile_post('default'));
     }
+
+    public function test_the_editor_gets_what_each_profile_turns_on()
+    {
+        code_block_pro_insert_profile('docs', [
+            'settings' => ['lineNumbers' => true, 'headerType' => 'pillString'],
+            'conditions' => [['id' => 'main', 'theme' => 'github-light'], ['id' => 'dark', 'theme' => 'dracula', 'trigger' => ['type' => 'media', 'value' => '(prefers-color-scheme: dark)']]],
+            'buttons' => [['type' => 'copy'], ['type' => 'toggle']],
+        ]);
+        wp_set_current_user(self::factory()->user->create(['role' => 'contributor']));
+
+        $profiles = rest_get_server()->dispatch(new WP_REST_Request('GET', '/code-block-pro/v1/profiles'))->get_data();
+        $summary = array_column($profiles, 'summary', 'slug')['docs'];
+
+        $this->assertSame(['github-light', 'dracula'], $summary['themes']);
+        $this->assertSame(['copy', 'toggle'], $summary['buttons']);
+        $this->assertTrue($summary['settings']['lineNumbers']);
+        $this->assertSame('pillString', $summary['settings']['headerType']);
+        $this->assertArrayHasKey('summary', $profiles[0]);
+    }
 }

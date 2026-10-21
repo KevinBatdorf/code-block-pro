@@ -55,3 +55,13 @@
 .cbp-add-pane {
 	margin-bottom: 16px;
 }
+.cbp-profile-summary__title {
+	margin: 0 0 8px;
+	font-weight: 500;
+}
+.cbp-profile-summary__features {
+	margin: 0 0 16px;
+	padding: 0;
+	list-style: none;
+	color: #757575;
+}

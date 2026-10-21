@@ -58,6 +58,7 @@
 		"version": { "type": "number" },
 		"profile": { "type": "string", "default": "default" },
 		"lineAnchors": { "type": "boolean" },
+		"overrides": { "type": "object" },
 		"panes": {
 			"type": "array",
 			"items": {

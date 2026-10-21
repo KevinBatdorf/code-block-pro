@@ -27,11 +27,17 @@ add_action('rest_api_init', function () {
             'no_found_rows' => true,
             'suppress_filters' => true,
         ]);
-        $profiles = array_map(fn (WP_Post $post) => ['slug' => $post->post_name, 'title' => $post->post_title ?: $post->post_name], $posts);
+        // The block sidebar sums up what each turns on.
+        $summary = function (string $slug) {
+            $profile = code_block_pro_profile($slug);
+
+            return ['settings' => $profile['settings'], 'themes' => array_column($profile['conditions'], 'theme'), 'buttons' => array_column($profile['buttons'], 'type')];
+        };
+        $profiles = array_map(fn (WP_Post $post) => ['slug' => $post->post_name, 'title' => $post->post_title ?: $post->post_name, 'summary' => $summary($post->post_name)], $posts);
         usort($profiles, fn ($a, $b) => ($b['slug'] === 'default') <=> ($a['slug'] === 'default'));
         // Until an admin's visit seeds it, blocks render with the built-in default.
         if (($profiles[0]['slug'] ?? '') !== 'default') {
-            array_unshift($profiles, ['slug' => 'default', 'title' => __('Default', 'code-block-pro')]);
+            array_unshift($profiles, ['slug' => 'default', 'title' => __('Default', 'code-block-pro'), 'summary' => $summary('default')]);
         }
 
         return new WP_REST_Response($profiles);

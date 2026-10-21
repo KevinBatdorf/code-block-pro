@@ -21,8 +21,8 @@ import { applyEdit, indentEdit } from './indent';
 import { Panes } from './panes';
 import { patchCode } from './patch';
 import { loadStyles, type Preview, usePreview } from './preview';
-import { ProfilePicker, ProfileToolbar } from './profiles';
-import { BlockSettings, LineSettings } from './sidebar';
+import { ProfileSummary, ProfileToolbar, useProfiles } from './profiles';
+import { BlockSettings, LineSettings, Overrides } from './sidebar';
 import { Status } from './status';
 
 // kses rewrites raw <, > and & in block attributes for users without unfiltered_html.
@@ -238,6 +238,13 @@ export const CodeEditor = ({
 		patched: boolean;
 	} | null>(null);
 	const blockProps = useBlockProps({ className: 'cbp-editor' });
+	const { profiles } = useProfiles();
+	const shown = profiles?.find(
+		({ slug }) => slug === (attributes.profile ?? 'default'),
+	);
+	const profileLineNumbers = shown?.summary
+		? Boolean(shown.summary.settings.lineNumbers)
+		: null;
 	const hint = `code-block-pro-hint-${instance}`;
 	// The 1.x stylesheet loads here for 1.x blocks and restyles anything under this class.
 	blockProps.className = blockProps.className
@@ -407,11 +414,13 @@ export const CodeEditor = ({
 			</InspectorControls>
 			<InspectorControls>
 				<PanelBody title={__('Profile', 'code-block-pro')}>
-					<ProfilePicker
-						value={attributes.profile ?? 'default'}
-						onChange={(profile) => setAttributes({ profile })}
-					/>
+					<ProfileSummary value={attributes.profile ?? 'default'} />
 				</PanelBody>
+				<Overrides
+					attributes={attributes}
+					lineNumbers={profileLineNumbers}
+					onBlock={setAttributes}
+				/>
 				<LineSettings
 					pane={pane}
 					attributes={attributes}
