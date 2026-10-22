@@ -2,7 +2,6 @@ import { Button, TextControl } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
-	humanize,
 	messageOf,
 	type Profile,
 	type ProfileData,
@@ -10,12 +9,13 @@ import {
 	saveProfile,
 	usedAt,
 } from './api';
+import { headerName } from './features';
 import { darkOf } from './themes';
 import { CHEVRON_RIGHT, Section, Svg, Tabs } from './ui';
 
 const features = (data: ProfileData) =>
 	[
-		data.settings.headerType !== 'none' && humanize(data.settings.headerType),
+		data.settings.headerType !== 'none' && headerName(data.settings.headerType),
 		data.settings.lineNumbers && __('Line numbers', 'code-block-pro'),
 		data.settings.seeMoreType && __('See more', 'code-block-pro'),
 		data.settings.footerType !== 'none' && __('Footer', 'code-block-pro'),

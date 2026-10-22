@@ -30,8 +30,8 @@ import {
 	PreviewButton,
 	pickTitle,
 } from './features';
+import { GeneralPage } from './general';
 import { Home } from './home';
-import { CodeSamplePage } from './sample';
 import { ThemeScreen, ThemeTiles } from './themes';
 import { CHEVRON_LEFT, CLOSE, loadFont, ProfileImpact, Svg, Tabs } from './ui';
 
@@ -45,6 +45,7 @@ type Screen =
 const HOME: Screen = { kind: 'home', tab: 'profiles' };
 
 const FEATURES = [
+	{ name: 'general', title: __('General', 'code-block-pro') },
 	{ name: 'theme', title: __('Theme', 'code-block-pro') },
 	{ name: 'font', title: __('Font', 'code-block-pro') },
 	{ name: 'header', title: __('Header', 'code-block-pro') },
@@ -52,7 +53,6 @@ const FEATURES = [
 	{ name: 'line-numbers', title: __('Line numbers', 'code-block-pro') },
 	{ name: 'see-more', title: __('See more', 'code-block-pro') },
 	{ name: 'buttons', title: __('Buttons', 'code-block-pro') },
-	{ name: 'code-sample', title: __('Code sample', 'code-block-pro') },
 	{ name: 'stats', title: __('Stats', 'code-block-pro') },
 ];
 
@@ -65,6 +65,10 @@ const BACK_TO_PICK: Record<Pick, string> = {
 
 // What each setting reaches, shown at the top of its page.
 const NOTES: Record<string, string> = {
+	general: __(
+		'The name is how blocks list this profile. Blocks that use it keep it when you rename it.',
+		'code-block-pro',
+	),
 	theme: __(
 		'Blocks use the Light theme. If you set a Dark theme, it takes over when the browser is in dark mode, or while the page has a class you choose. Custom themes need the Theme Pack.',
 		'code-block-pro',
@@ -91,10 +95,6 @@ const NOTES: Record<string, string> = {
 	),
 	buttons: __(
 		'Buttons shown on every block, in this order. Copy copies the code, Theme switch lets readers pick Light or Dark, and Custom sends an event your own script can listen for.',
-		'code-block-pro',
-	),
-	'code-sample': __(
-		'This code fills every preview in this profile’s settings. It never appears on your site.',
 		'code-block-pro',
 	),
 	stats: __(
@@ -160,7 +160,7 @@ const parentOf = (screen: Screen): { screen: Screen | null; focus: string } => {
 	}
 };
 
-type Draft = { data: ProfileData; sample: Sample | null };
+type Draft = { title: string; data: ProfileData; sample: Sample | null };
 
 const notify = (message: string) =>
 	(
@@ -187,22 +187,23 @@ const useDrafts = (saved: Profile[]) => {
 	const changed = saved.filter(
 		(p) =>
 			drafts[p.slug] &&
-			!same(drafts[p.slug], { data: p.data, sample: p.sample }),
+			!same(drafts[p.slug], { title: p.title, data: p.data, sample: p.sample }),
 	);
 
 	const edit = (p: Profile, next: Partial<Draft>) =>
 		setDrafts((all) => ({
 			...all,
 			[p.slug]: {
-				...(all[p.slug] ?? { data: p.data, sample: p.sample }),
+				...(all[p.slug] ?? { title: p.title, data: p.data, sample: p.sample }),
 				...next,
 			},
 		}));
 
-	const saveOne = ({ slug, data, sample }: Profile) => {
+	const saveOne = ({ slug, title, data, sample }: Profile) => {
 		const draft = drafts[slug];
 		return saveProfile({
 			slug,
+			...(draft.title !== title && { title: draft.title }),
 			...(!same(draft.data, data) && { data: draft.data }),
 			...(!same(draft.sample, sample) && { sample: draft.sample }),
 		});
@@ -324,12 +325,13 @@ const ProfilePages = ({
 					onOpen={(which) => onScreen({ kind: 'theme', slug, tab: which })}
 				/>
 			)}
-			{tab === 'code-sample' && meta && (
-				<CodeSamplePage
+			{tab === 'general' && meta && (
+				<GeneralPage
 					profile={profile}
 					themes={meta.themes}
 					defaultSample={meta.sample}
-					onChange={(sample) => onEdit({ sample })}
+					onTitle={(title) => onEdit({ title })}
+					onSample={(sample) => onEdit({ sample })}
 				/>
 			)}
 			{Page && meta && (
@@ -450,7 +452,7 @@ const useScreen = ({ view, blockSlug, saved, loading }: ScreenOptions) => {
 	const [chosen, setScreen] = useState<Screen>(
 		view === 'manage' || !blockSlug
 			? HOME
-			: { kind: 'profile', slug: blockSlug, tab: 'theme' },
+			: { kind: 'profile', slug: blockSlug, tab: 'general' },
 	);
 	// The control that opened the screen being left, focused again once its page is back.
 	const returnTo = useRef('');
@@ -581,7 +583,9 @@ export const ProfileManager = ({
 					blockSlug={blockSlug}
 					themeTitle={themeTitle}
 					background={background}
-					onOpen={(slug) => setScreen({ kind: 'profile', slug, tab: 'theme' })}
+					onOpen={(slug) =>
+						setScreen({ kind: 'profile', slug, tab: 'general' })
+					}
 					onError={setError}
 				/>
 			)}

@@ -6,7 +6,6 @@ import {
 	MenuItem,
 	Popover,
 	RadioControl,
-	TextControl,
 	ToggleControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
@@ -35,6 +34,7 @@ import {
 import {
 	CHECK,
 	CHEVRON_RIGHT,
+	CommitText,
 	fontLabel,
 	fontStack,
 	loadFont,
@@ -54,6 +54,7 @@ const HEADERS: Record<string, string> = {
 	stringSmall: __('String muted', 'code-block-pro'),
 	pillString: __('Pill string', 'code-block-pro'),
 };
+export const headerName = (type: string) => HEADERS[type] ?? type;
 const FOOTERS: Record<string, string> = {
 	none: __('None', 'code-block-pro'),
 	simpleStringEnd: __('Simple string end', 'code-block-pro'),
@@ -251,47 +252,6 @@ const Tile = ({
 const Option = ({ children }: { children: React.ReactNode }) => (
 	<div className="preferences-modal__option">{children}</div>
 );
-
-type TextProps = {
-	label: string;
-	value: string;
-	placeholder?: string;
-	help?: React.ReactNode;
-	onCommit: (value: string) => void;
-	required?: boolean;
-};
-
-// A required field keeps its last non-empty value in the profile while it is cleared to retype.
-const CommitText = ({
-	label,
-	value,
-	placeholder,
-	help,
-	onCommit,
-	required = false,
-}: TextProps) => {
-	const [text, setText] = useState(value);
-	const [seen, setSeen] = useState(value);
-	// The profile changed from outside this field.
-	if (value !== seen) {
-		setSeen(value);
-		if (value !== text.trim() && (value !== '' || !required)) setText(value);
-	}
-	return (
-		<TextControl
-			__nextHasNoMarginBottom
-			__next40pxDefaultSize
-			label={label}
-			placeholder={placeholder}
-			help={help}
-			value={text}
-			onChange={(next) => {
-				setText(next);
-				if (next.trim() !== '' || !required) onCommit(next.trim());
-			}}
-		/>
-	);
-};
 
 type GridOption = { value: string; label: string; thumb: React.ReactNode };
 

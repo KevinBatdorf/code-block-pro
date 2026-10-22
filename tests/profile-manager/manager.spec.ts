@@ -39,6 +39,10 @@ test('a block’s profile is edited from its toolbar, and the block shows the sa
 	await expect(modal.locator('.cbp-manager-impact-title')).toHaveText(
 		'Default',
 	);
+	await expect(modal.getByRole('tab', { name: 'General' })).toHaveAttribute(
+		'aria-selected',
+		'true',
+	);
 	const save = modal.getByRole('button', { name: 'Save' });
 	await expect(save).toBeDisabled();
 	await modal.getByRole('tab', { name: 'Line numbers' }).click();
@@ -85,7 +89,7 @@ test('closing with unsaved changes asks first, and nothing is saved', async ({
 	).toBe(before);
 });
 
-test('a profile added in the list can be picked for the block', async ({
+test('a profile added in the list can be renamed and picked for the block', async ({
 	page,
 	admin,
 	editor,
@@ -98,6 +102,11 @@ test('a profile added in the list can be picked for the block', async ({
 	await modal.getByRole('textbox', { name: 'Name' }).fill('Docs');
 	await modal.getByRole('button', { name: 'Add', exact: true }).click();
 	await expect(modal.locator('.cbp-manager-impact-title')).toHaveText('Docs');
+	await modal.getByRole('textbox', { name: 'Name' }).fill('Docs and guides');
+	await modal.getByRole('button', { name: 'Save' }).click();
+	await expect(
+		page.locator('.components-snackbar', { hasText: 'Profile updated.' }),
+	).toBeVisible();
 	await modal.getByRole('button', { name: 'Close', exact: true }).click();
 	await expect(modal).toBeHidden();
 
@@ -106,7 +115,7 @@ test('a profile added in the list can be picked for the block', async ({
 		.getByRole('toolbar', { name: 'Block tools' })
 		.getByRole('button', { name: 'Profile' })
 		.click();
-	await page.getByRole('menuitemradio', { name: 'Docs' }).click();
+	await page.getByRole('menuitemradio', { name: 'Docs and guides' }).click();
 	await expect(editor.canvas.locator('.cbp-block')).toHaveClass(
 		/\bcbp-profile-docs\b/,
 	);

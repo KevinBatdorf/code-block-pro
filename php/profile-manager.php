@@ -266,7 +266,7 @@ add_action('rest_api_init', function () {
         ]);
     });
 
-    // No slug adds a profile. Data or sample left out stays as it is; a null sample goes back to the shared one.
+    // No slug adds a profile. A title, data or sample left out stays as it is; a null sample goes back to the shared one.
     $route('profiles', 'POST', function (WP_REST_Request $request) use ($text) {
         $title = sanitize_text_field($text($request, 'title'));
         $slug = $text($request, 'slug');
@@ -291,6 +291,8 @@ add_action('rest_api_init', function () {
         }
         if (!$post || is_array($data)) {
             $id = code_block_pro_insert_profile($slug, is_array($data) ? $data : [], $title ?: ($post ? '' : $slug));
+        } elseif ($title !== '') {
+            $id = wp_update_post(wp_slash(['ID' => $id, 'post_title' => $title]));
         }
         if (!$id) {
             return new WP_Error('rest_cannot_create', __('The profile could not be saved.', 'code-block-pro'), ['status' => 500]);

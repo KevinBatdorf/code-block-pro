@@ -82,6 +82,9 @@ const withDarkTrigger = (data: ProfileData, trigger: Trigger): ProfileData => {
 		: data;
 };
 
+const LIGHT = __('Default/Light', 'code-block-pro');
+const DARK = __('Dark', 'code-block-pro');
+
 const CLASS_NAME = /^-?[_a-zA-Z][_a-zA-Z0-9-]{0,99}$/;
 
 const DarkSettings = ({
@@ -165,7 +168,7 @@ export const ThemeTiles = ({
 
 	return (
 		<Section title={__('Theme', 'code-block-pro')} hideTitle>
-			<div className="cbp-manager-tiles">
+			<div className="cbp-manager-tiles is-pairs">
 				<button
 					ref={first}
 					type="button"
@@ -179,9 +182,7 @@ export const ThemeTiles = ({
 							font={font}
 						/>
 					</span>
-					<span className="cbp-manager-label">
-						{__('Light', 'code-block-pro')}
-					</span>
+					<span className="cbp-manager-label">{LIGHT}</span>
 					<span className="cbp-manager-meta">{themeTitle(light)}</span>
 				</button>
 				<button
@@ -202,9 +203,7 @@ export const ThemeTiles = ({
 							<Svg d={PLUS} />
 						</span>
 					)}
-					<span className="cbp-manager-label">
-						{__('Dark', 'code-block-pro')}
-					</span>
+					<span className="cbp-manager-label">{DARK}</span>
 					<span className="cbp-manager-meta">
 						{dark ? themeTitle(dark.theme) : __('None', 'code-block-pro')}
 					</span>
@@ -214,7 +213,7 @@ export const ThemeTiles = ({
 						<Svg d={LOCK} />
 					</span>
 					<span className="cbp-manager-label">
-						{__('Custom', 'code-block-pro')}
+						{__('Custom Condition', 'code-block-pro')}
 					</span>
 					<span className="cbp-manager-meta">
 						{custom.length
@@ -280,13 +279,7 @@ export const ThemeScreen = ({
 
 	return (
 		<div className="cbp-manager-screen">
-			<Section
-				title={
-					tab === 'dark'
-						? __('Dark', 'code-block-pro')
-						: __('Light', 'code-block-pro')
-				}
-			>
+			<Section title={tab === 'dark' ? DARK : LIGHT}>
 				{tab === 'dark' && (
 					<DarkSettings
 						trigger={pending}
@@ -300,11 +293,7 @@ export const ThemeScreen = ({
 					ref={grid}
 					className={`cbp-manager-grid${quiet ? ' is-quiet' : ''}`}
 					role="radiogroup"
-					aria-label={
-						tab === 'dark'
-							? __('Dark theme', 'code-block-pro')
-							: __('Light theme', 'code-block-pro')
-					}
+					aria-label={tab === 'dark' ? DARK : LIGHT}
 				>
 					{tab === 'dark' && (
 						<button

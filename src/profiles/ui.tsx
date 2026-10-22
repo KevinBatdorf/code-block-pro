@@ -1,5 +1,5 @@
-import { Button, VisuallyHidden } from '@wordpress/components';
-import { useId } from '@wordpress/element';
+import { Button, TextControl, VisuallyHidden } from '@wordpress/components';
+import { useId, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import type { Meta } from './api';
 
@@ -185,3 +185,44 @@ export const ProfileImpact = ({
 		</p>
 	</div>
 );
+
+type TextProps = {
+	label: string;
+	value: string;
+	placeholder?: string;
+	help?: React.ReactNode;
+	onCommit: (value: string) => void;
+	required?: boolean;
+};
+
+// A required field keeps its last non-empty value in the profile while it is cleared to retype.
+export const CommitText = ({
+	label,
+	value,
+	placeholder,
+	help,
+	onCommit,
+	required = false,
+}: TextProps) => {
+	const [text, setText] = useState(value);
+	const [seen, setSeen] = useState(value);
+	// The profile changed from outside this field.
+	if (value !== seen) {
+		setSeen(value);
+		if (value !== text.trim() && (value !== '' || !required)) setText(value);
+	}
+	return (
+		<TextControl
+			__nextHasNoMarginBottom
+			__next40pxDefaultSize
+			label={label}
+			placeholder={placeholder}
+			help={help}
+			value={text}
+			onChange={(next) => {
+				setText(next);
+				if (next.trim() !== '' || !required) onCommit(next.trim());
+			}}
+		/>
+	);
+};

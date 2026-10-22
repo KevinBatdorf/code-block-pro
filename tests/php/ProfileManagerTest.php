@@ -80,6 +80,17 @@ class ProfileManagerTest extends WP_UnitTestCase
         $this->assertSame('Docs', $this->post('docs')->post_title);
     }
 
+    public function test_a_profile_renamed_alone_keeps_its_slug_and_data()
+    {
+        code_block_pro_insert_profile('docs', ['settings' => ['lineNumbers' => true]], 'Docs');
+
+        $response = $this->request('POST', 'profiles', ['slug' => 'docs', 'title' => 'Guides & "notes"']);
+
+        $this->assertSame('docs', $response->get_data()['slug']);
+        $this->assertSame('Guides & "notes"', $this->post('docs')->post_title);
+        $this->assertTrue(code_block_pro_profile('docs')['settings']['lineNumbers']);
+    }
+
     public function test_saving_a_profile_that_does_not_exist_adds_nothing()
     {
         $response = $this->request('POST', 'profiles', ['slug' => 'nope', 'data' => []]);
