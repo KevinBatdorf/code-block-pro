@@ -4,6 +4,9 @@ defined('ABSPATH') or die;
 
 const CODE_BLOCK_PRO_SAMPLE = ['language' => 'typescript', 'code' => "const greet = (name) => {\n  // Say hello\n  return `Hi, \${name}!`;\n};"];
 
+// Checked by rendering === and -> in every bundled font: only these draw them as one glyph.
+const CODE_BLOCK_PRO_LIGATURE_FONTS = ['Code-Pro-Fantasque-Sans-Mono', 'Code-Pro-Fira-Code', 'Code-Pro-Geist-Mono', 'Code-Pro-JetBrains-Mono'];
+
 /**
  * @return list<string>
  */
@@ -41,7 +44,7 @@ function code_block_pro_manager_themes(): array
 }
 
 /**
- * @return list<array{value: string, label: string, href: string}>
+ * @return list<array{value: string, label: string, href: string, ligatures: bool}>
  */
 function code_block_pro_manager_fonts(): array
 {
@@ -52,6 +55,7 @@ function code_block_pro_manager_fonts(): array
             'value' => $name,
             'label' => str_replace('-', ' ', substr($name, strlen('Code-Pro-'))),
             'href' => add_query_arg('ver', (string) filemtime($file), plugins_url("build/fonts/$name.css", __DIR__)),
+            'ligatures' => in_array($name, CODE_BLOCK_PRO_LIGATURE_FONTS, true),
         ];
     }
 
@@ -192,11 +196,6 @@ function code_block_pro_profile_usage(): array
 function code_block_pro_render_draft(mixed $data, array $swaps, array $attributes, string $slot): array
 {
     $data = code_block_pro_sanitize_profile($data);
-    // Previews show the Light theme, whatever the browser's scheme.
-    $base = $data['conditions'][0];
-    $data['conditions'] = [$base];
-    $data['languages'] = array_filter(array_map(fn ($themes) => array_intersect_key($themes, [$base['id'] => true]), $data['languages']));
-
     $slug = "draft_$slot";
     $result = ['items' => [], 'css' => '', 'styles' => []];
     try {
@@ -210,8 +209,11 @@ function code_block_pro_render_draft(mixed $data, array $swaps, array $attribute
             $rendered = code_block_pro_preview(['profile' => $slug] + $attributes, false, "draft-$slot-$i");
             $result['items'][] = $rendered['html'];
             array_push($result['styles'], ...$rendered['styles']);
-            if ($i === 0 && code_block_pro_profile_needs_stylesheet($profile)) {
-                $result['css'] = code_block_pro_profile_css($profile);
+            if ($i === 0) {
+                // Dark's rules stay out, so previews show the Light theme whatever the browser's scheme.
+                $light = $profile;
+                $light['conditions'] = [$profile['conditions'][0]];
+                $result['css'] = code_block_pro_profile_needs_stylesheet($light) ? code_block_pro_profile_css($light) : '';
             }
         }
     } finally {

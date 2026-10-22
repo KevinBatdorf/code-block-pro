@@ -41,6 +41,10 @@ function code_block_pro_render_block(array $attributes): string
         $code = strtr(is_string($pane['code'] ?? null) ? $pane['code'] : '', ['&amp;' => '&', '&lt;' => '<', '&gt;' => '>']);
         $prefix = $base . ($i > 0 ? ($i + 1) . '-' : '');
         $options = code_block_pro_line_options($pane, $settings, $prefix, !empty($attributes['lineAnchors']));
+        // Turning See more off in the profile has to unfold every block that set a fold.
+        if ($seeMore === '') {
+            $options['fold'] = 0;
+        }
         $themes = code_block_pro_profile_themes($profile, $language);
         $label = code_block_pro_plain_text($pane['label'] ?? '', 100);
         $label = $label !== '' ? $label : code_block_pro_language_name($language);

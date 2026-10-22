@@ -67,7 +67,7 @@ export const LineSettings = ({
 			__next40pxDefaultSize
 			label={__('Lines shown when folded', 'code-block-pro')}
 			help={__(
-				'The rest scrolls, or opens with the profile’s expand button if it has one.',
+				'The rest opens with the profile’s See more button. Nothing folds while the profile has See more off.',
 				'code-block-pro',
 			)}
 			type="number"

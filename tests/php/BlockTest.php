@@ -297,11 +297,11 @@ class BlockTest extends WP_UnitTestCase
         $this->assertStringNotContainsString('cbp-more', $this->render(['profile' => $slug], ['code' => "a\nb", 'seeMoreAfter' => 2]));
     }
 
-    public function test_a_fold_with_no_button_still_clamps_the_code()
+    public function test_a_fold_does_nothing_while_the_profile_has_see_more_off()
     {
         $html = $this->render(['profile' => $this->profile('clamp', ['settings' => ['seeMoreType' => '']])], ['code' => "a\nb\nc", 'seeMoreAfter' => 1]);
 
-        $this->assertStringContainsString('cbp-fold cbp-fold1-1', $html);
+        $this->assertStringNotContainsString('cbp-fold', $html);
         $this->assertStringNotContainsString('cbp-more', $html);
     }
 

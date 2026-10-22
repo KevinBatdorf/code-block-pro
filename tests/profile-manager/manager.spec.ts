@@ -102,7 +102,9 @@ test('a profile added in the list can be renamed and picked for the block', asyn
 	await modal.getByRole('textbox', { name: 'Name' }).fill('Docs');
 	await modal.getByRole('button', { name: 'Add', exact: true }).click();
 	await expect(modal.locator('.cbp-manager-impact-title')).toHaveText('Docs');
-	await modal.getByRole('textbox', { name: 'Name' }).fill('Docs and guides');
+	await modal
+		.getByRole('textbox', { name: 'Profile Name' })
+		.fill('Docs and guides');
 	await modal.getByRole('button', { name: 'Save' }).click();
 	await expect(
 		page.locator('.components-snackbar', { hasText: 'Profile updated.' }),
@@ -119,4 +121,36 @@ test('a profile added in the list can be renamed and picked for the block', asyn
 	await expect(editor.canvas.locator('.cbp-block')).toHaveClass(
 		/\bcbp-profile-docs\b/,
 	);
+});
+
+test('a button moves from the rail into the block and back out', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await newPost(admin, 'manager buttons');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('a');
+	const modal = await openFromToolbar(page, editor, 'Manage profiles');
+	await modal.getByRole('button', { name: 'Add profile' }).click();
+	await modal.getByRole('textbox', { name: 'Name' }).fill('Buttons');
+	await modal.getByRole('button', { name: 'Add', exact: true }).click();
+	await modal.getByRole('tab', { name: 'Buttons' }).click();
+	const rail = modal.getByRole('group', { name: 'Buttons to add' });
+	const copy = modal.locator('.cbp-manager-buttons-block .cbp-copy');
+	await expect(
+		rail.getByRole('button', { name: 'Theme switch' }),
+	).toBeDisabled();
+
+	await rail.getByRole('button', { name: 'Copy' }).click();
+	await modal.getByRole('button', { name: 'Put in the block' }).click();
+	await expect(copy).toBeVisible();
+	await expect(rail.getByRole('button', { name: 'Copy' })).toHaveCount(0);
+	await expect(
+		modal.getByRole('textbox', { name: 'After copying' }),
+	).toBeVisible();
+
+	await modal.getByRole('button', { name: 'Take out of the block' }).click();
+	await expect(copy).toHaveCount(0);
+	await expect(rail.getByRole('button', { name: 'Copy' })).toBeVisible();
 });

@@ -178,6 +178,28 @@ class ProfileManagerTest extends WP_UnitTestCase
         $this->assertSame($transients, $this->transients());
     }
 
+    public function test_a_draft_keeps_its_theme_switch_but_shows_only_its_light_theme()
+    {
+        $this->needsMbregex();
+        $data = [
+            'conditions' => [['id' => 'main', 'theme' => 'nord'], ['id' => 'dark', 'theme' => 'dracula', 'trigger' => ['type' => 'media', 'value' => '(prefers-color-scheme: dark)']]],
+            'buttons' => [['type' => 'toggle']],
+        ];
+
+        $draft = $this->request('POST', 'render', ['data' => $data, 'attributes' => ['panes' => [['code' => 'a']]], 'slot' => 'btns'])->get_data();
+
+        $this->assertStringContainsString('cbp-toggle', $draft['items'][0]);
+        $this->assertStringNotContainsString('prefers-color-scheme', $draft['css']);
+    }
+
+    public function test_the_font_list_says_which_fonts_draw_ligatures()
+    {
+        $fonts = array_column($this->request('GET', 'meta')->get_data()['fonts'], 'ligatures', 'value');
+
+        $this->assertTrue($fonts['Code-Pro-Fira-Code']);
+        $this->assertFalse($fonts['Code-Pro-JetBrains-Mono-NL']);
+    }
+
     public function test_a_draft_render_leaves_the_saved_profile_in_use()
     {
         $this->request('POST', 'render', ['data' => ['conditions' => [['id' => 'main', 'theme' => 'nord']]], 'attributes' => [], 'slot' => 'default']);

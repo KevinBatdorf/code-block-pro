@@ -6,7 +6,13 @@ import {
 	VisuallyHidden,
 } from '@wordpress/components';
 import { dispatch } from '@wordpress/data';
-import { useEffect, useId, useRef, useState } from '@wordpress/element';
+import {
+	createInterpolateElement,
+	useEffect,
+	useId,
+	useRef,
+	useState,
+} from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
 	humanize,
@@ -22,7 +28,6 @@ import {
 	useProfiles,
 } from './api';
 import {
-	ButtonScreen,
 	FEATURE_PAGES,
 	type Pick,
 	PICK_TABS,
@@ -39,8 +44,7 @@ type Screen =
 	| { kind: 'home'; tab: 'profiles' | 'languages' }
 	| { kind: 'profile'; slug: string; tab: string }
 	| { kind: 'theme'; slug: string; tab: 'light' | 'dark' }
-	| { kind: 'pick'; slug: string; pick: Pick }
-	| { kind: 'button'; slug: string; index: number };
+	| { kind: 'pick'; slug: string; pick: Pick };
 
 const HOME: Screen = { kind: 'home', tab: 'profiles' };
 
@@ -63,44 +67,63 @@ const BACK_TO_PICK: Record<Pick, string> = {
 	seeMore: __('Back to See more settings', 'code-block-pro'),
 };
 
+const LEARN_MORE = 'https://code-block-pro.com';
+
 // What each setting reaches, shown at the top of its page.
-const NOTES: Record<string, string> = {
-	general: __(
-		'The name is how blocks list this profile. Blocks that use it keep it when you rename it.',
-		'code-block-pro',
-	),
-	theme: __(
-		'Blocks use the Light theme. If you set a Dark theme, it takes over when the browser is in dark mode, or while the page has a class you choose. Custom themes need the Theme Pack.',
-		'code-block-pro',
-	),
-	font: __(
-		'The typeface, size and spacing of the code. Fonts load from your own site, only on pages that show them.',
-		'code-block-pro',
-	),
-	header: __(
-		'The bar above the code. Tabs and buttons sit in it. Each block sets its own header title in its sidebar.',
-		'code-block-pro',
-	),
-	footer: __(
-		'The line below the code. It shows the language unless a block sets its own footer text or link in its sidebar.',
-		'code-block-pro',
-	),
-	'line-numbers': __(
-		'Whether blocks show line numbers. A block sets its first line number in its sidebar.',
-		'code-block-pro',
-	),
-	'see-more': __(
-		'How long code is folded and opened again. A block folds only once “Lines shown when folded” is set in its sidebar.',
-		'code-block-pro',
-	),
-	buttons: __(
-		'Buttons shown on every block, in this order. Copy copies the code, Theme switch lets readers pick Light or Dark, and Custom sends an event your own script can listen for.',
-		'code-block-pro',
-	),
-	stats: __(
-		'Pages with blocks that use this profile, including drafts and private pages.',
-		'code-block-pro',
-	),
+const Note = ({
+	tab,
+	onTab,
+}: {
+	tab: string;
+	onTab: (tab: string) => void;
+}) => {
+	const notes: Record<string, React.ReactNode> = {
+		theme: createInterpolateElement(
+			__(
+				'Select a theme and optionally select a second theme to show in dark mode. Users with the theme pack can set further conditions to offer more themes. Learn more at <a>code-block-pro.com</a>',
+				'code-block-pro',
+			),
+			{
+				a: (
+					<a href={LEARN_MORE} target="_blank" rel="noreferrer">
+						code-block-pro.com
+					</a>
+				),
+			},
+		),
+		header: __(
+			'Select a header below. Depending on the chosen header you will see configuration options below.',
+			'code-block-pro',
+		),
+		footer: __(
+			'Select a footer below. Depending on the chosen footer you will see configuration options below.',
+			'code-block-pro',
+		),
+		'line-numbers': createInterpolateElement(
+			__(
+				'Decide whether to show or hide line numbers. Note that you may also add a <a>button</a> to allow users to toggle them, in which case this value would be the default',
+				'code-block-pro',
+			),
+			{
+				a: (
+					<Button variant="link" onClick={() => onTab('buttons')}>
+						button
+					</Button>
+				),
+			},
+		),
+		'see-more': __(
+			'Determine whether a max line can be set for blocks. The setting is per block so here you set the look and feel of it',
+			'code-block-pro',
+		),
+		stats: __(
+			'Below is every post we found the block on. You can manage your blocks with the Manage Blocks tool',
+			'code-block-pro',
+		),
+	};
+	return notes[tab] ? (
+		<p className="cbp-manager-description">{notes[tab]}</p>
+	) : null;
 };
 
 /** The screen's hidden title, and the label of its back button. */
@@ -118,15 +141,10 @@ const labelsOf = (screen: Screen, name: string) => {
 				title: titled(__('Theme', 'code-block-pro')),
 				back: __('Back to theme select', 'code-block-pro'),
 			};
-		case 'pick':
+		default:
 			return {
 				title: titled(pickTitle(screen.pick)),
 				back: BACK_TO_PICK[screen.pick],
-			};
-		default:
-			return {
-				title: titled(__('Button', 'code-block-pro')),
-				back: __('Back to buttons', 'code-block-pro'),
 			};
 	}
 };
@@ -147,11 +165,6 @@ const parentOf = (screen: Screen): { screen: Screen | null; focus: string } => {
 					tab: PICK_TABS[screen.pick],
 				},
 				focus: screen.pick,
-			};
-		case 'button':
-			return {
-				screen: { kind: 'profile', slug: screen.slug, tab: 'buttons' },
-				focus: `button-${screen.index}`,
 			};
 		case 'profile':
 			return { screen: HOME, focus: '' };
@@ -290,33 +303,43 @@ type PagesProps = {
 	tab: string;
 	profile: Profile;
 	meta: Meta | null;
-	uses: PageUse[];
+	pageList: Record<string, PageUse[]>;
+	usage: Record<string, number>;
+	dirty: boolean;
 	themeTitle: (slug: string) => string;
 	background: (slug: string) => string;
 	onScreen: (screen: Screen) => void;
 	onEdit: (next: Partial<Draft>) => void;
+	onDuplicate: () => Promise<void>;
+	onManageBlocks: () => void;
 };
 
 const ProfilePages = ({
 	tab,
 	profile,
 	meta,
-	uses,
+	pageList,
+	usage,
+	dirty,
 	themeTitle,
 	background,
 	onScreen,
 	onEdit,
+	onDuplicate,
+	onManageBlocks,
 }: PagesProps) => {
 	const { slug } = profile;
 	const Page = FEATURE_PAGES[tab];
+	const onTab = (next: string) =>
+		onScreen({ kind: 'profile', slug, tab: next });
 	return (
 		<Tabs
 			label={__('Settings', 'code-block-pro')}
 			items={FEATURES}
 			active={tab}
-			onSelect={(next) => onScreen({ kind: 'profile', slug, tab: next })}
+			onSelect={onTab}
 		>
-			{NOTES[tab] && <p className="cbp-manager-description">{NOTES[tab]}</p>}
+			<Note tab={tab} onTab={onTab} />
 			{tab === 'theme' && (
 				<ThemeTiles
 					profile={profile}
@@ -330,8 +353,12 @@ const ProfilePages = ({
 					profile={profile}
 					themes={meta.themes}
 					defaultSample={meta.sample}
+					blocks={usage[slug] ?? 0}
+					dirty={dirty}
 					onTitle={(title) => onEdit({ title })}
 					onSample={(sample) => onEdit({ sample })}
+					onStats={() => onTab('stats')}
+					onDuplicate={onDuplicate}
 				/>
 			)}
 			{Page && meta && (
@@ -339,10 +366,11 @@ const ProfilePages = ({
 					key={tab}
 					profile={profile}
 					meta={meta}
-					uses={uses}
+					uses={pageList[slug] ?? []}
+					dirty={dirty}
 					onChange={(data) => onEdit({ data })}
 					onPick={(pick) => onScreen({ kind: 'pick', slug, pick })}
-					onButton={(index) => onScreen({ kind: 'button', slug, index })}
+					onManageBlocks={onManageBlocks}
 				/>
 			)}
 		</Tabs>
@@ -350,21 +378,14 @@ const ProfilePages = ({
 };
 
 type SubScreenProps = {
-	screen: Extract<Screen, { kind: 'theme' | 'pick' | 'button' }>;
+	screen: Extract<Screen, { kind: 'theme' | 'pick' }>;
 	profile: Profile;
 	meta: Meta;
 	onChange: (data: ProfileData) => void;
-	onScreen: (screen: Screen) => void;
 };
 
 // The screens a settings page opens, which have no settings tabs.
-const SubScreen = ({
-	screen,
-	profile,
-	meta,
-	onChange,
-	onScreen,
-}: SubScreenProps) => {
+const SubScreen = ({ screen, profile, meta, onChange }: SubScreenProps) => {
 	if (screen.kind === 'theme') {
 		return (
 			<ThemeScreen
@@ -378,27 +399,45 @@ const SubScreen = ({
 	}
 	return (
 		<div className="cbp-manager-screen">
-			{screen.kind === 'pick' ? (
-				<PickScreen
-					key={screen.pick}
-					pick={screen.pick}
-					profile={profile}
-					meta={meta}
-					onChange={onChange}
-				/>
-			) : (
-				<ButtonScreen
-					key={screen.index}
-					index={screen.index}
-					profile={profile}
-					meta={meta}
-					onChange={onChange}
-					onRemoved={() =>
-						onScreen({ kind: 'profile', slug: profile.slug, tab: 'buttons' })
-					}
-				/>
-			)}
+			<PickScreen
+				key={screen.pick}
+				pick={screen.pick}
+				profile={profile}
+				meta={meta}
+				onChange={onChange}
+			/>
 		</div>
+	);
+};
+
+// Opens over the profile manager; saving first means its Back and Close never leave edits behind.
+const BlockManager = ({
+	onBack,
+	onClose,
+}: {
+	onBack: () => void;
+	onClose: () => void;
+}) => {
+	const titleId = useId();
+	const title = __('Manage blocks', 'code-block-pro');
+	return (
+		<Modal
+			title={title}
+			__experimentalHideHeader
+			aria={{ labelledby: titleId }}
+			className="preferences-modal cbp-manager-modal"
+			shouldCloseOnClickOutside={false}
+			onRequestClose={onBack}
+		>
+			<ManagerHeader
+				home={false}
+				title={title}
+				titleId={titleId}
+				back={__('Back to stats', 'code-block-pro')}
+				onBack={onBack}
+				onClose={onClose}
+			/>
+		</Modal>
 	);
 };
 
@@ -503,6 +542,24 @@ const useFont = (meta: Meta | null, profile: Profile | undefined) => {
 	}, [meta, font]);
 };
 
+// The copy opens on General, where its name is the first thing to change.
+const duplicator =
+	(setScreen: (screen: Screen) => void, setError: (message: string) => void) =>
+	async (from: Profile) => {
+		try {
+			const slug = await saveProfile({
+				/* translators: %s: the name of the profile being copied. */
+				title: sprintf(__('%s copy', 'code-block-pro'), from.title),
+				data: from.data,
+				sample: from.sample,
+			});
+			await reloadProfiles();
+			setScreen({ kind: 'profile', slug, tab: 'general' });
+		} catch (failure) {
+			setError(messageOf(failure));
+		}
+	};
+
 export type ManagerProps = {
 	/** The profile of the block the manager opened from. */
 	slug: string;
@@ -534,6 +591,7 @@ export const ProfileManager = ({
 	});
 	const { background, themeTitle } = useThemeNames(meta);
 	const [confirming, setConfirming] = useState(false);
+	const [managing, setManaging] = useState(false);
 	const titleId = useId();
 	const profile =
 		screen.kind === 'home'
@@ -545,6 +603,7 @@ export const ProfileManager = ({
 	const back = () => up() || requestClose();
 	const { title, back: backLabel } = labelsOf(screen, profile?.title ?? '');
 	const shownError = error || loadError || metaError;
+	const duplicate = duplicator(setScreen, setError);
 
 	return (
 		<Modal
@@ -595,11 +654,15 @@ export const ProfileManager = ({
 					tab={screen.tab}
 					profile={profile}
 					meta={meta}
-					uses={pageList[profile.slug] ?? []}
+					pageList={pageList}
+					usage={usage}
+					dirty={changed.length > 0}
 					themeTitle={themeTitle}
 					background={background}
 					onScreen={setScreen}
 					onEdit={(next) => edit(profile, next)}
+					onDuplicate={() => duplicate(profile)}
+					onManageBlocks={() => setManaging(true)}
 				/>
 			)}
 
@@ -612,7 +675,6 @@ export const ProfileManager = ({
 						profile={profile}
 						meta={meta}
 						onChange={(data) => edit(profile, { data })}
-						onScreen={setScreen}
 					/>
 				)}
 
@@ -641,6 +703,10 @@ export const ProfileManager = ({
 					'code-block-pro',
 				)}
 			</ConfirmDialog>
+
+			{managing && (
+				<BlockManager onBack={() => setManaging(false)} onClose={onClose} />
+			)}
 		</Modal>
 	);
 };

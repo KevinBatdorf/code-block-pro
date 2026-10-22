@@ -202,6 +202,8 @@
 	gap: 20px 16px;
 }
 
+/* Three across drew the previews too small to judge. */
+.cbp-manager-grid,
 .cbp-manager-tiles.is-pairs {
 	grid-template-columns: repeat(2, 1fr);
 }
@@ -212,6 +214,7 @@
 
 .cbp-manager-tile,
 .cbp-manager-card {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	min-width: 0;
@@ -286,12 +289,13 @@
 
 .cbp-manager-check {
 	position: absolute;
-	top: 6px;
-	right: 6px;
+	top: -7px;
+	right: -7px;
+	z-index: 1;
 	display: grid;
 	place-items: center;
-	width: 24px;
-	height: 24px;
+	width: 22px;
+	height: 22px;
 	border-radius: 999px;
 	background: var(--wp-admin-theme-color, #3858e9);
 	box-shadow: 0 0 0 2px #fff;
@@ -387,21 +391,9 @@
 }
 
 /* The textarea sits under the server's colored copy of the same text; both use one font and box. */
-.cbp-manager-editor-field {
-	width: 100%;
-}
-
-.cbp-manager-editor-label {
-	display: block;
-	margin-bottom: 8px;
-	font-size: 11px;
-	font-weight: 500;
-	line-height: 1.4;
-	text-transform: uppercase;
-}
-
 .cbp-manager-editor {
 	position: relative;
+	width: 100%;
 	overflow: hidden;
 	border-radius: 4px;
 	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
@@ -522,19 +514,6 @@
 	background: #f0f0f0;
 }
 
-/* Button list rows: the row opens the button, the arrows reorder it. */
-.cbp-manager-row {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-	padding-inline-end: 8px;
-	border-top: 1px solid #e0e0e0;
-}
-
-.cbp-manager-row:first-child {
-	border-top: 0;
-}
-
 .cbp-manager-row-main {
 	display: flex;
 	flex: 1;
@@ -564,9 +543,9 @@
 	fill: #757575;
 }
 
-/* Screens without the settings sidebar have tiles about a third wider. */
+/* Screens without the settings sidebar have wider cards. */
 .cbp-manager-screen .cbp-manager-box {
-	--cbp-manager-scale: 0.82;
+	--cbp-manager-scale: 1.15;
 }
 
 /* Save stays in view at the bottom of every screen, however short the screen. */
@@ -676,4 +655,138 @@ a.cbp-manager-page:first-child {
 	padding: 16px;
 	border: 1px solid #e0e0e0;
 	border-radius: 4px;
+}
+
+.cbp-manager-selected {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 16px;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+}
+
+.cbp-manager-selected-text {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.cbp-manager-selected-label {
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.cbp-manager-selected-value {
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.cbp-manager-tabpanel > .cbp-manager-live {
+	margin-bottom: 24px;
+}
+
+.cbp-manager-tabpanel .preferences-modal__option + .cbp-manager-tiles {
+	margin-top: 16px;
+}
+
+.cbp-manager-ligatures {
+	font-family: 'Code-Pro-JetBrains-Mono', monospace;
+}
+
+.cbp-manager-no-ligatures {
+	font-variant-ligatures: none;
+	font-feature-settings:
+		'calt' 0,
+		'liga' 0;
+}
+
+.cbp-manager-hint {
+	margin: 0;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #757575;
+}
+
+.cbp-manager-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+/* Buttons tab */
+.cbp-manager-buttons-stage {
+	position: relative;
+}
+
+.cbp-manager-buttons-preview {
+	position: relative;
+	overflow: hidden;
+	border-radius: 4px;
+	background: #f0f0f0;
+}
+
+.cbp-manager-buttons-preview.is-cropped {
+	mask-image: linear-gradient(to bottom, #000 75%, transparent);
+}
+
+.cbp-manager-buttons-block {
+	transform-origin: top left;
+}
+
+.cbp-manager-buttons-block .cbp-block {
+	margin: 0;
+}
+
+.cbp-manager-buttons-block .cbp-button {
+	cursor: pointer;
+}
+
+.cbp-manager-buttons-block .cbp-copy {
+	opacity: 0.9;
+}
+
+.cbp-manager-buttons-block [data-cbp-manager-selected] {
+	outline: 2px solid var(--wp-admin-theme-color, #3858e9);
+	outline-offset: 2px;
+}
+
+.cbp-manager-arrows {
+	height: 48px;
+}
+
+/* Over the code, so it carries its own background. */
+.cbp-manager-arrows-set {
+	position: absolute;
+	z-index: 1;
+	display: flex;
+	gap: 2px;
+	padding: 2px;
+	border-radius: 4px;
+	background: #fff;
+	box-shadow:
+		0 0 0 1px #ddd,
+		0 2px 6px rgb(0 0 0 / 0.12);
+	transform: translateX(-50%);
+}
+
+.cbp-manager-arrows-set .is-hidden {
+	visibility: hidden;
+}
+
+.cbp-manager-rail {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.cbp-manager-button-settings {
+	margin-top: 24px;
 }

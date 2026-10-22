@@ -12,7 +12,8 @@ import {
 	type Trigger,
 	useSamples,
 } from './api';
-import { CHECK, fontStack, LOCK, PLUS, Preview, Section, Svg } from './ui';
+import { Check } from './parts';
+import { fontStack, LOCK, PLUS, Preview, Section, Svg } from './ui';
 
 // Dark follows the browser's setting, or a class a theme or dark-mode plugin puts on the page.
 const isDark = (c: Condition) =>
@@ -29,6 +30,7 @@ const withLight = (data: ProfileData, theme: string): ProfileData => ({
 	conditions: data.conditions.map((c, i) => (i === 0 ? { ...c, theme } : c)),
 });
 
+// A theme switch with nothing to switch to wouldn't render, so it goes with Dark.
 const withoutDark = (data: ProfileData, dark: Condition): ProfileData => ({
 	...data,
 	conditions: data.conditions.filter((c) => c !== dark),
@@ -38,11 +40,13 @@ const withoutDark = (data: ProfileData, dark: Condition): ProfileData => ({
 			Object.fromEntries(Object.entries(byId).filter(([id]) => id !== dark.id)),
 		]),
 	),
-	buttons: data.buttons.map((b) =>
-		b.type === 'toggle'
-			? { ...b, conditions: b.conditions.filter((id) => id !== dark.id) }
-			: b,
-	),
+	buttons: data.buttons
+		.filter((b) => b.type !== 'toggle' || data.conditions.length > 2)
+		.map((b) =>
+			b.type === 'toggle'
+				? { ...b, conditions: b.conditions.filter((id) => id !== dark.id) }
+				: b,
+		),
 });
 
 const withDark = (
@@ -303,13 +307,8 @@ export const ThemeScreen = ({
 							className="cbp-manager-card"
 							onClick={() => pick(null)}
 						>
-							<span className="cbp-manager-box is-empty">
-								{dark === null && (
-									<span className="cbp-manager-check">
-										<Svg d={CHECK} size={20} />
-									</span>
-								)}
-							</span>
+							<span className="cbp-manager-box is-empty" />
+							{dark === null && <Check />}
 							<span className="cbp-manager-label">
 								{__('No theme', 'code-block-pro')}
 							</span>
@@ -330,12 +329,8 @@ export const ThemeScreen = ({
 									background={theme.background}
 									font={fontStack(profile.data.settings.fontFamily)}
 								/>
-								{theme.slug === value && (
-									<span className="cbp-manager-check">
-										<Svg d={CHECK} size={20} />
-									</span>
-								)}
 							</span>
+							{theme.slug === value && <Check />}
 							<span className="cbp-manager-label">{humanize(theme.title)}</span>
 						</button>
 					))}

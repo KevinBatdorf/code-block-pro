@@ -95,7 +95,7 @@ export type Theme = {
 
 export type Meta = {
 	themes: Theme[];
-	fonts: { value: string; label: string; href: string }[];
+	fonts: { value: string; label: string; href: string; ligatures: boolean }[];
 	headers: string[];
 	footers: string[];
 	seeMore: string[];
