@@ -241,6 +241,66 @@ export const saveProfile = async ({
 	return saved.slug;
 };
 
+const FILE_TYPE = 'code-block-pro-profile';
+
+type ProfileFile = Partial<ProfileData> & {
+	type: string;
+	title?: string;
+	sample?: Sample;
+};
+
+/** Saves the profile as a file another site can import; profiles/default.json is one. */
+export const downloadProfile = ({ slug, title, data, sample }: Profile) => {
+	const file: ProfileFile = {
+		type: FILE_TYPE,
+		version: data.version,
+		title,
+		settings: data.settings,
+		conditions: data.conditions,
+		languages: data.languages,
+		buttons: data.buttons,
+		...(sample && { sample }),
+	};
+	const url = URL.createObjectURL(
+		new Blob([`${JSON.stringify(file, null, '\t')}\n`], {
+			type: 'application/json',
+		}),
+	);
+	const link = document.createElement('a');
+	link.href = url;
+	link.download = `code-block-pro-${slug}.json`;
+	document.body.append(link);
+	link.click();
+	link.remove();
+	// Revoked at once, the download can be cancelled before it starts.
+	window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+};
+
+/** Adds the profile a file holds as a new one. Resolves to its slug. */
+export const importProfile = async (file: File) => {
+	let parsed: unknown = null;
+	try {
+		parsed = JSON.parse(await file.text());
+	} catch {
+		// Left null, so it's reported as not a profile.
+	}
+	if (
+		!parsed ||
+		typeof parsed !== 'object' ||
+		(parsed as ProfileFile).type !== FILE_TYPE
+	) {
+		throw new Error(
+			__('That file is not a Code Block Pro profile.', 'code-block-pro'),
+		);
+	}
+	const { type: _type, title, sample, ...data } = parsed as ProfileFile;
+	return saveProfile({
+		title: title || file.name.replace(/\.json$/i, ''),
+		data: data as ProfileData,
+		...(sample && { sample }),
+	});
+};
+
 // The code in every theme, one request per distinct sample. Null is the shared sample.
 const samplesFor = new Map<string, Promise<Record<string, string>>>();
 export const useSamples = (sample: Sample | null) => {

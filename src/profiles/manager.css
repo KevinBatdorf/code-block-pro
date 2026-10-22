@@ -178,10 +178,6 @@
 	flex: none;
 }
 
-.cbp-manager-add-button.components-button {
-	margin-top: 16px;
-}
-
 .cbp-manager-add {
 	display: flex;
 	align-items: center;

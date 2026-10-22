@@ -1,0 +1,37 @@
+{
+	"type": "code-block-pro-profile",
+	"version": 1,
+	"title": "Default",
+	"settings": {
+		"fontSize": ".875rem",
+		"fontFamily": "Code-Pro-JetBrains-Mono",
+		"lineHeight": "1.25rem",
+		"clampFonts": false,
+		"headerType": "headlights",
+		"footerType": "none",
+		"lineNumbers": false,
+		"highlightingHover": false,
+		"seeMoreType": "",
+		"seeMoreString": "",
+		"seeMoreTransition": false,
+		"seeMoreCollapse": false,
+		"seeMoreCollapseString": "",
+		"disablePadding": false,
+		"tabSize": 2,
+		"useTabs": false,
+		"editorHeight": ""
+	},
+	"conditions": [
+		{
+			"id": "main",
+			"name": "Main",
+			"theme": "dracula",
+			"trigger": { "type": "base" },
+			"background": { "type": "theme" }
+		}
+	],
+	"languages": {},
+	"buttons": [
+		{ "type": "copy", "icon": "heroicons", "label": "", "copiedLabel": "" }
+	]
+}

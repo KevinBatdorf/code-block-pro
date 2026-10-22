@@ -2,6 +2,7 @@ import { Button, TextControl } from '@wordpress/components';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import {
+	importProfile,
 	messageOf,
 	type Profile,
 	type ProfileData,
@@ -48,6 +49,7 @@ export const Home = ({
 	const [name, setName] = useState('');
 	const [busy, setBusy] = useState(false);
 	const first = useRef<HTMLButtonElement>(null);
+	const picker = useRef<HTMLInputElement>(null);
 	useEffect(() => first.current?.focus(), []);
 
 	const add = async () => {
@@ -64,6 +66,17 @@ export const Home = ({
 			onError(messageOf(failure));
 		} finally {
 			setBusy(false);
+		}
+	};
+
+	const upload = async (file: File | undefined) => {
+		if (!file) return;
+		try {
+			const slug = await importProfile(file);
+			await reloadProfiles();
+			onOpen(slug);
+		} catch (failure) {
+			onError(messageOf(failure));
 		}
 	};
 
@@ -174,14 +187,33 @@ export const Home = ({
 							</Button>
 						</form>
 					) : (
-						<Button
-							variant="secondary"
-							className="cbp-manager-add-button"
-							__next40pxDefaultSize
-							onClick={() => setAdding(true)}
-						>
-							{__('Add profile', 'code-block-pro')}
-						</Button>
+						<div className="cbp-manager-actions">
+							<Button
+								variant="secondary"
+								__next40pxDefaultSize
+								onClick={() => setAdding(true)}
+							>
+								{__('Add profile', 'code-block-pro')}
+							</Button>
+							<Button
+								variant="secondary"
+								__next40pxDefaultSize
+								onClick={() => picker.current?.click()}
+							>
+								{__('Import', 'code-block-pro')}
+							</Button>
+							<input
+								ref={picker}
+								type="file"
+								accept=".json,application/json"
+								hidden
+								onChange={(event) => {
+									void upload(event.target.files?.[0]);
+									// The same file can be picked again after a failed import.
+									event.target.value = '';
+								}}
+							/>
+						</div>
 					)}
 				</Section>
 			)}

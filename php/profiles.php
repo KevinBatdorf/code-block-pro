@@ -569,15 +569,38 @@ function code_block_pro_maybe_seed_default_profile(): void
 }
 
 /**
+ * The profile a site starts with, in the format profile exports use.
+ *
+ * @return array<mixed>
+ */
+function code_block_pro_default_profile_data(): array
+{
+    static $data = null;
+    if ($data === null) {
+        $file = dirname(__DIR__) . '/profiles/default.json';
+        $json = is_file($file) ? json_decode((string) file_get_contents($file), true) : null;
+        $data = is_array($json) ? $json : [];
+    }
+
+    return $data;
+}
+
+/**
+ * The default profile, with what 1.x's editor remembered on top when the site had 1.x.
+ *
  * @param array<mixed> $settings 1.x's code_block_pro_settings option: the "previous*" values its editor remembered.
  * @return array<mixed>
  */
 function code_block_pro_profile_from_1x(array $settings): array
 {
-    $profile = ['settings' => [], 'conditions' => [['id' => 'main', 'name' => __('Main', 'code-block-pro'), 'theme' => $settings['previousTheme'] ?? CODE_BLOCK_PRO_DEFAULT_THEME]]];
-    foreach (array_keys(code_block_pro_profile_setting_defaults()) as $key) {
+    $profile = code_block_pro_sanitize_profile(code_block_pro_default_profile_data());
+    if (!$settings) {
+        return $profile;
+    }
+    $profile['conditions'][0]['theme'] = code_block_pro_theme_slug($settings['previousTheme'] ?? $profile['conditions'][0]['theme']);
+    foreach (code_block_pro_profile_setting_defaults() as $key => $default) {
         if (isset($settings['previous' . ucfirst($key)])) {
-            $profile['settings'][$key] = $settings['previous' . ucfirst($key)];
+            $profile['settings'][$key] = code_block_pro_sanitize_setting($key, $settings['previous' . ucfirst($key)], $default);
         }
     }
     // 1.x saved the label in the editor's language at the time; empty translates at render.

@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import type { Page } from '@playwright/test';
 import {
 	type Editor,
@@ -153,4 +154,50 @@ test('a button moves from the rail into the block and back out', async ({
 	await modal.getByRole('button', { name: 'Take out of the block' }).click();
 	await expect(copy).toHaveCount(0);
 	await expect(rail.getByRole('button', { name: 'Copy' })).toBeVisible();
+});
+
+test('an exported profile imports as a new profile, and other files are refused', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await newPost(admin, 'manager export');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('a');
+	const modal = await openFromToolbar(page, editor, 'Edit profile');
+	const downloading = page.waitForEvent('download');
+	await modal.getByRole('button', { name: 'Export' }).click();
+	const download = await downloading;
+	const path = await download.path();
+
+	expect(download.suggestedFilename()).toBe('code-block-pro-default.json');
+	expect(JSON.parse(await readFile(path, 'utf8'))).toMatchObject({
+		type: 'code-block-pro-profile',
+		version: 1,
+		title: 'Default',
+	});
+
+	await modal.getByRole('button', { name: 'Back to profiles' }).click();
+	const picker = modal.locator('input[type="file"]');
+	await picker.setInputFiles({
+		name: 'notes.json',
+		mimeType: 'application/json',
+		buffer: Buffer.from('{"title":"Notes"}'),
+	});
+	await expect(
+		modal.getByText('That file is not a Code Block Pro profile.'),
+	).toBeVisible();
+
+	await picker.setInputFiles(path);
+	await expect(modal.getByRole('tab', { name: 'General' })).toHaveAttribute(
+		'aria-selected',
+		'true',
+	);
+	const { profiles } = await apiFetch<{
+		profiles: { slug: string; title: string }[];
+	}>(page, { path: '/code-block-pro/v1/manage/profiles' });
+	expect(profiles.map(({ slug, title }) => [slug, title])).toContainEqual([
+		'default-2',
+		'Default',
+	]);
 });

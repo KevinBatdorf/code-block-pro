@@ -277,12 +277,14 @@ add_action('rest_api_init', function () {
             return new WP_Error('rest_not_found', __('That profile does not exist or is not published.', 'code-block-pro'), ['status' => 404]);
         }
         $stored = $post ? json_decode($post->post_content, true) : null;
+        $data = $request->get_param('data');
         // Saving would drop what this release can't read.
         if (is_array($stored) && (int) ($stored['version'] ?? 1) > 1) {
             return new WP_Error('rest_conflict', __('A newer version of Code Block Pro saved this profile. Update the plugin to change it.', 'code-block-pro'), ['status' => 409]);
         }
-
-        $data = $request->get_param('data');
+        if (is_array($data) && (int) ($data['version'] ?? 1) > 1) {
+            return new WP_Error('rest_conflict', __('A newer version of Code Block Pro made this profile. Update the plugin to import it.', 'code-block-pro'), ['status' => 409]);
+        }
         $id = $post->ID ?? 0;
         if (!$post) {
             $base = sanitize_title($title) ?: 'profile';

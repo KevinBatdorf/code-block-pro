@@ -2,7 +2,13 @@ import { Button, SelectControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import LANGUAGES from '../languages.json';
-import { type Profile, type Sample, type Theme, useSamples } from './api';
+import {
+	downloadProfile,
+	type Profile,
+	type Sample,
+	type Theme,
+	useSamples,
+} from './api';
 import { CommitText, Section } from './ui';
 
 const LANGUAGE_OPTIONS = Object.entries(LANGUAGES)
@@ -132,7 +138,10 @@ export const GeneralPage = ({
 				defaultSample={defaultSample}
 				onSample={onSample}
 			/>
-			<Section title={__('Delete or duplicate', 'code-block-pro')} hideTitle>
+			<Section
+				title={__('Delete, duplicate or export', 'code-block-pro')}
+				hideTitle
+			>
 				<p className="cbp-manager-hint">
 					{__(
 						'You can only delete a profile if no other blocks are using it',
@@ -167,9 +176,21 @@ export const GeneralPage = ({
 					>
 						{__('Duplicate', 'code-block-pro')}
 					</Button>
+					<Button
+						variant="secondary"
+						__next40pxDefaultSize
+						disabled={dirty}
+						accessibleWhenDisabled
+						onClick={() => downloadProfile(profile)}
+					>
+						{__('Export', 'code-block-pro')}
+					</Button>
 					{dirty && (
 						<span className="cbp-manager-hint">
-							{__('Save your changes before duplicating.', 'code-block-pro')}
+							{__(
+								'Save your changes before duplicating or exporting.',
+								'code-block-pro',
+							)}
 						</span>
 					)}
 				</div>

@@ -160,6 +160,27 @@ class ProfileTest extends WP_UnitTestCase
         $this->assertSame('dracula', code_block_pro_profile('default')['conditions'][0]['theme']);
     }
 
+    public function test_the_shipped_default_profile_is_a_complete_profile_file()
+    {
+        $file = code_block_pro_default_profile_data();
+        $profile = array_intersect_key($file, array_flip(['version', 'settings', 'conditions', 'languages', 'buttons']));
+
+        $this->assertSame('code-block-pro-profile', $file['type']);
+        $this->assertSame(code_block_pro_sanitize_profile($file), $profile);
+    }
+
+    public function test_a_site_without_1x_settings_starts_from_the_shipped_default()
+    {
+        $this->deleteDefault();
+        delete_option('code_block_pro_settings');
+
+        code_block_pro_ensure_default_profile();
+        $profile = code_block_pro_profile('default');
+
+        $this->assertSame(code_block_pro_sanitize_profile(code_block_pro_default_profile_data())['buttons'], $profile['buttons']);
+        $this->assertSame(code_block_pro_sanitize_profile(code_block_pro_default_profile_data())['settings'], $profile['settings']);
+    }
+
     public function test_the_default_profile_is_recreated_when_missing()
     {
         $this->deleteDefault();

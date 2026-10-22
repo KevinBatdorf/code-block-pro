@@ -111,6 +111,16 @@ class ProfileManagerTest extends WP_UnitTestCase
         $this->assertSame($newer, get_post_field('post_content', $id));
     }
 
+    public function test_a_profile_from_a_newer_release_is_not_imported()
+    {
+        $before = $this->profileIds();
+
+        $response = $this->request('POST', 'profiles', ['title' => 'Later', 'data' => ['version' => 2, 'futureSetting' => true]]);
+
+        $this->assertSame(409, $response->get_status());
+        $this->assertSame($before, $this->profileIds());
+    }
+
     public function test_a_profile_keeps_its_own_code_sample_until_it_is_cleared()
     {
         code_block_pro_insert_profile('docs', []);
