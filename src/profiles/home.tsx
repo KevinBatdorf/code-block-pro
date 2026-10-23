@@ -5,22 +5,12 @@ import {
 	importProfile,
 	messageOf,
 	type Profile,
-	type ProfileData,
 	reloadProfiles,
 	saveProfile,
 	usedAt,
 } from './api';
-import { headerName } from './features';
 import { darkOf } from './themes';
 import { CHEVRON_RIGHT, Section, Svg, Tabs } from './ui';
-
-const features = (data: ProfileData) =>
-	[
-		data.settings.headerType !== 'none' && headerName(data.settings.headerType),
-		data.settings.lineNumbers && __('Line numbers', 'code-block-pro'),
-		data.settings.seeMoreType && __('See more', 'code-block-pro'),
-		data.settings.footerType !== 'none' && __('Footer', 'code-block-pro'),
-	].filter((feature): feature is string => Boolean(feature));
 
 type Props = {
 	tab: 'profiles' | 'languages';
@@ -134,9 +124,7 @@ export const Home = ({
 									/>
 									<span className="cbp-manager-profile-text">
 										<span className="cbp-manager-profile-title">{p.title}</span>
-										<span className="cbp-manager-profile-meta">
-											{[themes, ...features(p.data)].join(' · ')}
-										</span>
+										<span className="cbp-manager-profile-meta">{themes}</span>
 									</span>
 									<span className="cbp-manager-profile-count">
 										{sprintf(

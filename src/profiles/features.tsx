@@ -54,7 +54,7 @@ const HEADERS: Record<string, string> = {
 	stringSmall: __('String muted', 'code-block-pro'),
 	pillString: __('Pill string', 'code-block-pro'),
 };
-export const headerName = (type: string) => HEADERS[type] ?? type;
+const headerName = (type: string) => HEADERS[type] ?? type;
 const FOOTERS: Record<string, string> = {
 	none: __('None', 'code-block-pro'),
 	simpleStringEnd: __('Simple string end', 'code-block-pro'),
