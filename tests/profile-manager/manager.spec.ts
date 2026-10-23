@@ -122,6 +122,35 @@ test('closing Manage blocks returns to the profile, over the same overlay', asyn
 	);
 });
 
+test('the last settings tab can be reached in a short window', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await page.setViewportSize({ width: 1280, height: 560 });
+	await newPost(admin, 'manager short');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('a');
+	const modal = await openFromToolbar(page, editor, 'Edit profile');
+	const stats = modal.getByRole('tab', { name: 'Stats' });
+	const footer = modal.locator('.cbp-manager-footer');
+
+	await modal.locator('.cbp-manager-tabpanel').hover();
+	await page.mouse.wheel(0, 2000);
+
+	await expect
+		.poll(async () => {
+			const [tab, bar] = await Promise.all([
+				stats.boundingBox(),
+				footer.boundingBox(),
+			]);
+			return tab && bar ? bar.y - (tab.y + tab.height) : -1;
+		})
+		.toBeGreaterThanOrEqual(0);
+	await stats.click();
+	await expect(stats).toHaveAttribute('aria-selected', 'true');
+});
+
 test('a profile added in the list can be renamed and picked for the block', async ({
 	page,
 	admin,
