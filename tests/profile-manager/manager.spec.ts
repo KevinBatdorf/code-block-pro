@@ -90,6 +90,38 @@ test('closing with unsaved changes asks first, and nothing is saved', async ({
 	).toBe(before);
 });
 
+test('closing Manage blocks returns to the profile, over the same overlay', async ({
+	page,
+	admin,
+	editor,
+}) => {
+	await newPost(admin, 'manager blocks');
+	await editor.insertBlock({ name: 'kevinbatdorf/code-block-pro' });
+	await page.keyboard.type('a');
+	const modal = await openFromToolbar(page, editor, 'Edit profile');
+	await modal
+		.locator('.cbp-manager-footer')
+		.getByRole('button', { name: 'View stats' })
+		.click();
+	await modal.getByRole('button', { name: 'Manage blocks' }).click();
+	await expect(modal).toHaveCount(2);
+	await expect(page.locator('.cbp-manager-stacked')).toHaveCSS(
+		'background-color',
+		'rgba(0, 0, 0, 0)',
+	);
+
+	await modal
+		.last()
+		.getByRole('button', { name: 'Close', exact: true })
+		.click();
+
+	await expect(modal).toHaveCount(1);
+	await expect(modal.getByRole('tab', { name: 'Stats' })).toHaveAttribute(
+		'aria-selected',
+		'true',
+	);
+});
+
 test('a profile added in the list can be renamed and picked for the block', async ({
 	page,
 	admin,

@@ -410,14 +410,7 @@ const SubScreen = ({ screen, profile, meta, onChange }: SubScreenProps) => {
 	);
 };
 
-// Opens over the profile manager; saving first means its Back and Close never leave edits behind.
-const BlockManager = ({
-	onBack,
-	onClose,
-}: {
-	onBack: () => void;
-	onClose: () => void;
-}) => {
+const BlockManager = ({ onBack }: { onBack: () => void }) => {
 	const titleId = useId();
 	const title = __('Manage blocks', 'code-block-pro');
 	return (
@@ -426,6 +419,7 @@ const BlockManager = ({
 			__experimentalHideHeader
 			aria={{ labelledby: titleId }}
 			className="preferences-modal cbp-manager-modal"
+			overlayClassName="cbp-manager-stacked"
 			shouldCloseOnClickOutside={false}
 			onRequestClose={onBack}
 		>
@@ -435,7 +429,7 @@ const BlockManager = ({
 				titleId={titleId}
 				back={__('Back to stats', 'code-block-pro')}
 				onBack={onBack}
-				onClose={onClose}
+				onClose={onBack}
 			/>
 		</Modal>
 	);
@@ -704,9 +698,7 @@ export const ProfileManager = ({
 				)}
 			</ConfirmDialog>
 
-			{managing && (
-				<BlockManager onBack={() => setManaging(false)} onClose={onClose} />
-			)}
+			{managing && <BlockManager onBack={() => setManaging(false)} />}
 		</Modal>
 	);
 };

@@ -22,6 +22,20 @@
 	fill: currentColor;
 }
 
+/* Manage blocks covers the manager exactly; a second dim and shadow would darken the page. */
+.cbp-manager-stacked.components-modal__screen-overlay {
+	background: transparent;
+}
+
+.cbp-manager-stacked .components-modal__frame {
+	box-shadow: none;
+}
+
+/* Escape waits on core's exit animation; removing it would stall the close. */
+.cbp-manager-stacked:not(.is-animating-out) .components-modal__frame {
+	animation: none;
+}
+
 .cbp-manager-error.components-notice {
 	margin: 8px 0 16px;
 }
