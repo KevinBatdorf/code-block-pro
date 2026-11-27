@@ -1,0 +1,25 @@
+/*
+Theme Name: CBP Baseline
+Description: A fixed column and type, so renders don't move with each WordPress version's default theme.
+*/
+
+body {
+	margin: 0;
+	background: #fff;
+	color: #111;
+	font: 16px/1.5 sans-serif;
+}
+
+main {
+	width: 800px;
+	margin: 0 auto;
+	padding: 32px 0;
+}
+
+.alignwide {
+	margin-inline: -100px;
+}
+
+.alignfull {
+	margin-inline: calc(50% - 50vw);
+}

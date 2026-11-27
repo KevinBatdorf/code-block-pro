@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A comment -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title type="text">Code &amp; Blocks</title>
+	<entry id="1">
+		<summary><![CDATA[<b>raw</b> markup]]></summary>
+	</entry>
+</feed>

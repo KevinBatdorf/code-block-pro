@@ -1,0 +1,10 @@
+"""A user of the site."""
+type User @key(fields: "id") {
+	id: ID!
+	name: String
+	posts(first: Int = 10): [Post!]!
+}
+
+query Recent($first: Int!) {
+	posts(first: $first) { id ...PostFields }
+}

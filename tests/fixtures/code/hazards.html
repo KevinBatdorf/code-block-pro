@@ -1,0 +1,13 @@
+<!doctype html>
+<!-- A comment with <angle brackets> & an ampersand -->
+<div class="wrap" data-json='{"a":1,"b":"&amp;"}'>
+	<pre><code>escaped &lt;/pre&gt; inside a code sample</code></pre>
+	<p>Literal close tag in a string: "&lt;/pre&gt;" &amp; "&lt;/div&gt;"</p>
+	<script>
+		const gt = 1 > 0 && 2 < 3;
+		document.title = "a & b";
+	</script>
+	<style>
+		.wrap > p::after { content: " & more"; }
+	</style>
+</div>

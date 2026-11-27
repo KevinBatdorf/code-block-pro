@@ -1,0 +1,9 @@
+# Site settings
+title = "Fixtures"
+port = 8080
+debug = false
+released = 2026-10-16T12:00:00Z
+
+[database]
+hosts = ["alpha", "omega"]
+pool = { min = 1, max = 8 }

@@ -1,0 +1,17 @@
+diff --git a/src/front/BlockOutput.tsx b/src/front/BlockOutput.tsx
+index 8f2c1a1..b41d0e2 100644
+--- a/src/front/BlockOutput.tsx
++++ b/src/front/BlockOutput.tsx
+@@ -14,9 +14,10 @@ export const BlockOutput = ({ attributes }: { attributes: Attributes }) => {
+ 	const {
+ 		clampFonts,
+ 		code,
+-		codeHTML,
+ 		disablePadding,
++		enableBlurring,
+ 		footerType,
+ 	} = attributes;
+ 
+-	return <div>{codeHTML}</div>;
++	return <div>{code}</div>;
+ }

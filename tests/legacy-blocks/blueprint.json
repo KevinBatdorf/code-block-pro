@@ -1,0 +1,21 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"login": false,
+	"steps": [
+		{
+			"step": "defineWpConfigConsts",
+			"consts": {
+				"WP_DEBUG": true,
+				"WP_DEBUG_DISPLAY": false
+			}
+		},
+		{
+			"step": "activatePlugin",
+			"pluginPath": "code-block-pro/code-block-pro.php"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-content/plugins/code-block-pro/tests/legacy-blocks/setup.php'; ?>"
+		}
+	]
+}

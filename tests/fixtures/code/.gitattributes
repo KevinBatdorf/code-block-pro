@@ -1,0 +1,2 @@
+# These are byte-exact test inputs. Never let git rewrite their line endings.
+* -text
