@@ -28,4 +28,19 @@ test.describe('Updates paused notice', () => {
 
 		await expect(page.locator(notice)).toHaveCount(0);
 	});
+
+	test('Stays away from users who cannot update plugins', async ({
+		admin,
+		editor,
+		page,
+	}) => {
+		await admin.visitAdminPage(
+			'post-new.php',
+			'cbp_no_mbregex=1&cbp_cannot_update=1',
+		);
+		await insertCodeBlock(editor);
+		await expect(page.locator(inspectorReady)).toBeVisible();
+
+		await expect(page.locator(notice)).toHaveCount(0);
+	});
 });
